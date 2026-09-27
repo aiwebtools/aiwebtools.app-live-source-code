@@ -74,10 +74,10 @@ const OpInstructionsButton = ({ slug, name, className = "", compact = false }: O
       type="button"
       onClick={() => downloadAllOperationalInstructions()}
       className="op-gold-btn inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wide"
-      title="Download all 1,900+ AIWebTools operational instructions (ZIP)"
+      title="Download all 3,200+ AIWebTools operational instructions (ZIP)"
     >
       <Download className="h-3.5 w-3.5" aria-hidden="true" />
-      {compact ? "All 1,900+ (ZIP)" : "Download All 1,900+ Operational Instructions (ZIP)"}
+      {compact ? "All 3,200+ + Code" : "Download All 3,200+ Operational Instructions + Source Code"}
     </button>
     </span>
   );

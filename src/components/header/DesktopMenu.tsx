@@ -216,7 +216,7 @@ const DesktopMenu = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></div>
                 <span className="relative z-10 flex items-center justify-center gap-2 text-sm">
                   <Gift className="w-4 h-4" />
-                  FREE: 1,900+ GPT Instructions
+                  FREE: 3,200+ GPT Instructions
                   <Download className="w-4 h-4" />
                 </span>
               </button>
