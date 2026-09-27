@@ -49,21 +49,38 @@ export const triggerPublicDownload = (path: string, filename: string): void => {
   document.body.removeChild(link);
 };
 /**
- * Master collection: original 150 GPT instructions + 1,835 additional
- * operational instructions (2,100+ files), split into 4 parts so every file
- * is served directly from the site's own code.
+ * Master library, stored inside the site's own code (public/downloads),
+ * split alphabetically so every file stays under the hosting size limit.
+ * 2,969 unique operational instructions + 267 development app plans.
+ * Only byte-for-byte identical copies were removed; every variation is kept.
  */
-export const OPERATIONAL_INSTRUCTIONS_PARTS: ReadonlyArray<{ path: string; name: string }> = [
-  { path: "/downloads/AIWebTools-Operational-Instructions-Part-1.zip", name: "AIWebTools-Operational-Instructions-Part-1.zip" },
-  { path: "/downloads/AIWebTools-Operational-Instructions-Part-2.zip", name: "AIWebTools-Operational-Instructions-Part-2.zip" },
-  { path: "/downloads/AIWebTools-Operational-Instructions-Part-3.zip", name: "AIWebTools-Operational-Instructions-Part-3.zip" },
-  { path: "/downloads/AIWebTools-Operational-Instructions-Part-4.zip", name: "AIWebTools-Operational-Instructions-Part-4.zip" },
-];
+const OI = "/downloads/operational-instructions/";
+export const OPERATIONAL_INSTRUCTIONS_PARTS: ReadonlyArray<{ path: string; name: string; label: string; count: number }> = [
+  { label: "0–9 to Co", count: 658, name: "AIWebTools-Operational-Instructions-0-9-to-Co.zip" },
+  { label: "Co to Go", count: 541, name: "AIWebTools-Operational-Instructions-Co-to-Go.zip" },
+  { label: "Go to Gp", count: 27, name: "AIWebTools-Operational-Instructions-Go-to-Gp.zip" },
+  { label: "Gp to Hi", count: 76, name: "AIWebTools-Operational-Instructions-Gp-to-Hi.zip" },
+  { label: "Hi to In", count: 149, name: "AIWebTools-Operational-Instructions-Hi-to-In.zip" },
+  { label: "In to Pe", count: 614, name: "AIWebTools-Operational-Instructions-In-to-Pe.zip" },
+  { label: "Pe to St", count: 451, name: "AIWebTools-Operational-Instructions-Pe-to-St.zip" },
+  { label: "St to Ti", count: 233, name: "AIWebTools-Operational-Instructions-St-to-Ti.zip" },
+  { label: "Ti to Z", count: 220, name: "AIWebTools-Operational-Instructions-Ti-to-Z.zip" },
+  { label: "Development App Plans", count: 267, name: "AIWebTools-Development-App-Plans.zip" },
+].map((p) => ({ ...p, path: OI + p.name }));
 
-/** Downloads all 4 parts of the full operational-instructions collection. */
+/** Always-fresh open-source code copy, rebuilt on every publish. */
+export const SOURCE_CODE_DOWNLOAD = { path: "/downloads/AIWebTools-Source-Code.zip", name: "AIWebTools-Source-Code.zip" };
+
+export const OPEN_DOWNLOAD_CENTER_EVENT = "awt:open-download-center";
+
+/** Opens the Download Center popup listing every archive + source code. */
 export const downloadAllOperationalInstructions = (): void => {
-  OPERATIONAL_INSTRUCTIONS_PARTS.forEach((part, index) => {
-    // Stagger slightly so browsers don't suppress the follow-up downloads.
-    window.setTimeout(() => triggerPublicDownload(part.path, part.name), index * 400);
+  window.dispatchEvent(new Event(OPEN_DOWNLOAD_CENTER_EVENT));
+};
+
+/** Downloads every archive one after another (plus the source code). */
+export const downloadEverything = (): void => {
+  [...OPERATIONAL_INSTRUCTIONS_PARTS, SOURCE_CODE_DOWNLOAD].forEach((part, index) => {
+    window.setTimeout(() => triggerPublicDownload(part.path, part.name), index * 700);
   });
 };
