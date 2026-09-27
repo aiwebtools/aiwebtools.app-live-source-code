@@ -140,8 +140,8 @@ Best regards,
             <span className="relative z-10 flex items-center justify-center gap-2 sm:gap-3 leading-tight flex-wrap">
               <Gift className="w-5 h-5 sm:w-6 sm:h-6 animate-bounce" />
               <span className="text-center">
-                <span className="hidden sm:inline">🎁 FREE PROMPT GIFT: DOWNLOAD 1,900+ OPERATIONAL INSTRUCTIONS</span>
-                <span className="sm:hidden">🎁 FREE: 1,900+ GPT INSTRUCTIONS</span>
+                <span className="hidden sm:inline">🎁 FREE PROMPT GIFT: DOWNLOAD 3,200+ OPERATIONAL INSTRUCTIONS</span>
+                <span className="sm:hidden">🎁 FREE: 3,200+ GPT INSTRUCTIONS</span>
               </span>
               <Download className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse" />
             </span>
