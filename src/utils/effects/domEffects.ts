@@ -308,9 +308,12 @@ const tryAnchorClick = (url: string): boolean => {
 
 const tryWindowOpen = (url: string): boolean => {
   try {
-    const win = window.open(url, '_blank', 'noopener');
-    // Popup blocker -> null/undefined
-    return !!win;
+    // Don't pass 'noopener' as a feature: per spec that makes window.open
+    // return null even on success, which triggered the same-tab fallback.
+    const win = window.open(url, '_blank');
+    if (!win) return false; // popup blocked
+    try { win.opener = null; } catch { /* cross-origin safe */ }
+    return true;
   } catch {
     return false;
   }
