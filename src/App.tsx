@@ -24,6 +24,7 @@ import { lazyWithRetry } from "@/utils/lazyWithRetry";
 import disclaimerWelcomeAudio from "@/assets/audio/disclaimer-welcome-2026.mp3.asset.json";
 import ConfirmSubscriptionHandler from "@/components/ConfirmSubscriptionHandler";
 import DownloadCenterDialog from "@/components/DownloadCenterDialog";
+import { GlobalEmailSignupHost } from "@/components/JoinEmailListButton";
 
 // Eager load only the disclaimer gate; lazy-load heavy app routes to avoid black-screen startup
 import DisclaimerGate from "./pages/DisclaimerGate";
@@ -663,6 +664,7 @@ function App() {
                   <GlobalOverlays />
                   <ConfirmSubscriptionHandler />
                   <DownloadCenterDialog />
+                  <GlobalEmailSignupHost />
                 </BrowserRouter>
               </TooltipProvider>
             </VideoManagerProvider>

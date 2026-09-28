@@ -1104,10 +1104,8 @@ const PinnedVideoPlayer = memo(() => {
 
   const handleToolClick = useCallback(() => {
     if (isMusicMode) {
-      // Open the Music Video Maker AI Studio tool in a new tab
-      try {
-        window.open(MUSIC_VIDEO_TOOL_URL, '_blank', 'noopener,noreferrer');
-      } catch {}
+      // Music videos aren't tool demos — send visitors to browse every category
+      navigate('/main-category/ALL%20AI%20TOOLS');
       return;
     }
     if (!currentTool) return;
@@ -1424,12 +1422,13 @@ const PinnedVideoPlayer = memo(() => {
             </button>
             <button
               onClick={handleToolClick}
+              title={isMusicMode ? 'Browse all AI tool categories' : (currentTool ? `Open ${currentTool.title}` : 'Open tool')}
               className="col-span-2 h-7 w-full text-[12px] tracking-wider rounded bg-gradient-to-r from-amber-500 via-yellow-300 to-amber-500 hover:from-amber-400 hover:via-yellow-200 hover:to-amber-400 text-black font-extrabold active:scale-95 bg-[length:200%_100%]"
               style={{
                 boxShadow: '0 0 12px rgba(255, 215, 0, 0.8), 0 0 24px rgba(255, 215, 0, 0.5), 0 0 36px rgba(255, 215, 0, 0.3)'
               }}
             >
-              ▶ TRY NOW
+              {isMusicMode ? '▦ VIEW ALL TOOLS' : `▶ TRY ${currentTool ? 'THIS TOOL' : 'NOW'}`}
             </button>
           </div>
         </div>

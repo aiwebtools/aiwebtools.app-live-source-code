@@ -308,9 +308,12 @@ const tryAnchorClick = (url: string): boolean => {
 
 const tryWindowOpen = (url: string): boolean => {
   try {
-    const win = window.open(url, '_blank', 'noopener');
-    // Popup blocker -> null/undefined
-    return !!win;
+    // Don't pass 'noopener' as a feature: per spec that makes window.open
+    // return null even on success, which triggered the same-tab fallback.
+    const win = window.open(url, '_blank');
+    if (!win) return false; // popup blocked
+    try { win.opener = null; } catch { /* cross-origin safe */ }
+    return true;
   } catch {
     return false;
   }
@@ -386,6 +389,14 @@ export const openDestinationUrl = (destinationUrl: string): void => {
   // (which some browsers permit even when popups are blocked). Only if
   // BOTH fail do we navigate same-tab.
   const winOk = tryWindowOpen(url);
+  if (winOk) {
+    // A real window handle came back — the new tab is open. Never also
+    // navigate this tab (that made visitors lose their place on the site).
+    markResolved();
+    window.removeEventListener('blur', onBlurOrHidden);
+    document.removeEventListener('visibilitychange', onVisChange);
+    return;
+  }
   if (!winOk) {
     const anchorOk = tryAnchorClick(url);
     if (!anchorOk) {
