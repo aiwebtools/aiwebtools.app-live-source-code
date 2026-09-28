@@ -386,6 +386,14 @@ export const openDestinationUrl = (destinationUrl: string): void => {
   // (which some browsers permit even when popups are blocked). Only if
   // BOTH fail do we navigate same-tab.
   const winOk = tryWindowOpen(url);
+  if (winOk) {
+    // A real window handle came back — the new tab is open. Never also
+    // navigate this tab (that made visitors lose their place on the site).
+    markResolved();
+    window.removeEventListener('blur', onBlurOrHidden);
+    document.removeEventListener('visibilitychange', onVisChange);
+    return;
+  }
   if (!winOk) {
     const anchorOk = tryAnchorClick(url);
     if (!anchorOk) {
