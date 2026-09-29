@@ -1,6 +1,7 @@
 
 import FooterWeb3Domains from "./FooterWeb3Domains";
 import { createTimePortalEffect } from "@/utils/timeEffects";
+import DownloadLibraryButton from "@/components/DownloadLibraryButton";
 
 const FooterLinks = () => {
   const handleExternalLink = (url: string, e: React.MouseEvent) => {
@@ -15,6 +16,11 @@ const FooterLinks = () => {
       <h3 className="text-lg font-semibold mb-6 text-green-400" style={{ textShadow: '0 0 10px rgba(0, 255, 0, 0.4)' }}>Quick Links</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-3">
+          <DownloadLibraryButton
+            compact
+            label="Free Operational Instructions"
+            className="justify-start"
+          />
           <a
             href="/our-story"
             className="block text-green-200 hover:text-green-400 transition-colors text-left"

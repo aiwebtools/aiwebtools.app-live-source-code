@@ -5,6 +5,7 @@ import { ArrowLeft, SkipForward, SkipBack, Volume2, VolumeX, Home, Search, X } f
 import { buildMusicVideoOrder, MUSIC_VIDEO_GALLERY } from "@/components/PinnedVideoPlayer";
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import GlobalSearchBar from "@/components/LazyGlobalSearchBar";
+import DownloadLibraryButton from "@/components/DownloadLibraryButton";
 
 const shuffle = <T,>(a: T[]): T[] => {
   const s = [...a];
@@ -381,6 +382,11 @@ const MusicStream = () => {
         >
           <SkipForward className="w-4 h-4" />
         </button>
+        <DownloadLibraryButton
+          compact
+          label="Free GPT Instructions"
+          className="hidden sm:inline-flex w-auto max-w-[240px]"
+        />
       </div>
     </div>
   );

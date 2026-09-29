@@ -25,6 +25,7 @@ import DeferredMount from "@/components/DeferredMount";
 import { useRecentlyVisitedTools } from "@/hooks/useRecentlyVisitedTools";
 import { playMtvFlash } from "@/utils/mtvFlash";
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
+import DownloadLibraryButton from "@/components/DownloadLibraryButton";
 
 const DesktopMenu = () => {
   const navigate = useNavigate();
@@ -209,17 +210,12 @@ const DesktopMenu = () => {
               </div>
               
               {/* Compact Download Button */}
-              <button
-                onClick={handleDownloadGPTInstructions}
-                className="w-full relative group overflow-hidden bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black font-bold py-3 px-4 rounded-lg shadow-lg transition-all duration-200 border border-yellow-300 mb-4"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></div>
-                <span className="relative z-10 flex items-center justify-center gap-2 text-sm">
-                  <Gift className="w-4 h-4" />
-                  FREE: 3,200+ GPT Instructions
-                  <Download className="w-4 h-4" />
-                </span>
-              </button>
+              <DownloadLibraryButton
+                compact
+                label="Free 3,200+ GPT Instructions"
+                className="mb-4"
+                onBeforeOpen={closeMenu}
+              />
               
               <DropdownMenuSeparator className="border-gray-700 mb-4" />
                 
