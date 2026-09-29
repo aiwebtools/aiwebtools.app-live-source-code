@@ -20,6 +20,7 @@ import { createConfettiCelebration } from "@/utils/effects/audioEffects";
 import GlobalSearchBar from "@/components/LazyGlobalSearchBar";
 import Logo from "./Logo";
 import { useRecentlyVisitedTools } from "@/hooks/useRecentlyVisitedTools";
+import DownloadLibraryButton from "@/components/DownloadLibraryButton";
 
 const TabletMenu = () => {
   const navigate = useNavigate();
@@ -276,6 +277,13 @@ const TabletMenu = () => {
                 </DropdownMenuItem>
 
                 {/* Download ALL AI tools CSV - tablet only */}
+                <div className="py-1">
+                  <DownloadLibraryButton
+                    compact
+                    label="Free 3,200+ GPT Instructions"
+                    onBeforeOpen={() => setIsMenuOpen(false)}
+                  />
+                </div>
                 <DropdownMenuItem onClick={handleDownloadAllToolsCSV} className="text-cyan-100 hover:bg-cyan-500/20 rounded">
                   <Download className="w-4 h-4 mr-2" />
                   📊 Download ALL 5,500+ AI Tools (CSV)

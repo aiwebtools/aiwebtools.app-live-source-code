@@ -20,6 +20,7 @@ import { createConfettiCelebration } from "@/utils/effects/audioEffects";
 import Logo from "./Logo";
 import GlobalSearchBar, { prefetchGlobalSearchBar } from "@/components/LazyGlobalSearchBar";
 import JoinEmailListButton from "@/components/JoinEmailListButton";
+import DownloadLibraryButton from "@/components/DownloadLibraryButton";
 
 import { useRecentlyVisitedTools } from "@/hooks/useRecentlyVisitedTools";
 
@@ -489,6 +490,13 @@ const MobileMenu = () => {
                   <ChevronDown className={`w-3 h-3 ml-2 transition-transform ${isToolsOpen ? 'rotate-180' : ''}`} />
                 </CollapsibleTrigger>
                 <CollapsibleContent className="mt-1 space-y-1 pl-2">
+                  <div className="px-1 pb-1">
+                    <DownloadLibraryButton
+                      compact
+                      label="Free 3,200+ GPT Instructions"
+                      onBeforeOpen={closeMenu}
+                    />
+                  </div>
                   <DropdownMenuItem onClick={handleDownloadAllToolsCSV} className="text-cyan-100 hover:bg-cyan-500/20 mb-1 rounded text-sm">
                     <Download className="w-3 h-3 mr-2" />
                     📊 Download ALL 5,500+ AI Tools (CSV)

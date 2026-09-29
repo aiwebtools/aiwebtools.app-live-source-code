@@ -14,6 +14,7 @@ import { getStandardizedCategoryTitle } from "@/utils/categoryTitles";
 import { generateStructuredData } from "@/utils/seo";
 import { searchTools } from "@/utils/searchUtils";
 import { orderCategoryTools } from "@/utils/category/categoryOrdering";
+import DownloadLibraryButton from "@/components/DownloadLibraryButton";
 
 const CategoryPage = () => {
   const { categoryName } = useParams();
@@ -140,6 +141,9 @@ const CategoryPage = () => {
             isLoading={isLoading}
             isFilterSearch={!!filterSearchTerm} // Pass filter search flag
           />
+          <div className="container mx-auto flex justify-center px-4 py-10">
+            <DownloadLibraryButton />
+          </div>
         </div>
         
         <ScrollToTopButton />

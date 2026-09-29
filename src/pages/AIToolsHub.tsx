@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import DownloadLibraryButton from '@/components/DownloadLibraryButton';
 
 const AIToolsHub = () => {
   return (
@@ -73,13 +74,14 @@ const AIToolsHub = () => {
             </div>
           </div>
 
-          <div className="text-center">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
             <Link 
               to="/" 
               className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-xl"
             >
               🏠 Back to Main Directory
             </Link>
+            <DownloadLibraryButton />
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import DownloadLibraryButton from '@/components/DownloadLibraryButton';
 
 const AIAgentsDirectory = () => {
   return (
@@ -65,7 +66,7 @@ const AIAgentsDirectory = () => {
             </div>
           </div>
 
-          <div className="text-center">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
             <Link 
               to="/main-category/AI%20AGENTS" 
               className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-500 to-cyan-600 hover:from-purple-600 hover:to-cyan-700 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-xl mr-4"
@@ -78,6 +79,7 @@ const AIAgentsDirectory = () => {
             >
               🏠 Back to Home
             </Link>
+            <DownloadLibraryButton />
           </div>
         </div>
       </div>
