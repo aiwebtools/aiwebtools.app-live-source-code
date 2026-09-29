@@ -34,3 +34,14 @@
 - [x] Fix layering so the rain is actually visible (backdrop z-0, content z-10)
 - [x] Care Bot voice playback + refreshed knowledge deployed
 - [x] Verified live on aiwebtools.app (phone + desktop), published
+
+# Download access and finish pass (Sep 29)
+
+- [ ] Add a reusable operational-instructions download button across back pages
+- [ ] Add download access near the bottom of every category page and MTVai
+- [ ] Add download access to phone, tablet, and desktop menus plus footer links
+- [ ] Preserve the existing per-tool PDF and download-center behavior
+- [ ] Verify the Matrix loader, menu links, pinned-player destinations, and downloads on phone and desktop
+- [ ] Confirm Register Web3 search and featured-card navigation/homepage placement
+- [ ] Remove the obsolete hosted operational-instructions pointer
+- [ ] Publish and verify the public download archives and fresh source-code ZIP
