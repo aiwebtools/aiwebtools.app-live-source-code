@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Maximize2, ImageIcon, SendHorizontal, Volume2, VolumeX } from "lucide-react";
+import { Maximize2, ImageIcon, Play, SendHorizontal, Square, Volume2, VolumeX } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Conversation, ConversationContent, ConversationScrollButton } from "@/components/ai-elements/conversation";
 import MatrixRainBackdrop from "@/components/effects/MatrixRainBackdrop";
@@ -296,6 +296,18 @@ const InSiteGptRunner = ({ tool }: { tool: Tool }) => {
                       <>
                         {text && <MessageResponse className="gpt-generated-content">{text}</MessageResponse>}
                         {working && <ImageProgress />}
+                        {text && !working && (
+                          <button
+                            type="button"
+                            onClick={() => speech.speakNow(text)}
+                            className="gpt-room-chip mt-2 inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] font-semibold"
+                            aria-label={speech.speaking ? `Stop ${voiceProfile.label}` : `Play with ${voiceProfile.label}`}
+                            title={speech.speaking ? "Stop reading" : `Play with ${voiceProfile.label}`}
+                          >
+                            {speech.speaking ? <Square className="h-3 w-3" /> : <Play className="h-3 w-3" />}
+                            {speech.speaking ? "Stop" : "Play voice"}
+                          </button>
+                        )}
                       </>
                     );
                   })()

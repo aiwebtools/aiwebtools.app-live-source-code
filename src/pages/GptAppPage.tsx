@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Loader2, ArrowLeft, Star, ImageIcon, Repeat, SendHorizontal, Volume2, VolumeX } from "lucide-react";
+import { Loader2, ArrowLeft, Star, ImageIcon, Play, Repeat, SendHorizontal, Square, Volume2, VolumeX } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Message, MessageContent, MessageResponse } from "@/components/ai-elements/message";
@@ -444,6 +444,18 @@ const GptAppPage = () => {
                     <>
                       {text && <MessageResponse className="gpt-generated-content">{text}</MessageResponse>}
                       {working && <ImageProgress />}
+                      {text && !working && (
+                        <button
+                          type="button"
+                          onClick={() => speech.speakNow(text)}
+                          className="gpt-room-chip mt-2 inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] font-semibold"
+                          aria-label={speech.speaking ? `Stop ${voiceProfile.label}` : `Play with ${voiceProfile.label}`}
+                          title={speech.speaking ? "Stop reading" : `Play with ${voiceProfile.label}`}
+                        >
+                          {speech.speaking ? <Square className="h-3 w-3" /> : <Play className="h-3 w-3" />}
+                          {speech.speaking ? "Stop" : "Play voice"}
+                        </button>
+                      )}
                     </>
                   );
                 })()
