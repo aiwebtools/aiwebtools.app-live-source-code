@@ -776,6 +776,7 @@
         var matrixCtx = matrixCanvas.getContext('2d');
         var cubeCtx = cubeCanvas.getContext('2d');
         var burstCtx = burstCanvas.getContext('2d');
+        if (!matrixCtx || !cubeCtx || !burstCtx) { overlay.classList.add("aiwt-no-canvas"); }
         var terminalLines = document.getElementById('aiwt-terminal-lines');
         var cursor = document.getElementById('aiwt-cursor');
         var progressLabel = document.getElementById('aiwt-progress-label');
