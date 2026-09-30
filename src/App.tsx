@@ -608,7 +608,7 @@ const GlobalOverlays: React.FC = () => {
       {/* Welcome Neo voice - only plays after disclaimer accepted */}
       <WelcomeNeoVoice />
       {/* Tiny floating clone button - hides on scroll */}
-      {overlaysReady ? (
+      {overlaysReady && !isTouchPhone ? (
         <ErrorBoundary fallback={null}>
           <Suspense fallback={null}>
             <FloatingCloneButton />
