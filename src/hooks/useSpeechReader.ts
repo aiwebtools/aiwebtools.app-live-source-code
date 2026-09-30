@@ -89,6 +89,9 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     (fullText: string) => {
       if (!supported || !enabled) return;
       bufferRef.current = fullText;
+      // Studio profiles are generated once the full answer arrives. This avoids
+      // overlapping browser speech and preserves one consistent character voice.
+      if (profile) return;
       const pending = fullText.slice(spokenRef.current);
       const lastBreak = Math.max(
         pending.lastIndexOf(". "),
@@ -101,7 +104,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       spokenRef.current += ready.length;
       speakChunk(ready);
     },
-    [enabled, speakChunk, supported],
+    [enabled, profile, speakChunk, supported],
   );
 
   /** Speak whatever is left once the reply has finished streaming. */
@@ -116,16 +119,26 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
 
   /** Start a fresh reply. */
   const reset = useCallback(() => {
+    requestRef.current?.abort();
+    audioRef.current?.pause();
+    audioRef.current = null;
     spokenRef.current = 0;
     bufferRef.current = "";
     if (supported) window.speechSynthesis.cancel();
+    setSpeaking(false);
   }, [supported]);
 
   const toggle = useCallback(() => {
     setEnabled((was) => {
       const next = !was;
       localStorage.setItem(STORAGE_KEY, next ? "on" : "off");
-      if (!next && supported) window.speechSynthesis.cancel();
+      if (!next) {
+        requestRef.current?.abort();
+        audioRef.current?.pause();
+        audioRef.current = null;
+        setSpeaking(false);
+        if (supported) window.speechSynthesis.cancel();
+      }
       return next;
     });
   }, [supported]);
@@ -137,7 +150,10 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const speakNow = useCallback(
     (text: string) => {
       if (!supported) return;
-      if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+      if (speaking || window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+        requestRef.current?.abort();
+        audioRef.current?.pause();
+        audioRef.current = null;
         window.speechSynthesis.cancel();
         setSpeaking(false);
         return;
@@ -156,7 +172,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       setSpeaking(true);
       window.speechSynthesis.speak(utterance);
     },
-    [profile, speakStudio, supported],
+    [profile, speakStudio, speaking, supported],
   );
 
   useEffect(() => () => {

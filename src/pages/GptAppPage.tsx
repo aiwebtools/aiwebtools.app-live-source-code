@@ -44,10 +44,10 @@ const GptAppPage = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { session, user, loading: sessionLoading } = useAuthSession();
-  const voiceProfile = useMemo(() => getGptVoiceProfile(slug, app?.display_name), [app?.display_name, slug]);
-  const speech = useSpeechReader(voiceProfile);
 
   const [app, setApp] = useState<GptApp | null>(null);
+  const voiceProfile = useMemo(() => getGptVoiceProfile(slug, app?.display_name), [app?.display_name, slug]);
+  const speech = useSpeechReader(voiceProfile);
   const [loadingApp, setLoadingApp] = useState(true);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");

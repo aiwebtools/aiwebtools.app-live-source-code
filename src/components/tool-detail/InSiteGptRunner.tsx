@@ -47,9 +47,9 @@ const FUNCTIONS_URL = "https://huupailptzvcykyqdkar.supabase.co/functions/v1/run
  */
 const InSiteGptRunner = ({ tool }: { tool: Tool }) => {
   const { session } = useAuthSession();
+  const [app, setApp] = useState<GptApp | null>(null);
   const voiceProfile = useMemo(() => getGptVoiceProfile(app?.slug, app?.display_name, tool?.category), [app?.display_name, app?.slug, tool?.category]);
   const speech = useSpeechReader(voiceProfile);
-  const [app, setApp] = useState<GptApp | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
