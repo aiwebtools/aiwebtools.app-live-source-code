@@ -22,6 +22,7 @@ import { getGptRoomTheme, getRoomMotto } from "./gptRoomThemes";
 import { getGptAvatar } from "./gptAvatars";
 import { getToolImage, loadToolImageMap } from "@/utils/search/toolImageMap";
 import OpInstructionsButton from "./OpInstructionsButton";
+import { getGptVoiceProfile } from "@/utils/gptVoiceProfiles";
 
 interface GptApp {
   slug: string;
@@ -46,7 +47,8 @@ const FUNCTIONS_URL = "https://huupailptzvcykyqdkar.supabase.co/functions/v1/run
  */
 const InSiteGptRunner = ({ tool }: { tool: Tool }) => {
   const { session } = useAuthSession();
-  const speech = useSpeechReader();
+  const voiceProfile = useMemo(() => getGptVoiceProfile(app?.slug, app?.display_name, tool?.category), [app?.display_name, app?.slug, tool?.category]);
+  const speech = useSpeechReader(voiceProfile);
   const [app, setApp] = useState<GptApp | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -231,7 +233,7 @@ const InSiteGptRunner = ({ tool }: { tool: Tool }) => {
         <div className="mt-2.5 flex items-center gap-2">
           <OpInstructionsButton slug={app.slug} name={app.display_name} compact className="text-[10px]" />
           <span className="gpt-room-accent hidden text-[10px] font-semibold uppercase tracking-[0.18em] sm:inline">
-            {speech.enabled ? "Voice on" : "Voice off"}
+              {speech.enabled ? voiceProfile.label : "Voice off"}
           </span>
         </div>
       </div>

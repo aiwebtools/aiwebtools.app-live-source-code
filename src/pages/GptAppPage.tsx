@@ -20,6 +20,7 @@ import { loadToolImageMap } from "@/utils/search/toolImageMap";
 import { getGuestId } from "@/utils/guestId";
 import OpInstructionsButton from "@/components/tool-detail/OpInstructionsButton";
 import MatrixRainBackdrop from "@/components/effects/MatrixRainBackdrop";
+import { getGptVoiceProfile } from "@/utils/gptVoiceProfiles";
 
 interface GptApp {
   slug: string;
@@ -43,7 +44,8 @@ const GptAppPage = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { session, user, loading: sessionLoading } = useAuthSession();
-  const speech = useSpeechReader();
+  const voiceProfile = useMemo(() => getGptVoiceProfile(slug, app?.display_name), [app?.display_name, slug]);
+  const speech = useSpeechReader(voiceProfile);
 
   const [app, setApp] = useState<GptApp | null>(null);
   const [loadingApp, setLoadingApp] = useState(true);
@@ -323,8 +325,8 @@ const GptAppPage = () => {
                 onClick={speech.toggle}
                 aria-pressed={speech.enabled}
                 className="gpt-room-icon-btn"
-                title={speech.enabled ? "Mute the voice" : "Read replies out loud"}
-                aria-label={speech.enabled ? "Mute the voice" : "Read replies out loud"}
+                title={speech.enabled ? `${voiceProfile.label} — tap to mute` : `Enable ${voiceProfile.label}`}
+                aria-label={speech.enabled ? `Mute ${voiceProfile.label}` : `Enable ${voiceProfile.label}`}
               >
                 {speech.enabled ? <Volume2 className="h-4 w-4" aria-hidden="true" /> : <VolumeX className="h-4 w-4" aria-hidden="true" />}
               </button>

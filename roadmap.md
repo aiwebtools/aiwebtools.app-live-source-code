@@ -45,3 +45,11 @@
 - [ ] Confirm Register Web3 search and featured-card navigation/homepage placement
 - [ ] Remove the obsolete hosted operational-instructions pointer
 - [ ] Publish and verify the public download archives and fresh source-code ZIP
+
+# Character voice finish pass (Sep 30)
+
+- [x] Add deterministic subject-specific voice profiles for every hosted chatbot
+- [x] Add special era, accent, pacing, and temperament profiles for signature characters
+- [x] Use safe character-inspired delivery rather than cloning a real person's voice
+- [ ] Verify generated playback in representative chatbot rooms
+- [ ] Publish the completed voice upgrade
