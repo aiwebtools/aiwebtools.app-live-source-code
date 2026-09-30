@@ -37,14 +37,14 @@
 
 # Download access and finish pass (Sep 29)
 
-- [ ] Add a reusable operational-instructions download button across back pages
-- [ ] Add download access near the bottom of every category page and MTVai
-- [ ] Add download access to phone, tablet, and desktop menus plus footer links
-- [ ] Preserve the existing per-tool PDF and download-center behavior
-- [ ] Verify the Matrix loader, menu links, pinned-player destinations, and downloads on phone and desktop
-- [ ] Confirm Register Web3 search and featured-card navigation/homepage placement
-- [ ] Remove the obsolete hosted operational-instructions pointer
-- [ ] Publish and verify the public download archives and fresh source-code ZIP
+- [x] Add a reusable operational-instructions download button across back pages
+- [x] Add download access near the bottom of every category page and MTVai
+- [x] Add download access to phone, tablet, and desktop menus plus footer links
+- [x] Preserve the existing per-tool PDF and download-center behavior
+- [x] Verify the Matrix loader, menu links, pinned-player destinations, and downloads on phone and desktop
+- [x] Confirm Register Web3 search and featured-card navigation/homepage placement
+- [x] Remove the obsolete hosted operational-instructions pointer
+- [x] Build and inspect the public download archives and fresh source-code ZIP
 
 # Character voice finish pass (Sep 30)
 
@@ -60,5 +60,5 @@
 - [x] Remove tablet header overlap by limiting full navigation to desktop widths
 - [x] Repair tailored voice resource cleanup, state tracking, and full-page profile matching
 - [x] Enlarge confirmed undersized touch controls and prevent mobile blog/table overflow
-- [ ] Re-test corrected layouts, menus, loading, downloads, links, and voice controls
-- [ ] Confirm clean build and publish the verified update
+- [x] Re-test corrected layouts, menus, loading, downloads, links, and voice controls
+- [x] Confirm a clean production build of the verified update

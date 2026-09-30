@@ -16,7 +16,6 @@ import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/component
 import { useFavorites } from "@/hooks/useFavorites";
 import { createTimePortalEffect } from "@/utils/timeEffects";
 import { createConfettiCelebration } from "@/utils/effects/audioEffects";
-import { openDestinationUrl } from "@/utils/effects/domEffects";
 import { web3DomainsTools } from "@/data/tools/web3DomainsTools";
 import { triggerPublicDownload } from "@/utils/downloads";
 import Logo from "./Logo";
