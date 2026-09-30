@@ -52,4 +52,4 @@
 - [x] Add special era, accent, pacing, and temperament profiles for signature characters
 - [x] Use safe character-inspired delivery rather than cloning a real person's voice
 - [x] Verify Einstein's tailored control in-browser and generate a valid 88 KB MP3 sample
-- [ ] Publish the completed voice upgrade
+- [x] Publish the completed voice upgrade
