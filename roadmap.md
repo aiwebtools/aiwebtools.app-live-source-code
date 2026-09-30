@@ -67,4 +67,4 @@
 
 - [x] Add a visible phone-header download icon
 - [x] Put CSV, operational instructions, and source-code downloads above the fold in the phone menu
-- [ ] Verify both phone download actions and the compact header layout
+- [x] Verify both phone download actions and the compact header layout
