@@ -65,10 +65,10 @@ const Header = () => {
             >
               <Github className="h-4 w-4" />
             </a>
-            {viewportMenu !== "mobile" && (
+            {viewportMenu === "desktop" && (
               <JoinEmailListButton source="header" variant="compact" className="hidden md:inline-flex" />
             )}
-            {viewportMenu !== "mobile" && <Navigation />}
+            {viewportMenu === "desktop" && <Navigation />}
             {viewportMenu === "mobile" && <MobileMenu />}
             {viewportMenu === "desktop" && <DesktopMenu />}
             {viewportMenu === "tablet" && <TabletMenu />}

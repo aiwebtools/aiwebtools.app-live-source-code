@@ -168,7 +168,7 @@ export default function BlogPostPage() {
                 [&>ul]:text-gray-300 [&>ul]:my-4 [&>ul]:ml-6 [&>ul>li]:mb-2
                 [&>ol]:text-gray-300 [&>ol]:my-4 [&>ol]:ml-6 [&>ol>li]:mb-2
                 [&>blockquote]:border-l-4 [&>blockquote]:border-cyan-500 [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-gray-400
-                [&>table]:w-full [&>table]:my-6 [&>table]:border-collapse
+                overflow-x-auto [&>table]:min-w-[36rem] [&>table]:w-full [&>table]:my-6 [&>table]:border-collapse
                 [&>table>thead>tr>th]:bg-slate-800 [&>table>thead>tr>th]:text-cyan-400 [&>table>thead>tr>th]:p-3 [&>table>thead>tr>th]:text-left [&>table>thead>tr>th]:border [&>table>thead>tr>th]:border-slate-700
                 [&>table>tbody>tr>td]:p-3 [&>table>tbody>tr>td]:border [&>table>tbody>tr>td]:border-slate-700 [&>table>tbody>tr>td]:text-gray-300
                 [&>table>tbody>tr:nth-child(even)]:bg-slate-900/50

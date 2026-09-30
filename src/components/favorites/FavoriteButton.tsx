@@ -25,15 +25,15 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
   };
 
   const sizeClasses = {
-    sm: 'w-5 h-5 p-1',
-    md: 'w-6 h-6 p-1',
-    lg: 'w-7 h-7 p-1.5'
+    sm: 'w-9 h-9 p-2',
+    md: 'w-10 h-10 p-2.5',
+    lg: 'w-11 h-11 p-3'
   };
 
   const iconSizes = {
-    sm: 10,
-    md: 12,
-    lg: 14
+    sm: 16,
+    md: 18,
+    lg: 20
   };
 
   return (

@@ -53,3 +53,12 @@
 - [x] Use safe character-inspired delivery rather than cloning a real person's voice
 - [x] Verify Einstein's tailored control in-browser and generate a valid 88 KB MP3 sample
 - [x] Publish the completed voice upgrade
+
+# Cross-device quality pass (Sep 30)
+
+- [x] Test homepage, tools, music, and chatbot rooms at phone, tablet, and desktop sizes
+- [x] Remove tablet header overlap by limiting full navigation to desktop widths
+- [x] Repair tailored voice resource cleanup, state tracking, and full-page profile matching
+- [x] Enlarge confirmed undersized touch controls and prevent mobile blog/table overflow
+- [ ] Re-test corrected layouts, menus, loading, downloads, links, and voice controls
+- [ ] Confirm clean build and publish the verified update
