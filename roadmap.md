@@ -62,3 +62,9 @@
 - [x] Enlarge confirmed undersized touch controls and prevent mobile blog/table overflow
 - [x] Re-test corrected layouts, menus, loading, downloads, links, and voice controls
 - [x] Confirm a clean production build of the verified update
+
+# Mobile header downloads (Sep 30)
+
+- [x] Add a visible phone-header download icon
+- [x] Put CSV, operational instructions, and source-code downloads above the fold in the phone menu
+- [ ] Verify both phone download actions and the compact header layout

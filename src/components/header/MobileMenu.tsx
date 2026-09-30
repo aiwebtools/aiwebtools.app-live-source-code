@@ -87,6 +87,13 @@ const MobileMenu = () => {
     go('/main-category/ALL%20AI%20TOOLS');
   }, [go]);
 
+  const openDownloads = useCallback(() => {
+    openedAtRef.current = Date.now();
+    prefetchGlobalSearchBar();
+    setIsToolsOpen(true);
+    setIsMenuOpen(true);
+  }, []);
+
   const closeMenu = useCallback(() => {
     openedAtRef.current = 0;
     setIsMenuOpen(false);
@@ -197,11 +204,22 @@ const MobileMenu = () => {
 
   return (
     <>
-      <div className="md:hidden">  {/* Show on mobile only */}
+      <div className="flex items-center gap-2 md:hidden">  {/* Show on mobile only */}
         {/* No custom backdrop: Radix handles outside dismissal. A manual overlay
             caught the delayed synthetic tap-click and closed the menu instantly. */}
 
-        
+        <Button
+          type="button"
+          variant="outline"
+          size="icon"
+          onClick={openDownloads}
+          className="h-11 w-11 shrink-0 border-primary/60 bg-background/90 text-primary shadow-lg"
+          aria-label="Open CSV and operational instructions downloads"
+          title="Downloads"
+        >
+          <Download className="h-5 w-5" aria-hidden="true" />
+        </Button>
+
         <DropdownMenu open={isMenuOpen} onOpenChange={handleMenuToggle} modal={false}>
           <DropdownMenuTrigger asChild>
             <Button 
@@ -281,6 +299,24 @@ const MobileMenu = () => {
               <div className="mb-4">
                 <div className="text-xs text-cyan-400 mb-2">🔍 Search AI Tools</div>
                 <GlobalSearchBar autoFocus />
+              </div>
+
+              {/* Downloads stay above the fold when opened from the header icon. */}
+              <div className="mb-4 grid gap-2 border-y border-primary/30 py-3">
+                <DownloadLibraryButton
+                  compact
+                  label="Download 3,200+ Instructions + Source Code"
+                  onBeforeOpen={closeMenu}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleDownloadAllToolsCSV}
+                  className="min-h-11 w-full justify-center gap-2 border-primary/50 bg-background text-xs font-bold text-primary"
+                >
+                  <Download className="h-4 w-4" aria-hidden="true" />
+                  Download All 5,500+ AI Tools (CSV)
+                </Button>
               </div>
 
               <>
