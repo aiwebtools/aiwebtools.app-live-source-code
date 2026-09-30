@@ -284,9 +284,9 @@ const SubmitToolModal = ({ open, onOpenChange }: Props) => {
                     <button
                       type="button"
                       onClick={() => { setImageFile(null); setImagePreview(null); }}
-                      className="absolute -top-2 -right-2 bg-black border border-red-400/60 rounded-full p-0.5 text-red-300"
+                      className="absolute -right-4 -top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-red-400/60 bg-black text-red-300"
                       aria-label="Remove image"
-                    ><X className="w-3 h-3" /></button>
+                    ><X className="h-4 w-4" /></button>
                   </div>
                 )}
               </div>

@@ -300,7 +300,7 @@ const InSiteGptRunner = ({ tool }: { tool: Tool }) => {
                           <button
                             type="button"
                             onClick={() => speech.speakNow(text)}
-                            className="gpt-room-chip mt-2 inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] font-semibold"
+                            className="gpt-room-chip mt-2 inline-flex min-h-9 items-center gap-1.5 rounded-md border px-3 py-2 text-xs font-semibold"
                             aria-label={speech.speaking ? `Stop ${voiceProfile.label}` : `Play with ${voiceProfile.label}`}
                             title={speech.speaking ? "Stop reading" : `Play with ${voiceProfile.label}`}
                           >

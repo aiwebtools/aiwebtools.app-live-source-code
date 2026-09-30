@@ -110,7 +110,7 @@ export default function BlogPage() {
           </div>
 
           {/* Stats Bar */}
-          <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto mb-12">
+          <div className="mx-auto mb-12 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
             <div className="text-center p-4 bg-slate-900/50 rounded-lg border border-cyan-500/20">
               <div className="text-2xl font-bold text-cyan-400">{blogPosts.length}+</div>
               <div className="text-xs text-gray-500">Articles</div>

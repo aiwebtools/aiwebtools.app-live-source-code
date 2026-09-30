@@ -26,7 +26,17 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const spokenRef = useRef(0);
   const bufferRef = useRef("");
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioUrlRef = useRef<string | null>(null);
   const requestRef = useRef<AbortController | null>(null);
+
+  const releaseStudioAudio = useCallback(() => {
+    audioRef.current?.pause();
+    audioRef.current = null;
+    if (audioUrlRef.current) {
+      URL.revokeObjectURL(audioUrlRef.current);
+      audioUrlRef.current = null;
+    }
+  }, []);
 
   useEffect(() => {
     if (!supported) return;
@@ -35,19 +45,18 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
 
   const stop = useCallback(() => {
     requestRef.current?.abort();
-    audioRef.current?.pause();
-    audioRef.current = null;
+    releaseStudioAudio();
     if (supported) window.speechSynthesis.cancel();
     spokenRef.current = 0;
     bufferRef.current = "";
     setSpeaking(false);
-  }, [supported]);
+  }, [releaseStudioAudio, supported]);
 
   const speakStudio = useCallback(async (text: string) => {
     const clean = stripForSpeech(text).slice(0, 4000);
     if (!clean || !profile || !ANON_KEY) return false;
     requestRef.current?.abort();
-    audioRef.current?.pause();
+    releaseStudioAudio();
     const controller = new AbortController();
     requestRef.current = controller;
     setSpeaking(true);
@@ -60,17 +69,18 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       });
       if (!response.ok) return false;
       const url = URL.createObjectURL(await response.blob());
+      audioUrlRef.current = url;
       const audio = new Audio(url);
       audioRef.current = audio;
-      audio.onended = () => { URL.revokeObjectURL(url); setSpeaking(false); };
-      audio.onerror = () => { URL.revokeObjectURL(url); setSpeaking(false); };
+      audio.onended = () => { releaseStudioAudio(); setSpeaking(false); };
+      audio.onerror = () => { releaseStudioAudio(); setSpeaking(false); };
       await audio.play();
       return true;
     } catch {
       setSpeaking(false);
       return false;
     }
-  }, [profile]);
+  }, [profile, releaseStudioAudio]);
 
   const speakChunk = useCallback(
     (chunk: string) => {
@@ -79,6 +89,11 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       const utterance = new SpeechSynthesisUtterance(clean);
       utterance.rate = 1.02;
       utterance.pitch = 1;
+      utterance.onstart = () => setSpeaking(true);
+      utterance.onend = () => {
+        window.setTimeout(() => setSpeaking(window.speechSynthesis.speaking || window.speechSynthesis.pending), 0);
+      };
+      utterance.onerror = () => setSpeaking(false);
       window.speechSynthesis.speak(utterance);
     },
     [],
@@ -120,13 +135,12 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   /** Start a fresh reply. */
   const reset = useCallback(() => {
     requestRef.current?.abort();
-    audioRef.current?.pause();
-    audioRef.current = null;
+    releaseStudioAudio();
     spokenRef.current = 0;
     bufferRef.current = "";
     if (supported) window.speechSynthesis.cancel();
     setSpeaking(false);
-  }, [supported]);
+  }, [releaseStudioAudio, supported]);
 
   const toggle = useCallback(() => {
     setEnabled((was) => {
@@ -134,14 +148,13 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       localStorage.setItem(STORAGE_KEY, next ? "on" : "off");
       if (!next) {
         requestRef.current?.abort();
-        audioRef.current?.pause();
-        audioRef.current = null;
+        releaseStudioAudio();
         setSpeaking(false);
         if (supported) window.speechSynthesis.cancel();
       }
       return next;
     });
-  }, [supported]);
+  }, [releaseStudioAudio, supported]);
 
   /**
    * Read one specific message out loud on demand (a play button), regardless of
@@ -152,8 +165,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       if (!supported) return;
       if (speaking || window.speechSynthesis.speaking || window.speechSynthesis.pending) {
         requestRef.current?.abort();
-        audioRef.current?.pause();
-        audioRef.current = null;
+        releaseStudioAudio();
         window.speechSynthesis.cancel();
         setSpeaking(false);
         return;
@@ -172,14 +184,14 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       setSpeaking(true);
       window.speechSynthesis.speak(utterance);
     },
-    [profile, speakStudio, speaking, supported],
+    [profile, releaseStudioAudio, speakStudio, speaking, supported],
   );
 
   useEffect(() => () => {
     requestRef.current?.abort();
-    audioRef.current?.pause();
+    releaseStudioAudio();
     if (supported) window.speechSynthesis.cancel();
-  }, [supported]);
+  }, [releaseStudioAudio, supported]);
 
   return { supported, enabled, toggle, feed, flush, reset, stop, speakNow, speaking };
 };

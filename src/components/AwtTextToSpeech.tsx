@@ -329,7 +329,7 @@ const AwtTextToSpeech: React.FC = () => {
                     onClick={() => void previewSample(v.id)}
                     disabled={previewing !== null}
                     aria-label={`Preview the ${name} voice`}
-                    className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11px] font-semibold transition disabled:opacity-50 ${
+                    className={`inline-flex min-h-10 items-center gap-1.5 rounded-full border px-3 py-2 text-xs font-semibold transition disabled:opacity-50 ${
                       active
                         ? "border-green-400 bg-green-500/15 text-green-200"
                         : "border-green-500/30 text-green-300/80 hover:bg-green-500/10"

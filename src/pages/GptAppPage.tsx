@@ -46,7 +46,10 @@ const GptAppPage = () => {
   const { session, user, loading: sessionLoading } = useAuthSession();
 
   const [app, setApp] = useState<GptApp | null>(null);
-  const voiceProfile = useMemo(() => getGptVoiceProfile(slug, app?.display_name), [app?.display_name, slug]);
+  const voiceProfile = useMemo(
+    () => getGptVoiceProfile(slug, app?.display_name, `${app?.tool_title ?? ""} ${app?.tagline ?? ""}`),
+    [app?.display_name, app?.tagline, app?.tool_title, slug],
+  );
   const speech = useSpeechReader(voiceProfile);
   const [loadingApp, setLoadingApp] = useState(true);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -302,7 +305,7 @@ const GptAppPage = () => {
         style={{ borderColor: "hsl(var(--bot-accent) / 0.35)" }}
       >
         <div className="mx-auto flex max-w-3xl items-center gap-3 px-4 py-3">
-          <Button variant="ghost" size="icon" onClick={() => navigate(-1)} aria-label="Go back">
+          <Button variant="ghost" size="icon" className="shrink-0" onClick={() => navigate(-1)} aria-label="Go back">
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <img src={avatar} alt={`${app.display_name} AI assistant avatar`} className="gpt-room-avatar h-10 w-10 shrink-0 rounded-full" onError={(event) => { event.currentTarget.src = getGptAvatar(theme.key); }} />
@@ -324,7 +327,7 @@ const GptAppPage = () => {
                 type="button"
                 onClick={speech.toggle}
                 aria-pressed={speech.enabled}
-                className="gpt-room-icon-btn"
+                className="gpt-room-icon-btn shrink-0"
                 title={speech.enabled ? `${voiceProfile.label} — tap to mute` : `Enable ${voiceProfile.label}`}
                 aria-label={speech.enabled ? `Mute ${voiceProfile.label}` : `Enable ${voiceProfile.label}`}
               >
@@ -334,6 +337,7 @@ const GptAppPage = () => {
             <Button
               variant="ghost"
               size="icon"
+              className="shrink-0"
               onClick={toggleFavorite}
               aria-label={favorite ? "Remove from saved bots" : "Save this bot"}
               title={favorite ? "Saved" : "Save this bot"}
@@ -343,6 +347,7 @@ const GptAppPage = () => {
             <Button
               variant="ghost"
               size="icon"
+              className="shrink-0"
               onClick={() => setSwitcherOpen((v) => !v)}
               aria-label="Switch to another in-site tool"
               title="Switch tool"
@@ -448,7 +453,7 @@ const GptAppPage = () => {
                         <button
                           type="button"
                           onClick={() => speech.speakNow(text)}
-                          className="gpt-room-chip mt-2 inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] font-semibold"
+                          className="gpt-room-chip mt-2 inline-flex min-h-9 items-center gap-1.5 rounded-md border px-3 py-2 text-xs font-semibold"
                           aria-label={speech.speaking ? `Stop ${voiceProfile.label}` : `Play with ${voiceProfile.label}`}
                           title={speech.speaking ? "Stop reading" : `Play with ${voiceProfile.label}`}
                         >
