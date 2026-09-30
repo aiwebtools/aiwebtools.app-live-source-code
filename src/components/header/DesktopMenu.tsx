@@ -1,4 +1,4 @@
-import { downloadAllOperationalInstructions } from "@/utils/downloads";
+import { downloadAllOperationalInstructions, SOURCE_CODE_DOWNLOAD } from "@/utils/downloads";
 import { Menu, Phone, Search, X, FileText, Globe, ChevronDown, Download, Trees, Clapperboard, Heart, Copy, Gift, Clock, Github } from "lucide-react";
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
@@ -387,17 +387,7 @@ const DesktopMenu = () => {
                       onClick={(e) => {
                         e.preventDefault();
                         createConfettiCelebration();
-                        const codeInfo = `# AI Web Tools - Source Code Download Info\n\nVisit: https://lovable.dev/projects/c6134e40-21cf-4136-aebd-49c9868dd2ad?utm_source=lovable-badge`;
-                        const blob = new Blob([codeInfo], { type: 'text/plain' });
-                        const url = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = 'AIWebTools-Source-Code-Instructions.txt';
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                        URL.revokeObjectURL(url);
-                        setTimeout(() => openDestinationUrl("https://lovable.dev/projects/c6134e40-21cf-4136-aebd-49c9868dd2ad?utm_source=lovable-badge"), 300);
+                        triggerPublicDownload(SOURCE_CODE_DOWNLOAD.path, SOURCE_CODE_DOWNLOAD.name);
                         setIsMenuOpen(false);
                       }}
                       className="text-green-100 hover:bg-green-500/20 rounded text-sm px-2 py-1.5 bg-green-600/10 border border-green-500/30"
