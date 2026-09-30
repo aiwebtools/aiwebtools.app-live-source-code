@@ -262,7 +262,6 @@ export const MUSIC_VIDEO_GALLERY: Array<{ id: string; title: string }> = [
   { id: "uPioA-r3Wyw", title: "Truth. Light. Now. abracadabra aiwebtools.ai" },
 ];
 
-const MUSIC_VIDEO_TOOL_URL = "https://musicvideomakergpt.lovable.app/?via=aiwebtools";
 
 // Keep slug behavior consistent across the app
 const slugifyToolTitle = (title: string): string =>
