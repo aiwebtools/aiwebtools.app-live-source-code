@@ -431,7 +431,7 @@
            const IS_TOUCH = ('ontouchstart' in window) || (navigator.maxTouchPoints || 0) > 0;
            // Keep the cinematic entry, but never leave an invisible full-screen
            // hit target over an already-interactive directory.
-           const MIN_BOOT_MS = IS_TOUCH ? 350 : 250;
+           const MIN_BOOT_MS = IS_TOUCH ? 1400 : 1200;
            const MAX_BOOT_MS = 5000;
            const FINISH_DELAY_MS = 100;
 
@@ -776,6 +776,7 @@
         var matrixCtx = matrixCanvas.getContext('2d');
         var cubeCtx = cubeCanvas.getContext('2d');
         var burstCtx = burstCanvas.getContext('2d');
+        if (!matrixCtx || !cubeCtx || !burstCtx) { overlay.classList.add("aiwt-no-canvas"); }
         var terminalLines = document.getElementById('aiwt-terminal-lines');
         var cursor = document.getElementById('aiwt-cursor');
         var progressLabel = document.getElementById('aiwt-progress-label');
