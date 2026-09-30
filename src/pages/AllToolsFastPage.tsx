@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import DownloadLibraryButton from "@/components/DownloadLibraryButton";
 import SEOHead from "@/components/SEOHead";
 import ToolsGridSkeleton from "@/components/tools/ToolsGridSkeleton";
 import MinimalToolCard from "@/components/MinimalToolCard";
@@ -127,6 +128,9 @@ const AllToolsFastPage = () => {
               </div>
             </>
           )}
+          <div className="container mx-auto flex justify-center px-4 py-10">
+            <DownloadLibraryButton />
+          </div>
         </main>
 
         <ScrollToTop />

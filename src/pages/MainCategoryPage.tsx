@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo, useCallback, useTransition, useRef } from
 import { useParams, useNavigate, useNavigationType } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import DownloadLibraryButton from "@/components/DownloadLibraryButton";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import DeferredMount from "@/components/DeferredMount";
 import ScrollToTop from "@/components/ui/scroll-to-top";
@@ -311,6 +312,9 @@ const MainCategoryPage = () => {
               </div>
             </>
           )}
+          <div className="container mx-auto flex justify-center px-4 py-10">
+            <DownloadLibraryButton />
+          </div>
         </main>
         
         <ScrollToTop />
