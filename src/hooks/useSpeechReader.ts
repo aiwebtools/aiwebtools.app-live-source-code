@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { GptVoiceProfile } from "@/utils/gptVoiceProfiles";
 
 const STORAGE_KEY = "awt-voice-enabled";
+const FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/awt-tts`;
+const ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 const stripForSpeech = (text: string) =>
   text
@@ -16,12 +19,14 @@ const stripForSpeech = (text: string) =>
  * Reads assistant replies out loud as they stream in, sentence by sentence.
  * Visitors can mute it at any time; the choice is remembered on this device.
  */
-export const useSpeechReader = () => {
+export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const supported = typeof window !== "undefined" && "speechSynthesis" in window;
   const [enabled, setEnabled] = useState(false);
   const [speaking, setSpeaking] = useState(false);
   const spokenRef = useRef(0);
   const bufferRef = useRef("");
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const requestRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
     if (!supported) return;
@@ -29,11 +34,43 @@ export const useSpeechReader = () => {
   }, [supported]);
 
   const stop = useCallback(() => {
-    if (!supported) return;
-    window.speechSynthesis.cancel();
+    requestRef.current?.abort();
+    audioRef.current?.pause();
+    audioRef.current = null;
+    if (supported) window.speechSynthesis.cancel();
     spokenRef.current = 0;
     bufferRef.current = "";
+    setSpeaking(false);
   }, [supported]);
+
+  const speakStudio = useCallback(async (text: string) => {
+    const clean = stripForSpeech(text).slice(0, 4000);
+    if (!clean || !profile || !ANON_KEY) return false;
+    requestRef.current?.abort();
+    audioRef.current?.pause();
+    const controller = new AbortController();
+    requestRef.current = controller;
+    setSpeaking(true);
+    try {
+      const response = await fetch(FUNCTION_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` },
+        body: JSON.stringify({ text: clean, voice: profile.voice, speed: profile.speed, instructions: profile.instructions }),
+        signal: controller.signal,
+      });
+      if (!response.ok) return false;
+      const url = URL.createObjectURL(await response.blob());
+      const audio = new Audio(url);
+      audioRef.current = audio;
+      audio.onended = () => { URL.revokeObjectURL(url); setSpeaking(false); };
+      audio.onerror = () => { URL.revokeObjectURL(url); setSpeaking(false); };
+      await audio.play();
+      return true;
+    } catch {
+      setSpeaking(false);
+      return false;
+    }
+  }, [profile]);
 
   const speakChunk = useCallback(
     (chunk: string) => {
@@ -52,6 +89,9 @@ export const useSpeechReader = () => {
     (fullText: string) => {
       if (!supported || !enabled) return;
       bufferRef.current = fullText;
+      // Studio profiles are generated once the full answer arrives. This avoids
+      // overlapping browser speech and preserves one consistent character voice.
+      if (profile) return;
       const pending = fullText.slice(spokenRef.current);
       const lastBreak = Math.max(
         pending.lastIndexOf(". "),
@@ -64,7 +104,7 @@ export const useSpeechReader = () => {
       spokenRef.current += ready.length;
       speakChunk(ready);
     },
-    [enabled, speakChunk, supported],
+    [enabled, profile, speakChunk, supported],
   );
 
   /** Speak whatever is left once the reply has finished streaming. */
@@ -72,21 +112,33 @@ export const useSpeechReader = () => {
     if (!supported || !enabled) return;
     const rest = bufferRef.current.slice(spokenRef.current);
     spokenRef.current = bufferRef.current.length;
-    speakChunk(rest);
-  }, [enabled, speakChunk, supported]);
+    const completeReply = bufferRef.current;
+    if (profile) void speakStudio(completeReply).then((played) => { if (!played) speakChunk(rest); });
+    else speakChunk(rest);
+  }, [enabled, profile, speakChunk, speakStudio, supported]);
 
   /** Start a fresh reply. */
   const reset = useCallback(() => {
+    requestRef.current?.abort();
+    audioRef.current?.pause();
+    audioRef.current = null;
     spokenRef.current = 0;
     bufferRef.current = "";
     if (supported) window.speechSynthesis.cancel();
+    setSpeaking(false);
   }, [supported]);
 
   const toggle = useCallback(() => {
     setEnabled((was) => {
       const next = !was;
       localStorage.setItem(STORAGE_KEY, next ? "on" : "off");
-      if (!next && supported) window.speechSynthesis.cancel();
+      if (!next) {
+        requestRef.current?.abort();
+        audioRef.current?.pause();
+        audioRef.current = null;
+        setSpeaking(false);
+        if (supported) window.speechSynthesis.cancel();
+      }
       return next;
     });
   }, [supported]);
@@ -98,9 +150,16 @@ export const useSpeechReader = () => {
   const speakNow = useCallback(
     (text: string) => {
       if (!supported) return;
-      if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+      if (speaking || window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+        requestRef.current?.abort();
+        audioRef.current?.pause();
+        audioRef.current = null;
         window.speechSynthesis.cancel();
         setSpeaking(false);
+        return;
+      }
+      if (profile) {
+        void speakStudio(text);
         return;
       }
       const clean = stripForSpeech(text);
@@ -113,10 +172,12 @@ export const useSpeechReader = () => {
       setSpeaking(true);
       window.speechSynthesis.speak(utterance);
     },
-    [supported],
+    [profile, speakStudio, speaking, supported],
   );
 
   useEffect(() => () => {
+    requestRef.current?.abort();
+    audioRef.current?.pause();
     if (supported) window.speechSynthesis.cancel();
   }, [supported]);
 

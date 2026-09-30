@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Maximize2, ImageIcon, SendHorizontal, Volume2, VolumeX } from "lucide-react";
+import { Maximize2, ImageIcon, Play, SendHorizontal, Square, Volume2, VolumeX } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Conversation, ConversationContent, ConversationScrollButton } from "@/components/ai-elements/conversation";
 import MatrixRainBackdrop from "@/components/effects/MatrixRainBackdrop";
@@ -22,6 +22,7 @@ import { getGptRoomTheme, getRoomMotto } from "./gptRoomThemes";
 import { getGptAvatar } from "./gptAvatars";
 import { getToolImage, loadToolImageMap } from "@/utils/search/toolImageMap";
 import OpInstructionsButton from "./OpInstructionsButton";
+import { getGptVoiceProfile } from "@/utils/gptVoiceProfiles";
 
 interface GptApp {
   slug: string;
@@ -46,8 +47,9 @@ const FUNCTIONS_URL = "https://huupailptzvcykyqdkar.supabase.co/functions/v1/run
  */
 const InSiteGptRunner = ({ tool }: { tool: Tool }) => {
   const { session } = useAuthSession();
-  const speech = useSpeechReader();
   const [app, setApp] = useState<GptApp | null>(null);
+  const voiceProfile = useMemo(() => getGptVoiceProfile(app?.slug, app?.display_name, tool?.category), [app?.display_name, app?.slug, tool?.category]);
+  const speech = useSpeechReader(voiceProfile);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
@@ -231,7 +233,7 @@ const InSiteGptRunner = ({ tool }: { tool: Tool }) => {
         <div className="mt-2.5 flex items-center gap-2">
           <OpInstructionsButton slug={app.slug} name={app.display_name} compact className="text-[10px]" />
           <span className="gpt-room-accent hidden text-[10px] font-semibold uppercase tracking-[0.18em] sm:inline">
-            {speech.enabled ? "Voice on" : "Voice off"}
+              {speech.enabled ? voiceProfile.label : "Voice off"}
           </span>
         </div>
       </div>
@@ -294,6 +296,18 @@ const InSiteGptRunner = ({ tool }: { tool: Tool }) => {
                       <>
                         {text && <MessageResponse className="gpt-generated-content">{text}</MessageResponse>}
                         {working && <ImageProgress />}
+                        {text && !working && (
+                          <button
+                            type="button"
+                            onClick={() => speech.speakNow(text)}
+                            className="gpt-room-chip mt-2 inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] font-semibold"
+                            aria-label={speech.speaking ? `Stop ${voiceProfile.label}` : `Play with ${voiceProfile.label}`}
+                            title={speech.speaking ? "Stop reading" : `Play with ${voiceProfile.label}`}
+                          >
+                            {speech.speaking ? <Square className="h-3 w-3" /> : <Play className="h-3 w-3" />}
+                            {speech.speaking ? "Stop" : "Play voice"}
+                          </button>
+                        )}
                       </>
                     );
                   })()

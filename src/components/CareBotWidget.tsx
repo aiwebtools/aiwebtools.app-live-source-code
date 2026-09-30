@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import useSpeechReader from "@/hooks/useSpeechReader";
 import MatrixRainBackdrop from "@/components/effects/MatrixRainBackdrop";
 import type { Tool } from "@/types/tools";
+import { getGptVoiceProfile } from "@/utils/gptVoiceProfiles";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -94,7 +95,7 @@ const CareBotWidget = () => {
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const voice = useSpeechReader();
+  const voice = useSpeechReader(getGptVoiceProfile("aiwebtools-care-bot", "AIWebTools Care Bot"));
 
   useEffect(() => {
     if (scrollRef.current) {

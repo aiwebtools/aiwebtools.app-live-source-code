@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Loader2, ArrowLeft, Star, ImageIcon, Repeat, SendHorizontal, Volume2, VolumeX } from "lucide-react";
+import { Loader2, ArrowLeft, Star, ImageIcon, Play, Repeat, SendHorizontal, Square, Volume2, VolumeX } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Message, MessageContent, MessageResponse } from "@/components/ai-elements/message";
@@ -20,6 +20,7 @@ import { loadToolImageMap } from "@/utils/search/toolImageMap";
 import { getGuestId } from "@/utils/guestId";
 import OpInstructionsButton from "@/components/tool-detail/OpInstructionsButton";
 import MatrixRainBackdrop from "@/components/effects/MatrixRainBackdrop";
+import { getGptVoiceProfile } from "@/utils/gptVoiceProfiles";
 
 interface GptApp {
   slug: string;
@@ -43,9 +44,10 @@ const GptAppPage = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { session, user, loading: sessionLoading } = useAuthSession();
-  const speech = useSpeechReader();
 
   const [app, setApp] = useState<GptApp | null>(null);
+  const voiceProfile = useMemo(() => getGptVoiceProfile(slug, app?.display_name), [app?.display_name, slug]);
+  const speech = useSpeechReader(voiceProfile);
   const [loadingApp, setLoadingApp] = useState(true);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -323,8 +325,8 @@ const GptAppPage = () => {
                 onClick={speech.toggle}
                 aria-pressed={speech.enabled}
                 className="gpt-room-icon-btn"
-                title={speech.enabled ? "Mute the voice" : "Read replies out loud"}
-                aria-label={speech.enabled ? "Mute the voice" : "Read replies out loud"}
+                title={speech.enabled ? `${voiceProfile.label} — tap to mute` : `Enable ${voiceProfile.label}`}
+                aria-label={speech.enabled ? `Mute ${voiceProfile.label}` : `Enable ${voiceProfile.label}`}
               >
                 {speech.enabled ? <Volume2 className="h-4 w-4" aria-hidden="true" /> : <VolumeX className="h-4 w-4" aria-hidden="true" />}
               </button>
@@ -442,6 +444,18 @@ const GptAppPage = () => {
                     <>
                       {text && <MessageResponse className="gpt-generated-content">{text}</MessageResponse>}
                       {working && <ImageProgress />}
+                      {text && !working && (
+                        <button
+                          type="button"
+                          onClick={() => speech.speakNow(text)}
+                          className="gpt-room-chip mt-2 inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] font-semibold"
+                          aria-label={speech.speaking ? `Stop ${voiceProfile.label}` : `Play with ${voiceProfile.label}`}
+                          title={speech.speaking ? "Stop reading" : `Play with ${voiceProfile.label}`}
+                        >
+                          {speech.speaking ? <Square className="h-3 w-3" /> : <Play className="h-3 w-3" />}
+                          {speech.speaking ? "Stop" : "Play voice"}
+                        </button>
+                      )}
                     </>
                   );
                 })()
