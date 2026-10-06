@@ -70,6 +70,7 @@ const OpInstructionsButton = ({ slug, name, className = "", compact = false }: O
       )}
       {busy ? "Preparing download…" : label}
     </a>
+    {!singleOnly && (
     <button
       type="button"
       onClick={() => downloadAllOperationalInstructions()}
@@ -79,6 +80,7 @@ const OpInstructionsButton = ({ slug, name, className = "", compact = false }: O
       <Download className="h-3.5 w-3.5" aria-hidden="true" />
       {compact ? "All 3,200+ + Code" : "Download All 3,200+ Operational Instructions + Source Code"}
     </button>
+    )}
     </span>
   );
 };
