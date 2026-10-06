@@ -4102,7 +4102,10 @@ const SpecialServices = () => {
   const handleCardClick = (title: string) => {
     const pageTitle = FEATURED_PAGE_ALIASES[title] ?? title;
     const slug = generateToolSlug(pageTitle);
-    const win = window.open(`/${slug}`, "_blank", "noopener");
+    // NOTE: no "noopener" feature string — per spec that makes window.open
+    // return null even on success, which wrongly triggered the same-tab
+    // fallback. Modern browsers treat target=_blank as noopener anyway.
+    const win = window.open(`/${slug}`, "_blank");
     if (!win) navigate(`/${slug}`);
   };
 
