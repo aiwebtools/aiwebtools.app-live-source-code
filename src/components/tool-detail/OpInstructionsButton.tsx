@@ -8,6 +8,9 @@ interface OpInstructionsButtonProps {
   name?: string | null;
   className?: string;
   compact?: boolean;
+  /** Show only this bot's download (no all-library button), for compact cards. */
+  singleOnly?: boolean;
+  label?: string;
 }
 
 /**
@@ -17,14 +20,14 @@ interface OpInstructionsButtonProps {
  * browsers that drop plain anchor `download` attributes; falls back to opening
  * the PDF in a new tab if the fetch fails.
  */
-const OpInstructionsButton = ({ slug, name, className = "", compact = false }: OpInstructionsButtonProps) => {
+const OpInstructionsButton = ({ slug, name, className = "", compact = false, singleOnly = false, label: labelOverride }: OpInstructionsButtonProps) => {
   const [busy, setBusy] = useState(false);
   const doc = getOpInstructionDoc(slug);
   if (!doc) return null;
 
-  const label = compact
+  const label = labelOverride ?? (compact
     ? "Download Instructions (PDF)"
-    : "Download Operational Instructions for this Bot (PDF)";
+    : "Download Operational Instructions for this Bot (PDF)");
 
   const handleClick = async (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (busy) {
