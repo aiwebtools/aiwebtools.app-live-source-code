@@ -10,6 +10,7 @@ import { useState, useRef, useMemo, useEffect } from "react";
 import { Play } from "lucide-react";
 import ToolDisclaimerBadges from "@/components/disclaimers/ToolDisclaimerBadges";
 import { generateToolSlug } from "@/utils/urlGenerator";
+import FeaturedGptActions from "@/components/featured/FeaturedGptActions";
 import AutoScaleTitle from "@/components/ui/auto-scale-title";
 import { trackToolClickEvent } from "@/hooks/useToolAnalytics";
 import { civicTransparencyBatch2026 } from "@/data/tools/civicTransparencyBatch2026";
@@ -4325,6 +4326,10 @@ const SpecialServices = () => {
                   ))}
                 </div>
                 
+                <FeaturedGptActions
+                  titles={[FEATURED_PAGE_ALIASES[gpt.title] ?? gpt.title, gpt.title]}
+                  tool={createToolObject(gpt)}
+                />
                 <Button 
                   size="sm"
                   className={`w-full bg-gradient-to-r ${gpt.color} hover:opacity-90 text-white text-[10px] md:text-xs py-1.5 font-medium transition-all duration-300 group-hover:shadow-lg ${isHumanRightsCard ? "min-h-11 text-sm font-black uppercase tracking-[0.18em] shadow-[0_0_24px_hsl(var(--primary)/0.55)]" : ""}`}
