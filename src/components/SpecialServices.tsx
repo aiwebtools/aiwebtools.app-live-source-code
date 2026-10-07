@@ -4106,8 +4106,9 @@ const SpecialServices = () => {
     // NOTE: no "noopener" feature string — per spec that makes window.open
     // return null even on success, which wrongly triggered the same-tab
     // fallback. Modern browsers treat target=_blank as noopener anyway.
-    const win = window.open(`/${slug}`, "_blank");
-    if (!win) navigate(`/${slug}`);
+    // "#try-bot" lands the visitor directly on the tool's live chat.
+    const win = window.open(`/${slug}#try-bot`, "_blank");
+    if (!win) navigate(`/${slug}#try-bot`);
   };
 
   const createToolObject = (gpt: typeof featuredGPTs[0]): Tool => ({
