@@ -85,6 +85,15 @@ const InSiteGptRunner = ({ tool }: { tool: Tool }) => {
     };
   }, [tool?.title]);
 
+  // Featured cards link with "#try-bot" so visitors start right at the chat.
+  useEffect(() => {
+    if (!app || window.location.hash !== "#try-bot") return;
+    const t = window.setTimeout(() => {
+      document.getElementById("try-bot")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 350);
+    return () => window.clearTimeout(t);
+  }, [app]);
+
   useEffect(() => {
     if (streaming) bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, streaming]);
@@ -180,7 +189,8 @@ const InSiteGptRunner = ({ tool }: { tool: Tool }) => {
 
   return (
     <section
-      className="gpt-room mb-6 overflow-hidden rounded-2xl border"
+      id="try-bot"
+      className="gpt-room mb-6 scroll-mt-20 overflow-hidden rounded-2xl border"
       data-room-pattern={theme.pattern}
       style={{
         "--bot-accent": theme.accent,
