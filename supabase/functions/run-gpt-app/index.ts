@@ -10,7 +10,7 @@ const corsHeaders = {
 
 const DAILY_LIMIT = 60;
 const GUEST_DAILY_LIMIT = 10;
-const MAX_HISTORY = 60;
+const MAX_HISTORY = 120;
 const MAX_CLIENT_HISTORY = 500;
 const EARLIER_CONTEXT_CHARS = 20_000;
 const CHAT_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
@@ -37,6 +37,49 @@ const IMAGE_TOOL = {
       additionalProperties: false,
     },
   },
+};
+
+const SEARCH_TOOL = {
+  type: "function",
+  function: {
+    name: "web_search",
+    description: "Search the live web for current facts, news, prices, places, people or anything you are unsure about. Use it whenever the user asks you to look something up or needs up-to-date information.",
+    parameters: {
+      type: "object",
+      properties: { query: { type: "string", description: "The search query." } },
+      required: ["query"],
+      additionalProperties: false,
+    },
+  },
+};
+
+const webSearch = async (query: string): Promise<string> => {
+  const out: string[] = [];
+  try {
+    const r = await fetch(`https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`, {
+      headers: { "User-Agent": "Mozilla/5.0 (compatible; AIWebToolsBot/1.0)" },
+    });
+    const html = await r.text();
+    const re = /<a[^>]+class="result__a"[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>[\s\S]*?class="result__snippet"[^>]*>([\s\S]*?)<\/a>/g;
+    const strip = (t: string) => t.replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/&#x27;|&#39;/g, "'").replace(/&quot;/g, '"').trim();
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(html)) && out.length < 6) {
+      let url = m[1];
+      const u = url.match(/uddg=([^&]+)/);
+      if (u) url = decodeURIComponent(u[1]);
+      out.push(`- ${strip(m[2])} (${url}): ${strip(m[3])}`);
+    }
+  } catch (e) { console.error("ddg failed", e); }
+  if (out.length === 0) {
+    try {
+      const r = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&srlimit=5&srsearch=${encodeURIComponent(query)}`);
+      const j = await r.json();
+      for (const h of j?.query?.search ?? []) {
+        out.push(`- ${h.title} (https://en.wikipedia.org/wiki/${encodeURIComponent(h.title.replace(/ /g, "_"))}): ${String(h.snippet).replace(/<[^>]+>/g, "")}`);
+      }
+    } catch (e) { console.error("wiki failed", e); }
+  }
+  return out.length ? `Web results for "${query}":\n${out.join("\n")}` : "No web results were found. Answer from your own knowledge and say so.";
 };
 
 interface ChatMsg {
@@ -183,6 +226,8 @@ Deno.serve(async (req) => {
     systemPrompt += `\n\nThe member you are speaking with is called ${profile.display_name}. Remember details they share during this conversation and refer back to them naturally.`;
   }
   systemPrompt +=
+    "\n\nCORE OPERATING RULES: Follow the operational instructions above exactly and stay fully in this persona for the whole conversation, including its opening question and step-by-step flow. You have every capability of a modern assistant like ChatGPT and Gemini: deep reasoning, long memory of this whole conversation, writing, coding, analysis, tables, planning, live web search (web_search tool) and image creation (generate_image tool). Use web_search whenever the user asks you to look something up, mentions current events, prices, locations, or anything time-sensitive, and cite the source links you used. Make every reply vivid, immersive and true to your character.";
+  systemPrompt +=
     "\n\nYou can create images. Call the generate_image tool whenever the user explicitly asks for a picture, image, illustration, diagram, infographic, chart, logo, artwork, visual, scene, portrait, design, or photo. Never merely promise to create it: call the tool in the same response. Describe the visual richly and preserve every requested detail in the tool prompt.";
 
   // Conversation bookkeeping (members only — guest chats are not stored)
@@ -240,7 +285,7 @@ Deno.serve(async (req) => {
   const basePayload = {
     model: app.model || "openai/gpt-6-astra",
     stream: true,
-    tools: [IMAGE_TOOL],
+    tools: [IMAGE_TOOL, SEARCH_TOOL],
   };
 
   const upstream = await callGateway({
@@ -386,17 +431,27 @@ Deno.serve(async (req) => {
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       try {
-        const calls = await pump(upstream, controller);
-        const imageCalls = calls.filter((c) => c.name === "generate_image").slice(0, 2);
-        imageRequested = imageCalls.length > 0;
-
-        if (imageCalls.length > 0) {
-          controller.enqueue(frame("\n\n_Creating your image…_\n\n"));
+        let calls = await pump(upstream, controller);
+        const convo: ChatMsg[] = [{ role: "system", content: systemPrompt }, ...messages];
+        for (let round = 0; round < 4 && calls.length > 0; round++) {
+          const used = calls.filter((c) => c.name === "generate_image" || c.name === "web_search").slice(0, 4);
+          if (used.length === 0) break;
           const toolResults: ChatMsg[] = [];
-          for (const [index, imageCall] of imageCalls.entries()) {
+          for (const [index, call] of used.entries()) {
+            const id = call.id || `call_${round}_${index}`;
+            call.id = id;
+            let parsed: Record<string, unknown> = {};
+            try { parsed = JSON.parse(call.args || "{}"); } catch { /* ignore */ }
+            if (call.name === "web_search") {
+              const q = String(parsed.query || "").slice(0, 300);
+              controller.enqueue(frame(`\n\n_Searching the web for “${q}”…_\n\n`));
+              toolResults.push({ role: "tool", tool_call_id: id, content: (await webSearch(q)).slice(0, 6000) });
+              continue;
+            }
+            imageRequested = true;
+            controller.enqueue(frame("\n\n_Creating your image…_\n\n"));
             let toolResult = "The picture could not be created this time. Explain that clearly and offer to try again.";
             try {
-              const parsed = JSON.parse(imageCall.args || "{}");
               const url = await makeImage(String(parsed.prompt || "").slice(0, 4000));
               const md = `![Generated image ${index + 1}](${url})`;
               assistant += `\n\n${md}\n\n`;
@@ -409,29 +464,16 @@ Deno.serve(async (req) => {
               toolResult = finalError;
               controller.enqueue(frame(`\n\n_${toolResult}_\n\n`));
             }
-            toolResults.push({ role: "tool", tool_call_id: imageCall.id || `call_${index + 1}`, content: toolResult });
+            toolResults.push({ role: "tool", tool_call_id: id, content: toolResult });
           }
-
-          const follow = await callGateway({
-            ...basePayload,
-            messages: [
-              { role: "system", content: systemPrompt },
-              ...messages,
-              {
-                role: "assistant",
-                content: null,
-                tool_calls: imageCalls.map((imageCall, index) => ({
-                    id: imageCall.id || `call_${index + 1}`,
-                    type: "function",
-                    function: { name: "generate_image", arguments: imageCall.args || "{}" },
-                  })),
-              } as ChatMsg,
-              ...toolResults,
-            ],
-          });
-          if (follow.ok && follow.body) {
-            await pump(follow, controller);
-          }
+          convo.push({
+            role: "assistant",
+            content: null,
+            tool_calls: used.map((c) => ({ id: c.id, type: "function", function: { name: c.name, arguments: c.args || "{}" } })),
+          } as ChatMsg, ...toolResults);
+          const follow = await callGateway({ ...basePayload, messages: convo });
+          if (!follow.ok || !follow.body) break;
+          calls = await pump(follow, controller);
         }
       } catch (err) {
         finalStatus = "stream_error";
