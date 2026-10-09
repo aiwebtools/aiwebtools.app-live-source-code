@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Maximize2, ImageIcon, Play, SendHorizontal, Square, Volume2, VolumeX } from "lucide-react";
+import { Maximize2, ImageIcon, Mic, MicOff, Play, SendHorizontal, Square, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { Conversation, ConversationContent, ConversationScrollButton } from "@/components/ai-elements/conversation";
@@ -17,6 +17,7 @@ import { ImageProgress, splitImageProgress } from "@/components/ai-elements/imag
 import { ThinkingStatus } from "@/components/ai-elements/thinking-status";
 import { useAuthSession } from "@/hooks/useAuthSession";
 import { useSpeechReader } from "@/hooks/useSpeechReader";
+import { useVoiceInput } from "@/hooks/useVoiceInput";
 import { Tool } from "@/types/tools";
 import { getGuestId } from "@/utils/guestId";
 import { getGptRoomTheme, getRoomMotto } from "./gptRoomThemes";
@@ -181,6 +182,7 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
   );
 
   // Two clear choices read far better than a confusing wall of four.
+  const voiceInput = useVoiceInput((text) => { void send(text); }, speech.stop);
   const starters = useMemo(() => (app?.starter_prompts ?? []).slice(0, 2), [app]);
   const theme = useMemo(
     () => getGptRoomTheme(app?.slug, tool?.category, app?.display_name),
@@ -362,6 +364,10 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
             className="min-h-[48px] max-h-32 w-full resize-none bg-transparent text-base leading-relaxed text-foreground"
           />
           <PromptInputFooter className="flex-wrap gap-2 pt-0">
+            <Button type="button" variant="ghost" size="icon" className="h-10 w-10 shrink-0" disabled={streaming} onClick={voiceInput.toggle} aria-pressed={voiceInput.listening} aria-label={voiceInput.listening ? "Stop microphone" : "Speak to the bot"} title={voiceInput.listening ? "Stop microphone" : "Speak to the bot"}>
+              {voiceInput.listening ? <MicOff className="h-4 w-4 animate-pulse" /> : <Mic className="h-4 w-4" />}
+            </Button>
+            {voiceInput.listening && <span role="status" className="text-xs text-primary">Listening…</span>}
             <span className="gpt-room-accent hidden text-[10px] font-bold uppercase tracking-[0.18em] sm:inline">
               {theme.signature} · UNIT {theme.consoleNumber}
             </span>
