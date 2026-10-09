@@ -3,7 +3,7 @@ import { Download, MessageCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import OpInstructionsButton from "@/components/tool-detail/OpInstructionsButton";
-import { getOpInstructionDoc } from "@/data/opInstructionDocs";
+import { getOpInstructionDoc, OP_INSTRUCTION_DOCS } from "@/data/opInstructionDocs";
 import { downloadAllOperationalInstructions } from "@/utils/downloads";
 import { generateToolSlug } from "@/utils/urlGenerator";
 import { Tool } from "@/types/tools";
@@ -23,10 +23,12 @@ const loadApps = () => {
   return appsPromise;
 };
 
-const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+// Null-safe: some bot rows have no display name, which used to crash matching
+// and silently push every card to the bulk library instead of its own PDF.
+const norm = (s?: string | null) => (s ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
 // Looser key: drops filler words so "Fact Checker GPT" ~ "Fact Checker".
-const loose = (s: string) =>
-  s.toLowerCase().replace(/\b(gpt|ai|the|suite|assistant|tool|by aiwebtools)\b/g, "").replace(/[^a-z0-9]/g, "");
+const loose = (s?: string | null) =>
+  (s ?? "").toLowerCase().replace(/\b(gpt|ai|the|suite|assistant|tool|by aiwebtools)\b/g, "").replace(/[^a-z0-9]/g, "");
 
 export const findApp = (apps: AppRow[], titles: string[]) => {
   for (const t of titles) {
@@ -40,6 +42,54 @@ export const findApp = (apps: AppRow[], titles: string[]) => {
     if (l.length < 4) continue;
     const hit = apps.find((a) => loose(a.tool_title) === l || loose(a.display_name) === l);
     if (hit) return hit;
+  }
+  return null;
+};
+
+/**
+ * Featured cards whose title differs from their instruction document's name.
+ * Each value is a key of OP_INSTRUCTION_DOCS (Master's original document).
+ */
+const FEATURED_DOC_SLUGS: Record<string, string> = {
+  "Algebraic Expression Creative Inventor GPT": "algebraic-expression-inventor-gpt",
+  "Cannabis GPT": "cannabis-gpt-not-gpt4o1-compliant",
+  "Clarity Omni GPT": "clarity-writer-gpt",
+  "COLLECTIBLES APPRAISAL GPT": "antique-collectible-appraisal-gpt",
+  "Customizable GPT Maker": "custom-gpt-maker",
+  "Data Research Analysis Report GPT": "data-analysis-and-report-gpt",
+  "GRAPHIC & COVER DESIGN GPT": "cover-design-graphic-design-gpt",
+  "Illuminous World Data Explorer GPT": "illuminous-data-explorer-instrucutions",
+  "Agronomus AI Farming Expert": "agronomus-the-ai-farmer",
+  "MULTITASKER GPT": "multitasker-gpt4-turbo-newer-segmented-approach-to-handle-tasks",
+  "Public Testimony Writer GPT": "testimony-writer-gpt",
+  "Oraculum – The Revealer of Hidden Truths": "oraculum-u-the-illuminator-of-hidden-truths-safer",
+  "Personalized DR. GPT (Doctor GPT)": "doctor-gpt-open-source",
+  "Survivalist GPT": "survivalist-gpt-public-open-source-for-local-deployment-by-aiwebtools",
+  "TALK TO THE GODS GPT": "talk-to-your-god-gpt",
+  "Travel Advisor GPT": "travel-agent-gpt",
+  "Plastoline GPT - Plastic to Fuel": "plastoline-gpt",
+  "ENTER THE MATRIX GPT": "neo-matrix-gpt",
+  "Legislator Link GPT": "legistlator-link-prompt-state-rep-finder-writer-and-insights",
+  "Legislation Writer & Compiler GPT": "legislation-writer-gpt",
+  "Mental Wellness GPT (CBT)": "mental-wellness-gpt",
+  "Home-Schooling Assistant GPT": "home-school-gpt",
+  "Coloring Book Generator GPT": "coloring-book-generator-with-compiler",
+  "King Blueberry GPT": "blueberry-gpt",
+  "Custom GPT Ideas & Brainstorming Assistant": "gpt-ideas-creator",
+  "AD Maker GPT4o Image GPT": "ad-maker-gpt",
+  "MiddleJourney Midjourney Prompting Assistant": "mid-journey-prompt-optimizer-open-source",
+};
+
+/** Instruction document for a card, resolved instantly (no network wait). */
+export const resolveDocSlug = (titles: string[], appSlug?: string | null): string | null => {
+  for (const t of titles) {
+    const mapped = FEATURED_DOC_SLUGS[t];
+    if (mapped && OP_INSTRUCTION_DOCS[mapped]) return mapped;
+  }
+  if (appSlug && OP_INSTRUCTION_DOCS[appSlug]) return appSlug;
+  for (const t of titles) {
+    const slug = generateToolSlug(t);
+    if (OP_INSTRUCTION_DOCS[slug]) return slug;
   }
   return null;
 };
@@ -60,13 +110,18 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
 
   useEffect(() => {
     let alive = true;
-    loadApps().then((apps) => alive && setApp(findApp(apps, titles)));
+    loadApps().then((apps) => {
+      if (!alive) return;
+      const docSlug = resolveDocSlug(titles);
+      setApp(findApp(apps, titles) ?? (docSlug ? apps.find((a) => a.slug === docSlug) ?? null : null));
+    });
     return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [titles.join("|")]);
 
-  const hasDoc = !!(app && getOpInstructionDoc(app.slug));
-  const name = app?.display_name ?? titles[titles.length - 1];
+  const docSlug = resolveDocSlug(titles, app?.slug);
+  const hasDoc = !!getOpInstructionDoc(docSlug);
+  const name = app?.display_name || titles[titles.length - 1];
 
   return (
     <div className="mb-2 flex flex-wrap gap-1.5" onClick={(e) => e.stopPropagation()}>
@@ -80,7 +135,7 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
       </button>
       {hasDoc ? (
         <OpInstructionsButton
-          slug={app!.slug}
+          slug={docSlug}
           name={name}
           singleOnly
           label="Instructions"
@@ -91,21 +146,21 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
           type="button"
           onClick={() => downloadAllOperationalInstructions()}
           className={btn}
-          title="Download the AIWebTools operational instructions library"
+          title="This bot's single document isn't published yet — open the full AIWebTools instruction library"
         >
-          <Download className="h-3.5 w-3.5" aria-hidden="true" /> Instructions
+          <Download className="h-3.5 w-3.5" aria-hidden="true" /> Library
         </button>
       )}
       {app && (
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogContent className="max-h-[92dvh] w-[96vw] max-w-3xl overflow-y-auto p-2 sm:p-4">
-            <DialogTitle className="sr-only">{app.display_name}</DialogTitle>
+            <DialogTitle className="sr-only">{name}</DialogTitle>
             <DialogDescription className="sr-only">
-              Chat with {app.display_name}, following its AIWebTools operational instructions.
+              Chat with {name}, following its AIWebTools operational instructions.
             </DialogDescription>
             {open && (
-              <Suspense fallback={<p className="p-8 text-center text-sm text-muted-foreground">Opening {app.display_name}…</p>}>
-                <InSiteGptRunner tool={{ ...tool, title: app.tool_title }} />
+              <Suspense fallback={<p className="p-8 text-center text-sm text-muted-foreground">Opening {name}…</p>}>
+                <InSiteGptRunner tool={{ ...tool, title: app.tool_title || tool.title }} appSlug={app.slug} showLoading />
               </Suspense>
             )}
           </DialogContent>
