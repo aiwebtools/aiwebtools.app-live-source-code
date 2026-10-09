@@ -334,7 +334,7 @@ const GptAppPage = () => {
                 {speech.enabled ? <Volume2 className="h-4 w-4" aria-hidden="true" /> : <VolumeX className="h-4 w-4" aria-hidden="true" />}
               </Button>
             )}
-            <Button variant="ghost"
+            <Button
               variant="ghost"
               size="icon"
               className="shrink-0"
@@ -344,7 +344,7 @@ const GptAppPage = () => {
             >
               <Star className="h-4 w-4" fill={favorite ? "currentColor" : "none"} style={favorite ? { color: "hsl(var(--bot-accent))" } : undefined} />
             </Button>
-            <Button variant="ghost"
+            <Button
               variant="ghost"
               size="icon"
               className="shrink-0"
