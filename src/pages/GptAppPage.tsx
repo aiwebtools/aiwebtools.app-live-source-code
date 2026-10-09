@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Loader2, ArrowLeft, Star, ImageIcon, Play, Repeat, SendHorizontal, Square, Volume2, VolumeX } from "lucide-react";
+import { Loader2, ArrowLeft, Star, ImageIcon, Mic, MicOff, Play, Repeat, SendHorizontal, Square, Volume2, VolumeX } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Message, MessageContent, MessageResponse } from "@/components/ai-elements/message";
@@ -12,6 +12,7 @@ import { ThinkingStatus } from "@/components/ai-elements/thinking-status";
 import { useToast } from "@/hooks/use-toast";
 import { useAuthSession } from "@/hooks/useAuthSession";
 import { useSpeechReader } from "@/hooks/useSpeechReader";
+import { useVoiceInput } from "@/hooks/useVoiceInput";
 import { buildCanonicalUrl } from "@/utils/seo";
 import { getGptAppTheme } from "@/utils/gptAppTheme";
 import { getRoomMotto } from "@/components/tool-detail/gptRoomThemes";
@@ -247,6 +248,7 @@ const GptAppPage = () => {
   );
 
   const starters = useMemo(() => app?.starter_prompts?.slice(0, 2) ?? [], [app]);
+  const voiceInput = useVoiceInput((text) => { void send(text); }, speech.stop);
 
   if (loadingApp || sessionLoading) {
     return (

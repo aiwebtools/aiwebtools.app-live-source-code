@@ -10,6 +10,8 @@ const ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 const stripForSpeech = (text: string) =>
   text
     .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
+    .replace(/_Creating your image…_/g, " ")
+    .replace(/!\[[\s\S]*$/g, " ")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/```[\s\S]*?```/g, " ")
     .replace(/[#*_>`|]/g, " ")
@@ -31,6 +33,9 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioUrlRef = useRef<string | null>(null);
   const requestRef = useRef<AbortController | null>(null);
+  const queueRef = useRef<string[]>([]);
+  const queueBusyRef = useRef(false);
+  const generationRef = useRef(0);
 
   const releaseStudioAudio = useCallback(() => {
     audioRef.current?.pause();
@@ -47,6 +52,9 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   }, [supported]);
 
   const stop = useCallback(() => {
+    generationRef.current += 1;
+    queueRef.current = [];
+    queueBusyRef.current = false;
     requestRef.current?.abort();
     releaseStudioAudio();
     if (supported) window.speechSynthesis?.cancel();
@@ -105,6 +113,23 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     }
   }, [profile, releaseStudioAudio, toast]);
 
+  const enqueue = useCallback((text: string) => {
+    if (!stripForSpeech(text)) return;
+    queueRef.current.push(text);
+    if (queueBusyRef.current) return;
+    queueBusyRef.current = true;
+    const generation = generationRef.current;
+    void (async () => {
+      while (generation === generationRef.current && queueRef.current.length) {
+        const chunk = queueRef.current.shift();
+        if (!chunk) break;
+        const success = await speakStudio(chunk);
+        if (!success) { queueRef.current = []; break; }
+      }
+      if (generation === generationRef.current) queueBusyRef.current = false;
+    })();
+  }, [speakStudio]);
+
   const speakChunk = useCallback(
     (chunk: string) => {
       const clean = stripForSpeech(chunk);
@@ -127,9 +152,6 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     (fullText: string) => {
       if (!supported || !enabled) return;
       bufferRef.current = fullText;
-      // Studio profiles are generated once the full answer arrives. This avoids
-      // overlapping browser speech and preserves one consistent character voice.
-      if (profile) return;
       const pending = fullText.slice(spokenRef.current);
       const lastBreak = Math.max(
         pending.lastIndexOf(". "),
@@ -140,9 +162,10 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       if (lastBreak < 0) return;
       const ready = pending.slice(0, lastBreak + 1);
       spokenRef.current += ready.length;
-      speakChunk(ready);
+      if (profile) enqueue(ready);
+      else speakChunk(ready);
     },
-    [enabled, profile, speakChunk, supported],
+    [enabled, enqueue, profile, speakChunk, supported],
   );
 
   /** Speak whatever is left once the reply has finished streaming. */
@@ -150,13 +173,15 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     if (!supported || !enabled) return;
     const rest = bufferRef.current.slice(spokenRef.current);
     spokenRef.current = bufferRef.current.length;
-    const completeReply = bufferRef.current;
-    if (profile) void speakStudio(completeReply);
+    if (profile) enqueue(rest);
     else speakChunk(rest);
-  }, [enabled, profile, speakChunk, speakStudio, supported]);
+  }, [enabled, enqueue, profile, speakChunk, supported]);
 
   /** Start a fresh reply. */
   const reset = useCallback(() => {
+    generationRef.current += 1;
+    queueRef.current = [];
+    queueBusyRef.current = false;
     requestRef.current?.abort();
     releaseStudioAudio();
     spokenRef.current = 0;
@@ -170,6 +195,9 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       const next = !was;
       localStorage.setItem(STORAGE_KEY, next ? "on" : "off");
       if (!next) {
+        generationRef.current += 1;
+        queueRef.current = [];
+        queueBusyRef.current = false;
         requestRef.current?.abort();
         releaseStudioAudio();
         setSpeaking(false);
@@ -187,10 +215,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     (text: string) => {
       if (!supported) return;
       if (speaking || window.speechSynthesis?.speaking || window.speechSynthesis?.pending) {
-        requestRef.current?.abort();
-        releaseStudioAudio();
-        window.speechSynthesis?.cancel();
-        setSpeaking(false);
+        stop();
         return;
       }
       if (profile) {
@@ -207,10 +232,12 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       setSpeaking(true);
       window.speechSynthesis.speak(utterance);
     },
-    [profile, releaseStudioAudio, speakStudio, speaking, supported],
+    [profile, speakStudio, speaking, stop, supported],
   );
 
   useEffect(() => () => {
+    generationRef.current += 1;
+    queueRef.current = [];
     requestRef.current?.abort();
     releaseStudioAudio();
     if (supported) window.speechSynthesis?.cancel();
