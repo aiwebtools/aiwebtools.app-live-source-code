@@ -29,6 +29,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const { toast } = useToast();
   const [enabled, setEnabled] = useState(false);
   const enabledRef = useRef(false);
+  const listeningRef = useRef(false);
   const [speaking, setSpeaking] = useState(false);
   const spokenRef = useRef(0);
   const bufferRef = useRef("");
@@ -154,7 +155,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   /** Feed the growing reply; only newly completed sentences are spoken. */
   const feed = useCallback(
     (fullText: string) => {
-      if (!supported || !enabledRef.current) return;
+      if (!supported || !enabledRef.current || listeningRef.current) return;
       bufferRef.current = fullText;
       const pending = fullText.slice(spokenRef.current);
       const lastBreak = Math.max(
@@ -174,7 +175,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
 
   /** Speak whatever is left once the reply has finished streaming. */
   const flush = useCallback(() => {
-    if (!supported || !enabledRef.current) return;
+    if (!supported || !enabledRef.current || listeningRef.current) return;
     const rest = bufferRef.current.slice(spokenRef.current);
     spokenRef.current = bufferRef.current.length;
     if (profile) enqueue(rest);
@@ -248,7 +249,9 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     if (supported) window.speechSynthesis?.cancel();
   }, [releaseStudioAudio, supported]);
 
-  return { supported, enabled, toggle, feed, flush, reset, stop, speakNow, speaking };
+  const pauseForMicrophone = useCallback(() => { listeningRef.current = true; stop(); }, [stop]);
+  const resumeAfterMicrophone = useCallback(() => { listeningRef.current = false; }, []);
+  return { supported, enabled, toggle, feed, flush, reset, stop, speakNow, speaking, pauseForMicrophone, resumeAfterMicrophone };
 };
 
 export default useSpeechReader;

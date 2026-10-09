@@ -196,7 +196,7 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
   );
 
   // Two clear choices read far better than a confusing wall of four.
-  const voiceInput = useVoiceInput((text) => { if (streaming) setInput(text); else void send(text); }, speech.stop);
+  const voiceInput = useVoiceInput((text) => { if (streaming) setInput(text); else void send(text); }, speech.pauseForMicrophone, speech.resumeAfterMicrophone);
   const starters = useMemo(() => (app?.starter_prompts ?? []).slice(0, 2), [app]);
   const theme = useMemo(
     () => getGptRoomTheme(app?.slug, tool?.category, app?.display_name),

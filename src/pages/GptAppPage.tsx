@@ -248,7 +248,7 @@ const GptAppPage = () => {
   );
 
   const starters = useMemo(() => app?.starter_prompts?.slice(0, 2) ?? [], [app]);
-  const voiceInput = useVoiceInput((text) => { if (streaming) setInput(text); else void send(text); }, speech.stop);
+  const voiceInput = useVoiceInput((text) => { if (streaming) setInput(text); else void send(text); }, speech.pauseForMicrophone, speech.resumeAfterMicrophone);
 
   if (loadingApp || sessionLoading) {
     return (

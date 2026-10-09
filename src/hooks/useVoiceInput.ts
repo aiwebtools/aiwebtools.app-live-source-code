@@ -15,7 +15,7 @@ interface Recognition {
 type RecognitionConstructor = new () => Recognition;
 
 /** One utterance per turn prevents the bot's speaker audio becoming user input. */
-export function useVoiceInput(onTranscript: (text: string) => void, onStart: () => void) {
+export function useVoiceInput(onTranscript: (text: string) => void, onStart: () => void, onEnd: () => void) {
   const { toast } = useToast();
   const [listening, setListening] = useState(false);
   const callbackRef = useRef(onTranscript);
@@ -27,7 +27,8 @@ export function useVoiceInput(onTranscript: (text: string) => void, onStart: () 
     recognitionRef.current?.abort();
     recognitionRef.current = null;
     setListening(false);
-  }, []);
+    onEnd();
+  }, [onEnd]);
   const toggle = useCallback(() => {
     if (listening) { stop(); return; }
     if (!Constructor) {
@@ -45,16 +46,17 @@ export function useVoiceInput(onTranscript: (text: string) => void, onStart: () 
       for (let i = event.resultIndex; i < event.results.length; i++) {
         if (event.results[i].isFinal) text += event.results[i][0].transcript;
       }
-      if (text.trim()) callbackRef.current(text.trim());
+      if (text.trim()) { onEnd(); callbackRef.current(text.trim()); }
     };
     recognition.onerror = ({ error }) => {
       if (error !== "aborted") toast({ title: "Microphone paused", description: error === "not-allowed" ? "Allow microphone access to speak with this bot." : "Your voice could not be heard. Tap the microphone to try again." });
       setListening(false);
+      onEnd();
     };
-    recognition.onend = () => setListening(false);
+    recognition.onend = () => { setListening(false); onEnd(); };
     try { recognition.start(); setListening(true); }
     catch { stop(); toast({ title: "Microphone unavailable", description: "Please check microphone access and try again." }); }
-  }, [Constructor, listening, onStart, stop, toast]);
+  }, [Constructor, listening, onStart, onEnd, stop, toast]);
   useEffect(() => stop, [stop]);
   return { listening, toggle, stop, supported: Boolean(Constructor) };
 }
