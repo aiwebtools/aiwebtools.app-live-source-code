@@ -71,13 +71,6 @@
 
 # Natural voices and compact chat (Oct 9)
 
-# Concurrent voice and image experience (Oct 9)
-
-- [ ] Start character speech during replies, with mute and sequential playback
-- [ ] Add microphone conversation controls to embedded and full-screen bots
-- [ ] Keep image progress visible until an image or terminal error arrives
-- [ ] Test Time Machine voice, image, and follow-up story continuity; report any service blockers
-
 - [x] Improve conversational voice delivery without changing bot identities or instructions
 - [x] Remove robotic voice fallback; test complete reply chunking and real playback
 - [x] Slim chat headers, starter prompts, and typing controls across phone/tablet/desktop
@@ -85,3 +78,13 @@
 - [x] Run focused tests and browser checks; preserve every tool and original document
 - [ ] Featured-card end-to-end check: homepage section did not appear in the automated browser session
 - [ ] Published-site verification: awaiting Master's request to publish the frontend update
+
+# Concurrent voice and image experience (Oct 9)
+
+- [x] Start character speech during replies, with mute and sequential playback
+- [x] Add microphone conversation controls to embedded and full-screen bots
+- [x] Keep image progress visible until an image or terminal error arrives
+- [x] Test Time Machine with real generated images, real hosted speech, immediate mute, and Mira/compass story continuity
+- [x] Test microphone-event submission and phone/tablet/desktop controls without horizontal overflow
+- [ ] Physical microphone and Safari/Firefox verification: requires actual devices; automated check used simulated recognition events
+- [ ] Signed-in history restoration: external unmanaged authentication prevents an authenticated end-to-end check
