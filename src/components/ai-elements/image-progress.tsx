@@ -10,7 +10,7 @@ export const splitImageProgress = (content: string) => {
   const before = content.slice(0, index);
   const after = content.slice(index + IMAGE_PLACEHOLDER.length);
   const finished = /!\[[^\]]*\]\([^)]+\)/.test(after) || /(?:could not|couldn't|failed|unavailable|unable|error|paused)/i.test(after);
-  return { text: (before.replaceAll(IMAGE_PLACEHOLDER, "") + after).trim(), working: !finished };
+  return { text: (before.split(IMAGE_PLACEHOLDER).join("") + after).trim(), working: !finished };
 };
 
 export const ImageProgress = () => {
