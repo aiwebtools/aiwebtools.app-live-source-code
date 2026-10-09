@@ -52,6 +52,13 @@ export const findApp = (apps: AppRow[], titles: string[]) => {
  * Each value is a key of OP_INSTRUCTION_DOCS (Master's original document).
  */
 const FEATURED_DOC_SLUGS: Record<string, string> = {
+  "ALAN WATTS GPT": "alan-watts-gpt-page",
+  "BOOK WRITER GPT": "book-writer-gpt-no-longer-segmented",
+  "Insurance Claims GPT": "insurence-claims-gpt",
+  "🔒Insurance Claims GPT": "insurence-claims-gpt",
+  "Engineering GPT Suite": "engineering-gpt-ai-suite",
+  "Engineering GPT AI Suite": "engineering-gpt-ai-suite",
+  "Grant Writer GPT": "grant-writer-gpt-page",
   "Algebraic Expression Creative Inventor GPT": "algebraic-expression-inventor-gpt",
   "Cannabis GPT": "cannabis-gpt-not-gpt4o1-compliant",
   "Clarity Omni GPT": "clarity-writer-gpt",

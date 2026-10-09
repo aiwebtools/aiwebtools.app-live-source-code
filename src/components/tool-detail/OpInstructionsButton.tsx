@@ -3,7 +3,7 @@ import { Download, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { getOpInstructionDoc } from "@/data/opInstructionDocs";
-import { downloadAllOperationalInstructions, resolvePublicAssetUrl } from "@/utils/downloads";
+import { downloadAllOperationalInstructions, resolvePublicAssetUrl, triggerPublicDownload } from "@/utils/downloads";
 
 interface OpInstructionsButtonProps {
   slug?: string | null;
@@ -56,14 +56,7 @@ const OpInstructionsButton = ({ slug, name, className = "", compact = false, sin
       setTimeout(() => URL.revokeObjectURL(url), 10_000);
     } catch {
       // A real anchor remains usable even when a mobile browser blocks pop-ups.
-      const link = document.createElement("a");
-      link.href = resolvePublicAssetUrl(doc.href);
-      link.download = doc.download;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      triggerPublicDownload(doc.href, doc.download);
       toast({ title: "Opening your PDF", description: "If it does not download, save the PDF from the new tab." });
     } finally {
       setBusy(false);
