@@ -50,21 +50,22 @@ Deno.serve(async (req) => {
         ...(Number.isFinite(speed) && speed >= 0.25 && speed <= 4 ? { speed } : {}),
         ...(instructions ? { instructions } : {}),
       }),
+      signal: req.signal,
     });
 
     if (!upstream.ok) {
-      const details = await upstream.text().catch(() => '');
-      console.error(`AWT TTS failed [${upstream.status}]: ${details}`);
+      const details = await upstream.json().catch(() => ({}));
       const message =
-        upstream.status === 402
+        details?.error?.message || details?.message || (upstream.status === 402
           ? 'The voice studio is out of AI credits right now.'
           : upstream.status === 429
             ? 'The voice studio is busy — try again in a moment.'
-            : 'The voice studio could not generate that clip.';
-      return json({ error: message, status: upstream.status, details }, upstream.status);
+            : 'The voice studio could not generate that clip.');
+      return json({ error: message, status: upstream.status }, upstream.status);
     }
 
     const audio = await upstream.arrayBuffer();
+    if (!audio.byteLength) return json({ error: 'The voice provider returned no audio. Playback stopped; please start a fresh request when voice access is available.' }, 502);
     return new Response(audio, {
       headers: {
         ...corsHeaders,
@@ -73,6 +74,7 @@ Deno.serve(async (req) => {
       },
     });
   } catch (err) {
+    if (req.signal.aborted) return new Response(null, { status: 499, headers: corsHeaders });
     console.error('AWT TTS error:', err);
     return json({ error: 'Unexpected voice studio error.' }, 500);
   }
