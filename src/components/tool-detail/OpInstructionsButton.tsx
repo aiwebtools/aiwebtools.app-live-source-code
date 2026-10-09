@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Download, Loader2 } from "lucide-react";
 import { getOpInstructionDoc } from "@/data/opInstructionDocs";
-import { downloadAllOperationalInstructions } from "@/utils/downloads";
+import { downloadAllOperationalInstructions, resolvePublicAssetUrl } from "@/utils/downloads";
 
 interface OpInstructionsButtonProps {
   slug?: string | null;
@@ -39,6 +39,9 @@ const OpInstructionsButton = ({ slug, name, className = "", compact = false, sin
     try {
       const res = await fetch(doc.href, { credentials: "same-origin" });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      // The preview sandbox answers static files with a login page; never save
+      // that as a "PDF" — fall through to the public copy instead.
+      if (!(res.headers.get("content-type") || "").includes("pdf")) throw new Error("not a pdf");
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -50,7 +53,7 @@ const OpInstructionsButton = ({ slug, name, className = "", compact = false, sin
       setTimeout(() => URL.revokeObjectURL(url), 10_000);
     } catch {
       // Fallback: open the PDF directly so the visitor still gets the document.
-      window.open(doc.href, "_blank", "noopener");
+      window.open(resolvePublicAssetUrl(doc.href), "_blank", "noopener");
     } finally {
       setBusy(false);
     }
