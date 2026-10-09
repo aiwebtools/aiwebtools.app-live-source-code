@@ -126,7 +126,7 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
 
   return (
     <div className="mb-2 flex flex-wrap gap-1.5" onClick={(e) => e.stopPropagation()}>
-      <Button
+      <Button variant="ghost"
         type="button"
         onClick={() => (app ? setOpen(true) : window.open(`/${pageSlug}#try-bot`, "_blank"))}
         className={btn}
@@ -143,7 +143,7 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
           className="flex-1 justify-center px-3 py-1.5 text-[10px]"
         />
       ) : (
-        <Button
+        <Button variant="ghost"
           type="button"
           onClick={() => downloadAllOperationalInstructions()}
           className={btn}

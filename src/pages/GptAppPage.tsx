@@ -321,9 +321,9 @@ const GptAppPage = () => {
             </p>
           </div>
           <div className="ml-auto flex shrink-0 items-center gap-1">
-            <OpInstructionsButton slug={app.slug} name={app.display_name} compact className="hidden text-[10px] sm:inline-flex" />
+            <span className="hidden sm:inline-flex"><OpInstructionsButton slug={app.slug} name={app.display_name} compact singleOnly label="PDF" /></span>
             {speech.supported && (
-              <Button
+              <Button variant="ghost"
                 type="button"
                 onClick={speech.toggle}
                 aria-pressed={speech.enabled}
@@ -334,7 +334,7 @@ const GptAppPage = () => {
                 {speech.enabled ? <Volume2 className="h-4 w-4" aria-hidden="true" /> : <VolumeX className="h-4 w-4" aria-hidden="true" />}
               </Button>
             )}
-            <Button
+            <Button variant="ghost"
               variant="ghost"
               size="icon"
               className="shrink-0"
@@ -344,7 +344,7 @@ const GptAppPage = () => {
             >
               <Star className="h-4 w-4" fill={favorite ? "currentColor" : "none"} style={favorite ? { color: "hsl(var(--bot-accent))" } : undefined} />
             </Button>
-            <Button
+            <Button variant="ghost"
               variant="ghost"
               size="icon"
               className="shrink-0"
@@ -362,7 +362,7 @@ const GptAppPage = () => {
             <div className="max-h-64 overflow-y-auto rounded-xl border border-border/70 bg-card/80 p-2">
               {siblings.length === 0 && <p className="p-2 text-xs text-muted-foreground">Loading tools…</p>}
               {siblings.map((item) => (
-                <Button
+                <Button variant="ghost"
                   key={item.slug}
                   type="button"
                   onClick={() => {
@@ -382,7 +382,7 @@ const GptAppPage = () => {
       </header>
 
       <main className="relative z-10 mx-auto flex max-w-3xl flex-col gap-3 px-3 pb-40 pt-3 sm:px-4 sm:pb-36 sm:pt-4">
-        <OpInstructionsButton slug={app.slug} name={app.display_name} className="justify-center text-center sm:hidden" />
+        <div className="sm:hidden"><OpInstructionsButton slug={app.slug} name={app.display_name} singleOnly label="Instructions (PDF)" /></div>
         {messages.length === 0 && (
           <section
             className="px-1 py-3"
@@ -406,7 +406,7 @@ const GptAppPage = () => {
               <p className="gpt-room-accent mt-4 text-[10px] font-bold uppercase tracking-[0.2em]">Try one of these</p>
               <div className="mt-2 grid gap-2 sm:grid-cols-2">
                 {starters.map((prompt) => (
-                  <Button
+                  <Button variant="ghost"
                     key={prompt}
                     type="button"
                     onClick={() => send(prompt)}
@@ -450,10 +450,10 @@ const GptAppPage = () => {
                       {text && <MessageResponse className="gpt-generated-content">{text}</MessageResponse>}
                       {working && <ImageProgress />}
                       {text && !working && (
-                        <Button
+                        <Button variant="ghost"
                           type="button"
                           onClick={() => speech.speakNow(text)}
-                          className="gpt-room-chip mt-2 inline-flex min-h-9 items-center gap-1.5 rounded-md border px-3 py-2 text-xs font-semibold"
+                          className="gpt-room-chip mt-2 inline-flex w-auto min-h-9 items-center gap-1.5 rounded-md border px-3 py-2 text-xs font-semibold"
                           aria-label={speech.speaking ? `Stop ${voiceProfile.label}` : `Play with ${voiceProfile.label}`}
                           title={speech.speaking ? "Stop reading" : `Play with ${voiceProfile.label}`}
                         >

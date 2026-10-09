@@ -231,7 +231,7 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
             </h2>
           </div>
           {speech.supported && (
-            <Button
+            <Button variant="ghost"
               type="button"
               onClick={speech.toggle}
               aria-pressed={speech.enabled}
@@ -252,7 +252,7 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
           </Link>
         </div>
         <div className="mt-2.5 flex items-center gap-2">
-          <OpInstructionsButton slug={app.slug} name={app.display_name} compact className="text-[10px]" />
+          <OpInstructionsButton slug={app.slug} name={app.display_name} singleOnly compact label="Instructions (PDF)" className="text-[10px]" />
           <span className="gpt-room-accent hidden text-[10px] font-semibold uppercase tracking-[0.18em] sm:inline">
               {speech.enabled ? voiceProfile.label : "Voice off"}
           </span>
@@ -284,7 +284,7 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
                   </p>
                   <div className="mt-2 grid gap-2 sm:grid-cols-2">
                     {starters.map((prompt) => (
-                      <Button
+                      <Button variant="ghost"
                         key={prompt}
                         type="button"
                         onClick={() => send(prompt)}
@@ -318,7 +318,7 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
                         {text && <MessageResponse className="gpt-generated-content">{text}</MessageResponse>}
                         {working && <ImageProgress />}
                         {text && !working && (
-                          <Button
+                          <Button variant="ghost"
                             type="button"
                             onClick={() => speech.speakNow(text)}
                             className="gpt-room-chip mt-2 inline-flex min-h-9 items-center gap-1.5 rounded-md border px-3 py-2 text-xs font-semibold"
