@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Loader2, ArrowLeft, Star, ImageIcon, Play, Repeat, SendHorizontal, Square, Volume2, VolumeX } from "lucide-react";
+import { Loader2, ArrowLeft, Star, ImageIcon, Mic, MicOff, Play, Repeat, SendHorizontal, Square, Volume2, VolumeX } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Message, MessageContent, MessageResponse } from "@/components/ai-elements/message";
@@ -12,6 +12,7 @@ import { ThinkingStatus } from "@/components/ai-elements/thinking-status";
 import { useToast } from "@/hooks/use-toast";
 import { useAuthSession } from "@/hooks/useAuthSession";
 import { useSpeechReader } from "@/hooks/useSpeechReader";
+import { useVoiceInput } from "@/hooks/useVoiceInput";
 import { buildCanonicalUrl } from "@/utils/seo";
 import { getGptAppTheme } from "@/utils/gptAppTheme";
 import { getRoomMotto } from "@/components/tool-detail/gptRoomThemes";
@@ -113,11 +114,11 @@ const GptAppPage = () => {
           .from("gpt_messages")
           .select("role, content")
           .eq("conversation_id", data.id)
-          .order("created_at", { ascending: true })
-          .limit(60);
+          .order("created_at", { ascending: false })
+          .limit(120);
         if (!alive || !rows?.length) return;
         conversationIdRef.current = data.id;
-        setMessages(rows as ChatMessage[]);
+        setMessages([...rows].reverse() as ChatMessage[]);
       });
 
     supabase
@@ -243,10 +244,11 @@ const GptAppPage = () => {
         setStreaming(false);
       }
     },
-    [messages, navigate, session, slug, speech, streaming, toast],
+    [messages, session, slug, speech, streaming, toast],
   );
 
   const starters = useMemo(() => app?.starter_prompts?.slice(0, 2) ?? [], [app]);
+  const voiceInput = useVoiceInput((text) => { if (streaming) setInput(text); else void send(text); }, speech.pauseForMicrophone, speech.resumeAfterMicrophone);
 
   if (loadingApp || sessionLoading) {
     return (
@@ -448,7 +450,7 @@ const GptAppPage = () => {
                   return (
                     <>
                       {text && <MessageResponse className="gpt-generated-content">{text}</MessageResponse>}
-                      {working && <ImageProgress />}
+                      {working && streaming && <ImageProgress />}
                       {text && !working && (
                         <Button variant="ghost"
                           type="button"
@@ -491,6 +493,10 @@ const GptAppPage = () => {
             className="max-h-32 min-h-[48px] resize-none text-base"
           />
           <PromptInputFooter className="flex-wrap gap-2">
+            <Button type="button" variant="ghost" size="icon" className="h-10 w-10 shrink-0" onClick={voiceInput.toggle} aria-pressed={voiceInput.listening} aria-label={voiceInput.listening ? "Stop microphone" : "Speak to the bot"} title={voiceInput.listening ? "Stop microphone" : "Speak to the bot"}>
+              {voiceInput.listening ? <MicOff className="h-4 w-4 animate-pulse" /> : <Mic className="h-4 w-4" />}
+            </Button>
+            {voiceInput.listening && <span role="status" className="text-xs text-primary">Listening…</span>}
             <span className="hidden text-[10px] font-bold uppercase tracking-[0.18em] sm:inline" style={{ color: "hsl(var(--bot-accent))" }}>{getRoomMotto(theme)}</span>
             <PromptInputSubmit
               status={streaming ? "streaming" : "ready"}

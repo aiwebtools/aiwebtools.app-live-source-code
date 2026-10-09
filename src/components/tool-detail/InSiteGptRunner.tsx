@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Maximize2, ImageIcon, Play, SendHorizontal, Square, Volume2, VolumeX } from "lucide-react";
+import { Maximize2, ImageIcon, Mic, MicOff, Play, SendHorizontal, Square, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { Conversation, ConversationContent, ConversationScrollButton } from "@/components/ai-elements/conversation";
@@ -17,6 +17,7 @@ import { ImageProgress, splitImageProgress } from "@/components/ai-elements/imag
 import { ThinkingStatus } from "@/components/ai-elements/thinking-status";
 import { useAuthSession } from "@/hooks/useAuthSession";
 import { useSpeechReader } from "@/hooks/useSpeechReader";
+import { useVoiceInput } from "@/hooks/useVoiceInput";
 import { Tool } from "@/types/tools";
 import { getGuestId } from "@/utils/guestId";
 import { getGptRoomTheme, getRoomMotto } from "./gptRoomThemes";
@@ -47,7 +48,7 @@ const FUNCTIONS_URL = "https://huupailptzvcykyqdkar.supabase.co/functions/v1/run
  * are not signed in. Renders nothing when this tool has no hosted counterpart.
  */
 const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; appSlug?: string; showLoading?: boolean }) => {
-  const { session } = useAuthSession();
+  const { session, user } = useAuthSession();
   const [app, setApp] = useState<GptApp | null>(null);
   const [lookupDone, setLookupDone] = useState(false);
   const voiceProfile = useMemo(() => getGptVoiceProfile(app?.slug, app?.display_name, tool?.category), [app?.display_name, app?.slug, tool?.category]);
@@ -91,6 +92,20 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
       alive = false;
     };
   }, [tool?.title, appSlug]);
+
+  useEffect(() => {
+    if (!user || !app?.slug) return;
+    let alive = true;
+    void (async () => {
+      const { data: conversation } = await supabase.from("gpt_conversations").select("id").eq("user_id", user.id).eq("app_slug", app.slug).order("updated_at", { ascending: false }).limit(1).maybeSingle();
+      if (!alive || !conversation) return;
+      const { data: rows } = await supabase.from("gpt_messages").select("role, content").eq("conversation_id", conversation.id).order("created_at", { ascending: false }).limit(120);
+      if (!alive || !rows?.length || conversationIdRef.current) return;
+      conversationIdRef.current = conversation.id;
+      setMessages((current) => current.length ? current : [...rows].reverse() as ChatMessage[]);
+    })();
+    return () => { alive = false; };
+  }, [app?.slug, user]);
 
   // Featured cards link with "#try-bot" so visitors start right at the chat.
   useEffect(() => {
@@ -181,6 +196,7 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
   );
 
   // Two clear choices read far better than a confusing wall of four.
+  const voiceInput = useVoiceInput((text) => { if (streaming) setInput(text); else void send(text); }, speech.pauseForMicrophone, speech.resumeAfterMicrophone);
   const starters = useMemo(() => (app?.starter_prompts ?? []).slice(0, 2), [app]);
   const theme = useMemo(
     () => getGptRoomTheme(app?.slug, tool?.category, app?.display_name),
@@ -316,7 +332,7 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
                     return (
                       <>
                         {text && <MessageResponse className="gpt-generated-content">{text}</MessageResponse>}
-                        {working && <ImageProgress />}
+                        {working && streaming && <ImageProgress />}
                         {text && !working && (
                           <Button variant="ghost"
                             type="button"
@@ -362,6 +378,10 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
             className="min-h-[48px] max-h-32 w-full resize-none bg-transparent text-base leading-relaxed text-foreground"
           />
           <PromptInputFooter className="flex-wrap gap-2 pt-0">
+            <Button type="button" variant="ghost" size="icon" className="h-10 w-10 shrink-0" onClick={voiceInput.toggle} aria-pressed={voiceInput.listening} aria-label={voiceInput.listening ? "Stop microphone" : "Speak to the bot"} title={voiceInput.listening ? "Stop microphone" : "Speak to the bot"}>
+              {voiceInput.listening ? <MicOff className="h-4 w-4 animate-pulse" /> : <Mic className="h-4 w-4" />}
+            </Button>
+            {voiceInput.listening && <span role="status" className="text-xs text-primary">Listening…</span>}
             <span className="gpt-room-accent hidden text-[10px] font-bold uppercase tracking-[0.18em] sm:inline">
               {theme.signature} · UNIT {theme.consoleNumber}
             </span>
