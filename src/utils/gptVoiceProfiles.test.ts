@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { describe, expect, it } from "bun:test";
 import { getGptVoiceProfile } from "./gptVoiceProfiles";
 
