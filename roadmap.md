@@ -71,8 +71,10 @@
 
 # Natural voices and compact chat (Oct 9)
 
-- [ ] Improve conversational voice delivery without changing bot identities or instructions
-- [ ] Remove robotic voice fallback and verify complete, cancellable reply playback
-- [ ] Slim chat headers, starter prompts, and typing controls across phone/tablet/desktop
-- [ ] Audit every registered individual PDF and test featured-card download/chat actions
-- [ ] Run focused tests and browser checks; preserve every tool and original document
+- [x] Improve conversational voice delivery without changing bot identities or instructions
+- [x] Remove robotic voice fallback; test complete reply chunking and real playback
+- [x] Slim chat headers, starter prompts, and typing controls across phone/tablet/desktop
+- [x] Audit all 419 registered PDFs and verify a real individual PDF download
+- [x] Run focused tests and browser checks; preserve every tool and original document
+- [ ] Featured-card end-to-end check: homepage section did not appear in the automated browser session
+- [ ] Published-site verification: awaiting Master's request to publish the frontend update
