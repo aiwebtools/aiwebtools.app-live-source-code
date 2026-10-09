@@ -5,12 +5,12 @@ import { ImageIcon, Loader2 } from "lucide-react";
 export const IMAGE_PLACEHOLDER = "_Creating your image…_";
 
 export const splitImageProgress = (content: string) => {
-  const index = content.indexOf(IMAGE_PLACEHOLDER);
+  const index = content.lastIndexOf(IMAGE_PLACEHOLDER);
   if (index === -1) return { text: content, working: false };
   const before = content.slice(0, index);
   const after = content.slice(index + IMAGE_PLACEHOLDER.length);
   const finished = /!\[[^\]]*\]\([^)]+\)/.test(after) || /(?:could not|couldn't|failed|unavailable|unable|error|paused)/i.test(after);
-  return { text: (before + after).trim(), working: !finished };
+  return { text: (before.replaceAll(IMAGE_PLACEHOLDER, "") + after).trim(), working: !finished };
 };
 
 export const ImageProgress = () => {

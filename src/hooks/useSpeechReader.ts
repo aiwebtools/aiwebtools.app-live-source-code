@@ -127,6 +127,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
         const chunk = queueRef.current.shift();
         if (!chunk) break;
         const success = await speakStudio(chunk);
+        if (generation !== generationRef.current) return;
         if (!success) { queueRef.current = []; break; }
       }
       if (generation === generationRef.current) queueBusyRef.current = false;

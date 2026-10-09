@@ -196,7 +196,7 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
   );
 
   // Two clear choices read far better than a confusing wall of four.
-  const voiceInput = useVoiceInput((text) => { void send(text); }, speech.stop);
+  const voiceInput = useVoiceInput((text) => { if (streaming) setInput(text); else void send(text); }, speech.stop);
   const starters = useMemo(() => (app?.starter_prompts ?? []).slice(0, 2), [app]);
   const theme = useMemo(
     () => getGptRoomTheme(app?.slug, tool?.category, app?.display_name),
@@ -378,7 +378,7 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
             className="min-h-[48px] max-h-32 w-full resize-none bg-transparent text-base leading-relaxed text-foreground"
           />
           <PromptInputFooter className="flex-wrap gap-2 pt-0">
-            <Button type="button" variant="ghost" size="icon" className="h-10 w-10 shrink-0" disabled={streaming} onClick={voiceInput.toggle} aria-pressed={voiceInput.listening} aria-label={voiceInput.listening ? "Stop microphone" : "Speak to the bot"} title={voiceInput.listening ? "Stop microphone" : "Speak to the bot"}>
+            <Button type="button" variant="ghost" size="icon" className="h-10 w-10 shrink-0" onClick={voiceInput.toggle} aria-pressed={voiceInput.listening} aria-label={voiceInput.listening ? "Stop microphone" : "Speak to the bot"} title={voiceInput.listening ? "Stop microphone" : "Speak to the bot"}>
               {voiceInput.listening ? <MicOff className="h-4 w-4 animate-pulse" /> : <Mic className="h-4 w-4" />}
             </Button>
             {voiceInput.listening && <span role="status" className="text-xs text-primary">Listening…</span>}

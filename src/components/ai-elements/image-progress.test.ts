@@ -11,3 +11,6 @@ it("finishes image loading only after the generated image arrives", () => {
 it("clears image loading on a terminal image failure", () => {
   expect(splitImageProgress(`${IMAGE_PLACEHOLDER}\nImage generation failed.`).working).toBe(false);
 });
+it("shows progress for a second image after the first is complete", () => {
+  expect(splitImageProgress(`${IMAGE_PLACEHOLDER}\n![First](https://example.com/1.jpg)\n${IMAGE_PLACEHOLDER}\nContinuing our journey.`).working).toBe(true);
+});

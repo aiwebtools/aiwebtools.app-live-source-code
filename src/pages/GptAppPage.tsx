@@ -248,7 +248,7 @@ const GptAppPage = () => {
   );
 
   const starters = useMemo(() => app?.starter_prompts?.slice(0, 2) ?? [], [app]);
-  const voiceInput = useVoiceInput((text) => { void send(text); }, speech.stop);
+  const voiceInput = useVoiceInput((text) => { if (streaming) setInput(text); else void send(text); }, speech.stop);
 
   if (loadingApp || sessionLoading) {
     return (
@@ -493,7 +493,7 @@ const GptAppPage = () => {
             className="max-h-32 min-h-[48px] resize-none text-base"
           />
           <PromptInputFooter className="flex-wrap gap-2">
-            <Button type="button" variant="ghost" size="icon" className="h-10 w-10 shrink-0" disabled={streaming} onClick={voiceInput.toggle} aria-pressed={voiceInput.listening} aria-label={voiceInput.listening ? "Stop microphone" : "Speak to the bot"} title={voiceInput.listening ? "Stop microphone" : "Speak to the bot"}>
+            <Button type="button" variant="ghost" size="icon" className="h-10 w-10 shrink-0" onClick={voiceInput.toggle} aria-pressed={voiceInput.listening} aria-label={voiceInput.listening ? "Stop microphone" : "Speak to the bot"} title={voiceInput.listening ? "Stop microphone" : "Speak to the bot"}>
               {voiceInput.listening ? <MicOff className="h-4 w-4 animate-pulse" /> : <Mic className="h-4 w-4" />}
             </Button>
             {voiceInput.listening && <span role="status" className="text-xs text-primary">Listening…</span>}
