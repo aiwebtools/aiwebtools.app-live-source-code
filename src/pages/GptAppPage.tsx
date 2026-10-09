@@ -114,11 +114,11 @@ const GptAppPage = () => {
           .from("gpt_messages")
           .select("role, content")
           .eq("conversation_id", data.id)
-          .order("created_at", { ascending: true })
-          .limit(60);
+          .order("created_at", { ascending: false })
+          .limit(120);
         if (!alive || !rows?.length) return;
         conversationIdRef.current = data.id;
-        setMessages(rows as ChatMessage[]);
+        setMessages([...rows].reverse() as ChatMessage[]);
       });
 
     supabase

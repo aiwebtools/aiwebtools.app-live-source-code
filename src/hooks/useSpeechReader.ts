@@ -11,6 +11,7 @@ const stripForSpeech = (text: string) =>
   text
     .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
     .replace(/_Creating your image…_/g, " ")
+    .replace(/_Searching the web for “[^”]+”…_/g, " ")
     .replace(/!\[[\s\S]*$/g, " ")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/```[\s\S]*?```/g, " ")

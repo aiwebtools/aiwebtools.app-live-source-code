@@ -48,7 +48,7 @@ const FUNCTIONS_URL = "https://huupailptzvcykyqdkar.supabase.co/functions/v1/run
  * are not signed in. Renders nothing when this tool has no hosted counterpart.
  */
 const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; appSlug?: string; showLoading?: boolean }) => {
-  const { session } = useAuthSession();
+  const { session, user } = useAuthSession();
   const [app, setApp] = useState<GptApp | null>(null);
   const [lookupDone, setLookupDone] = useState(false);
   const voiceProfile = useMemo(() => getGptVoiceProfile(app?.slug, app?.display_name, tool?.category), [app?.display_name, app?.slug, tool?.category]);
@@ -92,6 +92,20 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
       alive = false;
     };
   }, [tool?.title, appSlug]);
+
+  useEffect(() => {
+    if (!user || !app?.slug) return;
+    let alive = true;
+    void (async () => {
+      const { data: conversation } = await supabase.from("gpt_conversations").select("id").eq("user_id", user.id).eq("app_slug", app.slug).order("updated_at", { ascending: false }).limit(1).maybeSingle();
+      if (!alive || !conversation) return;
+      const { data: rows } = await supabase.from("gpt_messages").select("role, content").eq("conversation_id", conversation.id).order("created_at", { ascending: false }).limit(120);
+      if (!alive || !rows?.length || conversationIdRef.current) return;
+      conversationIdRef.current = conversation.id;
+      setMessages((current) => current.length ? current : [...rows].reverse() as ChatMessage[]);
+    })();
+    return () => { alive = false; };
+  }, [app?.slug, user]);
 
   // Featured cards link with "#try-bot" so visitors start right at the chat.
   useEffect(() => {

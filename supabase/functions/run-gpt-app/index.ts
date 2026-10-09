@@ -161,7 +161,7 @@ Deno.serve(async (req) => {
   const validIncoming = incoming
     .filter((m) => (m.role === "user" || m.role === "assistant") && typeof m.content === "string")
     .slice(-MAX_CLIENT_HISTORY)
-    .map((m) => ({ role: m.role, content: m.content.slice(0, 8000) }));
+    .map((m) => ({ role: m.role, content: m.content.replace(/_Creating your image…_/g, "").replace(/_Searching the web for “[^”]+”…_/g, "").slice(0, 8000) }));
   const recentMessages = validIncoming.slice(-MAX_HISTORY);
   const earlierMessages = validIncoming.slice(0, -MAX_HISTORY);
   const earlierContext = earlierMessages.length > 0
@@ -229,6 +229,7 @@ Deno.serve(async (req) => {
     "\n\nCORE OPERATING RULES: Follow the operational instructions above exactly and stay fully in this persona for the whole conversation, including its opening question and step-by-step flow. You have every capability of a modern assistant like ChatGPT and Gemini: deep reasoning, long memory of this whole conversation, writing, coding, analysis, tables, planning, live web search (web_search tool) and image creation (generate_image tool). Use web_search whenever the user asks you to look something up, mentions current events, prices, locations, or anything time-sensitive, and cite the source links you used. Make every reply vivid, immersive and true to your character.";
   systemPrompt +=
     "\n\nYou can create images. Call the generate_image tool whenever the user explicitly asks for a picture, image, illustration, diagram, infographic, chart, logo, artwork, visual, scene, portrait, design, or photo. Never merely promise to create it: call the tool in the same response. Describe the visual richly and preserve every requested detail in the tool prompt.";
+  systemPrompt += "\n\nWhen creating a picture, first speak one or two brief in-character sentences continuing the current scene, then call generate_image in that same response. Preserve the user's companions, objects, location and unfolding plot from earlier turns. After creation, continue the scene rather than restarting your opening or asking to create the same image again.";
 
   // Conversation bookkeeping (members only — guest chats are not stored)
   let conversationId = body.conversationId || null;
@@ -392,7 +393,8 @@ Deno.serve(async (req) => {
     res: Response,
     controller: ReadableStreamDefaultController<Uint8Array>,
   ): Promise<{ name: string; args: string; id: string }[]> => {
-    const reader = res.body!.getReader();
+    if (!res.body) return [];
+    const reader = res.body.getReader();
     const calls: { name: string; args: string; id: string }[] = [];
     let buffer = "";
     while (true) {
@@ -433,10 +435,12 @@ Deno.serve(async (req) => {
       try {
         let calls = await pump(upstream, controller);
         const convo: ChatMsg[] = [{ role: "system", content: systemPrompt }, ...messages];
+        let turnTextStart = 0;
         for (let round = 0; round < 4 && calls.length > 0; round++) {
           const used = calls.filter((c) => c.name === "generate_image" || c.name === "web_search").slice(0, 4);
           if (used.length === 0) break;
           const toolResults: ChatMsg[] = [];
+          const turnText = assistant.slice(turnTextStart);
           for (const [index, call] of used.entries()) {
             const id = call.id || `call_${round}_${index}`;
             call.id = id;
@@ -468,9 +472,10 @@ Deno.serve(async (req) => {
           }
           convo.push({
             role: "assistant",
-            content: null,
+            content: turnText || null,
             tool_calls: used.map((c) => ({ id: c.id, type: "function", function: { name: c.name, arguments: c.args || "{}" } })),
           } as ChatMsg, ...toolResults);
+          turnTextStart = assistant.length;
           const follow = await callGateway({ ...basePayload, messages: convo });
           if (!follow.ok || !follow.body) break;
           calls = await pump(follow, controller);
