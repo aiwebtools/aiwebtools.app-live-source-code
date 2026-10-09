@@ -244,7 +244,7 @@ const GptAppPage = () => {
         setStreaming(false);
       }
     },
-    [messages, navigate, session, slug, speech, streaming, toast],
+    [messages, session, slug, speech, streaming, toast],
   );
 
   const starters = useMemo(() => app?.starter_prompts?.slice(0, 2) ?? [], [app]);
@@ -450,7 +450,7 @@ const GptAppPage = () => {
                   return (
                     <>
                       {text && <MessageResponse className="gpt-generated-content">{text}</MessageResponse>}
-                      {working && <ImageProgress />}
+                      {working && streaming && <ImageProgress />}
                       {text && !working && (
                         <Button variant="ghost"
                           type="button"

@@ -28,6 +28,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const supported = typeof window !== "undefined" && (Boolean(profile) || "speechSynthesis" in window);
   const { toast } = useToast();
   const [enabled, setEnabled] = useState(false);
+  const enabledRef = useRef(false);
   const [speaking, setSpeaking] = useState(false);
   const spokenRef = useRef(0);
   const bufferRef = useRef("");
@@ -49,7 +50,8 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
 
   useEffect(() => {
     if (!supported) return;
-    setEnabled(localStorage.getItem(STORAGE_KEY) !== "off");
+    enabledRef.current = localStorage.getItem(STORAGE_KEY) !== "off";
+    setEnabled(enabledRef.current);
   }, [supported]);
 
   const stop = useCallback(() => {
@@ -151,7 +153,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   /** Feed the growing reply; only newly completed sentences are spoken. */
   const feed = useCallback(
     (fullText: string) => {
-      if (!supported || !enabled) return;
+      if (!supported || !enabledRef.current) return;
       bufferRef.current = fullText;
       const pending = fullText.slice(spokenRef.current);
       const lastBreak = Math.max(
@@ -166,17 +168,17 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       if (profile) enqueue(ready);
       else speakChunk(ready);
     },
-    [enabled, enqueue, profile, speakChunk, supported],
+    [enqueue, profile, speakChunk, supported],
   );
 
   /** Speak whatever is left once the reply has finished streaming. */
   const flush = useCallback(() => {
-    if (!supported || !enabled) return;
+    if (!supported || !enabledRef.current) return;
     const rest = bufferRef.current.slice(spokenRef.current);
     spokenRef.current = bufferRef.current.length;
     if (profile) enqueue(rest);
     else speakChunk(rest);
-  }, [enabled, enqueue, profile, speakChunk, supported]);
+  }, [enqueue, profile, speakChunk, supported]);
 
   /** Start a fresh reply. */
   const reset = useCallback(() => {
@@ -194,6 +196,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const toggle = useCallback(() => {
     setEnabled((was) => {
       const next = !was;
+      enabledRef.current = next;
       localStorage.setItem(STORAGE_KEY, next ? "on" : "off");
       if (!next) {
         generationRef.current += 1;

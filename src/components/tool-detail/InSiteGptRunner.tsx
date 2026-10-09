@@ -332,7 +332,7 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
                     return (
                       <>
                         {text && <MessageResponse className="gpt-generated-content">{text}</MessageResponse>}
-                        {working && <ImageProgress />}
+                        {working && streaming && <ImageProgress />}
                         {text && !working && (
                           <Button variant="ghost"
                             type="button"
