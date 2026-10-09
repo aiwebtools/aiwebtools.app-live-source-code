@@ -45,9 +45,10 @@ const FUNCTIONS_URL = "https://huupailptzvcykyqdkar.supabase.co/functions/v1/run
  * tool page. Free for everyone, with a small daily allowance for visitors who
  * are not signed in. Renders nothing when this tool has no hosted counterpart.
  */
-const InSiteGptRunner = ({ tool }: { tool: Tool }) => {
+const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; appSlug?: string; showLoading?: boolean }) => {
   const { session } = useAuthSession();
   const [app, setApp] = useState<GptApp | null>(null);
+  const [lookupDone, setLookupDone] = useState(false);
   const voiceProfile = useMemo(() => getGptVoiceProfile(app?.slug, app?.display_name, tool?.category), [app?.display_name, app?.slug, tool?.category]);
   const speech = useSpeechReader(voiceProfile);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -64,26 +65,31 @@ const InSiteGptRunner = ({ tool }: { tool: Tool }) => {
 
   useEffect(() => {
     let alive = true;
-    if (!tool?.title) return;
+    if (!tool?.title && !appSlug) return;
     setApp(null);
+    setLookupDone(false);
     setMessages([]);
     setNotice(null);
     conversationIdRef.current = null;
 
-    supabase
+    // Look up by slug when the caller already knows the bot; otherwise by title.
+    // limit(1) (not maybeSingle) so a duplicate title can never blank the chat.
+    const base = supabase
       .from("gpt_apps")
       .select("slug, display_name, tagline, greeting, starter_prompts, supports_images")
-      .eq("tool_title", tool.title)
-      .eq("is_active", true)
-      .maybeSingle()
+      .eq("is_active", true);
+    (appSlug ? base.eq("slug", appSlug) : base.eq("tool_title", tool.title))
+      .limit(1)
       .then(({ data }) => {
-        if (alive) setApp((data as GptApp) ?? null);
+        if (!alive) return;
+        setApp(((data as GptApp[] | null) ?? [])[0] ?? null);
+        setLookupDone(true);
       });
 
     return () => {
       alive = false;
     };
-  }, [tool?.title]);
+  }, [tool?.title, appSlug]);
 
   // Featured cards link with "#try-bot" so visitors start right at the chat.
   useEffect(() => {
@@ -185,7 +191,14 @@ const InSiteGptRunner = ({ tool }: { tool: Tool }) => {
   const motto = useMemo(() => getRoomMotto(theme), [theme]);
   const avatar = useMemo(() => getToolImage(tool, toolImages) ?? getGptAvatar(theme.key), [theme.key, tool, toolImages]);
 
-  if (!app) return null;
+  if (!app) {
+    if (!showLoading) return null;
+    return (
+      <p className="p-8 text-center text-sm text-muted-foreground" role="status">
+        {lookupDone ? "This assistant is unavailable right now. Please try again shortly." : "Opening the assistant…"}
+      </p>
+    );
+  }
 
   return (
     <section
