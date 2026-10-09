@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Download, MessageCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import OpInstructionsButton from "@/components/tool-detail/OpInstructionsButton";
@@ -51,6 +52,13 @@ export const findApp = (apps: AppRow[], titles: string[]) => {
  * Each value is a key of OP_INSTRUCTION_DOCS (Master's original document).
  */
 const FEATURED_DOC_SLUGS: Record<string, string> = {
+  "ALAN WATTS GPT": "alan-watts-gpt-page",
+  "BOOK WRITER GPT": "book-writer-gpt-no-longer-segmented",
+  "Insurance Claims GPT": "insurence-claims-gpt",
+  "🔒Insurance Claims GPT": "insurence-claims-gpt",
+  "Engineering GPT Suite": "engineering-gpt-ai-suite",
+  "Engineering GPT AI Suite": "engineering-gpt-ai-suite",
+  "Grant Writer GPT": "grant-writer-gpt-page",
   "Algebraic Expression Creative Inventor GPT": "algebraic-expression-inventor-gpt",
   "Cannabis GPT": "cannabis-gpt-not-gpt4o1-compliant",
   "Clarity Omni GPT": "clarity-writer-gpt",
@@ -95,7 +103,7 @@ export const resolveDocSlug = (titles: string[], appSlug?: string | null): strin
 };
 
 const btn =
-  "op-gold-btn inline-flex flex-1 items-center justify-center gap-1.5 rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide";
+  "op-gold-btn inline-flex h-auto min-h-10 flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-xs font-bold";
 
 /**
  * Card actions for a featured Custom GPT: "Try It Here" pop-up chat running on
@@ -125,14 +133,14 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
 
   return (
     <div className="mb-2 flex flex-wrap gap-1.5" onClick={(e) => e.stopPropagation()}>
-      <button
+      <Button variant="ghost"
         type="button"
         onClick={() => (app ? setOpen(true) : window.open(`/${pageSlug}#try-bot`, "_blank"))}
         className={btn}
         title={`Try ${name} right here, running on its operational instructions`}
       >
         <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" /> Try It Here
-      </button>
+      </Button>
       {hasDoc ? (
         <OpInstructionsButton
           slug={docSlug}
@@ -142,18 +150,18 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
           className="flex-1 justify-center px-3 py-1.5 text-[10px]"
         />
       ) : (
-        <button
+        <Button variant="ghost"
           type="button"
           onClick={() => downloadAllOperationalInstructions()}
           className={btn}
           title="This bot's single document isn't published yet — open the full AIWebTools instruction library"
         >
           <Download className="h-3.5 w-3.5" aria-hidden="true" /> Library
-        </button>
+        </Button>
       )}
       {app && (
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent className="max-h-[92dvh] w-[96vw] max-w-3xl overflow-y-auto p-2 sm:p-4">
+          <DialogContent className="max-h-[92dvh] w-[96vw] max-w-3xl overflow-y-auto p-1 pt-10 sm:p-2 sm:pt-10">
             <DialogTitle className="sr-only">{name}</DialogTitle>
             <DialogDescription className="sr-only">
               Chat with {name}, following its AIWebTools operational instructions.

@@ -67,9 +67,12 @@ export const getGptVoiceProfile = (slug = "", displayName = "", category = ""): 
   const key = RULES.find(([pattern]) => pattern.test(identity))?.[1] ?? "concierge";
   const base = BLUEPRINTS[key] ?? BLUEPRINTS.concierge;
   const special = SPECIAL.find(([pattern]) => pattern.test(identity))?.[1] ?? {};
+  const cast = { ...base, ...special };
   return {
     ...base,
     label: `${key.charAt(0).toUpperCase()}${key.slice(1)} voice`,
     ...special,
+    speed: Math.max(0.95, cast.speed),
+    instructions: `${cast.instructions} Speak conversationally to one listener, not as a voice assistant. Use natural breath, varied intonation, connected phrases and subtle emotion. Avoid robotic rhythm, exaggerated accents and theatrical overacting.`,
   };
 };

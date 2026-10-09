@@ -57,7 +57,7 @@
 .gpt-room-chip { border-color: hsl(var(--bot-accent) / .32); background: hsl(var(--bot-soft) / .58); color: hsl(var(--foreground) / .84); }
 .gpt-room-chip:hover { border-color: hsl(var(--bot-accent) / .8); color: hsl(var(--foreground)); }
 .gpt-msg-user { margin-left: auto; max-width: min(88%, 44rem); border: 1px solid hsl(var(--bot-accent-2) / .7) !important; background: hsl(var(--bot-accent-2) / .86) !important; color: hsl(var(--background)) !important; box-shadow: 0 8px 26px hsl(var(--bot-accent-2) / .18); }
-.gpt-msg-bot { max-width: min(94%, 48rem); border: 1px solid hsl(var(--bot-accent) / .38) !important; border-left-width: 3px !important; background: hsl(var(--bot-deep) / .96) !important; color: hsl(var(--foreground)) !important; box-shadow: 0 8px 28px hsl(var(--bot-accent) / .1); font-size: .975rem; line-height: 1.68; }
+.gpt-msg-bot { max-width: 100%; border: 0 !important; background: transparent !important; color: hsl(var(--foreground)) !important; box-shadow: none; font-size: .975rem; line-height: 1.68; overflow-wrap: anywhere; }
 .gpt-msg-meta { display: flex; align-items: center; gap: .5rem; margin-bottom: .4rem; color: hsl(var(--bot-accent)); font-size: .7rem; font-weight: 800; text-transform: uppercase; }
 .gpt-msg-avatar { width: 1.75rem; height: 1.75rem; flex: 0 0 auto; border-radius: 9999px; border: 1px solid hsl(var(--bot-accent) / .65); object-fit: cover; }
 .gpt-thinking, .gpt-image-progress { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem; border: 1px solid hsl(var(--bot-accent) / .38); border-radius: .6rem; background: hsl(var(--bot-soft) / .52); padding: .65rem .75rem; color: hsl(var(--foreground) / .9); font-size: .75rem; }
@@ -76,8 +76,8 @@
 .gpt-room-icon-btn {
   display: inline-grid;
   place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.75rem;
+  height: 2.75rem;
   flex: 0 0 auto;
   border-radius: 9999px;
   border: 1px solid hsl(var(--bot-accent) / .45);
@@ -93,6 +93,10 @@
   .gpt-thinking, .gpt-image-progress { align-items: center; }
   .gpt-room { border-radius: 1rem; }
   .gpt-room-motto { letter-spacing: .18em !important; font-size: 9px; }
+  .gpt-app-room header > div:first-child { gap: .375rem; padding: .5rem; }
+  .gpt-app-room header .gpt-room-avatar { width: 2rem; height: 2rem; }
+  .gpt-app-room header h1 { font-size: .875rem; }
+  .gpt-app-room header button { flex-shrink: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

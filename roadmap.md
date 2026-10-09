@@ -68,3 +68,13 @@
 - [x] Add a visible phone-header download icon
 - [x] Put CSV, operational instructions, and source-code downloads above the fold in the phone menu
 - [x] Verify both phone download actions and the compact header layout
+
+# Natural voices and compact chat (Oct 9)
+
+- [x] Improve conversational voice delivery without changing bot identities or instructions
+- [x] Remove robotic voice fallback; test complete reply chunking and real playback
+- [x] Slim chat headers, starter prompts, and typing controls across phone/tablet/desktop
+- [x] Audit all 419 registered PDFs and verify a real individual PDF download
+- [x] Run focused tests and browser checks; preserve every tool and original document
+- [ ] Featured-card end-to-end check: homepage section did not appear in the automated browser session
+- [ ] Published-site verification: awaiting Master's request to publish the frontend update

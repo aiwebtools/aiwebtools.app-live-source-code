@@ -146,11 +146,11 @@ const GptAppPage = () => {
   }, [user, slug]);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    if (streaming) bottomRef.current?.scrollIntoView({ behavior: "instant", block: "end" });
   }, [messages, streaming]);
 
   useEffect(() => {
-    if (!streaming) inputRef.current?.focus();
+    if (!streaming && window.matchMedia("(hover: hover) and (pointer: fine)").matches) inputRef.current?.focus({ preventScroll: true });
   }, [streaming, slug]);
 
   const toggleFavorite = useCallback(async () => {
@@ -246,7 +246,7 @@ const GptAppPage = () => {
     [messages, navigate, session, slug, speech, streaming, toast],
   );
 
-  const starters = useMemo(() => app?.starter_prompts?.slice(0, 4) ?? [], [app]);
+  const starters = useMemo(() => app?.starter_prompts?.slice(0, 2) ?? [], [app]);
 
   if (loadingApp || sessionLoading) {
     return (
@@ -309,7 +309,7 @@ const GptAppPage = () => {
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <img src={avatar} alt={`${app.display_name} AI assistant avatar`} className="gpt-room-avatar h-10 w-10 shrink-0 rounded-full" onError={(event) => { event.currentTarget.src = getGptAvatar(theme.key); }} />
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <h1 className="truncate text-base font-bold" style={{ color: "hsl(var(--bot-accent))" }}>
               <span className="gpt-glitch-title truncate" data-text={app.display_name}>
                 {app.display_name}
@@ -320,10 +320,10 @@ const GptAppPage = () => {
               {app.tagline ? ` · ${app.tagline}` : ""}
             </p>
           </div>
-          <div className="ml-auto flex items-center gap-1">
-            <OpInstructionsButton slug={app.slug} name={app.display_name} compact className="hidden text-[10px] sm:inline-flex" />
+          <div className="ml-auto flex shrink-0 items-center gap-1">
+            <span className="hidden sm:inline-flex"><OpInstructionsButton slug={app.slug} name={app.display_name} compact singleOnly label="PDF" /></span>
             {speech.supported && (
-              <button
+              <Button variant="ghost"
                 type="button"
                 onClick={speech.toggle}
                 aria-pressed={speech.enabled}
@@ -332,7 +332,7 @@ const GptAppPage = () => {
                 aria-label={speech.enabled ? `Mute ${voiceProfile.label}` : `Enable ${voiceProfile.label}`}
               >
                 {speech.enabled ? <Volume2 className="h-4 w-4" aria-hidden="true" /> : <VolumeX className="h-4 w-4" aria-hidden="true" />}
-              </button>
+              </Button>
             )}
             <Button
               variant="ghost"
@@ -362,7 +362,7 @@ const GptAppPage = () => {
             <div className="max-h-64 overflow-y-auto rounded-xl border border-border/70 bg-card/80 p-2">
               {siblings.length === 0 && <p className="p-2 text-xs text-muted-foreground">Loading tools…</p>}
               {siblings.map((item) => (
-                <button
+                <Button variant="ghost"
                   key={item.slug}
                   type="button"
                   onClick={() => {
@@ -374,24 +374,24 @@ const GptAppPage = () => {
                   }`}
                 >
                   {item.display_name}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
         )}
       </header>
 
-      <main className="relative z-10 mx-auto flex max-w-3xl flex-col gap-4 px-3 pb-52 pt-4 sm:px-4 sm:pb-40 sm:pt-6">
-        <OpInstructionsButton slug={app.slug} name={app.display_name} className="justify-center text-center sm:hidden" />
+      <main className="relative z-10 mx-auto flex max-w-3xl flex-col gap-3 px-3 pb-40 pt-3 sm:px-4 sm:pb-36 sm:pt-4">
+        <div className="sm:hidden"><OpInstructionsButton slug={app.slug} name={app.display_name} singleOnly label="Instructions (PDF)" /></div>
         {messages.length === 0 && (
           <section
-            className="rounded-2xl border p-4 sm:p-5"
+            className="px-1 py-3"
             style={{
               borderColor: "hsl(var(--bot-accent) / 0.35)",
               background: "hsl(var(--bot-soft) / 0.45)",
             }}
           >
-            <img src={avatar} alt={`${app.display_name} AI assistant`} className="gpt-room-avatar mb-3 h-20 w-20 rounded-full" onError={(event) => { event.currentTarget.src = getGptAvatar(theme.key); }} />
+            <img src={avatar} alt={`${app.display_name} AI assistant`} className="gpt-room-avatar mb-3 h-12 w-12 rounded-full" onError={(event) => { event.currentTarget.src = getGptAvatar(theme.key); }} />
             <p className="text-sm text-foreground/90">
               {app.greeting || `Hello. I am ${app.display_name}. What would you like to work on?`}
             </p>
@@ -406,7 +406,7 @@ const GptAppPage = () => {
               <p className="gpt-room-accent mt-4 text-[10px] font-bold uppercase tracking-[0.2em]">Try one of these</p>
               <div className="mt-2 grid gap-2 sm:grid-cols-2">
                 {starters.map((prompt) => (
-                  <button
+                  <Button variant="ghost"
                     key={prompt}
                     type="button"
                     onClick={() => send(prompt)}
@@ -414,7 +414,7 @@ const GptAppPage = () => {
                     style={{ borderColor: "hsl(var(--bot-accent) / 0.25)" }}
                   >
                     {prompt}
-                  </button>
+                  </Button>
                 ))}
               </div>
               </>
@@ -450,16 +450,16 @@ const GptAppPage = () => {
                       {text && <MessageResponse className="gpt-generated-content">{text}</MessageResponse>}
                       {working && <ImageProgress />}
                       {text && !working && (
-                        <button
+                        <Button variant="ghost"
                           type="button"
                           onClick={() => speech.speakNow(text)}
-                          className="gpt-room-chip mt-2 inline-flex min-h-9 items-center gap-1.5 rounded-md border px-3 py-2 text-xs font-semibold"
+                          className="gpt-room-chip mt-2 inline-flex w-auto min-h-9 items-center gap-1.5 rounded-md border px-3 py-2 text-xs font-semibold"
                           aria-label={speech.speaking ? `Stop ${voiceProfile.label}` : `Play with ${voiceProfile.label}`}
                           title={speech.speaking ? "Stop reading" : `Play with ${voiceProfile.label}`}
                         >
                           {speech.speaking ? <Square className="h-3 w-3" /> : <Play className="h-3 w-3" />}
                           {speech.speaking ? "Stop" : "Play voice"}
-                        </button>
+                        </Button>
                       )}
                     </>
                   );
@@ -488,23 +488,21 @@ const GptAppPage = () => {
             }
             rows={2}
             maxLength={6000}
-            className="max-h-32 min-h-[56px] resize-none text-base sm:max-h-40 sm:min-h-[64px]"
+            className="max-h-32 min-h-[48px] resize-none text-base"
           />
           <PromptInputFooter className="flex-wrap gap-2">
             <span className="hidden text-[10px] font-bold uppercase tracking-[0.18em] sm:inline" style={{ color: "hsl(var(--bot-accent))" }}>{getRoomMotto(theme)}</span>
             <PromptInputSubmit
               status={streaming ? "streaming" : "ready"}
               disabled={streaming || !input.trim()}
-              className="gpt-room-send w-full justify-center px-4 sm:ml-auto sm:w-auto sm:min-w-[9rem]"
-              size="sm"
+              className="gpt-room-send ml-auto h-10 w-10 shrink-0 justify-center p-0"
+              size="icon-sm"
               aria-label={`Send message to ${app.display_name}`}
             >
               <SendHorizontal className="h-4 w-4" aria-hidden="true" />
-              Send message
             </PromptInputSubmit>
           </PromptInputFooter>
         </PromptInput>
-        <p className="mx-auto mt-1 max-w-3xl text-center text-[10px] sm:text-right text-muted-foreground">Press Enter to send · Shift+Enter for a new line</p>
       </div>
     </div>
   );
