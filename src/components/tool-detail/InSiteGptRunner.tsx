@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Maximize2, ImageIcon, Play, SendHorizontal, Square, Volume2, VolumeX } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { Conversation, ConversationContent, ConversationScrollButton } from "@/components/ai-elements/conversation";
 import MatrixRainBackdrop from "@/components/effects/MatrixRainBackdrop";
@@ -100,9 +101,6 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
     return () => window.clearTimeout(t);
   }, [app]);
 
-  useEffect(() => {
-    if (streaming) bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [messages, streaming]);
 
   const send = useCallback(
     async (text: string) => {
@@ -233,7 +231,7 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
             </h2>
           </div>
           {speech.supported && (
-            <button
+            <Button
               type="button"
               onClick={speech.toggle}
               aria-pressed={speech.enabled}
@@ -242,7 +240,7 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
               aria-label={speech.enabled ? "Mute the voice" : "Read replies out loud"}
             >
               {speech.enabled ? <Volume2 className="h-4 w-4" aria-hidden="true" /> : <VolumeX className="h-4 w-4" aria-hidden="true" />}
-            </button>
+            </Button>
           )}
           <Link
             to={`/app/${app.slug}`}
@@ -286,14 +284,14 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
                   </p>
                   <div className="mt-2 grid gap-2 sm:grid-cols-2">
                     {starters.map((prompt) => (
-                      <button
+                      <Button
                         key={prompt}
                         type="button"
                         onClick={() => send(prompt)}
                         className="gpt-room-chip rounded-lg border px-3 py-2.5 text-left text-sm leading-snug transition"
                       >
                         {prompt}
-                      </button>
+                      </Button>
                     ))}
                   </div>
                 </>
@@ -320,7 +318,7 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
                         {text && <MessageResponse className="gpt-generated-content">{text}</MessageResponse>}
                         {working && <ImageProgress />}
                         {text && !working && (
-                          <button
+                          <Button
                             type="button"
                             onClick={() => speech.speakNow(text)}
                             className="gpt-room-chip mt-2 inline-flex min-h-9 items-center gap-1.5 rounded-md border px-3 py-2 text-xs font-semibold"
@@ -329,7 +327,7 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
                           >
                             {speech.speaking ? <Square className="h-3 w-3" /> : <Play className="h-3 w-3" />}
                             {speech.speaking ? "Stop" : "Play voice"}
-                          </button>
+                          </Button>
                         )}
                       </>
                     );
@@ -353,7 +351,7 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
         {/* Wide typing deck — full width, roomy, send sits under it */}
         <PromptInput
           onSubmit={({ text }) => send(text)}
-          className="gpt-room-input mt-4 rounded-xl"
+          className="gpt-room-input mt-2 rounded-lg"
         >
           <PromptInputTextarea
             value={input}
@@ -361,25 +359,23 @@ const InSiteGptRunner = ({ tool, appSlug, showLoading = false }: { tool: Tool; a
             placeholder={theme.placeholder}
             rows={2}
             maxLength={6000}
-            className="min-h-[56px] w-full resize-y bg-transparent text-base leading-relaxed text-foreground sm:min-h-[96px]"
+            className="min-h-[48px] max-h-32 w-full resize-none bg-transparent text-base leading-relaxed text-foreground"
           />
-          <PromptInputFooter className="flex-wrap gap-2 border-t border-border pt-2">
+          <PromptInputFooter className="flex-wrap gap-2 pt-0">
             <span className="gpt-room-accent hidden text-[10px] font-bold uppercase tracking-[0.18em] sm:inline">
               {theme.signature} · UNIT {theme.consoleNumber}
             </span>
             <PromptInputSubmit
               status={streaming ? "streaming" : "ready"}
               disabled={streaming || !input.trim()}
-              className="gpt-room-send w-full justify-center px-4 sm:ml-auto sm:w-auto sm:min-w-[9rem]"
-              size="sm"
+              className="gpt-room-send ml-auto h-10 w-10 shrink-0 justify-center p-0"
+              size="icon-sm"
               aria-label={`Send message to ${app.display_name}`}
             >
               <SendHorizontal className="h-4 w-4" aria-hidden="true" />
-              Send message
             </PromptInputSubmit>
           </PromptInputFooter>
         </PromptInput>
-        <p className="mt-1.5 text-center text-[10px] text-muted-foreground sm:text-right">Press Enter to send · Shift+Enter for a new line</p>
 
         {!session && (
           <p className="mt-2 text-xs text-muted-foreground">

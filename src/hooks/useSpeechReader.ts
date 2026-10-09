@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { splitSpeechText } from "@/utils/speechText";
+import { useToast } from "@/hooks/use-toast";
 import type { GptVoiceProfile } from "@/utils/gptVoiceProfiles";
 
 const STORAGE_KEY = "awt-voice-enabled";
@@ -20,7 +22,8 @@ const stripForSpeech = (text: string) =>
  * Visitors can mute it at any time; the choice is remembered on this device.
  */
 export const useSpeechReader = (profile?: GptVoiceProfile) => {
-  const supported = typeof window !== "undefined" && "speechSynthesis" in window;
+  const supported = typeof window !== "undefined" && (Boolean(profile) || "speechSynthesis" in window);
+  const { toast } = useToast();
   const [enabled, setEnabled] = useState(false);
   const [speaking, setSpeaking] = useState(false);
   const spokenRef = useRef(0);
@@ -46,14 +49,14 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const stop = useCallback(() => {
     requestRef.current?.abort();
     releaseStudioAudio();
-    if (supported) window.speechSynthesis.cancel();
+    if (supported) window.speechSynthesis?.cancel();
     spokenRef.current = 0;
     bufferRef.current = "";
     setSpeaking(false);
   }, [releaseStudioAudio, supported]);
 
   const speakStudio = useCallback(async (text: string) => {
-    const clean = stripForSpeech(text).slice(0, 4000);
+    const clean = stripForSpeech(text);
     if (!clean || !profile || !ANON_KEY) return false;
     requestRef.current?.abort();
     releaseStudioAudio();
@@ -61,26 +64,46 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     requestRef.current = controller;
     setSpeaking(true);
     try {
-      const response = await fetch(FUNCTION_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` },
-        body: JSON.stringify({ text: clean, voice: profile.voice, speed: profile.speed, instructions: profile.instructions }),
-        signal: controller.signal,
-      });
-      if (!response.ok) return false;
-      const url = URL.createObjectURL(await response.blob());
-      audioUrlRef.current = url;
-      const audio = new Audio(url);
-      audioRef.current = audio;
-      audio.onended = () => { releaseStudioAudio(); setSpeaking(false); };
-      audio.onerror = () => { releaseStudioAudio(); setSpeaking(false); };
-      await audio.play();
-      return true;
-    } catch {
-      setSpeaking(false);
+      for (const chunk of splitSpeechText(clean)) {
+        if (controller.signal.aborted) return false;
+        const response = await fetch(FUNCTION_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` },
+          body: JSON.stringify({ text: chunk, voice: profile.voice, speed: profile.speed, instructions: profile.instructions }),
+          signal: controller.signal,
+        });
+        if (!response.ok) {
+          const detail = await response.json().catch(() => ({}));
+          throw new Error(detail.error || detail.message || "Voice playback is unavailable right now.");
+        }
+        const blob = await response.blob();
+        if (controller.signal.aborted) return false;
+        if (!blob.size || !blob.type.startsWith("audio/")) throw new Error("The voice engine returned no playable audio.");
+        const url = URL.createObjectURL(blob);
+        audioUrlRef.current = url;
+        const audio = new Audio(url);
+        audioRef.current = audio;
+        await new Promise<void>((resolve, reject) => {
+          const finish = () => { controller.signal.removeEventListener("abort", abort); releaseStudioAudio(); resolve(); };
+          const abort = () => { audio.pause(); finish(); };
+          controller.signal.addEventListener("abort", abort, { once: true });
+          audio.onended = finish;
+          audio.onerror = () => { controller.signal.removeEventListener("abort", abort); reject(new Error("Audio could not play. Please tap Play voice again.")); };
+          void audio.play().catch(reject);
+        });
+      }
+      return !controller.signal.aborted;
+    } catch (error) {
+      if (!controller.signal.aborted) toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Please try voice playback again.", variant: "destructive" });
       return false;
+    } finally {
+      if (requestRef.current === controller) {
+        releaseStudioAudio();
+        setSpeaking(false);
+        requestRef.current = null;
+      }
     }
-  }, [profile, releaseStudioAudio]);
+  }, [profile, releaseStudioAudio, toast]);
 
   const speakChunk = useCallback(
     (chunk: string) => {
@@ -128,7 +151,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     const rest = bufferRef.current.slice(spokenRef.current);
     spokenRef.current = bufferRef.current.length;
     const completeReply = bufferRef.current;
-    if (profile) void speakStudio(completeReply).then((played) => { if (!played) speakChunk(rest); });
+    if (profile) void speakStudio(completeReply);
     else speakChunk(rest);
   }, [enabled, profile, speakChunk, speakStudio, supported]);
 
@@ -138,7 +161,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     releaseStudioAudio();
     spokenRef.current = 0;
     bufferRef.current = "";
-    if (supported) window.speechSynthesis.cancel();
+    if (supported) window.speechSynthesis?.cancel();
     setSpeaking(false);
   }, [releaseStudioAudio, supported]);
 
@@ -150,7 +173,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
         requestRef.current?.abort();
         releaseStudioAudio();
         setSpeaking(false);
-        if (supported) window.speechSynthesis.cancel();
+        if (supported) window.speechSynthesis?.cancel();
       }
       return next;
     });
@@ -163,10 +186,10 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const speakNow = useCallback(
     (text: string) => {
       if (!supported) return;
-      if (speaking || window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+      if (speaking || window.speechSynthesis?.speaking || window.speechSynthesis?.pending) {
         requestRef.current?.abort();
         releaseStudioAudio();
-        window.speechSynthesis.cancel();
+        window.speechSynthesis?.cancel();
         setSpeaking(false);
         return;
       }
@@ -190,7 +213,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   useEffect(() => () => {
     requestRef.current?.abort();
     releaseStudioAudio();
-    if (supported) window.speechSynthesis.cancel();
+    if (supported) window.speechSynthesis?.cancel();
   }, [releaseStudioAudio, supported]);
 
   return { supported, enabled, toggle, feed, flush, reset, stop, speakNow, speaking };
