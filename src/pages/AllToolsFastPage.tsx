@@ -94,6 +94,8 @@ const AllToolsFastPage = () => {
             <GlobalSearchBar />
           </div>
 
+          <CommunityGptStrip />
+
           {tools.length === 0 ? (
             <ToolsGridSkeleton count={12} />
           ) : (
@@ -104,7 +106,6 @@ const AllToolsFastPage = () => {
                 </div>
               </div>
 
-              <CommunityGptStrip />
               <div id="tools-section">
                 <ToolsGrid
                   tools={tools}
