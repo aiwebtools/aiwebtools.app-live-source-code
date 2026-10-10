@@ -24,7 +24,7 @@ import { loadToolImageMap } from "@/utils/search/toolImageMap";
 import { loadStudioBots, STUDIO_MODELS, type StudioBot } from "./botCatalog";
 import BotPortrait from "./BotPortrait";
 import BotBuilder from "./BotBuilder";
-import { customToStudioBot, deleteCustomBot, readCustomBots } from "@/utils/customBots";
+import { deleteCustomBot, readCustomBots } from "@/utils/customBots";
 import { Trash2, Wand2 } from "lucide-react";
 import StudioImageActions from "./StudioImageActions";
 import { Tool, ToolHeader, ToolContent } from "@/components/ai-elements/tool";
@@ -193,5 +193,6 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
     </div>
     <Sheet open={leftOpen} onOpenChange={setLeftOpen}><SheetContent side="left" className="studio-drawer overflow-y-auto"><SheetTitle>Bots & conversations</SheetTitle><SheetDescription className="sr-only">Your assistants and chats saved on this device</SheetDescription><div className="mt-6">{sidebar}</div></SheetContent></Sheet>
     <Sheet open={rightOpen} onOpenChange={setRightOpen}><SheetContent className="studio-drawer overflow-y-auto"><SheetTitle>Assistant settings</SheetTitle><SheetDescription className="sr-only">Model, voice and operational instructions</SheetDescription><div className="mt-6">{settings}</div></SheetContent></Sheet>
+    <BotBuilder open={builderOpen} onOpenChange={setBuilderOpen} onSaved={(bot) => { setCustomBots(readCustomBots()); setBuilderOpen(false); chooseThread(openBotConversation(bot.slug, crypto.randomUUID())); }} />
   </section>;
 }
