@@ -217,7 +217,7 @@ Deno.serve(async (req) => {
   let basePrompt = "";
   if (isCustom) {
     if (customInstructions.length < 10 || !customName) return json({ error: "Your custom bot needs a name and instructions." }, 400);
-    app = { display_name: customName, model: "google/gemini-3-flash-preview", supports_images: true };
+    app = { display_name: customName, model: "google/gemini-3.1-flash-lite", supports_images: true };
     const customTagline = typeof body.custom?.tagline === "string" ? body.custom.tagline.trim().slice(0, 160) : "";
     basePrompt = `You are "${customName}"${customTagline ? ` — ${customTagline}` : ""}, a custom assistant created by a user on AIWebTools.app.\n\nOPERATIONAL INSTRUCTIONS:\n${customInstructions}`;
   } else {
@@ -383,7 +383,7 @@ Deno.serve(async (req) => {
     const requestImage = () => fetch(IMAGE_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${LOVABLE_API_KEY}` },
-      body: JSON.stringify({ model: IMAGE_MODEL, prompt, size: "1024x1024" }),
+      body: JSON.stringify({ model: IMAGE_MODEL, prompt, size: "1024x1024", quality: "low" }),
     });
     let res = await requestImage();
     if (res.status === 429 || res.status >= 500) {
