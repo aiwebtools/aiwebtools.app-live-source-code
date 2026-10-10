@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Send, ShieldCheck, Globe, Search } from "lucide-react";
 import SubmitToolModal from "@/components/SubmitToolModal";
 import SEOHead from "@/components/SEOHead";
+import CommunityGptStrip from "@/components/CommunityGptStrip";
 
 const UserSubmittedToolsPage = () => {
   const { tools, loading } = useUserSubmittedTools();
@@ -52,6 +53,7 @@ const UserSubmittedToolsPage = () => {
             </Button>
           </div>
 
+          <CommunityGptStrip />
           <div className="relative max-w-xl mx-auto mb-8">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-green-500/70" />
             <Input

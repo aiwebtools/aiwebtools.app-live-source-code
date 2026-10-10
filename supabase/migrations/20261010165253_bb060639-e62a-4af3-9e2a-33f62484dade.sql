@@ -1,0 +1,1 @@
+ALTER TABLE public.gpt_apps ADD COLUMN IF NOT EXISTS image_url text;

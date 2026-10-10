@@ -223,6 +223,7 @@ export type Database = {
           display_name: string
           greeting: string | null
           id: string
+          image_url: string | null
           is_active: boolean
           model: string
           slug: string
@@ -238,6 +239,7 @@ export type Database = {
           display_name: string
           greeting?: string | null
           id?: string
+          image_url?: string | null
           is_active?: boolean
           model?: string
           slug: string
@@ -253,6 +255,7 @@ export type Database = {
           display_name?: string
           greeting?: string | null
           id?: string
+          image_url?: string | null
           is_active?: boolean
           model?: string
           slug?: string

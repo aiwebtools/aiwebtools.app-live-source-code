@@ -1,5 +1,10 @@
 # Chatbot completion roadmap
 
+# Cheap model check + community directory (Oct 10)
+- [x] Real replies from 4 bots on cheapest model: ~3s vs ~15s before; ~0.0025 vs ~0.011-0.019 credits per message
+- [x] Community GPTs get an AI-generated branded image on approval and appear in search + All AI Tools + community page
+- [x] Publish
+
 # Matrix example verification and publish (Oct 10)
 - [x] Match supplied Matrix styling, fix gold-button contrast, and connect missing usable chat actions
 - [x] Check cheap model switching, original instructions, voice casting, images, PDFs, and initialization audio
