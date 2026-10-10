@@ -558,10 +558,19 @@ iframe {
 }
 
 /* Shared Matrix conversation studio; identity accents inherit the bot tokens. */
-.studio { --studio-surface: 160 14% 4%; --studio-line: 146 64% 27%; position: relative; isolation: isolate; overflow: hidden; color: hsl(var(--foreground)); background: hsl(var(--studio-surface)); border-radius: 8px; }
+.studio { --studio-surface: 160 14% 4%; --studio-line: 146 64% 27%; --primary: 146 90% 55%; --primary-foreground: 160 30% 3%; --secondary: 180 18% 13%; --secondary-foreground: 160 20% 95%; --border: 146 30% 20%; --ring: 146 90% 55%; position: relative; isolation: isolate; overflow: hidden; color: hsl(var(--foreground)); background: hsl(var(--studio-surface)); border-radius: 8px; }
 .studio-full { height: 100dvh; min-height: 420px; border: 0; border-radius: 0; }
 .studio-embedded { height: min(820px, 86dvh); min-height: 480px; margin-bottom: 24px; scroll-margin-top: 80px; }
-.studio-rain { z-index: -1; opacity: .38; }
+.studio-rain { z-index: 0; opacity: .65; }
+.studio-topbar, .studio-grid { position: relative; z-index: 1; }
+.studio-portrait-fallback { display: inline-grid; place-items: center; font-size: 24px; }
+.studio button { color: hsl(var(--foreground)); background-image: none; }
+.studio button:hover { background: hsl(var(--primary) / .12); }
+.studio .studio-new, .studio .gpt-room-send { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+.studio button.studio-selected { color: hsl(var(--primary)); }
+.studio .op-gold-btn { color: hsl(30 45% 12%); }
+.studio-transcript, .studio-composer { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.studio button.interactive-button::before { display: none; }
 .studio-topbar { height: 60px; display: flex; align-items: center; gap: 24px; padding: 0 20px; border-bottom: 1px solid hsl(var(--studio-line) / .8); background: hsl(var(--studio-surface) / .82); }
 .studio-brand { font-size: 19px; font-weight: 900; white-space: nowrap; }
 .studio-brand span { color: hsl(var(--primary)); }

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Bot, Check, Copy, Globe, History, ImageIcon, Loader2, Menu, Mic, MicOff, Plus, Search, SendHorizontal, Settings2, Square, Volume2, VolumeX, Play } from "lucide-react";
+import { Bot, Check, Copy, Globe, History, ImageIcon, Menu, Mic, MicOff, Plus, Search, SendHorizontal, Settings2, Square, Volume2, VolumeX, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -22,6 +22,9 @@ import { playTimeWarpVoice } from "@/utils/effects/timeWarpVoice";
 import { conversationPath, openBotConversation, readBotConversations, saveBotConversation, type BotConversation, type BotMessage } from "@/utils/botConversations";
 import { loadToolImageMap } from "@/utils/search/toolImageMap";
 import { loadStudioBots, STUDIO_MODELS, type StudioBot } from "./botCatalog";
+import BotPortrait from "./BotPortrait";
+import { Tool, ToolHeader, ToolContent } from "@/components/ai-elements/tool";
+import type { BotActivity } from "@/utils/botConversations";
 
 export default function BotStudio({ app, threadId, embedded = false }: { app: StudioBot; threadId?: string; embedded?: boolean }) {
   const navigate = useNavigate();
@@ -74,6 +77,7 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
     setInput(""); setNotice(""); setStreaming(true); speech.reset();
     const controller = new AbortController(); abortRef.current = controller;
     let assistant = "";
+    const activities: BotActivity[] = [];
     let serverId = current.serverId;
     try {
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/run-gpt-app`, {
@@ -96,11 +100,17 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
           const payload = line.slice(6).trim(); if (!payload || payload === "[DONE]") continue;
           let parsed; try { parsed = JSON.parse(payload); } catch { continue; }
           if (parsed.error) { setNotice(parsed.error); continue; }
+          if (parsed.activity) {
+            const activity = parsed.activity as BotActivity;
+            const found = activities.findIndex((item) => item.id === activity.id);
+            if (found >= 0) activities[found] = activity; else activities.push(activity);
+            setThread({ ...base, serverId, messages: [...messages, { role: "assistant", content: assistant, activities: [...activities] }] });
+          }
           const delta = parsed?.choices?.[0]?.delta?.content;
           if (typeof delta === "string") {
             assistant += delta;
             // Keep streamed state responsive; save the complete turn at the end.
-            setThread({ ...base, serverId, messages: [...messages, { role: "assistant", content: assistant }] });
+            setThread({ ...base, serverId, messages: [...messages, { role: "assistant", content: assistant, activities: [...activities] }] });
             speech.feed(assistant);
           }
         }
@@ -111,7 +121,7 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
     } catch (error) {
       if (!controller.signal.aborted) setNotice(error instanceof Error ? error.message : "The reply could not load.");
     } finally {
-      commit({ ...base, serverId, messages: assistant ? [...messages, { role: "assistant", content: assistant }] : messages, updatedAt: Date.now() });
+      commit({ ...base, serverId, messages: assistant || activities.length ? [...messages, { role: "assistant", content: assistant, activities: activities.map((activity) => activity.state === "input-available" ? { ...activity, state: "output-error", error: "This action was interrupted." } : activity) }] : messages, updatedAt: Date.now() });
       setStreaming(false); abortRef.current = null;
     }
   }, [app.slug, commit, session, speech, streaming]);
@@ -147,14 +157,14 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
     <div className="studio-setting-section"><OpInstructionsButton slug={app.slug} name={app.display_name} singleOnly compact label="Instructions (PDF)" /></div>
   </>;
   return <section id="try-bot" aria-label={`Run ${app.display_name} here`} className={`gpt-room studio ${embedded ? "studio-embedded" : "studio-full"}`} data-room-pattern={theme.pattern} style={themeVars}>
-    <MatrixRainBackdrop className="studio-rain" intensity={embedded ? 0.35 : 0.55} />
+    <MatrixRainBackdrop className="studio-rain" intensity={embedded ? 0.55 : 0.8} />
     <div className="studio-topbar"><Link to="/" className="studio-brand"><span>AI</span>WEBTOOLS<span>.APP</span></Link><span className="studio-label hidden sm:flex"><span className="studio-live-dot" />AI CONVERSATION STUDIO</span><div className="ml-auto flex gap-1"><Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setLeftOpen(true)} aria-label="Open bots and chat history"><Menu className="h-4 w-4" /></Button><Button variant="ghost" size="icon" className="xl:hidden" onClick={() => setRightOpen(true)} aria-label="Open model and voice settings"><Settings2 className="h-4 w-4" /></Button></div></div>
     <div className="studio-grid">
       <aside className="studio-sidebar hidden lg:flex">{sidebar}</aside>
       <main className="studio-main">
-        <header className="studio-bot-header"><img src={avatar} alt={`${app.display_name} avatar`} className="gpt-room-avatar h-11 w-11 shrink-0 rounded-md" /><div className="min-w-0 flex-1"><h1 className="break-words text-base font-bold sm:text-xl gpt-room-accent"><span className="gpt-glitch-title" data-text={app.display_name}>{app.display_name}</span></h1><p className="mt-1 truncate text-xs text-muted-foreground">{theme.roomLabel}</p></div><Button variant="ghost" size="icon" className="shrink-0" onClick={speech.toggle} aria-label={speech.enabled ? "Mute the voice" : "Enable the voice"} title={speech.enabled ? "Mute the voice" : "Enable the voice"}>{speech.enabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}</Button><div className="studio-header-pdf"><OpInstructionsButton slug={app.slug} name={app.display_name} singleOnly compact label="PDF" /></div></header>
+        <header className="studio-bot-header"><BotPortrait src={avatar} name={app.display_name} themeKey={theme.key} emblem={theme.emblem} className="gpt-room-avatar h-11 w-11 shrink-0 rounded-md" /><div className="min-w-0 flex-1"><h1 className="break-words text-base font-bold sm:text-xl gpt-room-accent"><span className="gpt-glitch-title" data-text={app.display_name}>{app.display_name}</span></h1><p className="mt-1 truncate text-xs text-muted-foreground">{theme.roomLabel}</p></div><Button variant="ghost" size="icon" className="shrink-0" onClick={speech.toggle} aria-label={speech.enabled ? "Mute the voice" : "Enable the voice"} title={speech.enabled ? "Mute the voice" : "Enable the voice"}>{speech.enabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}</Button><div className="studio-header-pdf"><OpInstructionsButton slug={app.slug} name={app.display_name} singleOnly compact label="PDF" /></div></header>
         <Conversation className="studio-transcript"><ConversationContent className="gap-5 p-4 sm:p-6">
-          {!thread.messages.length && <div className="studio-welcome"><img src={avatar} alt="" className="gpt-room-avatar mb-5 h-20 w-20 rounded-md" /><p className="text-sm leading-7 text-foreground">{app.greeting || `Hello, I am ${app.display_name}. What would you like to explore?`}</p><div className="mt-5 grid gap-2 sm:grid-cols-2">{(app.starter_prompts || []).slice(0, 2).map((prompt) => <Button variant="ghost" className="studio-starter h-auto whitespace-normal text-left text-xs" key={prompt} onClick={() => send(prompt)}>{prompt}</Button>)}</div></div>}
+          {!thread.messages.length && <div className="studio-welcome"><BotPortrait src={avatar} name={app.display_name} themeKey={theme.key} emblem={theme.emblem} className="gpt-room-avatar mb-5 h-20 w-20 rounded-md" /><p className="text-sm leading-7 text-foreground">{app.greeting || `Hello, I am ${app.display_name}. What would you like to explore?`}</p><div className="mt-5 grid gap-2 sm:grid-cols-2">{(app.starter_prompts || []).slice(0, 2).map((prompt) => <Button variant="ghost" className="studio-starter h-auto whitespace-normal text-left text-xs" key={prompt} onClick={() => send(prompt)}>{prompt}</Button>)}</div></div>}
           {thread.messages.map((message, index) => { const { text, working } = splitImageProgress(message.content); return <Message key={index} from={message.role}><MessageContent className={message.role === "user" ? "gpt-msg-user" : "gpt-msg-bot"}><div className="gpt-msg-meta">{message.role === "assistant" && <img src={avatar} alt="" className="gpt-msg-avatar" />}<span>{message.role === "user" ? "You" : app.display_name}</span></div>{message.role === "user" ? <p className="whitespace-pre-wrap">{message.content}</p> : <>{text && <MessageResponse className="gpt-generated-content">{text}</MessageResponse>}{working && streaming && index === thread.messages.length - 1 && <ImageProgress />}{text && <div className="mt-2 flex gap-1"><Button variant="ghost" size="icon" onClick={() => speech.speakNow(text)} aria-label={speech.speaking ? "Stop reading" : "Play reply"} title="Play or stop reply">{speech.speaking ? <Square className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}</Button><Button variant="ghost" size="icon" aria-label="Copy reply" title="Copy reply" onClick={() => { void navigator.clipboard.writeText(text).then(() => setCopied(index)).catch(() => setNotice("Copy is unavailable in this browser.")); }}>{copied === index ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}</Button></div>}</>}</MessageContent></Message>; })}
           {streaming && !thread.messages.at(-1)?.content && <ThinkingStatus avatar={avatar} name={app.display_name} />}
           {streaming && thread.messages.at(-1)?.role === "user" && <ThinkingStatus avatar={avatar} name={app.display_name} />}
