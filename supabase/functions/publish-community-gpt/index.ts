@@ -63,5 +63,35 @@ Deno.serve(async (req) => {
   const prompt = `You are "${name}"${tagline ? ` — ${tagline}` : ""}, a community-made assistant published on AIWebTools.app.\n\nOPERATIONAL INSTRUCTIONS:\n${instructions}`;
   const { error: promptErr } = await admin.from("gpt_app_prompts").insert({ app_slug: slug, system_prompt: prompt });
   if (promptErr) { await admin.from("gpt_apps").delete().eq("slug", slug); return json({ error: "Publishing failed. Please try again." }, 500); }
-  return json({ approved: true, slug, reason: verdict.reason || "Approved" });
+  // Branded directory image: bot name in the art + AIWEBTOOLS.AI mark bottom-right.
+  // Failure here never blocks publishing; the bot falls back to its themed emblem.
+  let imageUrl: string | null = null;
+  try {
+    const art = await fetch("https://ai.gateway.lovable.dev/v1/images/generations", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "openai/gpt-image-2.5-sunburst",
+        size: "1536x1024",
+        quality: "low",
+        prompt: `Premium cinematic 16:9 hero artwork for an AI assistant called "${name}"${tagline ? ` (${tagline})` : ""}. Visually express, through a rich metaphor, what this assistant does: ${instructions.slice(0, 600)}. Matrix-green digital glow, deep black background, 4K realistic yet artistic. The exact title text "${name}" appears large, clean and correctly spelled. A small, unobtrusive "AIWEBTOOLS.AI" logo wordmark sits in the bottom-right corner. No other text.`,
+      }),
+    });
+    if (art.ok) {
+      const b64: string = (await art.json())?.data?.[0]?.b64_json || "";
+      if (b64) {
+        const bin = atob(b64);
+        const bytes = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        const path = `community-bots/${slug}.png`;
+        const { error: upErr } = await admin.storage.from("tool-images").upload(path, bytes, { contentType: "image/png", upsert: true });
+        if (!upErr) {
+          imageUrl = admin.storage.from("tool-images").getPublicUrl(path).data.publicUrl;
+          await admin.from("gpt_apps").update({ image_url: imageUrl }).eq("slug", slug);
+        } else console.error("image upload failed", upErr.message);
+      }
+    } else console.error("image gen failed", art.status, (await art.text()).slice(0, 200));
+  } catch (e) { console.error("image step failed", e); }
+
+  return json({ approved: true, slug, imageUrl, reason: verdict.reason || "Approved" });
 });
