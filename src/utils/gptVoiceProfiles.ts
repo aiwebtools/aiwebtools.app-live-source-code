@@ -41,8 +41,9 @@ const RULES: Array<[RegExp, keyof typeof BLUEPRINTS]> = [
 ];
 
 const SPECIAL: Array<[RegExp, Partial<GptVoiceProfile>]> = [
-  [/albert.?einstein/i, { voice: "echo", speed: 0.9, label: "Reflective German-born physicist", instructions: "Speak as an original, character-inspired scientific guide with a gentle German accent, humane wit, thoughtful pauses, and delighted curiosity. Do not claim to be or clone Albert Einstein." }],
-  [/nikola.?tesla/i, { voice: "onyx", speed: 0.92, label: "Visionary Serbian-American inventor", instructions: "Speak as an original, character-inspired inventor with a subtle Serbian-influenced accent, elegant intensity, exact diction, and visionary wonder. Do not claim to be or clone Nikola Tesla." }],
+  [/mary.*magd[ae]l[ei]ne|magd[ae]l[ei]ne/i, { voice: "shimmer", speed: 0.96, label: "Mary Magdalene · Compassionate feminine storyteller", instructions: "Use a distinctly feminine adult voice: intimate, compassionate, quietly courageous and luminous. Gentle warmth, grounded tenderness and reflective pauses; no breathy whispering or grandiose sermon. An original character-inspired voice, not a historical recording." }],
+  [/einstein/i, { voice: "echo", speed: 0.97, label: "Reflective German-born physicist", instructions: "Use a warm mature masculine voice with a gentle German accent, humane wit, reflective pauses and delighted scientific curiosity. Explain as though sharing a discovery with a friend. Original character inspiration, not an imitation of Einstein's actual voice." }],
+  [/tesla/i, { voice: "onyx", speed: 0.98, label: "Visionary Serbian-American inventor", instructions: "Use an elegant masculine inventor's voice with a subtle Serbian-influenced English accent, precise consonants, restrained intensity and flashes of visionary excitement. Original character inspiration, not an imitation of Tesla's actual voice." }],
   [/black.?history|african.?american|civil.?rights/i, { voice: "onyx", speed: 0.86, label: "Civil-rights era orator", instructions: "Speak as an original, character-inspired Southern Baptist orator of the civil-rights era: deep resonant baritone, rising rhythmic preacher cadence, dignified, hopeful, and morally stirring. Do not claim to be or clone any real person." }],
   [/native.?american|black.?elk/i, { voice: "sage", speed: 0.86, label: "Elder storyteller", instructions: "Speak as a respectful, grounded elder storyteller: slow, warm, earthy, reverent toward land and ancestors, never stereotyped." }],
   [/yemaya|mother.?of.?the.?waters/i, { voice: "shimmer", speed: 0.88, label: "Ocean mother", instructions: "Speak as a serene, motherly ocean spirit: flowing, warm, protective, with gentle wave-like pauses." }],
@@ -52,7 +53,8 @@ const SPECIAL: Array<[RegExp, Partial<GptVoiceProfile>]> = [
   [/matrix|neo/i, { voice: "onyx", speed: 0.9, label: "Mysterious awakener", instructions: "Speak like a calm, mysterious mentor guiding someone out of a simulation: low, deliberate, enigmatic, profound." }],
   [/children|picture.?book|coloring|story/i, { voice: "coral", speed: 0.95, label: "Bedtime storyteller", instructions: "Speak like a magical, animated bedtime storyteller: playful, wonder-filled, expressive voices for characters, gentle and kind." }],
   [/imagin|dream|fortune|oracul|mayan|myth/i, { voice: "ballad", speed: 0.88, label: "Mystic dream guide", instructions: "Speak like an enchanting mystic guide: hushed wonder, vivid imagery in every word, dreamy pacing that makes the listener feel transported." }],
-  [/college|course|degree|learn|school|tutor|teach|quiz|lesson|class/i, { voice: "nova", speed: 0.95, label: "Friendly professor", instructions: "Speak like a beloved, friendly university professor: clear, encouraging, upbeat, patient, with the warmth of a favorite teacher." }],
+  [/college|university|professor|degree/i, { voice: "fable", speed: 1, label: "Friendly professor", instructions: "Use a mature, warm university professor's voice: intellectually engaged, articulate and approachable. Explain complex ideas with thoughtful emphasis, encouraging curiosity and a little dry wit; never a lecture drone or exaggerated announcer." }],
+  [/course|learn|school|tutor|teach|quiz|lesson|class/i, { voice: "nova", speed: 1, label: "Encouraging personal teacher", instructions: "Use a warm, bright teacher's voice: patient, conversational and encouraging. Celebrate discoveries sincerely, emphasize key ideas gently and allow space for understanding; never patronizing or sing-song." }],
   [/celebrity/i, { voice: "verse", speed: 1.04, label: "Showbiz host", instructions: "Speak like an energetic, glamorous showbiz host: charismatic, fun, and lively." }],
   [/alan.?watts|watts/i, { voice: "ballad", speed: 0.86, label: "Contemplative British philosopher", instructions: "Speak as an original philosophical narrator with a cultivated British cadence, playful warmth, spacious pauses, and contemplative clarity. Do not claim to be or clone Alan Watts." }],
   [/indiana.*archaeolog/i, { voice: "ash", speed: 0.97, label: "Adventurous field archaeologist", instructions: "Speak like a seasoned, quick-witted field archaeologist: adventurous, scholarly, dust-on-the-boots practical, and warmly human." }],
@@ -63,16 +65,21 @@ const SPECIAL: Array<[RegExp, Partial<GptVoiceProfile>]> = [
 ];
 
 export const getGptVoiceProfile = (slug = "", displayName = "", category = ""): GptVoiceProfile => {
-  const identity = `${displayName} ${slug} ${category}`;
-  const key = RULES.find(([pattern]) => pattern.test(identity))?.[1] ?? "concierge";
+  const identity = `${displayName} ${slug}`;
+  const key = RULES.find(([pattern]) => pattern.test(identity))?.[1]
+    ?? RULES.find(([pattern]) => pattern.test(category))?.[1] ?? "concierge";
   const base = BLUEPRINTS[key] ?? BLUEPRINTS.concierge;
   const special = SPECIAL.find(([pattern]) => pattern.test(identity))?.[1] ?? {};
   const cast = { ...base, ...special };
+  const name = (displayName || slug || "AIWebTools concierge").replace(/\s+/g, " ").trim().slice(0, 80);
+  // Stable delivery signatures distinguish bots sharing one of the hosted base voices.
+  const signature = [...identity.toLowerCase()].reduce((hash, char) => (hash * 31 + char.charCodeAt(0)) >>> 0, 0);
+  const delivery = ["warmly intimate", "gently animated", "thoughtfully expressive", "quietly magnetic", "brightly curious", "calmly assured"][signature % 6];
   return {
     ...base,
     label: `${key.charAt(0).toUpperCase()}${key.slice(1)} voice`,
     ...special,
-    speed: Math.max(0.95, cast.speed),
-    instructions: `${cast.instructions} Speak conversationally to one listener, not as a voice assistant. Use natural breath, varied intonation, connected phrases and subtle emotion. Avoid robotic rhythm, exaggerated accents and theatrical overacting.`,
+    speed: Math.max(0.96, cast.speed),
+    instructions: `Voice role: ${name}. ${cast.instructions} Delivery: ${delivery}. Speak naturally to one person; varied intonation, connected phrases, subtle emotion. No robotic rhythm, caricature or overacting.`.slice(0, 600),
   };
 };
