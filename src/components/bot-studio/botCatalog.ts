@@ -9,13 +9,14 @@ export interface StudioBot {
   starter_prompts: string[] | null;
   supports_images: boolean | null;
   model: string;
+  image_url?: string | null;
   custom?: { instructions: string; voice: import("@/utils/gptVoiceProfiles").GptVoiceProfile["voice"] };
 }
 let catalogPromise: Promise<StudioBot[]> | null = null;
 export function refreshStudioBots() { catalogPromise = null; return loadStudioBots(); }
 export function loadStudioBots(): Promise<StudioBot[]> {
   if (!catalogPromise) {
-    catalogPromise = Promise.resolve(supabase.from("gpt_apps").select("slug, display_name, tool_title, tagline, greeting, starter_prompts, supports_images, model").eq("is_active", true).order("display_name")).then(({ data, error }) => {
+    catalogPromise = Promise.resolve(supabase.from("gpt_apps").select("slug, display_name, tool_title, tagline, greeting, starter_prompts, supports_images, model, image_url").eq("is_active", true).order("display_name")).then(({ data, error }) => {
       if (error) { catalogPromise = null; throw new Error("The assistant directory could not load. Please try again."); }
       return ((data ?? []) as StudioBot[]).filter((bot) => bot.slug && bot.display_name);
     });

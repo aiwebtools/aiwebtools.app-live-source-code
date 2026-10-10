@@ -14,6 +14,7 @@ import OpInstructionsButton from "@/components/tool-detail/OpInstructionsButton"
 import { getGptRoomTheme } from "@/components/tool-detail/gptRoomThemes";
 import { getGptAvatar } from "@/components/tool-detail/gptAvatars";
 import { getBotPortrait } from "./botAvatars";
+import { getBundledCommunityImage } from "@/utils/communityBots";
 import { getGptVoiceProfile, type GptVoiceProfile } from "@/utils/gptVoiceProfiles";
 import { useSpeechReader } from "@/hooks/useSpeechReader";
 import { useVoiceInput } from "@/hooks/useVoiceInput";
@@ -58,6 +59,7 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
   const fileRef = useRef<HTMLInputElement | null>(null);
   const speech = useSpeechReader(profile);
   const avatar = getBotPortrait(app.slug)
+    || (app.slug.startsWith("community-") ? (app.image_url || getBundledCommunityImage(app.slug)) : undefined)
     || (app.tool_title ? imageMap?.get(app.tool_title.trim().toLowerCase()) : null)
     || imageMap?.get(app.display_name.trim().toLowerCase())
     || getGptAvatar(theme.key);
