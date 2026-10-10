@@ -637,7 +637,7 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
 .studio-capability { font-size: 13px; }
 .studio-settings [role="combobox"] { border-radius: 10px; }
 .studio-settings [role="combobox"] > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
-.studio-starter { white-space: normal; height: auto; line-height: 1.4; text-align: left; font-size: 13px; }
+.studio-starter { white-space: normal; height: auto; min-height: 56px; padding: 14px 16px; line-height: 1.55; text-align: left; justify-content: flex-start; font-size: 14px; overflow-wrap: anywhere; min-width: 0; }
 .studio .gpt-msg-bot { font-size: 15px; line-height: 1.7; overflow-wrap: anywhere; }
 .studio .gpt-msg-user { font-size: 15px; line-height: 1.55; border-radius: 14px; overflow-wrap: anywhere; }
 .studio-main { border-radius: 14px; overflow: hidden; }
