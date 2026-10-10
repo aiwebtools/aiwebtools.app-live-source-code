@@ -11,6 +11,7 @@ import GlobalSearchBar from "@/components/LazyGlobalSearchBar";
 import BreadcrumbNav from "@/components/navigation/BreadcrumbNav";
 import ScrollToTop from "@/components/ui/scroll-to-top";
 import { Tool } from "@/types/tools";
+import CommunityGptStrip from "@/components/CommunityGptStrip";
 
 const PAGE_TITLE = "ALL AI TOOLS";
 
@@ -103,6 +104,7 @@ const AllToolsFastPage = () => {
                 </div>
               </div>
 
+              <CommunityGptStrip />
               <div id="tools-section">
                 <ToolsGrid
                   tools={tools}
