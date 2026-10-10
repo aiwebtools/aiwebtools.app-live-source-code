@@ -13,6 +13,7 @@ import MatrixRainBackdrop from "@/components/effects/MatrixRainBackdrop";
 import OpInstructionsButton from "@/components/tool-detail/OpInstructionsButton";
 import { getGptRoomTheme } from "@/components/tool-detail/gptRoomThemes";
 import { getGptAvatar } from "@/components/tool-detail/gptAvatars";
+import { getBotPortrait } from "./botAvatars";
 import { getGptVoiceProfile, type GptVoiceProfile } from "@/utils/gptVoiceProfiles";
 import { useSpeechReader } from "@/hooks/useSpeechReader";
 import { useVoiceInput } from "@/hooks/useVoiceInput";
@@ -56,7 +57,10 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
   const profile = useMemo(() => ({ ...defaultProfile, voice, speed }), [defaultProfile, voice, speed]);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const speech = useSpeechReader(profile);
-  const avatar = (app.tool_title ? imageMap?.get(app.tool_title.trim().toLowerCase()) : null) || getGptAvatar(theme.key);
+  const avatar = getBotPortrait(app.slug)
+    || (app.tool_title ? imageMap?.get(app.tool_title.trim().toLowerCase()) : null)
+    || imageMap?.get(app.display_name.trim().toLowerCase())
+    || getGptAvatar(theme.key);
   const themeVars = { "--bot-accent": theme.accent, "--bot-accent-2": theme.accent2, "--bot-soft": theme.soft, "--bot-deep": theme.deep } as React.CSSProperties;
   const welcome = theme.key === "time-machine" && app.slug === "time-machine-gpt" ? "Great Scott! User, what date would you like to teleport to, & where do you want to go?" : app.greeting || `Hello, I am ${app.display_name}. What would you like to explore?`;
 
