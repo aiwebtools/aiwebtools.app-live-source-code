@@ -556,3 +556,41 @@ iframe {
   }
   .gpt-glitch-title::after { display: none; }
 }
+
+/* Shared Matrix conversation studio; identity accents inherit the bot tokens. */
+.studio { --studio-surface: 160 14% 4%; --studio-line: 146 64% 27%; position: relative; isolation: isolate; overflow: hidden; color: hsl(var(--foreground)); background: hsl(var(--studio-surface)); border-radius: 8px; }
+.studio-full { height: 100dvh; min-height: 420px; border: 0; border-radius: 0; }
+.studio-embedded { height: min(820px, 86dvh); min-height: 480px; margin-bottom: 24px; scroll-margin-top: 80px; }
+.studio-rain { z-index: -1; opacity: .38; }
+.studio-topbar { height: 60px; display: flex; align-items: center; gap: 24px; padding: 0 20px; border-bottom: 1px solid hsl(var(--studio-line) / .8); background: hsl(var(--studio-surface) / .82); }
+.studio-brand { font-size: 19px; font-weight: 900; white-space: nowrap; }
+.studio-brand span { color: hsl(var(--primary)); }
+.studio-grid { display: grid; grid-template-columns: minmax(0, 1fr); height: calc(100% - 60px); min-height: 0; }
+.studio-sidebar { flex-direction: column; padding: 18px 12px; min-height: 0; background: hsl(var(--studio-surface) / .92); border-right: 1px solid hsl(var(--studio-line) / .7); overflow: auto; }
+.studio-new { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); box-shadow: 0 0 22px hsl(var(--primary) / .2); }
+.studio-label { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; color: hsl(var(--foreground) / .8); }
+.studio-search { min-height: 40px; border-color: hsl(var(--studio-line) / .6); }
+.studio-bots { height: 240px; min-height: 160px; overflow-y: auto; flex-shrink: 0; }
+.studio-history { min-height: 90px; overflow-y: auto; flex: 1; }
+.studio-row { width: 100%; justify-content: flex-start; gap: 8px; min-height: 40px; font-size: 11px; padding: 8px; }
+.studio-selected { background: hsl(var(--primary) / .1); box-shadow: inset 2px 0 hsl(var(--primary)); color: hsl(var(--primary)); }
+.studio-bot-mark { display: grid; place-items: center; width: 24px; height: 24px; flex-shrink: 0; }
+.studio-main { display: flex; flex-direction: column; min-width: 0; min-height: 0; background: hsl(var(--studio-surface) / .76); }
+.studio-bot-header { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; padding: 16px 20px; border-bottom: 1px solid hsl(var(--studio-line) / .55); }
+.studio-header-pdf { flex-shrink: 0; }
+.studio-transcript { min-height: 0; }
+.studio-welcome { max-width: 640px; margin: auto; padding: 20px 0; }
+.studio-starter { padding: 12px; border: 1px solid hsl(var(--bot-accent) / .3); background: hsl(var(--bot-soft) / .28); }
+.studio-composer { flex-shrink: 0; padding: 10px 16px max(8px, env(safe-area-inset-bottom)); border-top: 1px solid hsl(var(--studio-line) / .4); }
+.studio-status { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 9px; color: hsl(var(--muted-foreground)); }
+.studio-live-dot { width: 5px; height: 5px; flex-shrink: 0; border-radius: 50%; background: hsl(var(--primary)); box-shadow: 0 0 8px hsl(var(--primary) / .75); }
+.studio-settings { padding: 20px 16px; overflow-y: auto; min-height: 0; border-left: 1px solid hsl(var(--studio-line) / .7); background: hsl(var(--studio-surface) / .93); }
+.studio-setting-section { margin-top: 24px; padding-top: 20px; border-top: 1px solid hsl(var(--studio-line) / .5); }
+.studio-capability { display: flex; align-items: center; gap: 9px; margin-top: 16px; font-size: 11px; }
+.studio-drawer { width: min(340px, 92vw); background: hsl(var(--background)); }
+.studio .gpt-msg-user { border-radius: 8px; background: hsl(var(--secondary)) !important; color: hsl(var(--secondary-foreground)) !important; border-color: hsl(var(--studio-line) / .5) !important; box-shadow: none; }
+.studio .gpt-msg-bot { font-size: 14px; line-height: 1.75; }
+@media (min-width: 1024px) { .studio-grid { grid-template-columns: 220px minmax(0, 1fr); } }
+@media (min-width: 1280px) { .studio-grid { grid-template-columns: 232px minmax(0, 1fr) 254px; } }
+@media (max-width: 639px) { .studio-topbar { height: 52px; gap: 8px; padding: 0 10px; } .studio-grid { height: calc(100% - 52px); } .studio-brand { font-size: 15px; } .studio-bot-header { padding: 10px; gap: 8px; } .studio-header-pdf { width: 100%; } .studio-header-pdf a { min-height: 32px; padding: 4px 10px; } .studio-composer { padding-left: 8px; padding-right: 8px; } .studio-welcome { padding-top: 0; } .studio-status { font-size: 8px; } }
+@media (prefers-reduced-motion: reduce) { .studio, .studio header { animation: none; } }

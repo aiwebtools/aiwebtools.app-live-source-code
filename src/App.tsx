@@ -354,6 +354,7 @@ const AnimatedRoutes = () => {
         <Route path="/join" element={<RouteReadySignal><JoinPage /></RouteReadySignal>} />
         <Route path="/account" element={<RouteReadySignal><AccountPage /></RouteReadySignal>} />
         <Route path="/app/:slug" element={<RouteReadySignal><GptAppPage /></RouteReadySignal>} />
+        <Route path="/app/:slug/chat/:threadId" element={<RouteReadySignal><GptAppPage /></RouteReadySignal>} />
         <Route path="/digest" element={<RouteReadySignal><DigestPage /></RouteReadySignal>} />
         <Route path="/digest/:date" element={<RouteReadySignal><DigestPage /></RouteReadySignal>} />
         <Route path="/spotlight/:slug" element={<RouteReadySignal><SpotlightPage /></RouteReadySignal>} />

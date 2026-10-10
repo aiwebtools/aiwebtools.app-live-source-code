@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Tool } from "@/types/tools";
+import { playTimeWarpVoice } from "@/utils/effects/timeWarpVoice";
 
 interface InSiteGptButtonProps {
   tool: Tool;
@@ -39,6 +40,7 @@ const InSiteGptButton = ({ tool }: InSiteGptButtonProps) => {
   return (
     <Link
       to={`/app/${slug}`}
+      onClick={() => playTimeWarpVoice()}
       className="group inline-flex w-full items-center justify-center gap-2 rounded-xl border border-primary/50 bg-primary/10 px-5 py-3 text-sm font-semibold text-primary transition hover:bg-primary/20"
     >
       <Sparkles className="h-4 w-4 transition group-hover:scale-110" aria-hidden="true" />

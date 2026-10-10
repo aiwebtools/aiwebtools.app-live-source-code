@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { getOpInstructionDoc } from "@/data/opInstructionDocs";
 import { downloadAllOperationalInstructions, resolvePublicAssetUrl, triggerPublicDownload } from "@/utils/downloads";
+import { playTimeWarpVoice } from "@/utils/effects/timeWarpVoice";
 
 interface OpInstructionsButtonProps {
   slug?: string | null;
@@ -38,6 +39,7 @@ const OpInstructionsButton = ({ slug, name, className = "", compact = false, sin
       return;
     }
     e.preventDefault();
+    playTimeWarpVoice();
     setBusy(true);
     try {
       const res = await fetch(resolvePublicAssetUrl(doc.href));
