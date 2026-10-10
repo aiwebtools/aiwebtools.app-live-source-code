@@ -628,3 +628,23 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
   .gpt-msg-avatar { width: 20px; height: 20px; }
 }
 @media (max-height: 560px) { .studio-topbar { height: 44px; } .studio-grid { height: calc(100% - 44px); } .studio-welcome .gpt-room-avatar { display: none; } }
+/* Readability + shape polish */
+.studio-row { font-size: 13px; text-align: left; border-radius: 8px; }
+.studio-row > span.truncate { flex: 1; min-width: 0; text-align: left; }
+.studio-sidebar > button:not(.studio-new) { height: auto; white-space: normal; text-align: left; justify-content: flex-start; line-height: 1.3; }
+.studio-new, .studio-search, .studio-starter, .studio .op-gold-btn { border-radius: 10px; }
+.studio-label { font-size: 12px; letter-spacing: .04em; }
+.studio-capability { font-size: 13px; }
+.studio-settings [role="combobox"] { border-radius: 10px; }
+.studio-settings [role="combobox"] > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+.studio-starter { white-space: normal; height: auto; line-height: 1.4; text-align: left; font-size: 13px; }
+.studio .gpt-msg-bot { font-size: 15px; line-height: 1.7; overflow-wrap: anywhere; }
+.studio .gpt-msg-user { font-size: 15px; line-height: 1.55; border-radius: 14px; overflow-wrap: anywhere; }
+.studio-main { border-radius: 14px; overflow: hidden; }
+.studio .gpt-room-input { border-radius: 14px; overflow: hidden; border-width: 1px; }
+.studio .gpt-room-input textarea { border: 0 !important; box-shadow: none !important; background: transparent; font-size: 15px; line-height: 1.5; }
+.studio .gpt-room-input [data-slot="input-group-addon"], .studio .gpt-room-input > div { border-color: hsl(var(--bot-accent) / .2); }
+.studio .gpt-room-send { border-radius: 10px; }
+.studio-status { font-size: 10px; }
+@media (min-width: 1280px) { .studio-grid { grid-template-columns: 250px minmax(0, 1fr) 280px; } }
+@media (max-width: 639px) { .studio-status { font-size: 9px; } .studio .gpt-msg-bot, .studio .gpt-msg-user { font-size: 15px; } .studio-main { border-radius: 12px; } }
