@@ -571,6 +571,8 @@ iframe {
 .studio .op-gold-btn { color: hsl(30 45% 12%); }
 .studio-transcript, .studio-composer { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
 .studio button.interactive-button::before { display: none; }
+body:has(.studio-full) .awt-floating-overlay,
+body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
 .studio-topbar { height: 60px; display: flex; align-items: center; gap: 24px; padding: 0 20px; border-bottom: 1px solid hsl(var(--studio-line) / .8); background: hsl(var(--studio-surface) / .82); }
 .studio-brand { font-size: 19px; font-weight: 900; white-space: nowrap; }
 .studio-brand span { color: hsl(var(--primary)); }

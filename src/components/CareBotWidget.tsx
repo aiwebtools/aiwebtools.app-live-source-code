@@ -196,7 +196,7 @@ const CareBotWidget = () => {
           onClick={() => setOpen(true)}
           aria-label="Open AIWebTools Care Bot — Web Tools 24/7 Questions"
           title="Web Tools 24/7 Questions"
-          className="fixed z-[9998] group flex flex-col items-center gap-1 focus:outline-none
+          className="awt-floating-overlay fixed z-[9998] group flex flex-col items-center gap-1 focus:outline-none
                      bottom-3 right-3 sm:bottom-4 sm:right-4"
         >
           <span

@@ -1,11 +1,11 @@
 # Chatbot completion roadmap
 
 # Matrix conversation studio (Oct 10)
-- [ ] Connect initialization audio to bot launches and instruction downloads
-- [ ] Adapt the uploaded Matrix design into a shared branded room with mobile drawers
-- [ ] Add device-saved conversations, route-based history, and guest bot switching
-- [ ] Verify available model selection without changing existing bot instructions
-- [ ] Verify real replies, individual PDFs, audio, history, and phone/desktop layouts
+- [x] Connect initialization audio to bot launches and instruction downloads
+- [x] Adapt the uploaded Matrix design into a shared branded room with mobile drawers
+- [x] Add device-saved conversations, route-based history, and guest bot switching
+- [x] Verify available model selection without changing existing bot instructions
+- [x] Verify real guest replies, individual PDFs, hosted audio, images, history, and phone/desktop layouts
 
 - [x] Audit all 222 active bot records and prompt links
 - [x] Confirm image generation live on Time Machine GPT
@@ -83,7 +83,7 @@
 - [x] Slim chat headers, starter prompts, and typing controls across phone/tablet/desktop
 - [x] Audit all 419 registered PDFs and verify a real individual PDF download
 - [x] Run focused tests and browser checks; preserve every tool and original document
-- [ ] Featured-card end-to-end check: homepage section did not appear in the automated browser session
+- [x] Featured-card end-to-end check: fresh homepage visitor opened branded studio popup with initialization audio and individual PDF controls
 - [ ] Published-site verification: awaiting Master's request to publish the frontend update
 
 # Concurrent voice and image experience (Oct 9)
