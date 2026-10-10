@@ -360,8 +360,9 @@ iframe {
 
 /* Gold download button for original operational instruction documents */
 .op-gold-btn {
-  background-image: linear-gradient(135deg, hsl(45 96% 62%), hsl(38 92% 50%) 55%, hsl(45 96% 68%));
-  color: hsl(30 45% 12%);
+  background-image: linear-gradient(135deg, hsl(var(--instruction-gold)), hsl(var(--instruction-gold-deep)) 55%, hsl(var(--instruction-gold-light)));
+  color: hsl(var(--instruction-foreground)) !important;
+  text-shadow: none !important;
   border: 1px solid hsl(45 90% 45%);
   box-shadow: 0 0 14px hsl(45 96% 58% / 0.45), inset 0 1px 0 hsl(48 100% 88% / 0.7);
   transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
@@ -561,14 +562,14 @@ iframe {
 .studio { --studio-surface: 160 14% 4%; --studio-line: 146 64% 27%; --primary: 146 90% 55%; --primary-foreground: 160 30% 3%; --secondary: 180 18% 13%; --secondary-foreground: 160 20% 95%; --border: 146 30% 20%; --ring: 146 90% 55%; position: relative; isolation: isolate; overflow: hidden; color: hsl(var(--foreground)); background: hsl(var(--studio-surface)); border-radius: 8px; }
 .studio-full { height: 100dvh; min-height: 420px; border: 0; border-radius: 0; }
 .studio-embedded { height: min(820px, 86dvh); min-height: 480px; margin-bottom: 24px; scroll-margin-top: 80px; }
-.studio-rain { z-index: 0; opacity: .65; }
+.studio-rain { z-index: 0; opacity: .9; }
 .studio-topbar, .studio-grid { position: relative; z-index: 1; }
 .studio-portrait-fallback { display: inline-grid; place-items: center; font-size: 24px; }
 .studio button { color: hsl(var(--foreground)); background-image: none; }
 .studio button:hover { background: hsl(var(--primary) / .12); }
 .studio .studio-new, .studio .gpt-room-send { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
 .studio button.studio-selected { color: hsl(var(--primary)); }
-.studio .op-gold-btn { color: hsl(30 45% 12%); }
+.studio .op-gold-btn { color: hsl(var(--instruction-foreground)); }
 .studio-transcript, .studio-composer { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
 .studio button.interactive-button::before { display: none; }
 body:has(.studio-full) .awt-floating-overlay,
@@ -576,7 +577,7 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
 .studio-topbar { height: 60px; display: flex; align-items: center; gap: 24px; padding: 0 20px; border-bottom: 1px solid hsl(var(--studio-line) / .8); background: hsl(var(--studio-surface) / .82); }
 .studio-brand { font-size: 19px; font-weight: 900; white-space: nowrap; }
 .studio-brand span { color: hsl(var(--primary)); }
-.studio-grid { display: grid; grid-template-columns: minmax(0, 1fr); height: calc(100% - 60px); min-height: 0; }
+.studio-grid { display: grid; grid-template-columns: minmax(0, 1fr); height: calc(100% - 60px); min-height: 0; padding: 8px; gap: 8px; }
 .studio-sidebar { flex-direction: column; padding: 18px 12px; min-height: 0; background: hsl(var(--studio-surface) / .92); border-right: 1px solid hsl(var(--studio-line) / .7); overflow: auto; }
 .studio-new { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); box-shadow: 0 0 22px hsl(var(--primary) / .2); }
 .studio-label { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; color: hsl(var(--foreground) / .8); }
@@ -586,7 +587,7 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
 .studio-row { width: 100%; justify-content: flex-start; gap: 8px; min-height: 40px; font-size: 11px; padding: 8px; }
 .studio-selected { background: hsl(var(--primary) / .1); box-shadow: inset 2px 0 hsl(var(--primary)); color: hsl(var(--primary)); }
 .studio-bot-mark { display: grid; place-items: center; width: 24px; height: 24px; flex-shrink: 0; }
-.studio-main { display: flex; flex-direction: column; min-width: 0; min-height: 0; background: hsl(var(--studio-surface) / .76); }
+.studio-main { display: flex; flex-direction: column; min-width: 0; min-height: 0; background: hsl(var(--studio-surface) / .84); border: 1px solid hsl(var(--studio-line) / .75); border-radius: 8px; box-shadow: 0 0 18px hsl(var(--primary) / .08); }
 .studio-bot-header { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; padding: 16px 20px; border-bottom: 1px solid hsl(var(--studio-line) / .55); }
 .studio-header-pdf { flex-shrink: 0; }
 .studio-transcript { min-height: 0; }
@@ -598,7 +599,16 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
 .studio-settings { padding: 20px 16px; overflow-y: auto; min-height: 0; border-left: 1px solid hsl(var(--studio-line) / .7); background: hsl(var(--studio-surface) / .93); }
 .studio-setting-section { margin-top: 24px; padding-top: 20px; border-top: 1px solid hsl(var(--studio-line) / .5); }
 .studio-capability { display: flex; align-items: center; gap: 9px; margin-top: 16px; font-size: 11px; }
-.studio-drawer { width: min(340px, 92vw); background: hsl(var(--background)); }
+.studio-drawer { --primary: 146 90% 55%; --primary-foreground: 160 30% 3%; --border: 146 30% 20%; --ring: 146 90% 55%; width: min(340px, 92vw); background: hsl(var(--background)); }
+.studio-drawer .studio-new { color: hsl(var(--primary-foreground)); }
+.studio-drawer button:not(.op-gold-btn):not(.studio-new) { color: hsl(var(--foreground)); background-image: none; }
+.studio-drawer button:hover { background-color: hsl(var(--primary) / .12); }
+.studio-image-actions { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+.studio-image-actions button { min-height: 40px; }
+.studio-voice-control { display: grid; gap: 8px; margin-top: 16px; font-size: 12px; }
+.studio-voice-control input { appearance: none; width: 100%; height: 6px; border-radius: 4px; background: hsl(var(--border)); accent-color: hsl(var(--primary)); }
+.studio-voice-control input::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; border-radius: 50%; background: hsl(var(--primary)); box-shadow: 0 0 8px hsl(var(--primary) / .4); }
+.studio-voice-control input::-moz-range-thumb { width: 18px; height: 18px; border: 0; border-radius: 50%; background: hsl(var(--primary)); }
 .studio .gpt-msg-user { border-radius: 8px; background: hsl(var(--secondary)) !important; color: hsl(var(--secondary-foreground)) !important; border-color: hsl(var(--studio-line) / .5) !important; box-shadow: none; }
 .studio .gpt-msg-bot { font-size: 14px; line-height: 1.75; }
 @media (min-width: 1024px) { .studio-grid { grid-template-columns: 220px minmax(0, 1fr); } }

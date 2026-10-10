@@ -172,9 +172,10 @@ const PageLoader = () => {
     // a dead black screen if a lazy chunk is a few frames late.
     <div
       data-aiwt-route-fallback="true"
-      aria-hidden="true"
-      className="min-h-screen bg-background"
-    />
+      role="status"
+      aria-live="polite"
+      className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center gap-4"
+    ><span className="h-8 w-8 animate-spin rounded-full border-2 border-primary/30 border-t-primary" aria-hidden="true" /><p className="font-mono text-primary">Opening the Matrix…</p></div>
   );
 };
 
