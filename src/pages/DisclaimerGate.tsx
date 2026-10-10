@@ -327,7 +327,7 @@ const DisclaimerGate: React.FC = () => {
   const handleAccept = () => {
     // Guard against double-fire (rapid clicks / touch+click) which created
     // two overlapping <audio> instances and an echo effect.
-    const w = window as any;
+    const w = window as Window & { __aiwtDisclaimerAccepted?: boolean; __aiwtDisclaimerAudio?: HTMLAudioElement | null; __aiwtBootTrace?: (event: string) => void };
     if (w.__aiwtDisclaimerAccepted) return;
     w.__aiwtDisclaimerAccepted = true;
 
@@ -338,7 +338,7 @@ const DisclaimerGate: React.FC = () => {
       markWeeklyWelcomeAudioPlayed();
       // Stop any prior instance just in case (HMR, back-nav, etc.)
       if (w.__aiwtDisclaimerAudio) {
-        try { w.__aiwtDisclaimerAudio.pause(); } catch {}
+        try { w.__aiwtDisclaimerAudio.pause(); } catch { /* A stale audio instance cannot block entry. */ }
         w.__aiwtDisclaimerAudio = null;
       }
       const audio = new Audio(disclaimerWelcomeAudio.url);
@@ -353,7 +353,7 @@ const DisclaimerGate: React.FC = () => {
       try {
         sessionStorage.setItem('aiwt:disclaimer-audio-at', String(Date.now()));
       } catch { /* storage may be unavailable */ }
-      (window as any).__aiwtBootTrace?.('disclaimer-audio-played');
+      w.__aiwtBootTrace?.('disclaimer-audio-played');
     } catch (e) {
       // Audio must never block the disclaimer accept flow.
     }
