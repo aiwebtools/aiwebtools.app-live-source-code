@@ -1,41 +1,25 @@
-// Time Warp Voice Effect - Preloaded for instant playback
-
-// Preload audio on module load
-let preloadedAudio: HTMLAudioElement | null = null;
-
-const preloadAudio = () => {
-  if (typeof window === 'undefined') return;
-  
-  preloadedAudio = new Audio('/sounds/time-warp-voice.mp3');
-  preloadedAudio.preload = 'auto';
-  preloadedAudio.volume = 0.85;
-  preloadedAudio.load(); // Force browser to buffer the audio
-};
-
-// Start preloading immediately when module loads
-preloadAudio();
-
-export const playTimeWarpVoice = () => {
-  console.log('🎤 Playing time warp voice - INSTANT');
-
-  try {
-    // Use preloaded audio for instant playback
-    if (preloadedAudio) {
-      preloadedAudio.currentTime = 0; // Reset to start
-      preloadedAudio.play().catch(() => {});
-      
-      // Preload a fresh copy for the next click
-      setTimeout(preloadAudio, 100);
-      return preloadedAudio;
-    }
-    
-    // Fallback: create new audio if preload failed
-    const audio = new Audio('/sounds/time-warp-voice.mp3');
+// Reuse one buffered clip; rapid download clicks never stack announcements.
+let audio: HTMLAudioElement | null = null;
+let lastStarted = 0;
+function getAudio() {
+  if (typeof window === "undefined") return null;
+  if (!audio) {
+    audio = new Audio("/sounds/time-warp-voice.mp3");
+    audio.preload = "auto";
     audio.volume = 0.85;
-    audio.play().catch(() => {});
-    return audio;
-  } catch (error) {
-    console.log('🎤 Voice failed:', error);
-    return null;
+    audio.load();
   }
-};
+  return audio;
+}
+getAudio();
+export function playTimeWarpVoice() {
+  const clip = getAudio();
+  if (!clip) return null;
+  const now = Date.now();
+  if (now - lastStarted < 1200 || (!clip.paused && !clip.ended)) return clip;
+  lastStarted = now;
+  clip.currentTime = 0;
+  // Called synchronously within user clicks, respecting browser audio permissions.
+  void clip.play().catch(() => { lastStarted = 0; });
+  return clip;
+}
