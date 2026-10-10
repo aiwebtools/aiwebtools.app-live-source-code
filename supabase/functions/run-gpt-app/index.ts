@@ -240,6 +240,10 @@ Deno.serve(async (req) => {
   let conversationId = body.conversationId || null;
   const lastUser = [...messages].reverse().find((m) => m.role === "user");
   if (userId) {
+    if (conversationId) {
+      const { data: owned } = await admin.from("gpt_conversations").select("id").eq("id", conversationId).eq("user_id", userId).eq("app_slug", slug).maybeSingle();
+      if (!owned) return json({ error: "This conversation does not belong to your account or this assistant." }, 403);
+    }
     if (!conversationId) {
       const { data: conv } = await admin
         .from("gpt_conversations")
@@ -313,6 +317,7 @@ Deno.serve(async (req) => {
   const decoder = new TextDecoder();
   const frame = (text: string) =>
     encoder.encode(`data: ${JSON.stringify({ choices: [{ delta: { content: text } }] })}\n\n`);
+  const activityFrame = (id: string, name: string, input: string, state: string, error?: string) => encoder.encode(`data: ${JSON.stringify({ activity: { id, name, input, state, error } })}\n\n`);
 
   let assistant = "";
   const requestStartedAt = Date.now();
@@ -453,24 +458,30 @@ Deno.serve(async (req) => {
             try { parsed = JSON.parse(call.args || "{}"); } catch { /* ignore */ }
             if (call.name === "web_search") {
               const q = String(parsed.query || "").slice(0, 300);
+              controller.enqueue(activityFrame(id, call.name, q, "input-available"));
               controller.enqueue(frame(`\n\n_Searching the web for “${q}”…_\n\n`));
               toolResults.push({ role: "tool", tool_call_id: id, content: (await webSearch(q)).slice(0, 6000) });
+              controller.enqueue(activityFrame(id, call.name, q, "output-available"));
               continue;
             }
             imageRequested = true;
+            const imagePrompt = String(parsed.prompt || "").slice(0, 4000);
+            controller.enqueue(activityFrame(id, call.name, imagePrompt, "input-available"));
             controller.enqueue(frame("\n\n_Creating your image…_\n\n"));
             let toolResult = "The picture could not be created this time. Explain that clearly and offer to try again.";
             try {
-              const url = await makeImage(String(parsed.prompt || "").slice(0, 4000));
+              const url = await makeImage(imagePrompt);
               const md = `![Generated image ${index + 1}](${url})`;
               assistant += `\n\n${md}\n\n`;
               controller.enqueue(frame(`${md}\n\n`));
               imageSucceeded = true;
+              controller.enqueue(activityFrame(id, call.name, imagePrompt, "output-available"));
               toolResult = "The picture was created and is already visible in the chat. Briefly describe it and offer refinements. Do not repeat the image link.";
             } catch (error) {
               finalStatus = "image_error";
               finalError = error instanceof Error ? error.message : "Unknown picture error";
               toolResult = finalError;
+              controller.enqueue(activityFrame(id, call.name, imagePrompt, "output-error", finalError));
               controller.enqueue(frame(`\n\n_${toolResult}_\n\n`));
             }
             toolResults.push({ role: "tool", tool_call_id: id, content: toolResult });
