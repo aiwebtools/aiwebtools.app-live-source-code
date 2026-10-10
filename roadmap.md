@@ -5,7 +5,7 @@
 - [x] Check cheap model switching, original instructions, voice casting, images, PDFs, and initialization audio
 - [ ] Exercise 15 randomly selected bots with real conversations: all 15 rooms/PDFs checked; seven random bots plus three Time Machine turns used the guest's 10-message allowance. Remaining eight need a later allowance or an authenticated account; external unmanaged auth prevents session minting.
 - [x] Verify phone-sized layouts, moving code, drawers, history, and live playback
-- [ ] Publishing requested for aiwebtools.app; verify the public first-visit flow after deployment finishes
+- [x] Published to aiwebtools.app and verified public phone-sized bot access, PDF download, initialization sound, moving code, and settings without page errors
 
 # Matrix conversation studio (Oct 10)
 - [x] Connect initialization audio to bot launches and instruction downloads
@@ -91,7 +91,7 @@
 - [x] Audit all 419 registered PDFs and verify a real individual PDF download
 - [x] Run focused tests and browser checks; preserve every tool and original document
 - [x] Featured-card end-to-end check: fresh homepage visitor opened branded studio popup with initialization audio and individual PDF controls
-- [ ] Published-site verification: deployment requested; public phone-sized checks pending deployment
+- [x] Published-site verification: public phone-sized bot, PDF, sound, moving code, and settings passed
 
 # Concurrent voice and image experience (Oct 9)
 
