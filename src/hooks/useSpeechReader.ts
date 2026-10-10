@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { splitSpeechText } from "@/utils/speechText";
 import { useToast } from "@/hooks/use-toast";
+import { beginSpeechClip, playSpeechClip, stopSpeechPlayback, type SpeechClip } from "@/utils/streamSpeech";
 import type { GptVoiceProfile } from "@/utils/gptVoiceProfiles";
 
 const STORAGE_KEY = "awt-voice-enabled";
@@ -20,6 +21,9 @@ const stripForSpeech = (text: string) =>
     .replace(/\s+/g, " ")
     .trim();
 
+/** Slightly brisker than the recorded pace so replies never drag. */
+const clipSpeed = (speed?: number) => Math.min(1.25, Math.max(1.05, (speed ?? 1) + 0.1));
+
 /**
  * Reads assistant replies out loud as they stream in, sentence by sentence.
  * Visitors can mute it at any time; the choice is remembered on this device.
@@ -33,22 +37,10 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const [speaking, setSpeaking] = useState(false);
   const spokenRef = useRef(0);
   const bufferRef = useRef("");
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const audioUrlRef = useRef<string | null>(null);
   const requestRef = useRef<AbortController | null>(null);
-  const queueRef = useRef<string[]>([]);
-  const pendingRef = useRef<Promise<Blob>[]>([]);
+  const pendingRef = useRef<SpeechClip[]>([]);
   const queueBusyRef = useRef(false);
   const generationRef = useRef(0);
-
-  const releaseStudioAudio = useCallback(() => {
-    audioRef.current?.pause();
-    audioRef.current = null;
-    if (audioUrlRef.current) {
-      URL.revokeObjectURL(audioUrlRef.current);
-      audioUrlRef.current = null;
-    }
-  }, []);
 
   useEffect(() => {
     if (!supported) return;
@@ -58,109 +50,93 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
 
   const stop = useCallback(() => {
     generationRef.current += 1;
-    queueRef.current = []; pendingRef.current = [];
+    pendingRef.current = [];
     queueBusyRef.current = false;
     requestRef.current?.abort();
-    releaseStudioAudio();
+    stopSpeechPlayback();
     if (supported) window.speechSynthesis?.cancel();
     spokenRef.current = 0;
     bufferRef.current = "";
     setSpeaking(false);
-  }, [releaseStudioAudio, supported]);
+  }, [supported]);
 
-  /** Request one clip; started early so the next sentence is ready when the current one ends. */
-  const fetchClip = useCallback(async (text: string, signal: AbortSignal): Promise<Blob> => {
-    const response = await fetch(FUNCTION_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` },
-      body: JSON.stringify({ text, voice: profile?.voice, engine: "gemini", style: profile?.label }),
-      signal,
-    });
-    if (!response.ok) {
-      const detail = await response.json().catch(() => ({}));
-      throw new Error(detail.error || detail.message || "Voice playback is unavailable right now.");
-    }
-    const blob = await response.blob();
-    if (!blob.size || !blob.type.startsWith("audio/")) throw new Error("The voice engine returned no playable audio.");
-    return blob;
-  }, [profile]);
+  /** Start one spoken clip; the voice engine streams its audio as it is produced. */
+  const startClip = useCallback(
+    (text: string, signal: AbortSignal): SpeechClip =>
+      beginSpeechClip(
+        FUNCTION_URL,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json", apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` },
+          body: JSON.stringify({ text, voice: profile?.voice, engine: "gemini", style: profile?.label, stream: true }),
+        },
+        signal,
+      ),
+    [profile],
+  );
 
-  const playClip = useCallback((blob: Blob, signal: AbortSignal) => new Promise<void>((resolve, reject) => {
-    releaseStudioAudio();
-    const url = URL.createObjectURL(blob);
-    audioUrlRef.current = url;
-    const audio = new Audio(url);
-    audio.playbackRate = Math.min(1.25, Math.max(1.05, (profile?.speed ?? 1) + 0.1));
-    audioRef.current = audio;
-    const finish = () => { signal.removeEventListener("abort", abort); releaseStudioAudio(); resolve(); };
-    const abort = () => { audio.pause(); finish(); };
-    signal.addEventListener("abort", abort, { once: true });
-    audio.onended = finish;
-    audio.onerror = () => { signal.removeEventListener("abort", abort); reject(new Error("Audio could not play. Please tap Play voice again.")); };
-    void audio.play().catch(reject);
-  }), [profile, releaseStudioAudio]);
-
-  /** Speak text in order, fetching every chunk ahead so playback runs without gaps. */
-  const speakStudio = useCallback(async (text: string) => {
-    const clean = stripForSpeech(text);
-    if (!clean || !profile || !ANON_KEY) return false;
-    requestRef.current?.abort();
-    releaseStudioAudio();
-    const controller = new AbortController();
-    requestRef.current = controller;
-    setSpeaking(true);
-    try {
-      const clips = splitSpeechText(clean, 600).map((chunk) => fetchClip(chunk, controller.signal));
-      clips.forEach((c) => c.catch(() => {}));
-      for (const clip of clips) {
-        const blob = await clip;
-        if (controller.signal.aborted) return false;
-        await playClip(blob, controller.signal);
-      }
-      return !controller.signal.aborted;
-    } catch (error) {
-      if (!controller.signal.aborted) toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Please try voice playback again.", variant: "destructive" });
-      return false;
-    } finally {
-      if (requestRef.current === controller) {
-        releaseStudioAudio();
-        setSpeaking(false);
-        requestRef.current = null;
-      }
-    }
-  }, [fetchClip, playClip, profile, releaseStudioAudio, toast]);
-
-  const enqueue = useCallback((text: string) => {
-    if (!stripForSpeech(text) || !profile || !ANON_KEY) return;
-    if (!requestRef.current || requestRef.current.signal.aborted) requestRef.current = new AbortController();
-    const controller = requestRef.current;
-    const clips = splitSpeechText(stripForSpeech(text), 600).map((chunk) => {
-      const clip = fetchClip(chunk, controller.signal);
-      clip.catch(() => {});
-      return clip;
-    });
-    pendingRef.current.push(...clips);
-    if (queueBusyRef.current) return;
-    queueBusyRef.current = true;
-    const generation = generationRef.current;
-    setSpeaking(true);
-    void (async () => {
+  /** Speak text in order; every clip is started at once so later sentences arrive early. */
+  const speakStudio = useCallback(
+    async (text: string) => {
+      const clean = stripForSpeech(text);
+      if (!clean || !profile || !ANON_KEY) return false;
+      requestRef.current?.abort();
+      stopSpeechPlayback();
+      const controller = new AbortController();
+      requestRef.current = controller;
+      setSpeaking(true);
       try {
-        while (generation === generationRef.current && pendingRef.current.length) {
-          const blob = await pendingRef.current.shift()!;
-          if (generation !== generationRef.current || controller.signal.aborted) return;
-          await playClip(blob, controller.signal);
+        const clips = splitSpeechText(clean, 600).map((chunk) => startClip(chunk, controller.signal));
+        for (const clip of clips) {
+          if (controller.signal.aborted) return false;
+          await playSpeechClip(clip, clipSpeed(profile.speed));
         }
+        return !controller.signal.aborted;
       } catch (error) {
-        if (generation === generationRef.current && !controller.signal.aborted) {
-          pendingRef.current = [];
+        if (!controller.signal.aborted) {
           toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Please try voice playback again.", variant: "destructive" });
         }
+        return false;
       } finally {
-        if (generation === generationRef.current) { queueBusyRef.current = false; setSpeaking(false); }
+        if (requestRef.current === controller) {
+          stopSpeechPlayback();
+          setSpeaking(false);
+          requestRef.current = null;
+        }
       }
-    })();
-  }, [fetchClip, playClip, profile, toast]);
+    },
+    [profile, startClip, toast],
+  );
+
+  const enqueue = useCallback(
+    (text: string) => {
+      if (!stripForSpeech(text) || !profile || !ANON_KEY) return;
+      if (!requestRef.current || requestRef.current.signal.aborted) requestRef.current = new AbortController();
+      const controller = requestRef.current;
+      pendingRef.current.push(...splitSpeechText(stripForSpeech(text), 600).map((chunk) => startClip(chunk, controller.signal)));
+      if (queueBusyRef.current) return;
+      queueBusyRef.current = true;
+      const generation = generationRef.current;
+      setSpeaking(true);
+      void (async () => {
+        try {
+          while (generation === generationRef.current && pendingRef.current.length) {
+            const clip = pendingRef.current.shift()!;
+            if (generation !== generationRef.current || controller.signal.aborted) return;
+            await playSpeechClip(clip, clipSpeed(profile.speed));
+          }
+        } catch (error) {
+          if (generation === generationRef.current && !controller.signal.aborted) {
+            pendingRef.current = [];
+            toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Please try voice playback again.", variant: "destructive" });
+          }
+        } finally {
+          if (generation === generationRef.current) { queueBusyRef.current = false; setSpeaking(false); }
+        }
+      })();
+    },
+    [profile, startClip, toast],
+  );
 
   const speakChunk = useCallback(
     (chunk: string) => {
@@ -212,15 +188,15 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   /** Start a fresh reply. */
   const reset = useCallback(() => {
     generationRef.current += 1;
-    queueRef.current = []; pendingRef.current = [];
+    pendingRef.current = [];
     queueBusyRef.current = false;
     requestRef.current?.abort();
-    releaseStudioAudio();
+    stopSpeechPlayback();
     spokenRef.current = 0;
     bufferRef.current = "";
     if (supported) window.speechSynthesis?.cancel();
     setSpeaking(false);
-  }, [releaseStudioAudio, supported]);
+  }, [supported]);
 
   const toggle = useCallback(() => {
     setEnabled((was) => {
@@ -229,16 +205,16 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       localStorage.setItem(STORAGE_KEY, next ? "on" : "off");
       if (!next) {
         generationRef.current += 1;
-        queueRef.current = []; pendingRef.current = [];
+        pendingRef.current = [];
         queueBusyRef.current = false;
         requestRef.current?.abort();
-        releaseStudioAudio();
+        stopSpeechPlayback();
         setSpeaking(false);
         if (supported) window.speechSynthesis?.cancel();
       }
       return next;
     });
-  }, [releaseStudioAudio, supported]);
+  }, [supported]);
 
   /**
    * Read one specific message out loud on demand (a play button), regardless of
@@ -270,11 +246,11 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
 
   useEffect(() => () => {
     generationRef.current += 1;
-    queueRef.current = []; pendingRef.current = [];
+    pendingRef.current = [];
     requestRef.current?.abort();
-    releaseStudioAudio();
+    stopSpeechPlayback();
     if (supported) window.speechSynthesis?.cancel();
-  }, [releaseStudioAudio, supported]);
+  }, [supported]);
 
   const pauseForMicrophone = useCallback(() => { listeningRef.current = true; stop(); }, [stop]);
   const resumeAfterMicrophone = useCallback(() => { listeningRef.current = false; }, []);
