@@ -1,3 +1,5 @@
+// Bun runs these tests; the browser TypeScript project does not include Bun types.
+// @ts-ignore -- test-only runtime import
 import { describe, expect, test } from "bun:test";
 import { getBotStarters } from "./botStarters";
 import catalog from "@/components/bot-studio/botStarters.json";
