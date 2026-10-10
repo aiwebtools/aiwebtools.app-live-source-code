@@ -8,6 +8,8 @@ import { getOpInstructionDoc, OP_INSTRUCTION_DOCS } from "@/data/opInstructionDo
 import { downloadAllOperationalInstructions } from "@/utils/downloads";
 import { generateToolSlug } from "@/utils/urlGenerator";
 import { Tool } from "@/types/tools";
+import type { StudioBot } from "@/components/bot-studio/botCatalog";
+import { getGptVoiceProfile } from "@/utils/gptVoiceProfiles";
 import { playTimeWarpVoice } from "@/utils/effects/timeWarpVoice";
 
 const InSiteGptRunner = lazy(() => import("@/components/tool-detail/InSiteGptRunner"));
@@ -89,6 +91,38 @@ const FEATURED_DOC_SLUGS: Record<string, string> = {
   "MiddleJourney Midjourney Prompting Assistant": "mid-journey-prompt-optimizer-open-source",
 };
 
+/** Featured cards whose hosted bot lives under a different name. */
+const FEATURED_BOT_SLUGS: Record<string, string> = {
+  "Game Design Document Developer GPT": "game-developer-gpt",
+  "OG TIME MACHINE HISTORY EDUCATION (GEM)": "time-machine-gpt",
+  "Book Writer Gemini (Custom Gem)": "book-writer-gpt-no-longer-segmented",
+  "Medicus - the FREE Personal Medical GPT": "doctor-gpt-open-source",
+  "Global Peace Restoration Strategist GPT": "diplomatica-world-peace-nuclear-disarmament-advisor",
+};
+
+/** Cards that are registrations, not chat assistants. */
+const NOT_A_BOT = /web3 registration/i;
+
+/** A working device-side bot for featured GPTs that have no hosted room yet. */
+const buildFallbackBot = (title: string, tool: Tool): StudioBot => {
+  const name = title.replace(/\s+/g, " ").trim();
+  const about = (tool.description || "").slice(0, 1500);
+  return {
+    slug: `custom-featured-${generateToolSlug(name)}`,
+    display_name: name,
+    tool_title: name,
+    tagline: about.split(/(?<=[.!?])\s/)[0]?.slice(0, 140) || name,
+    greeting: `Welcome, I am ${name}, hosted right here on AIWebTools.ai. Tell me what you need and we begin.`,
+    starter_prompts: null,
+    supports_images: true,
+    model: "google/gemini-3.1-flash-lite",
+    custom: {
+      instructions: `You are ${name}, an AIWebTools.ai custom GPT. Stay fully in this role at all times.\n\nWhat you do:\n${about}\n\nOperating rules: open by asking the user one focused question about their goal, then deliver expert, step-by-step help with clear follow-up steps. Use web search, image generation and structured reports whenever they serve the user. Be accurate, warm and practical.`,
+      voice: getGptVoiceProfile(generateToolSlug(name), name).voice,
+    },
+  };
+};
+
 /** Instruction document for a card, resolved instantly (no network wait). */
 export const resolveDocSlug = (titles: string[], appSlug?: string | null): string | null => {
   for (const t of titles) {
@@ -122,7 +156,9 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
     loadApps().then((apps) => {
       if (!alive) return;
       const docSlug = resolveDocSlug(titles);
-      setApp(findApp(apps, titles) ?? (docSlug ? apps.find((a) => a.slug === docSlug) ?? null : null));
+      const alias = titles.map((t) => FEATURED_BOT_SLUGS[t]).find(Boolean);
+      const aliased = alias ? apps.find((a) => a.slug === alias) : undefined;
+      setApp(aliased ?? findApp(apps, titles) ?? (docSlug ? apps.find((a) => a.slug === docSlug) ?? null : null));
     });
     return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -131,12 +167,14 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
   const docSlug = resolveDocSlug(titles, app?.slug);
   const hasDoc = !!getOpInstructionDoc(docSlug);
   const name = app?.display_name || titles[titles.length - 1];
+  const fallback = !app && !NOT_A_BOT.test(titles.join(" ")) ? buildFallbackBot(titles[titles.length - 1], tool) : null;
+  const canChat = !!app || !!fallback;
 
   return (
     <div className="mb-2 flex flex-wrap gap-1.5" onClick={(e) => e.stopPropagation()}>
       <Button variant="ghost"
         type="button"
-        onClick={() => { playTimeWarpVoice(); if (app) setOpen(true); else window.open(`/${pageSlug}#try-bot`, "_blank"); }}
+        onClick={() => { playTimeWarpVoice(); if (canChat) setOpen(true); else window.open(`/${pageSlug}#try-bot`, "_blank"); }}
         className={btn}
         title={`Try ${name} right here, running on its operational instructions`}
       >
@@ -160,7 +198,7 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
           <Download className="h-3.5 w-3.5" aria-hidden="true" /> Library
         </Button>
       )}
-      {app && (
+      {canChat && (
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogContent className="max-h-[96dvh] w-[98vw] max-w-7xl overflow-hidden p-1 pt-9 sm:p-1 sm:pt-9">
             <DialogTitle className="sr-only">{name}</DialogTitle>
@@ -169,7 +207,7 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
             </DialogDescription>
             {open && (
               <Suspense fallback={<p className="p-8 text-center text-sm text-muted-foreground">Opening {name}…</p>}>
-                <InSiteGptRunner tool={{ ...tool, title: app.tool_title || tool.title }} appSlug={app.slug} showLoading />
+                <InSiteGptRunner tool={{ ...tool, title: app?.tool_title || tool.title }} appSlug={app?.slug} fallbackBot={fallback} showLoading />
               </Suspense>
             )}
           </DialogContent>

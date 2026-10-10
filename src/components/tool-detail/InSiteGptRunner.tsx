@@ -3,15 +3,16 @@ import { Tool } from "@/types/tools";
 import BotStudio from "@/components/bot-studio/BotStudio";
 import { loadStudioBots, type StudioBot } from "@/components/bot-studio/botCatalog";
 
-export default function InSiteGptRunner({ tool, appSlug, showLoading = false }: { tool: Tool; appSlug?: string; showLoading?: boolean }) {
+export default function InSiteGptRunner({ tool, appSlug, showLoading = false, fallbackBot = null }: { tool: Tool; appSlug?: string; showLoading?: boolean; fallbackBot?: StudioBot | null }) {
   const [app, setApp] = useState<StudioBot | null>(null);
   const [done, setDone] = useState(false);
   useEffect(() => {
+    if (fallbackBot) { setApp(fallbackBot); setDone(true); return; }
     let alive = true;
     setApp(null); setDone(false);
     void loadStudioBots().then((bots) => { if (alive) setApp(bots.find((bot) => appSlug ? bot.slug === appSlug : bot.tool_title === tool.title) || null); }).catch(() => {}).finally(() => { if (alive) setDone(true); });
     return () => { alive = false; };
-  }, [appSlug, tool.title]);
+  }, [appSlug, tool.title, fallbackBot?.slug]);
   useEffect(() => {
     if (!app || window.location.hash !== "#try-bot") return;
     const id = requestAnimationFrame(() => document.getElementById("try-bot")?.scrollIntoView({ block: "start" }));
