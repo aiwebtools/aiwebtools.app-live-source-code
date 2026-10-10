@@ -1,5 +1,6 @@
 
 import { primeToolImageMap } from "@/utils/search/toolImageMap";
+import { getCommunityBotsSync, loadCommunityBots, matchCommunityBots } from "@/utils/communityBots";
 import { useState, useEffect, useRef, useCallback, useMemo, startTransition } from "react";
 import { useNavigate } from "react-router-dom";
 import { createTimePortalEffect } from "@/utils/timeEffects";
@@ -2615,7 +2616,7 @@ export const useGlobalSearch = () => {
         if (quickRef.current) clearTimeout(quickRef.current);
         if (fullRef.current) clearTimeout(fullRef.current);
         // Navigate using slug directly - no O(n) findIndex
-        navigate(`/${generateToolSlug(topResult.title)}`, { state: { instantTool: toInstantToolState(topResult) } });
+        navigate(topResult.categoryPath || `/${generateToolSlug(topResult.title)}`, { state: { instantTool: toInstantToolState(topResult) } });
         setIsOpen(false);
         setSearchResults([]);
         setSearchTermInternal("");
@@ -2637,9 +2638,18 @@ export const useGlobalSearch = () => {
   const loadMoreRecommendations = useCallback(() => {}, []);
 
   // Combined results: direct matches + recommendations
+  const [communityBots, setCommunityBots] = useState(getCommunityBotsSync);
+  useEffect(() => {
+    if (communityBots || !searchTerm.trim()) return;
+    loadCommunityBots().then(setCommunityBots).catch(() => {});
+  }, [communityBots, searchTerm]);
+
   const combinedResults = useMemo(() => {
-    return [...searchResults, ...recommendedTools];
-  }, [searchResults, recommendedTools]);
+    const community = searchResults.length || recommendedTools.length || searchTerm.trim()
+      ? matchCommunityBots(communityBots, searchTerm).filter((b) => !searchResults.some((r) => r?.title === b.title))
+      : [];
+    return [...community, ...searchResults, ...recommendedTools];
+  }, [searchResults, recommendedTools, communityBots, searchTerm]);
 
   // INFINITE SCROLL — keeps revealing the FULL result set in generous batches.
   // Uses a ref guard (not state) so fast momentum scrolling never drops a page.
