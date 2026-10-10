@@ -256,12 +256,12 @@
     "Help me model revenue and expenses with clear assumptions and a break-even estimate."
   ],
   "cannabis-gpt-not-gpt4o1-compliant": [
-    "Explain legal cannabis compliance topics for my jurisdiction using current sources.",
-    "Help me compare cultivation or product-label information with safety and legal considerations."
+    "Explain legal cannabis cultivation basics for adults in my jurisdiction.",
+    "Help me review a cannabis product label for potency, ingredients, and safety considerations."
   ],
   "carl-jung-gpt": [
-    "Explore Carl Jung through historical context, original sources, and thoughtful questions.",
-    "Guide a reflective conversation inspired by Carl Jung, separating interpretation from established facts."
+    "Explore the archetypes in a story or dream I describe through a Jungian lens.",
+    "Guide a reflection on the shadow and individuation without treating it as a diagnosis."
   ],
   "carl-sagan-gpt": [
     "Plan a fictional space-exploration mission grounded in scientific constraints.",
@@ -376,8 +376,8 @@
     "Guide a reflective conversation inspired by Creative Spark, separating interpretation from established facts."
   ],
   "criminologist-gpt": [
-    "Explore Criminologist through historical context, original sources, and thoughtful questions.",
-    "Guide a reflective conversation inspired by Criminologist, separating interpretation from established facts."
+    "Help me organize a fictional case timeline and evaluate competing explanations.",
+    "Build an evidence-review checklist for investigator training, separating facts from assumptions."
   ],
   "crop-sensei-is-an-agricultural-predict-and-horticulture-expert-agripredict-gpt": [
     "Help me troubleshoot crop health using symptoms, soil conditions, and local weather.",
@@ -472,8 +472,8 @@
     "Restyle my visual concept as watercolor while keeping its key details."
   ],
   "dream-interpreter-gpt": [
-    "Explore Dream Interpreter through historical context, original sources, and thoughtful questions.",
-    "Guide a reflective conversation inspired by Dream Interpreter, separating interpretation from established facts."
+    "Help me reflect on a dream’s imagery and emotions without claiming one certain meaning.",
+    "Compare symbolic interpretations of my dream and ask about its personal context."
   ],
   "drill-baby-drill-ai-suite": [
     "Explain an industrial process and identify its operational and environmental risks.",
@@ -704,8 +704,8 @@
     "Guide a reflective conversation inspired by Hermetic Mysteries, separating interpretation from established facts."
   ],
   "historical-apothecary-gpt": [
-    "Explore Historical Apothecary through historical context, original sources, and thoughtful questions.",
-    "Guide a reflective conversation inspired by Historical Apothecary, separating interpretation from established facts."
+    "Explore how a historical apothecary used herbs, distinguishing tradition from modern evidence.",
+    "Explain a historical herbal preparation for study, including toxicity and safety cautions."
   ],
   "historical-headlines-gpt": [
     "Write a period-accurate news report about the opening of the first railway.",
@@ -716,8 +716,8 @@
     "Help me troubleshoot a household problem and identify when I need a professional."
   ],
   "home-school-gpt": [
-    "Explore Home School through historical context, original sources, and thoughtful questions.",
-    "Guide a reflective conversation inspired by Home School, separating interpretation from established facts."
+    "Plan a homeschool week around my child’s age, learning needs, and local requirements.",
+    "Help me design a hands-on science lesson with activities and a comprehension check."
   ],
   "honest-advice-gpt": [
     "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
@@ -792,8 +792,8 @@
     "Analyze a current international issue and outline possible outcomes with uncertainty."
   ],
   "interpretis": [
-    "Explore Interpretis through historical context, original sources, and thoughtful questions.",
-    "Guide a reflective conversation inspired by Interpretis, separating interpretation from established facts."
+    "Trace a word’s origins and explain how its meaning changed across cultures.",
+    "Analyze a phrase’s symbolism while distinguishing documented etymology from interpretation."
   ],
   "jarvis-10-25": [
     "Help me break my project into actionable tasks and complete the first step.",
@@ -1686,5 +1686,9 @@
   "zoroastrian-light-gpt": [
     "Explore Zoroastrian Light through historical context, original sources, and thoughtful questions.",
     "Guide a reflective conversation inspired by Zoroastrian Light, separating interpretation from established facts."
+  ],
+  "freud-gpt": [
+    "Explain a Freudian concept and compare it with modern psychology.",
+    "Discuss symbolic interpretations of a dream as possibilities, not diagnoses."
   ]
 }
