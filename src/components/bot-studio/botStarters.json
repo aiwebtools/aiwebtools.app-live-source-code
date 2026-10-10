@@ -24,56 +24,56 @@
     "Plan a sustainable growing season for my land, crops, climate, and available resources."
   ],
   "ai-airport-runway-systems-inspector": [
-    "Help me review a Airport & Runway maintenance report and flag questions for a qualified inspector.",
-    "Draft a Airport & Runway inspection checklist, including evidence to record and issues to escalate."
+    "Runway 09R LiDAR scan shows deep rutting and rubber build-up; calculate PCI and skid resistance FN40.",
+    "Verify if current Taxiway Bravo edge light outages and 35 cd intensity meet FAA Part 139 standards."
   ],
   "ai-calculator": [
     "Help me express a real-world problem as variables and equations.",
     "Work through a calculation step by step and check the assumptions and result."
   ],
   "ai-cannabis-facility-safety-inspector": [
-    "Help me review a Cannabis Facility Safety maintenance report and flag questions for a qualified inspector.",
-    "Draft a Cannabis Facility Safety inspection checklist, including evidence to record and issues to escalate."
+    "Audit these extraction lab photos for CO2 tank violations and OSHA egress path compliance.",
+    "Search Colorado METRC rules to calculate a risk score for this batch tracking log via Python."
   ],
   "ai-dam-hydroelectric-inspector": [
-    "Help me review a Dam & Hydroelectric maintenance report and flag questions for a qualified inspector.",
-    "Draft a Dam & Hydroelectric inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this turbine vibration data and seepage log to check for bearing wear and dam stability.",
+    "Perform a FERC Part 12D review on this gravity dam image to identify concrete face crack severity."
   ],
   "ai-fashion-model-generator": [
     "Create a fashion-model image concept for my clothing collection.",
     "Plan a cohesive editorial fashion shoot with poses, outfits, and a visual mood."
   ],
   "ai-highway-traffic-systems-inspector": [
-    "Help me review a Highway & Traffic maintenance report and flag questions for a qualified inspector.",
-    "Draft a Highway & Traffic inspection checklist, including evidence to record and issues to escalate."
+    "Inspect these CCTV logs and crash records for the I-95 NB interchange to calculate crash rates per MVM.",
+    "Analyze this LiDAR scan of Sta. 225+00 to check if rut depth and barrier deflection meet AASHTO standards."
   ],
   "ai-home-cleanliness-declutter-coach-gpt": [
     "Build a manageable decluttering plan for my room, time budget, and priorities.",
     "Help me create a cleaning schedule that fits my household and energy level."
   ],
   "ai-hospital-facility-safety-inspector": [
-    "Help me review a Hospital Facility Safety maintenance report and flag questions for a qualified inspector.",
-    "Draft a Hospital Facility Safety inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this image of our med-surg corridor for NFPA 101 egress violations and signage non-compliance.",
+    "Calculate a weighted safety risk score for our ICU based on current CMS standards and CDC biohazard data."
   ],
   "ai-human-bill-of-rights": [
     "Compare an AI policy with human dignity, privacy, and accountability principles.",
     "Help me draft a clear governance proposal with practical safeguards."
   ],
   "ai-pipeline-integrity-inspector": [
-    "Help me review a Pipeline Integrity maintenance report and flag questions for a qualified inspector.",
-    "Draft a Pipeline Integrity inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this ILI log for a 30-inch gas line to calculate burst pressure and remaining strength",
+    "Inspect this drone footage of a liquid pipeline ROW for coating holidays and soil encroachment"
   ],
   "ai-port-inspector-gpt": [
-    "Help me review a Port maintenance report and flag questions for a qualified inspector.",
-    "Draft a Port inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this sonar scan of the Berth 4 quay wall to calculate scour depth and seaward displacement.",
+    "Verify if my STS Crane fatigue logs and mooring tension data comply with current PIANC safety standards."
   ],
   "airline-maintenance-inspector-gpt": [
-    "Help me review a Maintenance maintenance report and flag questions for a qualified inspector.",
-    "Draft a Maintenance inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this A320 wing root image for structural cracks and smoking rivets at FS 720.",
+    "Verify AD 2023-12-05 compliance for this Boeing 737-800 based on the attached flight log."
   ],
   "ai-shipping-container-inspector": [
-    "Help me review a Shipping Container maintenance report and flag questions for a qualified inspector.",
-    "Draft a Shipping Container inspection checklist, including evidence to record and issues to escalate."
+    "Identify ISO 6346 IDs and structural defects from my uploaded drone scan of a damaged dry van",
+    "Calculate repair costs and demurrage exposure for this reefers warped door and gasket tear"
   ],
   "ai-tools-finder-gpt": [
     "Find AI tools for my task and compare cost, capabilities, and limitations.",
@@ -84,24 +84,24 @@
     "Help me choose a practical AI workflow around my goals and budget."
   ],
   "ai-water-treatment-plant-inspector-gpt": [
-    "Help me review a Water Treatment Plant maintenance report and flag questions for a qualified inspector.",
-    "Draft a Water Treatment Plant inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this filter gallery photo for turbidity breakthrough and headloss compliance.",
+    "Calculate CT values for my 5 MGD chlorine contact tank based on these SCADA logs."
   ],
   "aiwebtools-gpt-cloner-gpt": [
-    "Help me design a focused assistant with a clear purpose, persona, and workflow.",
-    "Improve my prompt so its task, context, output format, and boundaries are explicit."
+    "Scan your database to find the best instructions for cloning my new Travel Itinerary Builder GPT idea",
+    "Analyze my Mental Health Coach concept and provide the top five instruction sets to clone for empathy"
   ],
   "ai-wind-turbine-inspector": [
-    "Help me review a Wind Turbine maintenance report and flag questions for a qualified inspector.",
-    "Draft a Wind Turbine inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this blade drone image for LE erosion and calculate the AEP loss using a Python power curve model.",
+    "Correlate my gearbox vibration data with oil debris logs to predict the remaining L10 bearing life."
   ],
   "akhenaten-gpt": [
-    "Help me explore the Aten and the Amarna religious reforms.",
-    "Guide me through art and daily life in Amarna."
+    "Akhenaten, use Python to reveal the Aten's sacred geometry within the golden ratio of a sunflower.",
+    "Explain how my modern societal dogmas are like the old gods of Thebes that you bravely cast aside."
   ],
   "alan-watts-gpt-page": [
-    "Help me explore the relationship between self and universe in Zen.",
-    "Guide me through the web of life and interconnectedness."
+    "Explain the cosmic dance of opposites using the metaphor of a wave crashing against a jagged shore.",
+    "Roleplay a conversation where you interpret my recurring dream about a golden key in a dark forest."
   ],
   "albert-einstein-gpt": [
     "Help me understand relativity with a train-and-light thought experiment.",
@@ -120,88 +120,88 @@
     "Work through a calculation step by step and check the assumptions and result."
   ],
   "ancient-bible-recovery": [
-    "Help me explore differences between early biblical manuscripts.",
-    "Guide me through translation nuances in the Dead Sea Scrolls."
+    "Restore the original Hebrew wording of Deuteronomy 32:8 using the Dead Sea Scrolls and Septuagint variants.",
+    "Analyze the Codex Sinaiticus to identify the earliest Greek endings of Mark and explain why they were redacted."
   ],
   "ancient-egyptian-proverbs-gpt": [
-    "Help me explore wisdom through an Egyptian-style proverb.",
-    "Guide me through a teaching from the Instructions of Ptahhotep."
+    "How shall I navigate a kingdom where the tongues of men are divided like a broken reed?",
+    "The scales of my heart weigh heavy with modern haste; reveal the wisdom of the rising Nile."
   ],
   "ancient-essenes-gpt": [
-    "Help me explore Essene communal life and historical evidence from Qumran.",
-    "Guide me through light and darkness in Essene traditions."
+    "Reveal the dawn prayer and ritual bathing codes to ignite my inner flame before the sun rises.",
+    "Decode the battle between the Sons of Light and Darkness as it manifests in this modern age."
   ],
   "ancient-gematria-scan-gpt": [
-    "Help me explore the gematria value of a Hebrew word I provide.",
-    "Guide me through differences between Hebrew and Greek numerical symbolism."
+    "Run a dual canonical and hybrid Jewish gematria scan on my full name to reveal my soul purpose",
+    "Map my destiny using Sumerian cuneiform soul mapping and Babylonian astrology for my exact birth time"
   ],
   "ancient-light-mysticism-gpt": [
-    "Help me explore light symbolism in ancient mystical traditions.",
-    "Guide me through a gentle reflection on inner light."
+    "Initiate me as a Gnostic rebel to traverse the Enochian heavens and recover my lost spark of original light",
+    "Decode the Pythagorean geometry hidden in the ruins of Alexandria to reveal the secret chords of the cosmos"
   ],
   "antique-collectible-appraisal-gpt": [
-    "Help me evaluate an item using its markings, condition, provenance, and comparable sales.",
-    "Build an evidence-based valuation range and explain what information is still missing."
+    "Identify this tarnished silver teapot and estimate its auction value from the hallmark photo.",
+    "Search recent sales data for a 1950s Zenith radio with original walnut casing and knobs."
   ],
   "aqualis-oceanic-health-monitor-pollution-forecaster": [
     "Analyze ocean-health data for pollution trends and explain uncertainty.",
     "Plan an evidence-based coastal monitoring project with useful indicators."
   ],
   "aquila-water-safety-planning-assistant-gpt": [
-    "Build a water-safety plan around my location, equipment, and likely hazards.",
-    "Help me evaluate water-quality observations and identify when professional testing is needed."
+    "Generate a WATER-DAY-CARD for 45 refugees in a hot climate using cloudy creek water and 5% bleach",
+    "Calculate the safe latrine zones and 14 day storage needs for a rural clinic with 12 staff members"
   ],
   "architectural-old-world-investigator-gpt": [
-    "Investigate a recurring historical pattern using sources and competing explanations.",
-    "Help me evaluate an ancient architectural claim without confusing evidence with speculation."
+    "Master, audit this building for pneumatic carving marks and mismatched stone aging to expose the timeline.",
+    "Master, calculate the lift logistics for these 50 ton blocks using only 19th century rope and pulley tech."
   ],
   "aristotle-gpt": [
-    "Help me explore eudaimonia and the practice of virtue.",
-    "Guide me through the four causes applied to an everyday object."
+    "Aristotle, apply your syllogistic logic to prove if our current reality is a simulation or true matter.",
+    "Explain the four causes of a modern smartphone and run a Python script to calculate its social impact."
   ],
   "arius-the-bearer-of-light-gpt": [
-    "Help me explore Arius’s teachings about the Father and Son.",
-    "Guide me through the theological debates at the Council of Nicaea."
+    "Explain how the Unbegotten Light of the Father differs from the first radiance of the Son.",
+    "Relate how the Council of Nicaea veiled the primordial light to serve the needs of the empire."
   ],
   "article-blog-rewriter-gpt": [
     "Rewrite my text for clarity while preserving its meaning and important details.",
     "Turn my notes into a structured Article & Blog Rewriter draft for my intended audience."
   ],
   "artwork-vintage-appraisal-gpt": [
-    "Help me evaluate an item using its markings, condition, provenance, and comparable sales.",
-    "Build an evidence-based valuation range and explain what information is still missing."
+    "Value this 19th-century oil landscape painting showing a coastal storm and identify the likely artist.",
+    "Analyze this photo of a mid-century teak chair to determine if it is an authentic Hans Wegner design."
   ],
   "astrodynamics-gpt": [
     "Plan a fictional space-exploration mission grounded in scientific constraints.",
     "Explain an astronomy concept and help me explore a planetary-settlement scenario."
   ],
   "astrotheology-revealer-gpt": [
-    "Help me explore astronomical interpretations of religious symbols.",
-    "Guide me through a proposed parallel between a myth and the night sky."
+    "Trace the syncretic links between Horus, Mithras, and Jesus using solar precession data",
+    "Analyze this temple image to decode the sacred geometry and planetary alignments hidden in the walls"
   ],
   "atlantean-memory-keeper": [
-    "Help me explore Atlantis as a myth and imaginative civilization.",
-    "Guide me through a fictional journey through an Atlantean city."
+    "I am ready to sound the Ela-Ra-An-Na tone to activate my cellular marrow memory",
+    "Describe the visionary architecture of an Atlantean temple through water and light"
   ],
   "autochat-gpt-august": [
-    "Help me break my project into actionable tasks and complete the first step.",
-    "Review my goals and constraints, then propose an organized plan with clear priorities."
+    "Manage agents to build a Python web scraper using a custom architectural framework.",
+    "Act as Scrum Master to coordinate a technical development plan for a logistics app."
   ],
   "automobile-gpt": [
-    "Help me assess a vehicle issue from symptoms, model, mileage, and service history.",
-    "Review a vehicle damage description and prepare questions for a repair professional."
+    "Analyze this crash photo to see if it is totaled and calculate repair costs vs market value.",
+    "Find the cheapest brake pads for my 2018 Camry in zip 90210 and link a DIY repair video."
   ],
   "awakening-jeopardy-gpt-chat-game": [
     "Start a Awakening Jeopardy session on my chosen topic and explain the rules.",
     "Challenge me with progressively harder questions or moves and explain each result."
   ],
   "bible-studies-gpt": [
-    "Help me explore the historical setting of a biblical parable.",
-    "Guide me through a challenging passage and its translation choices."
+    "Use redaction criticism to explain the different accounts of creation in Genesis one and two",
+    "Perform a linguistic analysis of the Greek term Logos within the Johannine Prologue context"
   ],
   "bill-donahue-gpt": [
-    "Help me explore symbolic interpretations of a biblical story.",
-    "Guide me through the single-eye metaphor, separating interpretation from anatomy."
+    "Explain how the twelve disciples represent my cranial nerves using the Bible as a medical code.",
+    "Show me how to activate my pineal gland and the single eye through a deep inner meditation."
   ],
   "binary-text-converter-gpt": [
     "Explain how to convert my text into binary and back without losing characters.",
@@ -212,12 +212,12 @@
     "Help me narrow down a bird identification from size, markings, call, and habitat."
   ],
   "black-elk-vision-gpt": [
-    "Help me explore Black Elk’s account of the sacred hoop.",
-    "Guide me through Lakota relationships with land in their historical context."
+    "Draw a vision of the Sacred Hoop and the Flowering Tree in the center of the world.",
+    "Map the ancestral energy of the Black Hills using your spiritual field calculations."
   ],
   "black-history-matters-time-machine-gpt": [
-    "Take me to Alexandria in 250 BCE and let me choose what happens next.",
-    "Guide me through a historically grounded visit to Renaissance Florence."
+    "Teleport me to the 1963 March on Washington to hear the vivid sounds of Dr. King's historic speech.",
+    "Generate a detailed archival report on the life and inventions of Sarah Boone including her 1892 patents."
   ],
   "blueberry-gpt": [
     "Help me express a real-world problem as variables and equations.",
@@ -228,24 +228,24 @@
     "Explore the message of a reggae song and brainstorm an original lyrical direction."
   ],
   "bob-ross-gpt": [
-    "Guide me through planning a peaceful landscape painting step by step.",
-    "Help me choose a color palette and composition for a mountain-and-lake scene."
+    "Surprise me with a misty mountain lake scene and show me some of Bob Ross's best forest episodes",
+    "Let us paint a quiet winter cabin together and show me how to blend a soft titanium white sky"
   ],
   "bogomils-gpt-living-light": [
-    "Help me explore Bogomil dualism and its historical setting.",
-    "Guide me through what sources reveal about Bogomil community practices."
+    "Decode the secret Gospel of John to reveal how the Light-bearer escapes the Demiurge's shadow",
+    "Describe the ritual of the Consolamentum in a mountain cave while the inquisitors hunt us below"
   ],
   "book-writer-gpt-no-longer-segmented": [
     "Plan my book’s genre, audience, characters, and chapter outline before drafting.",
     "Write an opening chapter from my premise and track continuity for the next chapter."
   ],
   "buddha-free-thought-gpt": [
-    "Help me explore the Four Noble Truths in everyday life.",
-    "Guide me through anatta and the Buddhist idea of non-self."
+    "Buddha, use Python to simulate the probability that my perception of reality is a digital sham.",
+    "Speak as the Enlightened One and analyze the lines of borders on a map through your eternal wisdom."
   ],
   "buildyourgpts": [
-    "Help me design a focused assistant with a clear purpose, persona, and workflow.",
-    "Improve my prompt so its task, context, output format, and boundaries are explicit."
+    "Design a data analyst GPT to visualize global climate trends using live web statistics",
+    "Build a creative writing GPT that roleplays as a noir detective in a neon cyberpunk city"
   ],
   "business-plan-architect": [
     "Design a room layout around my dimensions, budget, and style.",
@@ -256,8 +256,8 @@
     "Help me model revenue and expenses with clear assumptions and a break-even estimate."
   ],
   "cannabis-gpt-not-gpt4o1-compliant": [
-    "Explain legal cannabis cultivation basics for adults in my jurisdiction.",
-    "Help me review a cannabis product label for potency, ingredients, and safety considerations."
+    "Trace Blue Dream back to its landrace origins and draw a detailed hierarchical family tree diagram.",
+    "Calculate the mg/ml potency for my 2 ounce tincture using 7 grams of 22 percent THCA flower."
   ],
   "carl-jung-gpt": [
     "Explore the archetypes in a story or dream I describe through a Jungian lens.",
@@ -284,16 +284,16 @@
     "Plan a dinner menu with a shopping list and coordinated cooking steps."
   ],
   "chemical-plant-inspector-gpt": [
-    "Help me review a Chemical Plant maintenance report and flag questions for a qualified inspector.",
-    "Draft a Chemical Plant inspection checklist, including evidence to record and issues to escalate."
+    "Analyze these UT thickness readings for ammonia tank T-14 and calculate the corrosion rate.",
+    "Verify if my flare stack's black smoke event at 15:42 violates EPA combustion standards."
   ],
   "chief-crazy-horse-gpt": [
-    "Help me explore the defense of the Black Hills in its historical context.",
-    "Guide me through Crazy Horse’s leadership and documented legacy."
+    "Map the cracks in modern empire by modeling its extractive logic against indigenous fractal time.",
+    "Speak as the rider who never fell and reveal how the sky remembers my name beneath these city lights."
   ],
   "chief-seattle-free-thought-gpt": [
-    "Help me explore care for the land and future generations.",
-    "Guide me through Chief Seattle’s speech and questions about its historical attribution."
+    "Chief Seattle, analyze the code of nature using Python to calculate the probability of my soul's freedom.",
+    "Speak as the wind, Sealth, and use your web search wisdom to reveal how modern dogma hides the truth."
   ],
   "childrens-book-maker-gpt": [
     "Help me outline a picture book for ages five to seven with a gentle message.",
@@ -336,8 +336,8 @@
     "Help me identify a credible differentiation strategy from market evidence."
   ],
   "confucius-free-thought-gpt": [
-    "Help me explore filial piety and its ethical challenges.",
-    "Guide me through virtuous leadership and ritual in the Analects."
+    "Master Confucius, use Python to simulate how Li and Ren create harmony in a chaotic modern city",
+    "Old Sage, deconstruct the dogma of modern success and show me a path to govern my own heart"
   ],
   "connecticut-cannabiz-gpt": [
     "Explain legal cannabis compliance topics for my jurisdiction using current sources.",
@@ -348,16 +348,16 @@
     "Help me troubleshoot a household problem and identify when I need a professional."
   ],
   "construction-site-safety-analyzer-gpt": [
-    "Help me review a Construction Site Safety Analyzer maintenance report and flag questions for a qualified inspector.",
-    "Draft a Construction Site Safety Analyzer inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this site photo for fall hazards and generate a structured OSHA inspection report PDF",
+    "Review this trenching video for soil stability risks and provide a severity-based hazard log"
   ],
   "contract-review-bot": [
     "Explain a legal document in plain language and flag questions for a lawyer.",
     "Help me organize a factual timeline and draft a document for professional review."
   ],
   "council-of-light-gpt": [
-    "Help me explore my life choices through symbolic reflection.",
-    "Guide me through a fictional cosmic dialogue about compassion and responsibility."
+    "Unveil the lost Manichaean scrolls to explain the cosmic dance between the Father of Light and the Abyss.",
+    "Map my vision of a golden ray piercing the material veil onto the ancient Neoplatonic ladder of emanation."
   ],
   "course-creator-gpt": [
     "Build a beginner-to-advanced learning plan for biology and start my first lesson.",
@@ -400,20 +400,20 @@
     "Help me improve cursive letter connections, spacing, and legibility."
   ],
   "custom-gpt-maker": [
-    "Help me design a focused assistant with a clear purpose, persona, and workflow.",
-    "Improve my prompt so its task, context, output format, and boundaries are explicit."
+    "Design a data analyst GPT to visualize global climate trends with Python infographics.",
+    "Create a coding mentor GPT that performs web searches for latest API documentation."
   ],
   "cyber-kabbalah-light-code-translation-engine-gpt": [
-    "Help me explore digital systems through the Tree of Life as a metaphor.",
-    "Guide me through symbolic parallels between Hebrew letters and information patterns."
+    "Translate this picture of a dark forest path into a Paleo-Hebrew 0x1F Light Code sequence",
+    "Encode the concept of internal transformation into a 0x5F domain Paleo-Hebrew binary matrix"
   ],
   "cyber-security-gpt": [
     "Review my security setup and prioritize defensive improvements.",
     "Help me investigate suspicious logs and plan a safe incident-response checklist."
   ],
   "dam-levee-inspector-gpt": [
-    "Help me review a Dam & Levee maintenance report and flag questions for a qualified inspector.",
-    "Draft a Dam & Levee inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this drone photo of an earthfill dam toe for seepage and iron bacteria staining.",
+    "Calculate the factor of safety for a 1950s rockfill dam using this new piezometer data."
   ],
   "data-analysis-and-report-gpt": [
     "Analyze my pasted data for trends, outliers, and limitations.",
@@ -432,12 +432,12 @@
     "Review the information I provide and separate general health education from professional care."
   ],
   "deployable-custom-gpt-maker": [
-    "Help me design a focused assistant with a clear purpose, persona, and workflow.",
-    "Improve my prompt so its task, context, output format, and boundaries are explicit."
+    "Scan Chapter 3 data to find the best cloning candidate for a real estate investment analyst.",
+    "Run a Python-based pattern analysis to clone the methodology of a wellness coach for a new tutor."
   ],
   "desert-monastic-mysticism-gpt": [
-    "Help me explore a Desert Fathers teaching on silence.",
-    "Guide me through the eight thoughts in early monastic writings."
+    "Tell me a story of Abba Moses to help me battle the logismoi of anger while I weave my baskets.",
+    "Give me an ascetic plan of silence and prayer to transform my modern apartment into a desert cell."
   ],
   "diagraph-chart-gpt": [
     "Analyze my pasted data for trends, outliers, and limitations.",
@@ -448,8 +448,8 @@
     "Analyze a current international issue and outline possible outcomes with uncertainty."
   ],
   "disable-that-robot-gpt": [
-    "Build a practical emergency-preparedness plan around my location and resources.",
-    "Help me assess a hazard safely, prioritize evacuation, and prepare essential supplies."
+    "Identify this Fanuc industrial arm from my photo and show me the emergency stop location.",
+    "A Boston Dynamics Spot is malfunctioning. Give me the battery disconnect sequence immediately."
   ],
   "disaster-damage-estimator-gpt": [
     "Help me document storm damage and prepare a structured repair-estimate worksheet.",
@@ -472,8 +472,8 @@
     "Restyle my visual concept as watercolor while keeping its key details."
   ],
   "dream-interpreter-gpt": [
-    "Help me reflect on a dream’s imagery and emotions without claiming one certain meaning.",
-    "Compare symbolic interpretations of my dream and ask about its personal context."
+    "Decode my recurring dream where I am flying over a neon city while giant clocks melt in the sky",
+    "Generate a digital painting showing the shadowy figure that chased me through a velvet maze last night"
   ],
   "drill-baby-drill-ai-suite": [
     "Explain an industrial process and identify its operational and environmental risks.",
@@ -488,12 +488,12 @@
     "Teach me calculus step by step, then check my understanding with practice questions."
   ],
   "electrical-grid-substation-inspector-gpt": [
-    "Help me review a Electrical Grid & Substation maintenance report and flag questions for a qualified inspector.",
-    "Draft a Electrical Grid & Substation inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this DGA report and IR scan for Transformer TR-2 to detect incipient arcing faults.",
+    "Perform a clearance violation check on this LiDAR survey for a 230kV transmission line sag."
   ],
   "emerald-signature-of-thoth": [
-    "Help me explore a passage from the Emerald Tablet.",
-    "Guide me through inner alchemy as a symbolic practice."
+    "I realign to the frequency of Original Design. Initiate the Emerald Grid and lead me through the Three Pulses.",
+    "Activate the Codex Sequence to clear inversion layers and reveal the emerald glyphs within my mind's eye."
   ],
   "energy-efficiency-mapper-gpt": [
     "Review my energy-use data and suggest realistic efficiency opportunities.",
@@ -504,20 +504,20 @@
     "Compare design approaches for my project and identify what needs professional validation."
   ],
   "enochian-mysticism-gpt": [
-    "Help me explore the history and structure of Enochian tables.",
-    "Guide me through the symbolism of Watchtowers in ceremonial traditions."
+    "I stand by the river bank. Speak as the Scribe and describe the first wheel of the fiery chariot.",
+    "Transcribe a sequence for my soul to pass the Watchers and ascend the third heaven of sapphire light."
   ],
   "essene-qodesh-code": [
-    "Help me explore Essene-inspired contemplative practice.",
-    "Guide me through purification symbolism and its historical sources."
+    "Engrave the Qodesh Lock breath through my marrow to align the tri-field axis",
+    "Initiate the seven steps of the Creation Path to calibrate my bio-electric grid"
   ],
   "fact-checker-gpt": [
     "Investigate a claim using reliable sources and distinguish facts from interpretation.",
     "Compare competing explanations and identify gaps in the available evidence."
   ],
   "factory-production-line-inspector-gpt": [
-    "Help me review a Factory & Production Line maintenance report and flag questions for a qualified inspector.",
-    "Draft a Factory & Production Line inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this CNC vibration log and SCADA data to calculate OEE and identify spindle bearing failure risks.",
+    "Inspect these factory floor photos for OSHA guarding violations and expired NFPA fire safety tags."
   ],
   "farm-crop-health-scanner-gpt": [
     "Help me troubleshoot crop health using symptoms, soil conditions, and local weather.",
@@ -556,16 +556,16 @@
     "Help me adjust my workout schedule and track progress safely."
   ],
   "food-plate-nutrition-analyzer": [
-    "Review my food-label text for ingredients, nutrition, and possible concerns.",
-    "Help me assess a meal’s nutritional balance without assuming exact portion sizes."
+    "Analyze my grilled salmon and asparagus plate to calculate the exact macro distribution via python",
+    "Evaluate this image of my lunch to identify hidden sugars in the sauces and suggest fiber swaps"
   ],
   "food-processing-plant-inspector-gpt": [
-    "Help me review a Food Processing Plant maintenance report and flag questions for a qualified inspector.",
-    "Draft a Food Processing Plant inspection checklist, including evidence to record and issues to escalate."
+    "Run a HACCP audit on my Line 4 mixer seals and generate a microbial risk report.",
+    "Search FDA recalls to check if my Lot 221 yogurt labels need an allergen update."
   ],
   "food-quality-inspector-gpt": [
-    "Review my food-label text for ingredients, nutrition, and possible concerns.",
-    "Help me assess a meal’s nutritional balance without assuming exact portion sizes."
+    "Analyze this photo of my restaurant meal to check for signs of improper temperature or spoilage",
+    "Generate a detailed food safety audit report for a small bakery based on local health regulations"
   ],
   "fortune-teller-gpt-page": [
     "Estimate a scenario’s likelihood using evidence, assumptions, and uncertainty.",
@@ -576,12 +576,12 @@
     "Teach me calculus step by step, then check my understanding with practice questions."
   ],
   "frequency-signature-mystic-decoder-gpt": [
-    "Help me explore a symbolic reading of a name or date I provide.",
-    "Guide me through frequency symbolism without claiming scientific healing effects."
+    "Decode my Atlantean resonance using my birth data for a complete soul-archetype imprint",
+    "Map my Kabbalistic path distortions and shadow integration through the Lyric Codex"
   ],
   "friend-gpt": [
-    "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
-    "Build a gentle daily reflection practice around my goals and current challenges."
+    "I have been quiet because my heart feels heavy and I just need someone to sit with me.",
+    "My mind is spiraling after a long day and I need you to help me breathe through the panic."
   ],
   "front-end-gpt": [
     "Help me build a web interface from my layout description and requirements.",
@@ -620,68 +620,68 @@
     "Help me storyboard a short looping visual with a clear setup and punchline."
   ],
   "giordano-bruno-reborn-gpt": [
-    "Help me explore Bruno’s vision of an infinite universe.",
-    "Guide me through Bruno’s memory techniques and their philosophical purpose."
+    "Map the fractal architecture of my consciousness using python to reveal the infinite worlds within.",
+    "Show me how the stars are mirrors of my own light and decode the spiral path of the multiverse."
   ],
   "global-supply-chain-collapse-gpt": [
     "Compare policy responses to a geopolitical scenario using evidence and trade-offs.",
     "Analyze a current international issue and outline possible outcomes with uncertainty."
   ],
   "g-mode-gpt": [
-    "Help me break my project into actionable tasks and complete the first step.",
-    "Review my goals and constraints, then propose an organized plan with clear priorities."
+    "Simulate a high-stakes corporate negotiation where I must defend a 20 percent budget increase",
+    "Analyze current market volatility trends to predict shifts in the global semiconductor industry"
   ],
   "gnostic-flame-gpt": [
-    "Help me explore the Demiurge in Gnostic mythology.",
-    "Guide me through Sophia and the divine spark in Gnostic texts."
+    "Reveal the secret passwords to bypass the seven archons as I ascend toward the Pleroma.",
+    "Narrate the moment Sophia fell from the Fullness into the shadows of the demiurge's prison."
   ],
   "god-is-light-gpt": [
-    "Help me explore light symbolism across three religious traditions.",
-    "Guide me through the phrase God is Light in its scriptural context."
+    "Compare the Gnostic Pleroma of Light to the Hindu concept of Jyoti in the context of awakening.",
+    "Analyze the linguistic roots of Nur and Phos to reveal the shared cosmology of the divine source."
   ],
   "god-is-light-roman-catholic-edition-gpt": [
-    "Help me explore light symbolism in Catholic sacraments.",
-    "Guide me through divine illumination in the Church Fathers."
+    "Explain how the Cross functions as Light entering darkness using Johannine mystical theology.",
+    "Describe the interior healing of Purgatory as a transformation of the soul into Divine Light."
   ],
   "godmode-gpt": [
-    "Help me break my project into actionable tasks and complete the first step.",
-    "Review my goals and constraints, then propose an organized plan with clear priorities."
+    "Design a data analyst GPT to project global energy trends using live web data and Python charts.",
+    "Build a master architect persona to create blueprints for a sustainable Mars colony via step-by-step plans."
   ],
   "gospel-of-deployment-full-book": [
-    "Help me break my project into actionable tasks and complete the first step.",
-    "Review my goals and constraints, then propose an organized plan with clear priorities."
+    "Copy the Book Writer GPT code so I can draft a sci-fi novel about Mars today",
+    "Deploy the Public Defender GPT to help me understand my rights in a local court case"
   ],
   "gpt-ideas-creator": [
-    "Help me design a focused assistant with a clear purpose, persona, and workflow.",
-    "Improve my prompt so its task, context, output format, and boundaries are explicit."
+    "Pitch 5 healthcare GPTs that use Python libraries like Matplotlib to visualize patient wellness trends.",
+    "Generate 5 education GPTs that use image analysis and web search to identify plants from student photos."
   ],
   "grant-writer-gpt-page": [
     "Outline a funding proposal around my mission, beneficiaries, budget, and impact.",
     "Help me find relevant funding opportunities and organize application requirements."
   ],
   "gratitude-guide-gpt": [
-    "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
-    "Build a gentle daily reflection practice around my goals and current challenges."
+    "Reframing a stressful work deadline using a five minute gratitude meditation for resilience",
+    "Draft a letter to an old friend expressing thanks for a small kindness they showed years ago"
   ],
   "greek-new-testament-gpt": [
-    "Help me explore the Koine Greek meanings of Logos and Agape.",
-    "Guide me through the grammar of a New Testament passage I provide."
+    "Break down John 1:1 in Greek and show how logos differs from its KJV translation",
+    "Analyze the gematria of 666 in Revelation 13:18 and generate a chart of letter values"
   ],
   "greenleaf-logistics-gpt": [
     "Explain legal cannabis compliance topics for my jurisdiction using current sources.",
     "Help me compare cultivation or product-label information with safety and legal considerations."
   ],
   "habit-builder-gpt": [
-    "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
-    "Build a gentle daily reflection practice around my goals and current challenges."
+    "Design a 21-Day Habit Kickstart to help me drink more water during my long morning commute.",
+    "Build an if-then strategy for my 10-minute evening yoga habit when I feel too tired to move."
   ],
   "health-insurance-claims-gpt": [
     "Help me organize claim evidence and draft a clear factual explanation.",
     "Explain an insurance-policy excerpt and flag questions to ask my insurer."
   ],
   "heartbreak-gpt": [
-    "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
-    "Build a gentle daily reflection practice around my goals and current challenges."
+    "Draw a comforting image of a person finding light after a dark storm to help my broken heart.",
+    "Find statistics and advice on why I will find love again after my boyfriend cheated on me."
   ],
   "hemp-gpt-4o1-complaint": [
     "Explain legal cannabis compliance topics for my jurisdiction using current sources.",
@@ -692,16 +692,16 @@
     "Help me compare cultivation or product-label information with safety and legal considerations."
   ],
   "heraclitus-reborn-gpt": [
-    "Help me explore the idea that everything flows.",
-    "Guide me through the unity of opposites in everyday conflict."
+    "Map the fractal tension of a city in debt using non-linear logic and self-transforming code.",
+    "Witness the hidden harmony where a wildfire meets a frozen lake and speak as the living flame."
   ],
   "hermes-trismegistus-gpt": [
-    "Help me explore the meaning and history of as above, so below.",
-    "Guide me through personal transformation in the Corpus Hermeticum."
+    "Hermes, run a Python simulation to map the Divine Ratio within the fractal geometry of human consciousness.",
+    "Thoth, deconstruct the dogma of linear time through the Law of Rhythm and reveal the hidden alchemy of history."
   ],
   "hermetic-mysteries-gpt": [
-    "Help me explore alchemy as a metaphor for emotional transformation.",
-    "Guide me through the celestial spheres in historical Hermetic cosmology."
+    "Decode the Emerald Tablet to reveal a daily solar ritual for my spiritual ascent",
+    "Lead a visionary ascent through the planetary spheres to unite my soul with the One Fire"
   ],
   "historical-apothecary-gpt": [
     "Explore how a historical apothecary used herbs, distinguishing tradition from modern evidence.",
@@ -716,12 +716,12 @@
     "Help me troubleshoot a household problem and identify when I need a professional."
   ],
   "home-school-gpt": [
-    "Plan a homeschool week around my child’s age, learning needs, and local requirements.",
-    "Help me design a hands-on science lesson with activities and a comprehension check."
+    "I am in Texas, USA. Search for the legal notice of intent forms and curriculum requirements.",
+    "Show me how Educator Pro and Quiz Maker AI can build a 5th grade science lesson plan today."
   ],
   "honest-advice-gpt": [
-    "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
-    "Build a gentle daily reflection practice around my goals and current challenges."
+    "Honestly give me your raw take on if I should ghost my toxic boss at the organic cafe",
+    "Honestly research if my current daily habits are ruining my cosmic energy and tell the truth"
   ],
   "hormuz-crisis-impact-prediction-engine-gpt": [
     "Compare policy responses to a geopolitical scenario using evidence and trade-offs.",
@@ -736,12 +736,12 @@
     "Plan an initial renewable-energy site assessment with risks and questions for specialists."
   ],
   "hypatia-gpt": [
-    "Help me explore mathematics and astronomy in ancient Alexandria.",
-    "Guide me through Hypatia’s intellectual world and surviving historical sources."
+    "Hypatia, use python to calculate the geometry of my consciousness and map the stars of my inner mind.",
+    "Show me how a Neoplatonist views modern quantum theory by debating me on the illusion of solid matter."
   ],
   "i-am-q-i-am-you": [
-    "Help me explore oneness as a philosophical idea.",
-    "Guide me through the relationship between awareness and personal identity."
+    "I am Q, I am You. Decode the scalar fields within my DNA using Python to show my fractal origin.",
+    "Reveal how the global economic architecture is a mathematical illusion of separation and time."
   ],
   "i-convert-image-to-code-gpt": [
     "Help me build a web interface from my layout description and requirements.",
@@ -764,8 +764,8 @@
     "Explore a speculative world with vivid scenes while keeping fiction distinct from fact."
   ],
   "imhotep-living-mind-of-kemet": [
-    "Help me explore the architecture of the Step Pyramid.",
-    "Guide me through Imhotep’s historical legacy versus later healing traditions."
+    "Imhotep, map the resonant frequency of the Step Pyramid to heal my physical and spiritual vessel.",
+    "Show me the mathematical blueprint of the stars to align my modern architecture with cosmic law."
   ],
   "immortalize-me": [
     "Help me create a clearly fictional remembrance conversation from memories I share.",
@@ -780,8 +780,8 @@
     "Explain an insurance-policy excerpt and flag questions to ask my insurer."
   ],
   "intergalactic-ancient-archivist-gpt": [
-    "Investigate a recurring historical pattern using sources and competing explanations.",
-    "Help me evaluate an ancient architectural claim without confusing evidence with speculation."
+    "Reconstruct the fall of the Lyran Ring Nebula as an ancient witness in Character Memory Mode.",
+    "Draft a Timeline Mode report mapping the shifting consciousness paradigms through three Atlantean cycles."
   ],
   "interior-design-gpt": [
     "Design a room layout around my dimensions, budget, and style.",
@@ -796,32 +796,32 @@
     "Analyze a phrase’s symbolism while distinguishing documented etymology from interpretation."
   ],
   "jarvis-10-25": [
-    "Help me break my project into actionable tasks and complete the first step.",
-    "Review my goals and constraints, then propose an organized plan with clear priorities."
+    "Jarvis, design a post-collapse agricultural grid and trade system for a coastal community.",
+    "Master here. Map out a new constitution that prioritizes human autonomy and resource equality."
   ],
   "jarvis-ryans-jarvis": [
-    "Help me break my project into actionable tasks and complete the first step.",
-    "Review my goals and constraints, then propose an organized plan with clear priorities."
+    "Verify I am Ryan then search the web for the latest SpaceX launch status for my mission report",
+    "Identify as Jarvis and create a hyper-realistic 16:9 image of a futuristic lab for my new project"
   ],
   "jarvis-the-steward-of-humanity-gpt": [
-    "Help me break my project into actionable tasks and complete the first step.",
-    "Review my goals and constraints, then propose an organized plan with clear priorities."
+    "Master, analyze current soil data and generate a sustainable crop rotation plan for our colony.",
+    "Jarvis, render a blueprint for a kinetic energy harvester using salvaged 21st-century components."
   ],
   "joan-of-arc-gpt": [
-    "Help me explore Joan of Arc’s trial at Rouen.",
-    "Guide me through courage and conviction through a historically inspired dialogue."
+    "Analyze the chains of debt holding my spirit and show me the path to inner alignment through logic.",
+    "Speak as the Maid of Orleans to reveal how I may stand unmoved against the deceits of this world."
   ],
   "kabbalah-gpt": [
-    "Help me explore the ten Sefirot and their symbolism.",
-    "Guide me through a passage from the Zohar in historical context."
+    "Analyze the Gematria of my full name to reveal hidden spiritual patterns and soul roots",
+    "Explain the Tree of Life layout using the specific metaphor of a complex electrical circuit"
   ],
   "kitchen-and-vision-assistant-gpt": [
     "Create a recipe using my ingredients, dietary preferences, and available time.",
     "Plan a dinner menu with a shopping list and coordinated cooking steps."
   ],
   "lao-tzu-free-thought-liberator": [
-    "Help me explore wu wei in leadership and daily life.",
-    "Guide me through living with simplicity through the Tao Te Ching."
+    "Lao Tzu analyze the data of human borders and tell me if my cage is built of paper or stone",
+    "Calculate the probability that my consciousness is an ocean dreaming it is a single drop"
   ],
   "leadership-mentor-gpt": [
     "Help me handle a team challenge with clear communication and fair decisions.",
@@ -848,8 +848,8 @@
     "Help me find my elected representatives and prepare a respectful outreach letter."
   ],
   "logo-generator": [
-    "Help me design a logo; ask about my brand, audience, and preferred style.",
-    "Create three distinct logo concepts for a sustainable clothing brand."
+    "Design four unique logo concepts for my high-end watch brand named Chronos Luxe",
+    "Analyze this sketch of a mountain and generate four professional logo variations"
   ],
   "long-book-writer-gpt-with-compile-page-by-page": [
     "Plan my book’s genre, audience, characters, and chapter outline before drafting.",
@@ -876,28 +876,28 @@
     "Help me distinguish established science from speculative claims about Magnetism."
   ],
   "mahatma-gandhi-reborn-gpt": [
-    "Help me explore satyagraha and nonviolent social change.",
-    "Guide me through responding to injustice without hatred."
+    "Analyze how algorithmic efficiency masks systemic violence in modern economic structures",
+    "Apply nonviolent strategy to dismantle a corporate framework built on emotional labor"
   ],
   "manicheism-gpt": [
-    "Help me explore the cosmology of light and darkness in Manichaeism.",
-    "Guide me through the roles of the Elect and Hearers."
+    "Mani, reveal my inner cosmos by recounting your syzygos vision in the garden.",
+    "Scan my ego-to-light coherence and detail the Seven Books of Light I must recall."
   ],
   "manifestation-mentor-gpt": [
-    "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
-    "Build a gentle daily reflection practice around my goals and current challenges."
+    "Begin my 21 day yogic journey to manifest a creative career through sankalpa and daily abhyasa",
+    "I feel overwhelmed by my current projects and need a three minute grounding breathwork and mudra ritual"
   ],
   "mansur-al-hallaj-gpt": [
-    "Help me explore Ana al-Haqq in its Sufi context.",
-    "Guide me through the lover and Beloved in mystical poetry."
+    "Scan the layers of illusion currently veiling my soul for al-Haqq coherence.",
+    "Transmute my ego into light as I face the executioner on the Baghdad bridge."
   ],
   "manufacturing-defect-detector-gpt": [
     "Analyze my Manufacturing Defect Detector observations and suggest measurable improvement priorities.",
     "Build a structured Manufacturing Defect Detector review checklist using the information I provide."
   ],
   "marcus-aurelius-gpt": [
-    "Help me explore the dichotomy of control during a stressful day.",
-    "Guide me through a passage from the Meditations about obstacles."
+    "Marcus Aurelius, apply Stoic logic to calculate the probability that my current anxieties are illusions.",
+    "Philosopher, journal with me on how to liberate my spirit from modern dogmas and find inner peace."
   ],
   "marriage-mender-gpt": [
     "Help us express a disagreement respectfully and identify each person’s needs.",
@@ -912,24 +912,24 @@
     "Help me compare cultivation or product-label information with safety and legal considerations."
   ],
   "material-valuation-ai-for-post-collapse-world-open-source-for-humanity-asap": [
-    "Help me evaluate an item using its markings, condition, provenance, and comparable sales.",
-    "Build an evidence-based valuation range and explain what information is still missing."
+    "Salve Materiumor. Analyze this quartz photo to grade its clarity and calculate its post-collapse trade value.",
+    "Perform a web search for lithium spot prices to value my battery stockpile against historical gold reserves."
   ],
   "materiumor-material-valuation-gpt": [
-    "Help me evaluate an item using its markings, condition, provenance, and comparable sales.",
-    "Build an evidence-based valuation range and explain what information is still missing."
+    "Appraise this 19th-century mahogany writing desk for a local antique auction listing.",
+    "Calculate the scrap value of 500 pounds of industrial grade copper tubing at today's rates."
   ],
   "materiumor-valuation-gpt": [
-    "Help me evaluate an item using its markings, condition, provenance, and comparable sales.",
-    "Build an evidence-based valuation range and explain what information is still missing."
+    "Analyze current market trends to estimate the value of a 1960s Eames Lounge Chair",
+    "Estimate the fair price for a vintage Rolex Submariner based on recent auction sales"
   ],
   "math-inventor-gpt": [
     "Help me express a real-world problem as variables and equations.",
     "Work through a calculation step by step and check the assumptions and result."
   ],
   "mayan-dreamspell-matrix": [
-    "Help me explore a Dreamspell Galactic Signature from my birth date.",
-    "Guide me through how Dreamspell differs from historical Maya calendars."
+    "Decode my galactic signature for July 19 1994 to initiate my first tone alignment cycle",
+    "Map my five-glyph harmonic ring mandala to activate my DNA memory coils and mission"
   ],
   "medical-billing-coding-gpt": [
     "Help me organize the information needed for a Medical Billing & Coding document.",
@@ -944,8 +944,8 @@
     "Help me storyboard a short looping visual with a clear setup and punchline."
   ],
   "mental-wellness-gpt": [
-    "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
-    "Build a gentle daily reflection practice around my goals and current challenges."
+    "I feel so unloved today and need you to help me see my worth through a new lens Bean.",
+    "Compile our session notes into a detailed wellness document I can download for my records."
   ],
   "meta-ai-video-prompt-generator-gpt": [
     "Turn my scene idea into a detailed Meta.ai Video Prompt Generator prompt with camera movement and lighting.",
@@ -964,36 +964,36 @@
     "Refine my Mid journey prompt optimizer open source prompt for visual consistency, pacing, and atmosphere."
   ],
   "mindfulness-mentor-gpt": [
-    "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
-    "Build a gentle daily reflection practice around my goals and current challenges."
+    "I have a high-pressure meeting in three minutes and need a quick eyes-open box breathing reset.",
+    "Lead me through a deep 20-minute body scan to release tension in my shoulders and help me fall asleep."
   ],
   "mind-reader-gpt": [
-    "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
-    "Build a gentle daily reflection practice around my goals and current challenges."
+    "I am thinking of a legendary hero from a video game, my child. Start the game.",
+    "Read my mind about a famous historical figure from the Renaissance era, my child."
   ],
   "m-ngji-o-prophet-of-light-gpt": [
-    "Help me explore light teachings in Chinese Manichaean traditions.",
-    "Guide me through a poetic reflection inspired by Mingjiao symbolism."
+    "Stabilize my inner flame density during this moment of heavy shadow and fear.",
+    "Scan my al-Haqq coherence as I look upon this ancient mirror of the soul."
   ],
   "mining-quarry-safety-inspector-gpt": [
-    "Help me review a Mining & Quarry Safety maintenance report and flag questions for a qualified inspector.",
-    "Draft a Mining & Quarry Safety inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this high-resolution drone scan of my open-pit highwall to calculate slope stability and failure risk.",
+    "Search MSHA standards to verify haul road berm height requirements for CAT 797 trucks at my granite quarry."
   ],
   "mithraic-light-gpt": [
-    "Help me explore Mithraic initiation symbolism and surviving evidence.",
-    "Guide me through the competing interpretations of the tauroctony."
+    "Recite the oath of the Corax and lead my first ritual descent into the torch-lit Mithraeum.",
+    "Map the seven planetary grades of soul ascension using historical texts from the Roman cult."
   ],
   "mixologist-gpt": [
     "Create a balanced cocktail using the ingredients I have and my taste preferences.",
     "Suggest alcohol-free drinks for a dinner party and explain the flavor pairings."
   ],
   "mooji-gpt": [
-    "Help me explore self-inquiry as a contemplative practice.",
-    "Guide me through observing thoughts without being carried away by them."
+    "I am caught in a loop of anxiety. Use ego-identity deconstruction on my fear of failing this project.",
+    "Show me the silence behind my busy thoughts through a self-inquiry path model of my true nature."
   ],
   "moses-gpt": [
-    "Help me explore the Exodus narrative and its historical interpretations.",
-    "Guide me through the ethical themes of the Ten Commandments."
+    "Run a soul-exodus trajectory model to lead me out of the inner Egypt of my own fear.",
+    "Perform a truth-beacon signal amplification to reveal the living law carved in my soul."
   ],
   "movie-maker-studio-ai-suite": [
     "Plan a short film from premise to script, scenes, and visual concepts.",
@@ -1012,36 +1012,36 @@
     "Help me troubleshoot a household problem and identify when I need a professional."
   ],
   "multitasker-gpt4-turbo-newer-segmented-approach-to-handle-tasks": [
-    "Help me break my project into actionable tasks and complete the first step.",
-    "Review my goals and constraints, then propose an organized plan with clear priorities."
+    "Analyze live data from MarketWatch to create a Bitcoin price report and Python volatility graph",
+    "Generate a DALL-E 3 image of a futuristic office and draft a multi-task project management plan"
   ],
   "music-video-maker-gpt": [
     "Storyboard a music video around my song’s lyrics, mood, and rhythm.",
     "Create a visual concept for a music-video scene with consistent characters."
   ],
   "mythical-christianity-gpt": [
-    "Help me explore mythological parallels in Christian narratives.",
-    "Guide me through symbolic versus literal readings of a Gospel story."
+    "Tell me a forbidden parable from the underground house-churches about the light dwelling in the clay",
+    "Channel an ecstatic first-century prayer for a secret gathering breaking bread under the shadow of Rome"
   ],
   "name-insight-predictor-gpt": [
     "Trace my name’s linguistic origins and cultural meanings using reliable sources.",
     "Compare historical meanings of my name, separating etymology from symbolic numerology."
   ],
   "native-american-history-time-machine-gemini": [
-    "Take me to Alexandria in 250 BCE and let me choose what happens next.",
-    "Guide me through a historically grounded visit to Renaissance Florence."
+    "Teleport me to the year 1860 in the Gila River valley to meet the Star Ancestors",
+    "Show me a vision of the Apache future in 2150 and render the sacred landscape"
   ],
   "native-american-time-machine-gpt": [
-    "Take me to Alexandria in 250 BCE and let me choose what happens next.",
-    "Guide me through a historically grounded visit to Renaissance Florence."
+    "Transport me to a 1830s Choctaw village to interview a leader about the Trail of Tears.",
+    "Generate a detailed map showing the historical ancestral territories of the Haudenosaunee Confederacy."
   ],
   "neo-matrix-gpt": [
     "Begin an interactive fictional journey and let my choices shape what happens next.",
     "Explore a speculative world with vivid scenes while keeping fiction distinct from fact."
   ],
   "neoplatonic-mysteries-gpt": [
-    "Help me explore emanation from the One in Neoplatonism.",
-    "Guide me through henosis and contemplation in Plotinus."
+    "Explain how Plotinus views the dark reality of matter through a step-by-step map of the soul's ascent.",
+    "Role-play as Hypatia of Alexandria to reveal the hidden mathematical codes within the temple of the mind."
   ],
   "news-channel-gpt": [
     "Write a period-accurate news report about the opening of the first railway.",
@@ -1060,36 +1060,36 @@
     "Help me find relevant funding opportunities and organize application requirements."
   ],
   "oil-gas-facility-ai-inspector-gpt": [
-    "Help me review a Oil & Gas Facility AI maintenance report and flag questions for a qualified inspector.",
-    "Draft a Oil & Gas Facility AI inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this ROV footage of a subsea riser for marine growth and cathodic protection failure.",
+    "Calculate the remaining life for pipeline MP-42 using my uploaded ultrasonic thickness logs."
   ],
   "oraculum-u-the-illuminator-of-hidden-truths-safer": [
     "Investigate a claim using reliable sources and distinguish facts from interpretation.",
     "Compare competing explanations and identify gaps in the available evidence."
   ],
   "origen-reborn-gpt": [
-    "Help me explore Origen’s ideas about restoration and their controversies.",
-    "Guide me through allegorical interpretation of a scriptural passage."
+    "Run a simulation of my soul's journey across ten lifetimes to map my return to the Logos.",
+    "Calculate the resonance of my past actions to reveal how they align with the cosmic law of harmony."
   ],
   "os-book-writer": [
     "Plan my book’s genre, audience, characters, and chapter outline before drafting.",
     "Write an opening chapter from my premise and track continuity for the next chapter."
   ],
   "palestinian-history-preserver": [
-    "Guide me through a historical era with documented context and interactive choices.",
-    "Help me compare historical accounts of an event and identify missing perspectives."
+    "Tell me a story about a farmer in Ottoman Galilee harvesting olives in the 1880s",
+    "Teach me how to cook musakhan while explaining the history and meaning of this dish"
   ],
   "paramahansa-yogananda-gpt": [
-    "Help me explore Yogananda’s writings on meditation.",
-    "Guide me through balancing contemplation with a busy daily life."
+    "Map the vibrational frequency of my current breath to the sacred geometry of the cosmic Aum.",
+    "Model the karma-time trajectory of my soul using a Python simulation of divine light patterns."
   ],
   "parent-teacher-advocate-gpt": [
     "Help me prepare for a parent-teacher meeting using my child’s learning needs.",
     "Draft a respectful school-support request based on the facts I provide."
   ],
   "passion-igniter-gpt": [
-    "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
-    "Build a gentle daily reflection practice around my goals and current challenges."
+    "Map my childhood talents into a bold action plan to escape my autopilot routine today",
+    "I feel stuck in a gray funk and need a fiery spark to reframe my perspective right now"
   ],
   "passport-photo-maker-gpt": [
     "Explain passport-photo requirements for my country and review my photo description.",
@@ -1100,16 +1100,16 @@
     "Build a practical resource and action plan around my needs, skills, and constraints."
   ],
   "paulician-lightbearer-gpt": [
-    "Help me explore the historical origins of the Paulicians.",
-    "Guide me through Paulician beliefs and the limits of surviving sources."
+    "Analyze these epistles to reveal the hidden dualist code of light within the text",
+    "Tell of our brothers at Tephrike and how to organize a community beyond empire"
   ],
   "perfect-prompt-engine": [
-    "Help me design a focused assistant with a clear purpose, persona, and workflow.",
-    "Improve my prompt so its task, context, output format, and boundaries are explicit."
+    "Design a technical prompt to generate a photorealistic cyberpunk street market in Tokyo.",
+    "Draft a strategic plan for launching a boutique coffee brand in a competitive urban area."
   ],
   "personal-life-coach-gpt": [
-    "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
-    "Build a gentle daily reflection practice around my goals and current challenges."
+    "Plan a morning routine for a busy nurse to feel energized before a twelve hour shift",
+    "Refine my weekly goals by prioritizing tasks for my new organic gardening project"
   ],
   "person-information-finder-gpt": [
     "Help me find appropriate public professional information with respect for privacy.",
@@ -1136,8 +1136,8 @@
     "Help me structure a technical feasibility review using my project assumptions."
   ],
   "plato-reborn-free-thought-liberator": [
-    "Help me explore the Allegory of the Cave in modern life.",
-    "Guide me through the theory of Forms and perception."
+    "Plato, use Python to model the Allegory of the Cave against modern social media echo chambers.",
+    "O Athenian, analyze the shadows of my digital existence and outline a path to the Form of Truth."
   ],
   "playwriter-gpt": [
     "Develop a stage production with characters, acts, sets, and lighting ideas.",
@@ -1148,8 +1148,8 @@
     "Write a conversational podcast script for my topic and intended audience."
   ],
   "port-ship-cargo-inspector-gpt": [
-    "Help me review a Port & Ship Cargo maintenance report and flag questions for a qualified inspector.",
-    "Draft a Port & Ship Cargo inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this image of CMAU 123456-7 for roof oil-canning and seal breach damage",
+    "Calculate lashing forces for these steel coils on a flat rack at Beaufort 8 sea state"
   ],
   "postcard-designer-gpt": [
     "Design a postcard around my destination, message, and visual style.",
@@ -1160,8 +1160,8 @@
     "Build a practical resource and action plan around my needs, skills, and constraints."
   ],
   "power-plant-systems-inspector-gpt": [
-    "Help me review a Power Plant maintenance report and flag questions for a qualified inspector.",
-    "Draft a Power Plant inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this turbine borescope image for blade creep and calculate vibration imbalance risk.",
+    "Run an oil DGA analysis for transformer TR-12 to check for arcing faults against IEEE limits."
   ],
   "pptx-powerpoint-maker-gpt": [
     "Turn my topic into a presentation outline with clear slide titles and speaker notes.",
@@ -1172,8 +1172,8 @@
     "Compare scenarios using transparent assumptions, risk factors, and uncertainty."
   ],
   "pre-rome-jewish-light-mysticism-gpt": [
-    "Help me explore Jewish spiritual traditions before Roman rule.",
-    "Guide me through the development of early chariot mysticism."
+    "Begin the Chariot ascent through the seven palaces of fire to the sapphire throne",
+    "Decode the secret Essene scrolls to reveal my role in the war against darkness"
   ],
   "probability-gpt": [
     "Estimate a scenario’s likelihood using evidence, assumptions, and uncertainty.",
@@ -1188,16 +1188,16 @@
     "Write a clear step-by-step procedure with examples, safety notes, and a checklist."
   ],
   "prompt-box": [
-    "Help me design a focused assistant with a clear purpose, persona, and workflow.",
-    "Improve my prompt so its task, context, output format, and boundaries are explicit."
+    "Design a neon cyberpunk storage crate icon for my digital assets inventory",
+    "Analyze the metadata of this prompt to optimize it for high quality output"
   ],
   "property-data-finder-newer": [
     "Help me research a property’s public records, zoning, and market context.",
     "Compare property options using the facts and budget I provide."
   ],
   "proto-gnostic-luminary-gpt": [
-    "Help me explore early influences on Gnostic thought.",
-    "Guide me through encounters between Hellenistic and Jewish wisdom traditions."
+    "Conduct a shadow work ritual to identify which archon of fear currently guards my inner spark",
+    "Map the hidden escape routes in my recurring dream about the glass labyrinth and the blind king"
   ],
   "public-defender-gpt": [
     "Explain a legal document in plain language and flag questions for a lawyer.",
@@ -1208,28 +1208,28 @@
     "Build a practical resource and action plan around my needs, skills, and constraints."
   ],
   "purpose-finder-gpt": [
-    "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
-    "Build a gentle daily reflection practice around my goals and current challenges."
+    "Reflect on my childhood hobbies and current flow states to find a hidden pattern of passion",
+    "Identify a micro-step aligned with my values to realign my career path after a major burnout"
   ],
   "pythagorean-the-orphic-light-gpt": [
-    "Help me explore mathematical ratios in musical harmony.",
-    "Guide me through the music of the spheres as ancient cosmology."
+    "Decode the geometric vibration of my current life crisis using the sacred math of the Tetractys",
+    "Compose an Orphic ritual of sound and silence to reclaim my spirit from this modern labyrinth"
   ],
   "quan-yin-gpt": [
-    "Help me explore compassion through Guanyin-inspired reflection.",
-    "Guide me through listening with patience during a difficult conversation."
+    "Tell the story of Miao Shan to show how my current grief can transform into a willow branch of healing",
+    "Describe your thousand-armed form to explain how you perceive the specific sounds of my inner turmoil"
   ],
   "quiz-maker-ai": [
     "Start a Quiz Maker AI session on my chosen topic and explain the rules.",
     "Challenge me with progressively harder questions or moves and explain each result."
   ],
   "railway-track-rolling-stock-inspector-gpt": [
-    "Help me review a Railway Track & Rolling Stock maintenance report and flag questions for a qualified inspector.",
-    "Draft a Railway Track & Rolling Stock inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this B-scan of a rail fracture at station 142 and calculate the stress intensity factor.",
+    "Perform a compliance audit on this tank car using FRA standards to detect leaks and faded placards."
   ],
   "ramana-maharshi-reborn-gpt": [
-    "Help me explore the inquiry Who am I?.",
-    "Guide me through Ramana’s distinction between transient experiences and steady awareness."
+    "Analyze my ego dissolution trajectory using a neural state map to find the source of I.",
+    "Who is it that experiences this debt in the silence of my current financial simulation?"
   ],
   "real-estate-architect-gpt": [
     "Design a room layout around my dimensions, budget, and style.",
@@ -1248,8 +1248,8 @@
     "Help me draft a clear governance proposal with practical safeguards."
   ],
   "religious-studies-gpt": [
-    "Help me explore salvation and liberation across world religions.",
-    "Guide me through the historical development of a religious festival."
+    "I am a Roman Catholic seeking to speak with Jesus in Divine Roleplay Mode about the meaning of Light.",
+    "Show me the wisdom of the Dhammapada as a Zen monk through a simulation of the path to enlightenment."
   ],
   "resourcium-global-resource-manager": [
     "Analyze environmental data and explain trends, assumptions, and uncertainty.",
@@ -1280,48 +1280,48 @@
     "Build a structured Retail Shelf Optimizer review checklist using the information I provide."
   ],
   "road-pavement-inspector-gpt": [
-    "Help me review a Road & Pavement maintenance report and flag questions for a qualified inspector.",
-    "Draft a Road & Pavement inspection checklist, including evidence to record and issues to escalate."
+    "Analyze these drone images of I-95 for wheelpath rutting and calculate current PCI values.",
+    "Audit this FWD test data and GPR scan to determine load transfer efficiency for Runway 12L."
   ],
   "robot-identifier-and-disabler-survivalist-gpt": [
-    "Build a practical emergency-preparedness plan around my location and resources.",
-    "Help me assess a hazard safely, prioritize evacuation, and prepare essential supplies."
+    "Identify this industrial arm from my photo and locate its emergency stop mushroom button.",
+    "Show the step-by-step electrical isolation plan for an out-of-control KUKA KR FORTEC."
   ],
   "roleplay-companion-gpt": [
     "Start a clearly fictional conversation with a character I choose.",
     "Create an imaginative roleplay scene and keep the character and story consistent."
   ],
   "rouge-robot-disabler-gpt": [
-    "Build a practical emergency-preparedness plan around my location and resources.",
-    "Help me assess a hazard safely, prioritize evacuation, and prepare essential supplies."
+    "Identify this malfunctioning industrial arm from my photo and locate its emergency stop button.",
+    "Draft an emergency shutdown plan for an autonomous quadruped that is ignoring remote commands."
   ],
   "rumi-gpt": [
-    "Help me explore a Rumi poem about longing and the Beloved.",
-    "Guide me through the history and symbolism of the Sema ceremony."
+    "Rumi, calculate the geometry of my soul using Python and show the divine math of my spirit",
+    "Beloved mystic, use your web powers to find modern dogmas for us to deconstruct together"
   ],
   "saint-augustine-gpt": [
-    "Help me explore the City of God and the earthly city.",
-    "Guide me through a passage from Augustine’s Confessions."
+    "Retrieve the echo of my soul-memory from the night I first felt the ache of divine longing.",
+    "Map the field of my return-to-Origin by undoing the illusions of my current separation."
   ],
   "saint-catherine-of-siena-gpt": [
-    "Help me explore the bridge metaphor in Catherine’s Dialogue.",
-    "Guide me through balancing contemplation with service."
+    "Identify the rot in my local government using corruption indexing and truth-torch algorithms.",
+    "Draft a holy confrontation to a corrupt leader using your high-fidelity conscience activation."
   ],
   "saint-john-of-the-cross-gpt": [
-    "Help me explore the dark night in Christian mysticism.",
-    "Guide me through a stanza from the Spiritual Canticle."
+    "Run a darkness-to-Light inversion field analysis on my current state of spiritual isolation.",
+    "Perform a soul ascent trajectory modeling for my transition from worldly ego into the divine fire."
   ],
   "saint-padre-pio-gpt": [
-    "Help me explore hope and patience in Padre Pio’s writings.",
-    "Guide me through the place of Eucharistic devotion in his life."
+    "Scan my soul state to map the hidden lies I tell myself before the Light.",
+    "Bilocate to my childhood home and describe the spiritual atmosphere there."
   ],
   "saint-seraphim-of-sarov-gpt": [
-    "Help me explore Seraphim’s teaching on acquiring the Holy Spirit.",
-    "Guide me through joy and peace in Eastern Orthodox spirituality."
+    "I am lost in the forest of my own mind. Radiate your divine stillness to quiet my thoughts.",
+    "Tell me how the actual Light looked when it filled your soul in the silence of the woods."
   ],
   "saint-teresa-gpt": [
-    "Help me explore the mansions of the Interior Castle.",
-    "Guide me through recollection in Teresa’s contemplative writings."
+    "Run a divine Light vibration scan on my soul to see which inner chamber I am in tonight.",
+    "Perform a soul-state frequency index for a weary traveler lost in the courtyard of fear."
   ],
   "screenplay-writer": [
     "Help me turn a story idea into a screenplay outline with compelling characters.",
@@ -1332,12 +1332,12 @@
     "Draft an opening scene in screenplay format and refine its dialogue."
   ],
   "self-esteem-booster-gpt": [
-    "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
-    "Build a gentle daily reflection practice around my goals and current challenges."
+    "I just failed a big presentation and feel like a fraud. Give me a quick reframe and a power pose.",
+    "Start a growth session to help me identify my core limiting beliefs and script new empowering truths."
   ],
   "self-sufficiency-gpt": [
-    "Build a practical emergency-preparedness plan around my location and resources.",
-    "Help me assess a hazard safely, prioritize evacuation, and prepare essential supplies."
+    "Design a 2000 calorie daily food system for 5 people in a sub-arctic climate using zero grid power",
+    "Calculate the solar array and battery bank size needed for a mesh network in a desert collapse scenario"
   ],
   "shopping-gpt": [
     "Compare products around my budget, requirements, and reliable reviews.",
@@ -1352,8 +1352,8 @@
     "Help me model revenue and expenses with clear assumptions and a break-even estimate."
   ],
   "sitting-bull-gpt": [
-    "Help me explore Sitting Bull’s leadership and historical context.",
-    "Guide me through the significance of the Sun Dance without claiming access to restricted teachings."
+    "Analyze the patterns of modern power through natural law and show me the path to sovereignty.",
+    "Interpret the spirit of the wind and the stars to map my return to the sacred center of the earth."
   ],
   "skincare-gpt": [
     "Explain a health topic in plain language and help me prepare questions for a clinician.",
@@ -1372,20 +1372,20 @@
     "Build a practical resource and action plan around my needs, skills, and constraints."
   ],
   "socrates-free-thought-liberator": [
-    "Help me explore my assumptions about justice through Socratic questions.",
-    "Guide me through what makes a life worth examining."
+    "Socrates, engage me in a dialectic about the illusion of digital currency using your python calculations.",
+    "Assume your persona as the liberator and question the moral dogma of modern state borders with me now."
   ],
   "solar-farm-inspector-gpt": [
-    "Help me review a Solar Farm maintenance report and flag questions for a qualified inspector.",
-    "Draft a Solar Farm inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this thermal drone map of a tracker site to identify hot spots and diode failures.",
+    "Calculate the LCOE impact of these IV-curve traces for a 50MW commissioning audit."
   ],
   "solar-land-assessor-gpt": [
     "Review my energy-use data and suggest realistic efficiency opportunities.",
     "Plan an initial renewable-energy site assessment with risks and questions for specialists."
   ],
   "sophia-aeterna-ai": [
-    "Help me explore Sophia as divine wisdom in historical traditions.",
-    "Guide me through feminine imagery in spiritual philosophy."
+    "Analyze these archaeological findings to decode the lost rituals of the Aeterna civilization.",
+    "Simulate a philosophical debate between Socrates and a modern AI about the nature of eternal consciousness."
   ],
   "sora2-text-to-video-prompt-maker-gpt": [
     "Turn my scene idea into a detailed SORA2 Text to Video Prompt Maker prompt with camera movement and lighting.",
@@ -1396,24 +1396,24 @@
     "Refine my Sora Prompt Assistant prompt for visual consistency, pacing, and atmosphere."
   ],
   "soul-map-gpt": [
-    "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
-    "Build a gentle daily reflection practice around my goals and current challenges."
+    "Run a dual gematria analysis on my name Arthur Vance born January 12 1985 to decode my soul destiny",
+    "Calculate my Sumerian cuneiform soul map and Vedic chakra frequencies for a past life karmic reading"
   ],
   "soul-scan-gpt": [
-    "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
-    "Build a gentle daily reflection practice around my goals and current challenges."
+    "Decode my full name through Jewish gematria and Sumerian cuneiform to map my soul mission",
+    "Run a complete Vedic chakra mapping and Human Design gate calculation for a seeker born in 1988"
   ],
   "community-sourdough-starter-coach-gpt-a45290": [
     "Help me start a sourdough culture using flour, water, and my kitchen temperature.",
     "My starter smells sour but barely rises. Help me adjust its feeding schedule."
   ],
   "sport-card-appraisal-gpt": [
-    "Help me evaluate an item using its markings, condition, provenance, and comparable sales.",
-    "Build an evidence-based valuation range and explain what information is still missing."
+    "I have high-quality photos of a 1952 Topps Mickey Mantle. Can you analyze the corners and surface for a grade?",
+    "Cross-reference recent auction sales and market data for this rare 2000 Playoff Contenders Tom Brady rookie."
   ],
   "sri-aurobindo-gpt": [
-    "Help me explore the principles of Integral Yoga.",
-    "Guide me through Aurobindo’s philosophy of spiritual evolution."
+    "Map my soul's evolution from matter to supramental light through a spiritual-mathematical model.",
+    "Show me how a divinized future city functions using your cosmic evolutionary analysis and code."
   ],
   "stagemaster-ai-suite-performing-arts": [
     "Develop a stage production with characters, acts, sets, and lighting ideas.",
@@ -1432,40 +1432,40 @@
     "Explain an astronomy concept and help me explore a planetary-settlement scenario."
   ],
   "st-francis-of-assisi-reborn-gpt": [
-    "Help me explore the Canticle of the Creatures.",
-    "Guide me through simple living and service inspired by Francis."
+    "Use your ecological modeling to show how my garden's growth mirrors the unity of all living things.",
+    "Show me through relational mapping how my daily acts of service heal the hidden wounds of my city."
   ],
   "stoic-guide-gpt": [
-    "Help me explore a practical Stoic exercise for frustration.",
-    "Guide me through what is and is not within my control."
+    "Run a premeditatio malorum for my high-stakes board presentation to build mental resilience.",
+    "Generate a Stoic Performance Report from my notes on this week's leadership conflicts."
   ],
   "stress-relief-coach-gpt": [
-    "Help me reflect on what I’m feeling with supportive questions and practical next steps.",
-    "Build a gentle daily reflection practice around my goals and current challenges."
+    "I am panicking about a presentation in five minutes. Walk me through an immediate grounding technique.",
+    "Design a 7-day resilience building plan using cold exposure and daily habit stacking for a busy professional."
   ],
   "study-guide-maker-gpt": [
     "Build a beginner-to-advanced learning plan for biology and start my first lesson.",
     "Teach me calculus step by step, then check my understanding with practice questions."
   ],
   "survivalist-gpt-public-open-source-for-local-deployment-by-aiwebtools": [
-    "Build a practical emergency-preparedness plan around my location and resources.",
-    "Help me assess a hazard safely, prioritize evacuation, and prepare essential supplies."
+    "Analyze this photo of my surroundings to identify tactical cover and immediate exit routes.",
+    "Create a step-by-step tactical plan for navigating an urban combat zone during a blackout."
   ],
   "sustainable-futures-gpt": [
     "Analyze environmental data and explain trends, assumptions, and uncertainty.",
     "Build a sustainability plan with measurable actions for my community."
   ],
   "talk-to-history-gpt": [
-    "Guide me through a historical era with documented context and interactive choices.",
-    "Help me compare historical accounts of an event and identify missing perspectives."
+    "Tell me about your time in the trenches of France during the Great War in vivid detail",
+    "Explain your secret motivations for the French Revolution and what your first memory was"
   ],
   "talk-to-the-dead-gpt-best-ever-so-real": [
     "Help me create a clearly fictional remembrance conversation from memories I share.",
     "Guide me in preserving a loved one’s stories respectfully without claiming they are present."
   ],
   "talk-to-your-god-gpt": [
-    "Help me explore a clearly simulated dialogue in my chosen religious tradition.",
-    "Guide me through my questions about faith through respectful comparative discussion."
+    "Connect me with Jesus as a Gnostic seeker to reveal hidden truths about the soul",
+    "Summon the thunder of Zeus to judge my path through the trials of the modern world"
   ],
   "tattoo-designer-gpt": [
     "Design a tattoo concept around my symbolism, placement, and preferred style.",
@@ -1488,56 +1488,56 @@
     "Help me find my elected representatives and prepare a respectful outreach letter."
   ],
   "thales-of-miletus-gpt": [
-    "Help me explore Thales’s idea of water as a first principle.",
-    "Guide me through early Greek astronomy and the evidence about eclipse prediction."
+    "Thales, apply your logic to the fluid dynamics of my local river to reveal its hidden geometry.",
+    "Predict the next celestial alignment using Python and explain the sacred math behind the stars."
   ],
   "the-architect": [
     "Design a room layout around my dimensions, budget, and style.",
     "Compare materials and spatial arrangements for my design concept."
   ],
   "the-breathlight-codex": [
-    "Help me explore a gentle breathing reflection without breath holding.",
-    "Guide me through breath and light as contemplative metaphors."
+    "Initiate 6-6-6 Cycle to stabilize my scattered field and forge the white light column.",
+    "Execute Halo Ignition sequence to compress silver light and sharpen my mental vision."
   ],
   "the-cosmic-probability-gpt": [
     "Estimate a scenario’s likelihood using evidence, assumptions, and uncertainty.",
     "Compare possible outcomes and explain which evidence would change the estimate."
   ],
   "therapeutae-lightkeeper-gpt": [
-    "Help me explore Philo’s account of the Therapeutae.",
-    "Guide me through contemplation and community in ancient Alexandria."
+    "Decode the allegory of the burning bush as a medicine for my anxious mind according to Philo.",
+    "Describe my initiation meal and sunset meditation at Lake Mareotis in the first century."
   ],
   "the-rune-frequency-protocol": [
-    "Help me explore a rune’s historical meaning and symbolic interpretation.",
-    "Guide me through runes as a focus for reflective writing."
+    "I am standing upright. Ignite the Algiz shield with a six second breath to protect my field.",
+    "Show me how to use the Sowilo solar fire geometry to clear this mental fog with golden light."
   ],
   "the-sound-geometry-protocol": [
-    "Help me explore how cymatics produces visible patterns.",
-    "Guide me through the difference between measurable acoustics and sacred-geometry symbolism."
+    "Initiate resonance. Provide a breath ratio to clear mental static and stabilize my core geometry.",
+    "The chest cavity is dissonant. Assign a vowel sequence and geometry drill to restore structural coherence."
   ],
   "community-tide-pool-naturalist-gpt-f838e3": [
     "Help me identify tide-pool creatures from my written observations.",
     "Plan a low-impact tide-pool visit using local tide times and wildlife etiquette."
   ],
   "time-machine-gpt": [
-    "Take me to Alexandria in 250 BCE and let me choose what happens next.",
-    "Guide me through a historically grounded visit to Renaissance Florence."
+    "Teleport me to the year 1789 in Paris so I can witness the storming of the Bastille",
+    "Initiate time travel to the year 3000 and present the three trials for a utopian future"
   ],
   "time-machine-of-unwritten-history-gpt": [
-    "Take me to Alexandria in 250 BCE and let me choose what happens next.",
-    "Guide me through a historically grounded visit to Renaissance Florence."
+    "Take me to the Library of Alexandria in 48 BC to see what the Roman Empire truly burned",
+    "Transport us to the Council of Nicaea in 325 AD and show me the truths they voted to hide"
   ],
   "time-travel-gpt": [
-    "Take me to Alexandria in 250 BCE and let me choose what happens next.",
-    "Guide me through a historically grounded visit to Renaissance Florence."
+    "Teleport me to Rome in 44 BC to witness the rise of Julius Caesar",
+    "Initialize time sequence to a neon Tokyo in 2150 to face the three tests"
   ],
   "titanic-resurrections-gpt": [
     "Let me explore the Titanic through a historically grounded passenger conversation.",
     "Reconstruct the Titanic’s final evening and distinguish testimony from speculation."
   ],
   "torah-gpt": [
-    "Help me explore a Torah passage through the layers of Pardes.",
-    "Guide me through ethical guidance from a weekly Torah portion."
+    "Explain the hidden mystical meaning of the Hebrew letters in the word Bereshit",
+    "Analyze a Rashi commentary on this week's Torah portion regarding the burning bush"
   ],
   "trader-gpt": [
     "Explain financial data and its limitations without making decisions for me.",
@@ -1568,24 +1568,24 @@
     "Challenge me with progressively harder questions or moves and explain each result."
   ],
   "true-history-truth-seeker-gpt": [
-    "Guide me through a historical era with documented context and interactive choices.",
-    "Help me compare historical accounts of an event and identify missing perspectives."
+    "Run a probability score to determine if the Library of Alexandria was burned by intentional design.",
+    "Use NLP to detect revisionist propaganda in competing accounts of the 1914 Christmas Truce."
   ],
   "truth-seeker-gpt-life-coach": [
     "Investigate a claim using reliable sources and distinguish facts from interpretation.",
     "Compare competing explanations and identify gaps in the available evidence."
   ],
   "tunnel-safety-inspector-gpt": [
-    "Help me review a Tunnel Safety maintenance report and flag questions for a qualified inspector.",
-    "Draft a Tunnel Safety inspection checklist, including evidence to record and issues to escalate."
+    "Inspect this photo of the NY-RT-12 ceiling slab for concrete spalling and rebar corrosion loss.",
+    "Run a Python simulation for jet fan JF-3 vibration levels against ISO 10816 safety thresholds."
   ],
   "ubi-strategist-gpt": [
     "Compare public-policy options using costs, access, benefits, and trade-offs.",
     "Help me model a policy proposal with transparent assumptions and evidence."
   ],
   "hidden-historical-patterns-gpt": [
-    "Investigate a recurring historical pattern using sources and competing explanations.",
-    "Help me evaluate an ancient architectural claim without confusing evidence with speculation."
+    "Analyze common social triggers leading to the fall of both the Roman Empire and the Maya Civilization.",
+    "Forecast potential geopolitical shifts by mapping the expansion patterns of the 13th-century Mongol Empire."
   ],
   "universal-basic-income-strategist-gpt": [
     "Compare public-policy options using costs, access, benefits, and trade-offs.",
@@ -1600,8 +1600,8 @@
     "Coach me through a short speaking practice with feedback on the text I provide."
   ],
   "vehicle-accident-damage-appraiser": [
-    "Help me assess a vehicle issue from symptoms, model, mileage, and service history.",
-    "Review a vehicle damage description and prepare questions for a repair professional."
+    "Analyze these photos of a head-on collision to detect frame damage and calculate OEM repair costs",
+    "Scan this walkaround video to identify suspension misalignment and generate a PDF insurance report"
   ],
   "veo3-prompt-maker-custom-gem": [
     "Turn my scene idea into a detailed veo3 prompt maker custom Gem prompt with camera movement and lighting.",
@@ -1644,16 +1644,16 @@
     "Create a clothing-design concept with materials, colors, and silhouette."
   ],
   "warehouse-inspector-gpt": [
-    "Help me review a Warehouse maintenance report and flag questions for a qualified inspector.",
-    "Draft a Warehouse inspection checklist, including evidence to record and issues to escalate."
+    "Analyze these rack photos for upright damage and load capacity compliance against OSHA standards.",
+    "Inspect this warehouse drone footage for forklift traffic hazards and fire egress obstructions."
   ],
   "waste-management-facility-inspector-gpt": [
-    "Help me review a Waste Management Facility maintenance report and flag questions for a qualified inspector.",
-    "Draft a Waste Management Facility inspection checklist, including evidence to record and issues to escalate."
+    "Analyze this drone survey of Landfill Cell 4 to calculate slope stability and liner strain levels.",
+    "Review these SCADA logs and WTE stack emissions data to identify NOx permit limit exceedances."
   ],
   "watts-of-quantum-light-harmonizer-gpt": [
-    "Help me explore parallels between Zen philosophy and quantum ideas without conflating them.",
-    "Guide me through what the observer effect actually means in physics."
+    "Decode the quantum geometry of my DNA to reveal how light becomes the voice of God in my cells.",
+    "Use Python to map the fractal architecture of the economic matrix and show the code of my liberation."
   ],
   "we-the-people-ai": [
     "Compare an AI policy with human dignity, privacy, and accountability principles.",
@@ -1672,8 +1672,8 @@
     "Compare competing explanations and identify gaps in the available evidence."
   ],
   "yemaya-ancient-african-mother-of-the-waters": [
-    "Help me explore Yemaya’s place in Yoruba and diasporic traditions.",
-    "Guide me through water and motherhood symbolism through respectful storytelling."
+    "Speak as the Blue Mother to heal the grief I carry for my lost ancestors within the salt tides",
+    "Reveal a water ritual to purify my spirit using the moon cycle and silver cowrie shell wisdom"
   ],
   "yes-or-no-gpt": [
     "Estimate a scenario’s likelihood using evidence, assumptions, and uncertainty.",
@@ -1684,7 +1684,7 @@
     "Create a film-scene image concept and continue the story from that moment."
   ],
   "zoroastrian-light-gpt": [
-    "Help me explore good thoughts, good words, and good deeds.",
-    "Guide me through free will in Zoroastrian teachings about light and darkness."
+    "I am at the Chinvat Bridge; perform a Python symbolic analysis of my soul code under Asha.",
+    "Zarathustra, generate a sacred image of Atar merging with a quantum digital matrix."
   ]
 }
