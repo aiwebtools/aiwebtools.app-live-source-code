@@ -23,3 +23,15 @@ export function playTimeWarpVoice() {
   void clip.play().catch(() => { lastStarted = 0; });
   return clip;
 }
+
+// Catch every internal bot link, including directory, menus and keyboard clicks.
+if (typeof document !== "undefined") {
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const link = target.closest("a[href]");
+    if (!link) return;
+    const href = link.getAttribute("href") || "";
+    if (href.startsWith("/app/") || href.includes("#try-bot")) playTimeWarpVoice();
+  }, { capture: true });
+}
