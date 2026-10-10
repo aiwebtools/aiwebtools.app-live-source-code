@@ -44,6 +44,7 @@ Deno.serve(async (req) => {
     if (body?.engine === 'gemini') {
       const style = typeof body?.style === 'string' ? body.style.replace(/[\n:]/g, ' ').slice(0, 120).trim() : '';
       const prompt = `Read aloud as a real, warm human speaker${style ? ` (${style})` : ''}, at a brisk, natural conversational pace with lively expression: ${text}`;
+      const wantsStream = body.stream === true;
       const gem = await fetch('https://ai.gateway.lovable.dev/v1/audio/speech', {
         method: 'POST',
         headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
@@ -54,6 +55,7 @@ Deno.serve(async (req) => {
             responseModalities: ['AUDIO'],
             speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: GEMINI_VOICES[voice] } } },
           },
+          ...(wantsStream ? { stream_format: 'sse' } : {}),
         }),
         signal: req.signal,
       });
@@ -63,6 +65,14 @@ Deno.serve(async (req) => {
           ? 'The voice studio is out of AI credits right now.'
           : gem.status === 429 ? 'The voice studio is busy — try again in a moment.' : 'The voice could not be generated.');
         return json({ error: message, status: gem.status }, gem.status);
+      }
+      // Live playback: hand the browser the audio stream as it is produced so speech
+      // starts the moment the first samples land instead of after the whole clip.
+      if (wantsStream) {
+        if (!gem.body) return json({ error: 'The voice provider returned no audio.' }, 502);
+        return new Response(gem.body, {
+          headers: { ...corsHeaders, 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-store' },
+        });
       }
       const wav = await gem.arrayBuffer();
       if (!wav.byteLength) return json({ error: 'The voice provider returned no audio.' }, 502);
