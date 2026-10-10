@@ -9,3 +9,5 @@
 - Validate runtime model choices against a server-side allowlist while preserving each bot's configured model by default, so changing engines cannot change its instructions.
 - Keep studio image download/revision actions in `StudioImageActions` and route revisions through the existing conversation so generated visuals retain story context.
 - Attach small text/CSV/JSON excerpts through the existing message transport; do not advertise unsupported binary-file analysis.
+- Publish community GPTs only through the publish-community-gpt function, which runs an AI ethics review before inserting into gpt_apps/gpt_app_prompts with a community- slug, so public bots reuse the same studio, routing and runtime as official bots.
+- Device-only custom bots use custom- slugs and send their own instructions to run-gpt-app; they are never stored server-side or in conversation history.
