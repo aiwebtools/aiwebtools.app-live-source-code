@@ -2736,7 +2736,7 @@ export const useGlobalSearch = () => {
     searchTerm,
     setSearchTerm,
     searchResults: combinedResults, // Return combined results
-    directMatchCount, // How many were direct matches
+    directMatchCount: directMatchCount + (combinedResults.length - searchResults.length - recommendedTools.length), // direct matches incl. community GPTs
     displayedCount,
     isOpen,
     isLoadingMore: isLoadingMore || isLoadingRecommendations,
