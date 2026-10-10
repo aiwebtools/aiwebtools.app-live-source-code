@@ -372,7 +372,7 @@ const DisclaimerGate: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-4">
+    <div className="min-h-screen bg-background text-foreground flex items-center justify-center px-4">
       <ImprovedSEOHead pageType="homepage" />
       <Helmet>
         <title>AI Web Tools — 5,500+ Best Free AI Tools Directory</title>
@@ -403,16 +403,6 @@ const DisclaimerGate: React.FC = () => {
         </div>
 
         <div className="space-y-3 mb-6">
-          <div className="bg-gray-800 rounded-lg p-3 border border-cyan-500/30">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">🔞</span>
-              <div>
-                <h2 className="text-cyan-300 font-semibold text-sm">Age Requirement</h2>
-                <p className="text-gray-300 text-xs">You must be 21+ to access our platform</p>
-              </div>
-            </div>
-          </div>
-
           <div className="bg-gray-800 rounded-lg p-3 border border-cyan-500/30">
             <div className="flex items-center gap-3">
               <span className="text-2xl">📚</span>
