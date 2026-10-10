@@ -1,5 +1,10 @@
 # Chatbot completion roadmap
 
+# Bot starter readability and subject matching (Oct 10)
+- [ ] Tailor both visible starters across every active bot without changing operational instructions
+- [ ] Enlarge starter touch targets and show full bot names on hover/focus
+- [ ] Verify representative phone/desktop rooms and catalog-wide starter coverage
+
 # Cheap model check + community directory (Oct 10)
 - [x] Real replies from 4 bots on cheapest model: ~3s vs ~15s before; ~0.0025 vs ~0.011-0.019 credits per message
 - [x] Community GPTs get an AI-generated branded image on approval and appear in search + All AI Tools + community page
