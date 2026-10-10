@@ -1,7 +1,7 @@
 import { beforeEach, expect, test } from "bun:test";
 import { openBotConversation, readBotConversations, saveBotConversation, conversationPath } from "./botConversations";
 const storage = new Map<string, string>();
-globalThis.localStorage = { getItem: (key: string) => storage.get(key) ?? null, setItem: (key: string, value: string) => { storage.set(key, value); }, removeItem: (key: string) => { storage.delete(key); }, clear: () => storage.clear(), key: () => null, length: 0 };
+globalThis.localStorage = { getItem: (key) => storage.get(key) ?? null, setItem: (key, value) => { storage.set(key, value); }, removeItem: (key) => { storage.delete(key); }, clear: () => storage.clear(), key: () => null, length: 0 };
 beforeEach(() => storage.clear());
 test("device history keeps separate bot conversations without login", () => {
   const first = openBotConversation("time-machine-gpt", "trip-one");
