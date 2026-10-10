@@ -1,5 +1,12 @@
 # Chatbot completion roadmap
 
+# Matrix conversation studio (Oct 10)
+- [ ] Connect initialization audio to bot launches and instruction downloads
+- [ ] Adapt the uploaded Matrix design into a shared branded room with mobile drawers
+- [ ] Add device-saved conversations, route-based history, and guest bot switching
+- [ ] Verify available model selection without changing existing bot instructions
+- [ ] Verify real replies, individual PDFs, audio, history, and phone/desktop layouts
+
 - [x] Audit all 222 active bot records and prompt links
 - [x] Confirm image generation live on Time Machine GPT
 - [x] Unify embedded and full-screen room branding with a unique signature per bot
