@@ -1,5 +1,12 @@
 # Chatbot completion roadmap
 
+# Matrix example verification and publish (Oct 10)
+- [ ] Match supplied Matrix styling, fix gold-button contrast, and connect missing usable chat actions
+- [ ] Check cheap model switching, original instructions, voice casting, images, PDFs, and initialization audio
+- [ ] Exercise 15 randomly selected bots with real conversations within existing usage limits
+- [ ] Verify phone-sized layouts, moving code, drawers, history, and live playback
+- [ ] Publish and verify the public site
+
 # Matrix conversation studio (Oct 10)
 - [x] Connect initialization audio to bot launches and instruction downloads
 - [x] Adapt the uploaded Matrix design into a shared branded room with mobile drawers

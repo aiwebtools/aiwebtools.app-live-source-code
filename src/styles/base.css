@@ -32,6 +32,10 @@
     --border: 270 50% 20%;
     --input: 270 50% 20%;
     --ring: 180 100% 50%;
+    --instruction-foreground: 0 0% 0%;
+    --instruction-gold: 45 96% 62%;
+    --instruction-gold-deep: 38 92% 50%;
+    --instruction-gold-light: 45 96% 68%;
     --sidebar-background: 0 0% 5%;
     --sidebar-foreground: 180 100% 90%;
     --sidebar-primary: 180 100% 50%;
