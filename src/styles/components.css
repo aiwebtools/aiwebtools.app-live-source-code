@@ -615,3 +615,16 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
 @media (min-width: 1280px) { .studio-grid { grid-template-columns: 232px minmax(0, 1fr) 254px; } }
 @media (max-width: 639px) { .studio-topbar { height: 52px; gap: 8px; padding: 0 10px; } .studio-grid { height: calc(100% - 52px); } .studio-brand { font-size: 15px; } .studio-bot-header { padding: 10px; gap: 8px; } .studio-header-pdf { width: 100%; } .studio-header-pdf a { min-height: 32px; padding: 4px 10px; } .studio-composer { padding-left: 8px; padding-right: 8px; } .studio-welcome { padding-top: 0; } .studio-status { font-size: 8px; } }
 @media (prefers-reduced-motion: reduce) { .studio, .studio header { animation: none; } }
+/* Compact studio on phones and short screens */
+@media (max-width: 639px) {
+  .studio-bot-header { flex-wrap: nowrap; padding: 6px 8px; }
+  .studio-bot-header .gpt-room-avatar { width: 32px; height: 32px; }
+  .studio-bot-header h1 { font-size: 14px; line-height: 1.2; }
+  .studio-bot-header p { display: none; }
+  .studio-header-pdf { width: auto; }
+  .studio-welcome .gpt-room-avatar { width: 56px; height: 56px; margin-bottom: 10px; }
+  .studio-welcome { padding: 4px 0; }
+  .studio-starter { padding: 8px 10px; }
+  .gpt-msg-avatar { width: 20px; height: 20px; }
+}
+@media (max-height: 560px) { .studio-topbar { height: 44px; } .studio-grid { height: calc(100% - 44px); } .studio-welcome .gpt-room-avatar { display: none; } }

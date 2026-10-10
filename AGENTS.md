@@ -6,7 +6,7 @@
 - Share one-utterance microphone input across bot surfaces and pause speaker audio while listening to prevent feedback into the conversation.
 - Render hosted bot rooms through `BotStudio` in both embedded and full-page placements so voice, streaming, downloads, branding and guest history cannot diverge.
 - Store device conversations separately by bot and thread, with dedicated `/app/:slug/chat/:threadId` URLs so reloads restore the exact conversation.
-- Validate runtime model choices against a server-side allowlist while preserving each bot's configured model by default, so changing engines cannot change its instructions.
+- Validate runtime model choices against a server-side allowlist and default every bot to the cheapest allowed model; instructions stay per-bot so engine changes never alter persona.
 - Keep studio image download/revision actions in `StudioImageActions` and route revisions through the existing conversation so generated visuals retain story context.
 - Attach small text/CSV/JSON excerpts through the existing message transport; do not advertise unsupported binary-file analysis.
 - Publish community GPTs only through the publish-community-gpt function, which runs an AI ethics review before inserting into gpt_apps/gpt_app_prompts with a community- slug, so public bots reuse the same studio, routing and runtime as official bots.

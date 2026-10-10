@@ -25,7 +25,7 @@ export function loadStudioBots(): Promise<StudioBot[]> {
 
 // Exact IDs from the authenticated workspace catalog; the original bot model stays the default.
 export const STUDIO_MODELS = [
-  { id: "default", label: "Bot’s original model" },
+  { id: "default", label: "Economy (cheapest)" },
   { id: "google/gemini-3-flash-preview", label: "Gemini 3 Flash Preview" },
   { id: "google/gemini-3.1-flash-lite", label: "Gemini 3.1 Flash Lite" },
 ];
