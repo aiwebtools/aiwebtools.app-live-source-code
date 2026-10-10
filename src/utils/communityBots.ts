@@ -42,6 +42,8 @@ export function loadCommunityBots(): Promise<CommunityBotTool[]> {
   return pending;
 }
 
+export const getBundledCommunityImage = (slug: string): string | undefined => BUNDLED[slug];
+
 export function getCommunityBotsSync() { return cache; }
 
 export function matchCommunityBots(bots: CommunityBotTool[] | null, query: string): CommunityBotTool[] {
