@@ -9,6 +9,7 @@ export interface StudioBot {
   starter_prompts: string[] | null;
   supports_images: boolean | null;
   model: string;
+  custom?: { instructions: string; voice: import("@/utils/gptVoiceProfiles").GptVoiceProfile["voice"] };
 }
 let catalogPromise: Promise<StudioBot[]> | null = null;
 export function loadStudioBots(): Promise<StudioBot[]> {
