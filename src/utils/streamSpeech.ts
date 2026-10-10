@@ -13,7 +13,7 @@ import { createParser } from "eventsource-parser";
 const SAMPLE_RATE = 24000;
 
 /** Turn streamed 16-bit samples into playable floats, carrying an odd trailing byte. */
-const decodePCM = (pending: Uint8Array, incoming: Uint8Array) => {
+export const decodePCM = (pending: Uint8Array, incoming: Uint8Array) => {
   const bytes = new Uint8Array(pending.length + incoming.length);
   bytes.set(pending);
   bytes.set(incoming, pending.length);
