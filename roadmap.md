@@ -1,9 +1,9 @@
 # Chatbot completion roadmap
 
 # Bot starter readability and subject matching (Oct 10)
-- [ ] Tailor both visible starters across every active bot without changing operational instructions
-- [ ] Enlarge starter touch targets and show full bot names on hover/focus
-- [ ] Verify representative phone/desktop rooms and catalog-wide starter coverage
+- [x] Tailor both visible starters across all 422 active bots without changing operational instructions; future bots use their subject rather than old generic introductions
+- [x] Enlarge starter touch targets to at least 56px and show full library bot names on hover/focus; personal bots have full-name hints
+- [x] Verify phone/desktop rooms, 422-bot coverage, full-name tooltip, and a real Time Machine starter reply (200, no page errors)
 
 # Cheap model check + community directory (Oct 10)
 - [x] Real replies from 4 bots on cheapest model: ~3s vs ~15s before; ~0.0025 vs ~0.011-0.019 credits per message
