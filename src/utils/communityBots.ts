@@ -10,6 +10,11 @@ export interface CommunityBotTool {
   isCommunityGpt: true;
 }
 
+// Bundled branded images for bots published before automatic image generation.
+const bundled = import.meta.glob("@/assets/community-bots/*.jpg", { eager: true, query: "?url", import: "default" }) as Record<string, string>;
+const BUNDLED: Record<string, string> = {};
+for (const [path, url] of Object.entries(bundled)) BUNDLED[path.split("/").pop()!.replace(/\.jpg$/, "")] = url;
+
 let cache: CommunityBotTool[] | null = null;
 let pending: Promise<CommunityBotTool[]> | null = null;
 
@@ -26,7 +31,7 @@ export function loadCommunityBots(): Promise<CommunityBotTool[]> {
         title: b.display_name,
         description: (b.tagline || "Community GPT").replace(/\s*·\s*Community GPT$/, "") + " — a community-built AI assistant, ethics-reviewed and published on AIWebTools.",
         category: "Community GPTs",
-        imageUrl: b.image_url || undefined,
+        imageUrl: b.image_url || BUNDLED[b.slug] || undefined,
         categoryPath: `/app/${b.slug}`,
         tags: ["community gpt", "custom gpt", "ai assistant", "chatbot"],
         isCommunityGpt: true as const,
