@@ -12,3 +12,4 @@
 - Publish community GPTs only through the publish-community-gpt function, which runs an AI ethics review before inserting into gpt_apps/gpt_app_prompts with a community- slug, so public bots reuse the same studio, routing and runtime as official bots.
 - Device-only custom bots use custom- slugs and send their own instructions to run-gpt-app; they are never stored server-side or in conversation history.
 - Resolve bot chat avatars in BotStudio as per-slug portrait (`botAvatars.ts`, files in `src/assets/bot-avatars/<slug>.jpg`), then tool hero image by title/name, then theme emblem image, so named figures keep a matching portrait without replacing tool media.
+- Surface community GPTs in search and directories through `src/utils/communityBots.ts` (live `gpt_apps` rows with community- slugs, linking to `/app/<slug>`), so newly approved bots appear without rebuilding the static search catalog.
