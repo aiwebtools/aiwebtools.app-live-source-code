@@ -18,3 +18,10 @@ test("reloading a thread restores its identity without duplicating it", () => {
   expect(readBotConversations()).toHaveLength(1);
   expect(conversationPath("time-machine-gpt", "trip-one")).toBe("/app/time-machine-gpt/chat/trip-one");
 });
+test("selected model and completed tool activity survive device restoration", () => {
+  const thread = openBotConversation("time-machine-gpt", "model-trip");
+  saveBotConversation({ ...thread, model: "google/gemini-3-flash-preview", messages: [{ role: "assistant", content: "A journey", activities: [{ id: "image-1", name: "generate_image", input: "A time portal", state: "output-available" }] }] });
+  const restored = openBotConversation("time-machine-gpt", "model-trip");
+  expect(restored.model).toBe("google/gemini-3-flash-preview");
+  expect(restored.messages[0].activities[0].state).toBe("output-available");
+});

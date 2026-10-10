@@ -125,6 +125,8 @@ Deno.serve(async (req) => {
     }
   }
 
+  if (authHeader && !userId) return json({ error: "Your sign-in session is invalid. Please sign in again." }, 401);
+
   let body: {
     slug?: string;
     messages?: { role: string; content: string }[];
