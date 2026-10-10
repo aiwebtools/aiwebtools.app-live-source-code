@@ -1200,7 +1200,7 @@ const PinnedVideoPlayer = memo(() => {
 
   const playerUi = (
     <div
-      className={shouldShow ? "opacity-100" : "opacity-0 pointer-events-none"}
+      className={`awt-floating-overlay ${shouldShow ? "opacity-100" : "opacity-0 pointer-events-none"}`}
       style={{
         // CRITICAL: Inline fixed positioning - cannot be overridden by CSS
         position: 'fixed',

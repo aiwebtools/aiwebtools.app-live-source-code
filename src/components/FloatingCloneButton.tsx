@@ -31,6 +31,7 @@ const FloatingCloneButton = () => {
   const content = useMemo(
     () => (
       <div
+        className="awt-floating-overlay"
         style={{
           position: 'fixed',
           // Top-right: opposite the logo so nothing overlaps; sits well below the

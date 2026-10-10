@@ -9,6 +9,7 @@
  * On the published site, custom domains, or any non-preview origin, the
  * relative path is used as-is.
  */
+import { playTimeWarpVoice } from "./effects/timeWarpVoice";
 const PUBLIC_ORIGIN = "https://aiwebtools.lovable.app";
 
 const isPreviewSandbox = (): boolean => {
@@ -34,6 +35,7 @@ export const resolvePublicAssetUrl = (path: string): string => {
  * never redirected to a Lovable login screen.
  */
 export const triggerPublicDownload = (path: string, filename: string): void => {
+  if (/operational|instruction/i.test(path + filename)) playTimeWarpVoice();
   const href = resolvePublicAssetUrl(path);
   const link = document.createElement("a");
   link.href = href;
@@ -75,11 +77,13 @@ export const OPEN_DOWNLOAD_CENTER_EVENT = "awt:open-download-center";
 
 /** Opens the Download Center popup listing every archive + source code. */
 export const downloadAllOperationalInstructions = (): void => {
+  playTimeWarpVoice();
   window.dispatchEvent(new Event(OPEN_DOWNLOAD_CENTER_EVENT));
 };
 
 /** Downloads every archive one after another (plus the source code). */
 export const downloadEverything = (): void => {
+  playTimeWarpVoice();
   [...OPERATIONAL_INSTRUCTIONS_PARTS, SOURCE_CODE_DOWNLOAD].forEach((part, index) => {
     window.setTimeout(() => triggerPublicDownload(part.path, part.name), index * 700);
   });

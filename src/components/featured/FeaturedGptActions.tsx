@@ -8,6 +8,7 @@ import { getOpInstructionDoc, OP_INSTRUCTION_DOCS } from "@/data/opInstructionDo
 import { downloadAllOperationalInstructions } from "@/utils/downloads";
 import { generateToolSlug } from "@/utils/urlGenerator";
 import { Tool } from "@/types/tools";
+import { playTimeWarpVoice } from "@/utils/effects/timeWarpVoice";
 
 const InSiteGptRunner = lazy(() => import("@/components/tool-detail/InSiteGptRunner"));
 
@@ -135,7 +136,7 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
     <div className="mb-2 flex flex-wrap gap-1.5" onClick={(e) => e.stopPropagation()}>
       <Button variant="ghost"
         type="button"
-        onClick={() => (app ? setOpen(true) : window.open(`/${pageSlug}#try-bot`, "_blank"))}
+        onClick={() => { playTimeWarpVoice(); if (app) setOpen(true); else window.open(`/${pageSlug}#try-bot`, "_blank"); }}
         className={btn}
         title={`Try ${name} right here, running on its operational instructions`}
       >
@@ -161,7 +162,7 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
       )}
       {app && (
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent className="max-h-[92dvh] w-[96vw] max-w-3xl overflow-y-auto p-1 pt-10 sm:p-2 sm:pt-10">
+          <DialogContent className="max-h-[96dvh] w-[98vw] max-w-7xl overflow-hidden p-1 pt-9 sm:p-1 sm:pt-9">
             <DialogTitle className="sr-only">{name}</DialogTitle>
             <DialogDescription className="sr-only">
               Chat with {name}, following its AIWebTools operational instructions.
