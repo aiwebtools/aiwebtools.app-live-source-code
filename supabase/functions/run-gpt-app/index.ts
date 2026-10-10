@@ -133,6 +133,7 @@ Deno.serve(async (req) => {
     conversationId?: string | null;
     guestId?: string;
     model?: string;
+    custom?: { name?: string; tagline?: string; instructions?: string };
   } = {};
   try {
     body = await req.json();
@@ -208,27 +209,41 @@ Deno.serve(async (req) => {
     );
   }
 
-  const { data: app } = await admin
-    .from("gpt_apps")
-    .select("slug, display_name, model, is_active, supports_images")
-    .eq("slug", slug)
-    .maybeSingle();
-  if (!app || !app.is_active) return json({ error: "This tool is not available." }, 404);
+  // Device-saved custom bots built in the Matrix studio carry their own instructions.
+  const isCustom = slug.startsWith("custom-");
+  const customInstructions = typeof body.custom?.instructions === "string" ? body.custom.instructions.trim().slice(0, 20000) : "";
+  const customName = typeof body.custom?.name === "string" ? body.custom.name.trim().slice(0, 80) : "";
+  let app: { display_name: string; model: string | null; supports_images: boolean | null };
+  let basePrompt = "";
+  if (isCustom) {
+    if (customInstructions.length < 10 || !customName) return json({ error: "Your custom bot needs a name and instructions." }, 400);
+    app = { display_name: customName, model: "google/gemini-3-flash-preview", supports_images: true };
+    const customTagline = typeof body.custom?.tagline === "string" ? body.custom.tagline.trim().slice(0, 160) : "";
+    basePrompt = `You are "${customName}"${customTagline ? ` — ${customTagline}` : ""}, a custom assistant created by a user on AIWebTools.app.\n\nOPERATIONAL INSTRUCTIONS:\n${customInstructions}`;
+  } else {
+    const { data: dbApp } = await admin
+      .from("gpt_apps")
+      .select("slug, display_name, model, is_active, supports_images")
+      .eq("slug", slug)
+      .maybeSingle();
+    if (!dbApp || !dbApp.is_active) return json({ error: "This tool is not available." }, 404);
+    app = dbApp;
+    const { data: promptRow } = await admin
+      .from("gpt_app_prompts")
+      .select("system_prompt")
+      .eq("app_slug", slug)
+      .maybeSingle();
+    if (!promptRow?.system_prompt) return json({ error: "This tool is not available." }, 404);
+    basePrompt = promptRow.system_prompt;
+  }
   const selectedModel = selectBotModel(app.model || "openai/gpt-6-astra", body.model);
   if (!selectedModel) return json({ error: "That model is not supported by this assistant." }, 400);
-
-  const { data: promptRow } = await admin
-    .from("gpt_app_prompts")
-    .select("system_prompt")
-    .eq("app_slug", slug)
-    .maybeSingle();
-  if (!promptRow?.system_prompt) return json({ error: "This tool is not available." }, 404);
 
   const { data: profile } = userId
     ? await admin.from("profiles").select("display_name").eq("id", userId).maybeSingle()
     : { data: null as { display_name?: string } | null };
 
-  let systemPrompt = promptRow.system_prompt;
+  let systemPrompt = basePrompt;
   if (profile?.display_name) {
     systemPrompt += `\n\nThe member you are speaking with is called ${profile.display_name}. Remember details they share during this conversation and refer back to them naturally.`;
   }
@@ -241,7 +256,7 @@ Deno.serve(async (req) => {
   // Conversation bookkeeping (members only — guest chats are not stored)
   let conversationId = body.conversationId || null;
   const lastUser = [...messages].reverse().find((m) => m.role === "user");
-  if (userId) {
+  if (userId && !isCustom) {
     if (conversationId) {
       const { data: owned } = await admin.from("gpt_conversations").select("id").eq("id", conversationId).eq("user_id", userId).eq("app_slug", slug).maybeSingle();
       if (!owned) return json({ error: "This conversation does not belong to your account or this assistant." }, 403);
