@@ -7,6 +7,12 @@ const VOICES = new Set([
 
 const MAX_CHARS = 4000;
 
+// Lifelike Gemini voices standing in for each hosted voice name (bot chat engine).
+const GEMINI_VOICES: Record<string, string> = {
+  alloy: 'Achird', ash: 'Orus', ballad: 'Enceladus', coral: 'Aoede', echo: 'Charon',
+  fable: 'Sadaltager', nova: 'Leda', onyx: 'Algenib', sage: 'Sulafat', shimmer: 'Achernar', verse: 'Puck',
+};
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -34,6 +40,34 @@ Deno.serve(async (req) => {
       return json({ error: `Please keep it under ${MAX_CHARS} characters.` }, 400);
     }
     if (!VOICES.has(voice)) return json({ error: 'Unknown voice selected.' }, 400);
+
+    if (body?.engine === 'gemini') {
+      const style = typeof body?.style === 'string' ? body.style.replace(/[\n:]/g, ' ').slice(0, 120).trim() : '';
+      const prompt = `Read aloud as a real, warm human speaker${style ? ` (${style})` : ''}, at a brisk, natural conversational pace with lively expression: ${text}`;
+      const gem = await fetch('https://ai.gateway.lovable.dev/v1/audio/speech', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'google/gemini-3.1-flash-tts-preview',
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: {
+            responseModalities: ['AUDIO'],
+            speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: GEMINI_VOICES[voice] } } },
+          },
+        }),
+        signal: req.signal,
+      });
+      if (!gem.ok) {
+        const details = await gem.json().catch(() => ({}));
+        const message = details?.error?.message || details?.message || (gem.status === 402
+          ? 'The voice studio is out of AI credits right now.'
+          : gem.status === 429 ? 'The voice studio is busy — try again in a moment.' : 'The voice could not be generated.');
+        return json({ error: message, status: gem.status }, gem.status);
+      }
+      const wav = await gem.arrayBuffer();
+      if (!wav.byteLength) return json({ error: 'The voice provider returned no audio.' }, 502);
+      return new Response(wav, { headers: { ...corsHeaders, 'Content-Type': 'audio/wav', 'Cache-Control': 'no-store' } });
+    }
 
     const upstream = await fetch('https://ai.gateway.lovable.dev/v1/audio/speech', {
       method: 'POST',
