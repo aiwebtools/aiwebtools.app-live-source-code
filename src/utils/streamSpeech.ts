@@ -26,7 +26,7 @@ export const decodePCM = (pending: Uint8Array, incoming: Uint8Array) => {
 
 export type SpeechClip = {
   /** Next decoded block of audio, or null when nothing has arrived yet. */
-  next: () => Float32Array | null;
+  next: () => Float32Array<ArrayBuffer> | null;
   /** Resolves once more audio arrives, the clip finishes, or it fails. */
   wait: () => Promise<void>;
   readonly finished: boolean;
@@ -41,7 +41,7 @@ export type SpeechClip = {
  * away so the next sentence is ready before the current one finishes playing.
  */
 export const beginSpeechClip = (url: string, init: RequestInit, outer: AbortSignal): SpeechClip => {
-  let samples: Float32Array[] = [];
+  let samples: Float32Array<ArrayBuffer>[] = [];
   let finished = false;
   let error: Error | null = null;
   let started = false;
