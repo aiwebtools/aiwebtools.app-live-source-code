@@ -21,7 +21,7 @@ import { getGuestId } from "@/utils/guestId";
 import { playTimeWarpVoice } from "@/utils/effects/timeWarpVoice";
 import { conversationPath, openBotConversation, readBotConversations, saveBotConversation, type BotConversation, type BotMessage } from "@/utils/botConversations";
 import { loadToolImageMap } from "@/utils/search/toolImageMap";
-import { loadStudioBots, STUDIO_MODELS, type StudioBot } from "./botCatalog";
+import { loadStudioBots, refreshStudioBots, STUDIO_MODELS, type StudioBot } from "./botCatalog";
 import BotPortrait from "./BotPortrait";
 import BotBuilder from "./BotBuilder";
 import { deleteCustomBot, readCustomBots } from "@/utils/customBots";
@@ -161,7 +161,7 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
     <h2 className="studio-label mt-6"><Bot className="h-4 w-4" />My GPTs</h2>
     <div className="relative my-3"><Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" /><input aria-label="Search bots" placeholder="Find an assistant…" value={query} onChange={(e) => setQuery(e.target.value)} className="studio-search w-full rounded-md border bg-background pl-9 pr-2 text-sm" /></div>
     <div className="studio-bots">
-      {bots.filter((bot) => `${bot.display_name} ${bot.tagline}`.toLowerCase().includes(query.toLowerCase())).map((bot) => <Button key={bot.slug} variant="ghost" disabled={streaming} onClick={() => chooseBot(bot.slug)} className={`studio-row ${bot.slug === app.slug ? "studio-selected" : ""}`}><span className="studio-bot-mark">{getGptRoomTheme(bot.slug).emblem}</span><span className="truncate">{bot.display_name}</span></Button>)}
+      {bots.filter((bot) => `${bot.display_name} ${bot.tagline}`.toLowerCase().includes(query.toLowerCase())).map((bot) => <Button key={bot.slug} variant="ghost" disabled={streaming} onClick={() => chooseBot(bot.slug)} className={`studio-row ${bot.slug === app.slug ? "studio-selected" : ""}`}><span className="studio-bot-mark">{getGptRoomTheme(bot.slug).emblem}</span><span className="truncate">{bot.display_name}</span>{bot.slug.startsWith("community-") && <span className="ml-auto shrink-0 text-[10px] text-primary">COMMUNITY</span>}</Button>)}
     </div>
     <h2 className="studio-label mt-5"><History className="h-4 w-4" />Recent chats</h2>
     <div className="studio-history mt-2">{threads.map((item) => <Button key={item.id} variant="ghost" disabled={streaming} onClick={() => chooseThread(item)} className={`studio-row ${item.id === thread.id ? "studio-selected" : ""}`}><History className="h-3.5 w-3.5 shrink-0" /><span className="truncate">{item.title}</span></Button>)}</div>
@@ -193,6 +193,6 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
     </div>
     <Sheet open={leftOpen} onOpenChange={setLeftOpen}><SheetContent side="left" className="studio-drawer overflow-y-auto"><SheetTitle>Bots & conversations</SheetTitle><SheetDescription className="sr-only">Your assistants and chats saved on this device</SheetDescription><div className="mt-6">{sidebar}</div></SheetContent></Sheet>
     <Sheet open={rightOpen} onOpenChange={setRightOpen}><SheetContent className="studio-drawer overflow-y-auto"><SheetTitle>Assistant settings</SheetTitle><SheetDescription className="sr-only">Model, voice and operational instructions</SheetDescription><div className="mt-6">{settings}</div></SheetContent></Sheet>
-    <BotBuilder open={builderOpen} onOpenChange={setBuilderOpen} onSaved={(bot) => { setCustomBots(readCustomBots()); setBuilderOpen(false); chooseThread(openBotConversation(bot.slug, crypto.randomUUID())); }} />
+    <BotBuilder open={builderOpen} onOpenChange={setBuilderOpen} onSaved={(bot, publishedSlug) => { setCustomBots(readCustomBots()); setBuilderOpen(false); if (publishedSlug) void refreshStudioBots().then(setBots); chooseThread(openBotConversation(publishedSlug || bot.slug, crypto.randomUUID())); }} />
   </section>;
 }
