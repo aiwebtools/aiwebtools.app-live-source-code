@@ -161,12 +161,15 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       if (!supported || !enabledRef.current || listeningRef.current) return;
       bufferRef.current = fullText;
       const pending = fullText.slice(spokenRef.current);
-      const lastBreak = Math.max(
-        pending.lastIndexOf(". "),
-        pending.lastIndexOf("! "),
-        pending.lastIndexOf("? "),
-        pending.lastIndexOf("\n"),
-      );
+      // Speak as it types: sentence ends, and for the very first words a clause
+      // break or a long run, so the voice starts within the first line.
+      const first = spokenRef.current === 0;
+      let lastBreak = -1;
+      for (const m of pending.matchAll(/[.!?:;]\s|\n/g)) lastBreak = m.index!;
+      if (lastBreak < 0 && first && pending.length > 28) {
+        for (const m of pending.matchAll(/[,—–-]\s/g)) lastBreak = m.index!;
+      }
+      if (lastBreak < 0 && pending.length > (first ? 70 : 180)) lastBreak = pending.lastIndexOf(" ");
       if (lastBreak < 0) return;
       const ready = pending.slice(0, lastBreak + 1);
       spokenRef.current += ready.length;
