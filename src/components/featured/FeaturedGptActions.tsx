@@ -10,6 +10,7 @@ import { generateToolSlug } from "@/utils/urlGenerator";
 import { Tool } from "@/types/tools";
 import type { StudioBot } from "@/components/bot-studio/botCatalog";
 import { getGptVoiceProfile } from "@/utils/gptVoiceProfiles";
+import { rememberFeaturedFallbackBot } from "@/utils/customBots";
 import { playTimeWarpVoice } from "@/utils/effects/timeWarpVoice";
 
 const InSiteGptRunner = lazy(() => import("@/components/tool-detail/InSiteGptRunner"));
@@ -169,6 +170,11 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
   const name = app?.display_name || titles[titles.length - 1];
   const fallback = !app && !NOT_A_BOT.test(titles.join(" ")) ? buildFallbackBot(titles[titles.length - 1], tool) : null;
   const canChat = !!app || !!fallback;
+  const fallbackSlug = fallback?.slug;
+  useEffect(() => {
+    if (open && fallback) rememberFeaturedFallbackBot(fallback);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, fallbackSlug]);
 
   return (
     <div className="mb-2 flex flex-wrap gap-1.5" onClick={(e) => e.stopPropagation()}>

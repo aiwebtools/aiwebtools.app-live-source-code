@@ -48,3 +48,21 @@ export function customToStudioBot(bot: CustomBot): StudioBot {
     custom: { instructions: bot.instructions, voice: bot.voice },
   };
 }
+
+const FEATURED_KEY = "aiwt.featuredFallbackBots.v1";
+
+/** Stand-in bots for featured GPTs without a hosted room; kept apart from "My creations". */
+export function rememberFeaturedFallbackBot(bot: StudioBot) {
+  try {
+    const list: StudioBot[] = JSON.parse(localStorage.getItem(FEATURED_KEY) || "[]");
+    const rest = Array.isArray(list) ? list.filter((b) => b && b.slug !== bot.slug) : [];
+    localStorage.setItem(FEATURED_KEY, JSON.stringify([bot, ...rest].slice(0, 100)));
+  } catch { /* storage unavailable */ }
+}
+
+export function readFeaturedFallbackBot(slug: string): StudioBot | null {
+  try {
+    const list: StudioBot[] = JSON.parse(localStorage.getItem(FEATURED_KEY) || "[]");
+    return (Array.isArray(list) && list.find((b) => b && b.slug === slug && b.custom?.instructions)) || null;
+  } catch { return null; }
+}
