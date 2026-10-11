@@ -1,5 +1,10 @@
 # Chatbot completion roadmap
 
+# Phone chat reference (Oct 11)
+- [ ] Match the uploaded polished Matrix phone reference with rounded glass controls, readable messages and a clear bot header
+- [ ] Fit featured popup chats to the phone viewport while preserving voice, images, downloads and history
+- [ ] Verify real chat controls and phone/desktop screenshots without changing instructions or tools
+
 # Bot starter readability and subject matching (Oct 10)
 - [x] Tailor both visible starters across all 422 active bots without changing operational instructions; future bots use their subject rather than old generic introductions
 - [x] Enlarge starter touch targets to at least 56px and show full library bot names on hover/focus; personal bots have full-name hints
