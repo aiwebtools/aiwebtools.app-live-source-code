@@ -206,7 +206,7 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
       )}
       {canChat && (
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent className="max-h-[96dvh] w-[98vw] max-w-7xl overflow-hidden p-1 pt-9 sm:p-1 sm:pt-9">
+          <DialogContent className="studio-dialog max-h-[96dvh] w-[98vw] max-w-7xl overflow-hidden p-1 pt-9 sm:p-1 sm:pt-9">
             <DialogTitle className="sr-only">{name}</DialogTitle>
             <DialogDescription className="sr-only">
               Chat with {name}, following its AIWebTools operational instructions.
