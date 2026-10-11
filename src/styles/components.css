@@ -726,7 +726,7 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
   .studio .gpt-room-input textarea { padding: 14px 14px 8px; min-height: 68px; max-height: 110px; font-size: 16px; line-height: 1.5; }
   .studio-status { font-size: 10px; line-height: 1.4; }
   .studio-status > span:last-child { max-width: 55%; }
-  .studio-dialog { width: 100%; height: 100dvh; max-height: 100dvh; padding: 0; padding-top: 38px; border: 0; gap: 0; border-radius: 0; }
+  [role="dialog"].studio-dialog { width: 100%; height: 100dvh; max-height: 100dvh; padding: 0; padding-top: 38px; border: 0; gap: 0; border-radius: 0; }
   .studio-dialog .studio-embedded { height: 100%; min-height: 0; margin: 0; border-radius: 0; }
   .studio-dialog > button:last-child { top: 3px; right: 10px; width: 32px; height: 32px; border-image: none !important; border-radius: 50%; background: hsl(var(--background)); color: hsl(var(--destructive)); border-color: hsl(var(--destructive) / .6); }
 }
