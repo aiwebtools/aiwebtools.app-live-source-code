@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import BotStudio from "@/components/bot-studio/BotStudio";
 import { loadStudioBots, type StudioBot } from "@/components/bot-studio/botCatalog";
 import { buildCanonicalUrl } from "@/utils/seo";
-import { customToStudioBot, isCustomSlug, readCustomBots } from "@/utils/customBots";
+import { customToStudioBot, isCustomSlug, readCustomBots, readFeaturedFallbackBot } from "@/utils/customBots";
 
 export default function GptAppPage() {
   const { slug = "", threadId } = useParams();
@@ -16,7 +16,7 @@ export default function GptAppPage() {
   useEffect(() => {
     let alive = true;
     setLoading(true);
-    if (isCustomSlug(slug)) { const found = readCustomBots().find((b) => b.slug === slug); setApp(found ? customToStudioBot(found) : null); setLoading(false); return; }
+    if (isCustomSlug(slug)) { const found = readCustomBots().find((b) => b.slug === slug); setApp(found ? customToStudioBot(found) : readFeaturedFallbackBot(slug)); setLoading(false); return; }
     void loadStudioBots().then((bots) => { if (alive) setApp(bots.find((bot) => bot.slug === slug) || null); }).catch((e) => { if (alive) setError(e.message); }).finally(() => { if (alive) setLoading(false); });
     return () => { alive = false; };
   }, [slug]);
