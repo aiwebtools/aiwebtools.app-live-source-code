@@ -327,6 +327,7 @@ Deno.serve(async (req) => {
     console.error("gateway error", upstream.status, detail.slice(0, 400));
     let safeMessage = "The AI could not respond right now.";
     try { const parsed = JSON.parse(detail); safeMessage = parsed.message || parsed.error?.message || (typeof parsed.error === "string" ? parsed.error : safeMessage); } catch { /* non-JSON gateway failure */ }
+    if (upstream.status === 402) safeMessage = "Our bots are resting — the site's AI credits have run out. Please check back soon.";
     return json({ error: safeMessage }, upstream.status);
   }
 
