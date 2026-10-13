@@ -41,7 +41,7 @@ export type SpeechClip = {
  * away so the next sentence is ready before the current one finishes playing.
  */
 export const beginSpeechClip = (url: string, init: RequestInit, outer: AbortSignal): SpeechClip => {
-  let samples: Float32Array<ArrayBuffer>[] = [];
+  const samples: Float32Array<ArrayBuffer>[] = [];
   let finished = false;
   let error: Error | null = null;
   let started = false;
