@@ -21,6 +21,9 @@ const stripForSpeech = (text: string) =>
     .replace(/\s+/g, " ")
     .trim();
 
+/** Only chunks with real words go to the voice engine; punctuation-only fragments are rejected upstream. */
+const speakable = (text: string) => /[\p{L}\p{N}]/u.test(text);
+
 /** Slightly brisker than the recorded pace so replies never drag. */
 const clipSpeed = (speed?: number) => Math.min(1.25, Math.max(1.05, (speed ?? 1) + 0.1));
 
@@ -86,7 +89,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       requestRef.current = controller;
       setSpeaking(true);
       try {
-        const clips = splitSpeechText(clean, 600).map((chunk) => startClip(chunk, controller.signal));
+        const clips = splitSpeechText(clean, 600).filter(speakable).map((chunk) => startClip(chunk, controller.signal));
         for (const clip of clips) {
           if (controller.signal.aborted) return false;
           await playSpeechClip(clip, clipSpeed(profile.speed));
@@ -113,7 +116,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       if (!stripForSpeech(text) || !profile || !ANON_KEY) return;
       if (!requestRef.current || requestRef.current.signal.aborted) requestRef.current = new AbortController();
       const controller = requestRef.current;
-      pendingRef.current.push(...splitSpeechText(stripForSpeech(text), 600).map((chunk) => startClip(chunk, controller.signal)));
+      pendingRef.current.push(...splitSpeechText(stripForSpeech(text), 600).filter(speakable).map((chunk) => startClip(chunk, controller.signal)));
       if (queueBusyRef.current) return;
       queueBusyRef.current = true;
       const generation = generationRef.current;
