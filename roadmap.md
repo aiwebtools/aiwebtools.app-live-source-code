@@ -1,9 +1,9 @@
 # Chatbot completion roadmap
 
 # Reply celebrations and community creator (Oct 13)
-- [ ] Add 20 lightweight reply sound/visual combinations with mute and reduced-motion support
-- [ ] Fix phone/desktop bot builder submission and verify ethics-approved bots appear in the selectable library
-- [ ] Submit five genuinely new useful community bots through the existing ethics review and verify their images and replies
+- [x] Add 20 lightweight reply sound/visual combinations with mute and reduced-motion support; count test passes, real reply triggers effect, overlay cleans up, effects-off verified
+- [x] Fix phone/desktop bot builder submission and verify ethics-approved bots appear in the selectable library; close competing drawer, visible validation, safe storage failures and retry reuse; phone UI publication and real replies verified
+- [ ] Publish remaining Museum Label Editor GPT and Citizen Science Notebook GPT: saved locally and submitted, but existing 3-per-day community publication limit blocked them (429). Repair Cafe Coordinator GPT, Sensory Friendly Event Planner GPT and Seed Library Organizer GPT approved with branded images and real replies.
 
 # Chat replies and sidebar portraits (Oct 13)
 - [x] Live replies verified; repair swallowed stream errors and final frames without changing bot instructions or economy default; original intermittent failure not reproduced
