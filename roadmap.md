@@ -1,9 +1,10 @@
 # Chatbot completion roadmap
 
 # First-response web search and larger data uploads (Oct 13)
-- [ ] Repair first-turn search selection and report genuine search failures with source links
-- [ ] Accept 3 MB and larger CSV/JSON/text files with whole-dataset summaries and bounded excerpts, preserving original instructions and inexpensive models
-- [ ] Test upload limits, live first-turn search, file analysis, and phone controls
+- [x] Repair first-turn search selection and report genuine failures instead of disguising Wikipedia/background knowledge as live web research; real first-turn tool call verified
+- [x] Accept supported data files up to 10 MB; CSV statistics cover every row, JSON/text use labeled bounded excerpts; original instructions and inexpensive models preserved
+- [x] 17 regression tests pass; real 3,150,021-byte CSV returned 350,001 rows, sum 350,099 and max 99; attachment restored on reload; phone/desktop screenshots, no overflow/page errors, build OK; server deployed, frontend unpublished
+- [ ] Restore dependable live search results: existing DuckDuckGo search returns a bot challenge; Parallel connection declined by Master. Requires approved search-service access; no alternate paid connection attempted.
 
 # Homepage visibility and phone bot navigation (Oct 13)
 - [x] Reduce deferred mount wait, show explicit loading status, and remove blanket nested-grid paint containment; homepage content preserved
