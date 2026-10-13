@@ -27,3 +27,4 @@
 
 - Unlock generated-audio contexts from the initiating click and reuse decoded clips for replay; homepage audio controls must never regenerate on replay.
 - Generate sound effects server-side through the linked ElevenLabs account, preserving provider errors and keeping its key out of the browser.
+- Select first-turn web research when the request or operational instructions require it and expose failed retrieval as a failed activity; never substitute encyclopedia results or model knowledge as successful live web research.
