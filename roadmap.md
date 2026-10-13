@@ -1,5 +1,10 @@
 # Chatbot completion roadmap
 
+# Promotional pop-ups and clone destination (Oct 13)
+- [ ] Space automatic promotions at least 15 minutes apart, preserving user-triggered dialogs
+- [ ] Update every active clone link to Master's specified remix project
+- [ ] Test cooldown boundaries, navigation, dialog spacing, and visible clone destination
+
 # Phone chat reference (Oct 11)
 - [x] Match the uploaded polished Matrix phone reference with rounded glass controls, readable messages and a clear bot header
 - [x] Fit featured popup chats to the phone viewport while preserving voice, images, downloads and history

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Copy, Sparkles } from "lucide-react";
 import { createTimePortalEffect } from "@/utils/timeEffects";
+import { schedulePromotion } from "@/utils/promotionalPopups";
 
 // Served from /public to guarantee a stable URL inside id-preview and
 // avoid any bundler/asset-pipeline edge cases where the import resolves
@@ -31,6 +32,8 @@ const popupImages: Record<number, string> = {
 const CloneOfferPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showCount, setShowCount] = useState(0);
+  const dismissPromotion = useRef<() => void>(() => {});
+  const closePopup = () => { dismissPromotion.current(); setIsOpen(false); };
 
   // Function to pause all videos on the page
   const pauseAllVideos = () => {
@@ -74,19 +77,16 @@ const CloneOfferPopup = () => {
       return;
     }
 
-    // Delays: 7min, 12min, 20min, 25min, then every 7min after
-    const delays = [420000, 720000, 1200000, 1500000, 1920000, 2340000, 2760000, 3180000, 3600000];
-    const delay = delays[shownCount] || delays[delays.length - 1];
-
-    const timer = setTimeout(() => {
+    const promotion = schedulePromotion(() => {
       pauseAllVideos();
       setIsOpen(true);
       const newCount = shownCount + 1;
       setShowCount(newCount);
       sessionStorage.setItem('cloneOfferShowCount', newCount.toString());
-    }, delay);
+    });
+    dismissPromotion.current = promotion.dismiss;
 
-    return () => clearTimeout(timer);
+    return promotion.cancel;
   }, []);
 
   const handleClone = (e: React.MouseEvent) => {
@@ -94,14 +94,14 @@ const CloneOfferPopup = () => {
     const cloneUrl = "https://lovable.dev/projects/c6134e40-21cf-4136-aebd-49c9868dd2ad?utm_source=lovable-badge";
     
     // Close popup immediately
-    setIsOpen(false);
+    closePopup();
     
     // Trigger time warp effect with sound - this will open the URL after the effect
     createTimePortalEffect(cloneUrl, "Clone AI Empire");
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={(open) => { if (!open) closePopup(); }}>
       <DialogContent className="sm:max-w-xl max-w-[95vw] bg-gray-900 border-2 border-cyan-500/50 max-h-[90vh] overflow-y-auto z-[9999] shadow-2xl shadow-cyan-500/20 p-4 sm:p-6">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-lg sm:text-2xl text-white">
@@ -166,7 +166,7 @@ const CloneOfferPopup = () => {
           </Button>
           
           <Button
-            onClick={() => setIsOpen(false)}
+            onClick={closePopup}
             variant="outline"
             className="bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border-gray-600 hover:border-gray-500 font-medium px-4 py-2 text-sm cursor-pointer select-none"
             style={{ position: 'relative', zIndex: 10, pointerEvents: 'auto' }}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Dialog,
   DialogContent,
@@ -10,17 +10,21 @@ import { Button } from "@/components/ui/button";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { createTimePortalEffect } from "@/utils/timeEffects";
 import lovableBanner from "@/assets/lovable-invite-banner.jpg";
+import { schedulePromotion, PROMOTION_INTERVAL_MS } from "@/utils/promotionalPopups";
 
 const INVITE_URL = "https://lovable.dev/invite/P0KP4RR";
 const STORAGE_KEY = "lovableInviteShownCount";
 
 /**
- * Shows a friendly popup at ~13 minutes asking visitors to sign up via the
+ * Shows a friendly popup after 30 minutes, sharing the promotional cooldown,
+ * asking visitors to sign up via the
  * Lovable invite link. Each successful signup credits AI Web Tools, helping
  * fund continued platform improvements.
  */
 const LovableInvitePopup = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const dismissPromotion = useRef<() => void>(() => {});
+  const closePopup = () => { dismissPromotion.current(); setIsOpen(false); };
 
   useEffect(() => {
     const isMobile =
@@ -30,25 +34,26 @@ const LovableInvitePopup = () => {
     if (isMobile) return;
 
     const shown = parseInt(sessionStorage.getItem(STORAGE_KEY) || "0", 10);
-    // Only show once per session — at the 13 minute mark
+    // Only show once per session, never overlapping another promotion.
     if (shown >= 1) return;
 
-    const timer = setTimeout(() => {
+    const promotion = schedulePromotion(() => {
       setIsOpen(true);
       sessionStorage.setItem(STORAGE_KEY, "1");
-    }, 13 * 60 * 1000); // 13 minutes
+    }, 2 * PROMOTION_INTERVAL_MS);
+    dismissPromotion.current = promotion.dismiss;
 
-    return () => clearTimeout(timer);
+    return promotion.cancel;
   }, []);
 
   const handleAccept = (e: React.MouseEvent) => {
     e.preventDefault();
-    setIsOpen(false);
+    closePopup();
     createTimePortalEffect(INVITE_URL, "Lovable Invite — Support AI Web Tools");
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={(open) => { if (!open) closePopup(); }}>
       <DialogContent className="sm:max-w-lg max-w-[95vw] bg-[#0a0613] border border-pink-500/40 z-[9999] shadow-2xl shadow-purple-600/30 p-0 overflow-hidden">
         <div className="relative">
           <img
@@ -91,7 +96,7 @@ const LovableInvitePopup = () => {
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
             <Button
-              onClick={() => setIsOpen(false)}
+              onClick={closePopup}
               variant="outline"
               className="bg-transparent hover:bg-white/5 text-gray-400 hover:text-white border-gray-700"
             >
