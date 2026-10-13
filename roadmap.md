@@ -1,5 +1,10 @@
 # Chatbot completion roadmap
 
+# Chat replies and sidebar portraits (Oct 13)
+- [ ] Diagnose and repair missing studio replies without changing bot instructions or the economy default
+- [ ] Show matching avatar images beside all selectable GPT names on desktop and phone
+- [ ] Verify real conversations, sidebar selection, and current preview health
+
 # Unlimited economy chat (Oct 13)
 - [x] Remove guest and member daily chat caps while retaining usage accounting; deployed handler and three tests pass
 - [x] Default to GPT-6 Luna, lowest-priced supported non-deprecated text model in the authenticated catalog; real phone-sized Time Machine reply returned 200 and preserved Father Time persona

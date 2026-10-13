@@ -60,11 +60,16 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
   const profile = useMemo(() => ({ ...defaultProfile, voice, speed }), [defaultProfile, voice, speed]);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const speech = useSpeechReader(profile);
-  const avatar = getBotPortrait(app.slug)
-    || (app.slug.startsWith("community-") ? (app.image_url || getBundledCommunityImage(app.slug)) : undefined)
-    || (app.tool_title ? imageMap?.get(app.tool_title.trim().toLowerCase()) : null)
-    || imageMap?.get(app.display_name.trim().toLowerCase())
-    || getGptAvatar(theme.key);
+  const botAvatar = (bot: StudioBot) => getBotPortrait(bot.slug)
+    || bot.image_url || getBundledCommunityImage(bot.slug)
+    || (bot.tool_title ? imageMap?.get(bot.tool_title.trim().toLowerCase()) : null)
+    || imageMap?.get(bot.display_name.trim().toLowerCase())
+    || getGptAvatar(getGptRoomTheme(bot.slug, bot.tagline || "", bot.display_name).key);
+  const avatar = botAvatar(app);
+  const sidebarPortrait = (bot: StudioBot) => {
+    const room = getGptRoomTheme(bot.slug, bot.tagline || "", bot.display_name);
+    return <BotPortrait key={bot.slug} src={botAvatar(bot)} name={bot.display_name} themeKey={room.key} emblem={room.emblem} className="h-8 w-8 shrink-0 rounded-md object-cover" />;
+  };
   const themeVars = { "--bot-accent": theme.accent, "--bot-accent-2": theme.accent2, "--bot-soft": theme.soft, "--bot-deep": theme.deep } as React.CSSProperties;
   const welcome = theme.key === "time-machine" && app.slug === "time-machine-gpt" ? "Great Scott! User, what date would you like to teleport to, & where do you want to go?" : app.greeting || `Hello, I am ${app.display_name}. What would you like to explore?`;
 
@@ -165,11 +170,11 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
   const sidebar = <>
     <Button className="studio-new w-full gap-2" onClick={newChat} disabled={streaming}><Plus className="h-4 w-4" />New chat</Button>
     <Button variant="ghost" className="studio-row mt-3 w-full gap-2 gpt-room-accent" onClick={() => setBuilderOpen(true)} disabled={streaming}><Wand2 className="h-4 w-4" />Create your own custom model</Button>
-    {customBots.length > 0 && <><h2 className="studio-label mt-5"><Wand2 className="h-4 w-4" />My creations</h2><div className="mt-2">{customBots.map((bot) => <div key={bot.slug} className="flex items-center gap-1"><Button variant="ghost" disabled={streaming} onClick={() => chooseBot(bot.slug)} title={bot.display_name} className={`studio-row flex-1 ${bot.slug === app.slug ? "studio-selected" : ""}`}><Wand2 className="h-3.5 w-3.5 shrink-0" /><span className="truncate">{bot.display_name}</span></Button><Button variant="ghost" size="icon" aria-label={`Delete ${bot.display_name}`} title="Delete from this device" onClick={() => { if (window.confirm(`Delete ${bot.display_name} from this device?`)) { deleteCustomBot(bot.slug); setCustomBots(readCustomBots()); } }}><Trash2 className="h-3.5 w-3.5" /></Button></div>)}</div></>}
+    {customBots.length > 0 && <><h2 className="studio-label mt-5"><Wand2 className="h-4 w-4" />My creations</h2><div className="mt-2">{customBots.map((bot) => <div key={bot.slug} className="flex items-center gap-1"><Button variant="ghost" disabled={streaming} onClick={() => chooseBot(bot.slug)} title={bot.display_name} className={`studio-row flex-1 ${bot.slug === app.slug ? "studio-selected" : ""}`}>{sidebarPortrait(bot)}<span className="truncate">{bot.display_name}</span></Button><Button variant="ghost" size="icon" aria-label={`Delete ${bot.display_name}`} title="Delete from this device" onClick={() => { if (window.confirm(`Delete ${bot.display_name} from this device?`)) { deleteCustomBot(bot.slug); setCustomBots(readCustomBots()); } }}><Trash2 className="h-3.5 w-3.5" /></Button></div>)}</div></>}
     <h2 className="studio-label mt-6"><Bot className="h-4 w-4" />My GPTs</h2>
     <div className="relative my-3"><Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" /><input aria-label="Search bots" placeholder="Find an assistant…" value={query} onChange={(e) => setQuery(e.target.value)} className="studio-search w-full rounded-md border bg-background pl-9 pr-2 text-sm" /></div>
     <div className="studio-bots">
-      {bots.filter((bot) => `${bot.display_name} ${bot.tagline}`.toLowerCase().includes(query.toLowerCase())).map((bot) => <Tooltip key={bot.slug}><TooltipTrigger asChild><Button variant="ghost" disabled={streaming} onClick={() => chooseBot(bot.slug)} className={`studio-row ${bot.slug === app.slug ? "studio-selected" : ""}`}><span className="studio-bot-mark">{getGptRoomTheme(bot.slug).emblem}</span><span className="truncate">{bot.display_name}</span>{bot.slug.startsWith("community-") && <span className="ml-auto shrink-0 text-[10px] text-primary">COMMUNITY</span>}</Button></TooltipTrigger><TooltipContent side="right" className="max-w-64 break-words">{bot.display_name}</TooltipContent></Tooltip>)}
+      {bots.filter((bot) => `${bot.display_name} ${bot.tagline}`.toLowerCase().includes(query.toLowerCase())).map((bot) => <Tooltip key={bot.slug}><TooltipTrigger asChild><Button variant="ghost" disabled={streaming} onClick={() => chooseBot(bot.slug)} className={`studio-row ${bot.slug === app.slug ? "studio-selected" : ""}`}>{sidebarPortrait(bot)}<span className="truncate">{bot.display_name}</span>{bot.slug.startsWith("community-") && <span className="ml-auto shrink-0 text-[10px] text-primary">COMMUNITY</span>}</Button></TooltipTrigger><TooltipContent side="right" className="max-w-64 break-words">{bot.display_name}</TooltipContent></Tooltip>)}
     </div>
     <h2 className="studio-label mt-5"><History className="h-4 w-4" />Recent chats</h2>
     <div className="studio-history mt-2">{threads.map((item) => <Button key={item.id} variant="ghost" disabled={streaming} onClick={() => chooseThread(item)} className={`studio-row ${item.id === thread.id ? "studio-selected" : ""}`}><History className="h-3.5 w-3.5 shrink-0" /><span className="truncate">{item.title}</span></Button>)}</div>
