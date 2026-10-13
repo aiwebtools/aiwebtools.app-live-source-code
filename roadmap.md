@@ -1,5 +1,10 @@
 # Chatbot completion roadmap
 
+# Homepage visibility and phone bot navigation (Oct 13)
+- [ ] Diagnose and repair blank homepage sections without removing content
+- [ ] Add phone Back and visible bot switching; close embedded popup before switching routes
+- [ ] Verify homepage scrolling, popup exit, bot switching, settings and phone layout
+
 # Scrolling and featured labels (Oct 13)
 - [x] Repair deferred loading gaps with persistent skeletons, cancellable queued mounts, and near-viewport priority
 - [x] Rename in-site featured actions and ChatGPT destination buttons, retaining destinations and other platform actions

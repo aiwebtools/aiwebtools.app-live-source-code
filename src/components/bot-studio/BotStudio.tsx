@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Bot, Check, Copy, Download, Globe, History, ImageIcon, Menu, Mic, MicOff, Plus, Search, SendHorizontal, Settings2, Square, Volume2, VolumeX, Play, Paperclip } from "lucide-react";
+import { ArrowLeft, Bot, Check, Copy, Download, Globe, History, ImageIcon, Menu, Mic, MicOff, Plus, Search, SendHorizontal, Settings2, Square, Volume2, VolumeX, Play, Paperclip } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { getBotStarters } from "@/utils/botStarters";
@@ -35,7 +35,7 @@ import { Tool, ToolHeader, ToolContent } from "@/components/ai-elements/tool";
 import type { BotActivity } from "@/utils/botConversations";
 import { celebrateReply } from "@/utils/replyCelebrations";
 
-export default function BotStudio({ app, threadId, embedded = false }: { app: StudioBot; threadId?: string; embedded?: boolean }) {
+export default function BotStudio({ app, threadId, embedded = false, onExit }: { app: StudioBot; threadId?: string; embedded?: boolean; onExit?: () => void }) {
   const navigate = useNavigate();
   const { session } = useAuthSession();
   const [thread, setThread] = useState(() => openBotConversation(app.slug, threadId));
@@ -165,7 +165,13 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
   const chooseThread = (item: BotConversation) => {
     stop(); setLeftOpen(false); playTimeWarpVoice();
     if (embedded && item.slug === app.slug) { commit(item); setInput(""); }
-    else navigate(conversationPath(item.slug, item.id));
+    else { onExit?.(); navigate(conversationPath(item.slug, item.id)); }
+  };
+  const goBack = () => {
+    stop(); setLeftOpen(false); setRightOpen(false);
+    if (onExit) onExit();
+    else if (window.history.state?.idx > 0) navigate(-1);
+    else navigate("/");
   };
   const newChat = () => {
     const item = openBotConversation(app.slug, crypto.randomUUID());
@@ -202,7 +208,7 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
   </>;
   return <section ref={studioRef} id="try-bot" aria-label={`Run ${app.display_name} here`} className={`relative gpt-room studio ${embedded ? "studio-embedded" : "studio-full"}`} data-room-pattern={theme.pattern} style={themeVars}>
     <MatrixRainBackdrop className="studio-rain" intensity={embedded ? 0.55 : 0.8} />
-    <div className="studio-topbar"><Link to="/" className="studio-brand"><span>AI</span>WEBTOOLS<span>.APP</span></Link><span className="studio-label hidden sm:flex"><span className="studio-live-dot" />AI CONVERSATION STUDIO</span><div className="ml-auto flex gap-1"><Button variant="ghost" size="icon" className="studio-nav-control lg:hidden" onClick={() => setLeftOpen(true)} aria-label="Open bots and chat history"><Menu className="h-4 w-4" /></Button><Button variant="ghost" size="icon" className="studio-nav-control xl:hidden" onClick={() => setRightOpen(true)} aria-label="Open model and voice settings"><Settings2 className="h-4 w-4" /></Button></div></div>
+    <div className="studio-topbar"><Button variant="ghost" size="icon" className="studio-nav-control shrink-0" onClick={goBack} aria-label="Back to previous screen" title="Back"><ArrowLeft className="h-5 w-5" /></Button><Link to="/" onClick={() => { stop(); onExit?.(); }} className="studio-brand"><span>AI</span>WEBTOOLS<span>.APP</span></Link><span className="studio-label hidden md:flex"><span className="studio-live-dot" />AI CONVERSATION STUDIO</span><div className="ml-auto flex shrink-0 gap-1"><Button variant="ghost" className="studio-nav-control studio-bot-menu gap-1.5 lg:hidden" onClick={() => setLeftOpen(true)} aria-label="Open bots and chat history" title="Bots and saved chats"><Menu className="h-4 w-4" /><span>Bots</span></Button><Button variant="ghost" size="icon" className="studio-nav-control xl:hidden" onClick={() => setRightOpen(true)} aria-label="Open model and voice settings" title="Model and voice settings"><Settings2 className="h-4 w-4" /></Button></div></div>
     <div className="studio-grid">
       <aside className="studio-sidebar hidden lg:flex">{sidebar}</aside>
       <main className="studio-main">

@@ -673,6 +673,7 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
   border-radius: 12px;
 }
 .studio .studio-nav-control { border-radius: 50%; }
+.studio .studio-bot-menu { width: auto; min-width: 68px; border-radius: 12px; padding: 0 10px; }
 .studio .studio-starter { border-radius: 12px; border-color: hsl(var(--studio-glow) / .4); box-shadow: none; }
 .studio .studio-messages .gpt-msg-user { border-radius: 18px; }
 .studio .gpt-msg-bot button.interactive-button { border-radius: 10px; border-image: none !important; box-shadow: none; }
@@ -701,7 +702,7 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
 @media (max-width: 639px) {
   .studio-full { border-radius: 0; min-height: 0; }
   .studio-topbar { height: 64px; padding: 0 14px; gap: 8px; background: hsl(var(--studio-surface) / .75); }
-  .studio-brand { font-size: 20px; letter-spacing: 0; }
+  .studio-brand { font-size: 16px; letter-spacing: 0; min-width: 0; }
   .studio-topbar > div { gap: 8px; }
   .studio-nav-control { width: 40px; height: 40px; }
   .studio-grid { height: calc(100% - 64px); padding: 6px 8px 8px; }
@@ -731,7 +732,7 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
   .studio-dialog > button:last-child { top: 3px; right: 10px; width: 32px; height: 32px; border-image: none !important; border-radius: 50%; background: hsl(var(--background)); color: hsl(var(--destructive)); border-color: hsl(var(--destructive) / .6); }
 }
 @media (max-width: 359px) {
-  .studio-brand { font-size: 18px; }
+  .studio-brand { font-size: 13px; }
   .studio-bot-header { grid-template-columns: 40px minmax(0, 1fr) auto; padding: 10px 8px; gap: 6px; }
   .studio-bot-header .gpt-room-avatar { width: 40px; height: 52px; }
   .studio-bot-header h1 { font-size: 14px; }
