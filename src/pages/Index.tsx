@@ -6,6 +6,7 @@ import ImprovedSEOHead from "@/components/ImprovedSEOHead";
 import GoogleRankingBooster from "@/components/seo/GoogleRankingBooster";
 import { Button } from "../components/ui/button";
 import DeferredMount from "@/components/DeferredMount";
+import SectionLoading from "@/components/SectionLoading";
 import { lazyWithRetry as lazy } from "@/utils/lazyWithRetry";
 import { useMobile } from "@/hooks/useMobile";
 import CategoryPageSelection from "@/components/CategoryPageSelection";
@@ -148,15 +149,15 @@ const Index = () => {
         </section>
         
         {/* Featured Custom GPT collection sits directly under the main video. */}
-        <DeferredMount delay={0} fallback={<div className="min-h-[55vh]" aria-hidden="true" />}>
-          <Suspense fallback={null}>
+        <DeferredMount delay={0} fallback={<SectionLoading />}>
+          <Suspense fallback={<SectionLoading />}>
             <SpecialServices />
           </Suspense>
         </DeferredMount>
 
         {/* Free AWT text-to-speech generator: lightweight, browser-voice powered. */}
-        <DeferredMount delay={1600} fallback={<div className="min-h-[40vh]" aria-hidden="true" />}>
-          <Suspense fallback={null}>
+        <DeferredMount delay={1600} fallback={<SectionLoading />}>
+          <Suspense fallback={<SectionLoading />}>
             <AwtTextToSpeech />
           </Suspense>
         </DeferredMount>
@@ -167,33 +168,33 @@ const Index = () => {
           <CategoryPageSelection />
         </div>
         
-        <DeferredMount delay={2400} fallback={<div className="min-h-[35vh]" aria-hidden="true" />}>
-          <Suspense fallback={null}>
+        <DeferredMount delay={2400} fallback={<SectionLoading />}>
+          <Suspense fallback={<SectionLoading />}>
             <AIWebToolsSEOSection />
           </Suspense>
         </DeferredMount>
    
-        <DeferredMount delay={0} fallback={<div className="min-h-[55vh]" aria-hidden="true" />}>
-          <Suspense fallback={null}>
+        <DeferredMount delay={0} fallback={<SectionLoading />}>
+          <Suspense fallback={<SectionLoading />}>
             <LazyFeaturedTools onToolsLoaded={(count) => {}} />
           </Suspense>
         </DeferredMount>
 
-        <DeferredMount delay={2000} fallback={<div className="min-h-[35vh]" aria-hidden="true" />}>
-          <Suspense fallback={null}>
+        <DeferredMount delay={2000} fallback={<SectionLoading />}>
+          <Suspense fallback={<SectionLoading />}>
             <BookPromotionCard />
           </Suspense>
         </DeferredMount>
 
-        <DeferredMount delay={2600} fallback={<div className="min-h-[45vh]" aria-hidden="true" />}>
-          <Suspense fallback={null}>
+        <DeferredMount delay={2600} fallback={<SectionLoading />}>
+          <Suspense fallback={<SectionLoading />}>
             <TikTokFeedSection />
           </Suspense>
         </DeferredMount>
 
         
-        <DeferredMount delay={2800} fallback={<div className="min-h-[45vh]" aria-hidden="true" />}>
-          <Suspense fallback={null}>
+        <DeferredMount delay={2800} fallback={<SectionLoading />}>
+          <Suspense fallback={<SectionLoading />}>
             <section className="py-16 relative" style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #001a00 50%, #0a0a0a 100%)' }}>
               <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
@@ -211,14 +212,14 @@ const Index = () => {
           </Suspense>
         </DeferredMount>
         
-        <DeferredMount delay={isMobile ? 3200 : 860} fallback={<div className="min-h-[16vh]" aria-hidden="true" />}>
-          <Suspense fallback={null}>
+        <DeferredMount delay={isMobile ? 3200 : 860} fallback={<SectionLoading />}>
+          <Suspense fallback={<SectionLoading />}>
             <EthicalAIQuoteSection />
           </Suspense>
         </DeferredMount>
         
-        <DeferredMount delay={isMobile ? 3600 : 920} fallback={<div className="min-h-[24vh]" aria-hidden="true" />}>
-          <Suspense fallback={null}>
+        <DeferredMount delay={isMobile ? 3600 : 920} fallback={<SectionLoading />}>
+          <Suspense fallback={<SectionLoading />}>
             <InspirationCarousel />
           </Suspense>
         </DeferredMount>
