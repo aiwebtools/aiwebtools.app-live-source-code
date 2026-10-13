@@ -1,4 +1,5 @@
 # Architecture Rules
+- Keep deferred section mounts in one cancellable priority queue and retain their loading fallback through lazy imports; this prevents simultaneous scroll-time commits and empty loading gaps.
 
 - Keep the temporary access gate unlock in React memory only and render its own Matrix backdrop; reloads must ask again and loader cleanup must not remove its background.
 
