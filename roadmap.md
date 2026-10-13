@@ -1,5 +1,10 @@
 # Chatbot completion roadmap
 
+# Homepage visibility and phone bot navigation (Oct 13)
+- [x] Reduce deferred mount wait, show explicit loading status, and remove blanket nested-grid paint containment; homepage content preserved
+- [x] Add phone Back and visible Bots controls; raise both drawers/model lists above embedded popup and close popup before bot route changes
+- [x] Verify phone homepage sections through search/music/book, popup Back, Einstein switching, model options, and 320/408/820/1280px layouts; lint zero errors and build OK; unpublished
+
 # Scrolling and featured labels (Oct 13)
 - [x] Repair deferred loading gaps with persistent skeletons, cancellable queued mounts, and near-viewport priority
 - [x] Rename in-site featured actions and ChatGPT destination buttons, retaining destinations and other platform actions

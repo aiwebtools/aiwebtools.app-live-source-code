@@ -601,6 +601,9 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
 .studio-capability { display: flex; align-items: center; gap: 9px; margin-top: 16px; font-size: 11px; }
 .studio-drawer { --primary: 146 90% 55%; --primary-foreground: 160 30% 3%; --border: 146 30% 20%; --ring: 146 90% 55%; width: min(340px, 92vw); background: hsl(var(--background)); }
 .studio-drawer .studio-new { color: hsl(var(--primary-foreground)); }
+.studio-drawer-overlay { z-index: 170; background: hsl(var(--background) / .65); }
+.studio-drawer { z-index: 180; }
+.studio-drawer > button:last-child { width: 40px; height: 40px; display: grid; place-items: center; }
 .studio-drawer button:not(.op-gold-btn):not(.studio-new) { color: hsl(var(--foreground)); background-image: none; }
 .studio-drawer button:hover { background-color: hsl(var(--primary) / .12); }
 .studio-image-actions { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
@@ -673,6 +676,7 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
   border-radius: 12px;
 }
 .studio .studio-nav-control { border-radius: 50%; }
+.studio .studio-bot-menu { width: auto; min-width: 68px; border-radius: 12px; padding: 0 10px; }
 .studio .studio-starter { border-radius: 12px; border-color: hsl(var(--studio-glow) / .4); box-shadow: none; }
 .studio .studio-messages .gpt-msg-user { border-radius: 18px; }
 .studio .gpt-msg-bot button.interactive-button { border-radius: 10px; border-image: none !important; box-shadow: none; }
@@ -701,7 +705,7 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
 @media (max-width: 639px) {
   .studio-full { border-radius: 0; min-height: 0; }
   .studio-topbar { height: 64px; padding: 0 14px; gap: 8px; background: hsl(var(--studio-surface) / .75); }
-  .studio-brand { font-size: 20px; letter-spacing: 0; }
+  .studio-brand { font-size: 16px; letter-spacing: 0; min-width: 0; }
   .studio-topbar > div { gap: 8px; }
   .studio-nav-control { width: 40px; height: 40px; }
   .studio-grid { height: calc(100% - 64px); padding: 6px 8px 8px; }
@@ -731,12 +735,14 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
   .studio-dialog > button:last-child { top: 3px; right: 10px; width: 32px; height: 32px; border-image: none !important; border-radius: 50%; background: hsl(var(--background)); color: hsl(var(--destructive)); border-color: hsl(var(--destructive) / .6); }
 }
 @media (max-width: 359px) {
-  .studio-brand { font-size: 18px; }
+  .studio .studio-brand { font-size: 12px; }
+  .studio .studio-topbar { padding-inline: 8px; gap: 6px; }
+  .studio .studio-topbar > div { gap: 6px; }
   .studio-bot-header { grid-template-columns: 40px minmax(0, 1fr) auto; padding: 10px 8px; gap: 6px; }
   .studio-bot-header .gpt-room-avatar { width: 40px; height: 52px; }
   .studio-bot-header h1 { font-size: 14px; }
-  .studio-input-tools { gap: 6px; padding-inline: 8px; }
-  .studio-input-tools > button { width: 38px; height: 40px; }
+  .studio .studio-input-tools { gap: 4px; padding-inline: 6px; }
+  .studio .studio-input-tools > button { width: 36px; height: 40px; }
 }
 @media (max-height: 560px) and (max-width: 639px) {
   .studio-topbar { height: 48px; }

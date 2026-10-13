@@ -3,7 +3,7 @@ import { Tool } from "@/types/tools";
 import BotStudio from "@/components/bot-studio/BotStudio";
 import { loadStudioBots, type StudioBot } from "@/components/bot-studio/botCatalog";
 
-export default function InSiteGptRunner({ tool, appSlug, showLoading = false, fallbackBot = null }: { tool: Tool; appSlug?: string; showLoading?: boolean; fallbackBot?: StudioBot | null }) {
+export default function InSiteGptRunner({ tool, appSlug, showLoading = false, fallbackBot = null, onExit }: { tool: Tool; appSlug?: string; showLoading?: boolean; fallbackBot?: StudioBot | null; onExit?: () => void }) {
   const [app, setApp] = useState<StudioBot | null>(null);
   const [done, setDone] = useState(false);
   useEffect(() => {
@@ -19,5 +19,5 @@ export default function InSiteGptRunner({ tool, appSlug, showLoading = false, fa
     return () => cancelAnimationFrame(id);
   }, [app]);
   if (!app) return showLoading ? <p role="status" className="p-8 text-center text-sm text-muted-foreground">{done ? "This assistant is unavailable right now." : "Opening the assistant…"}</p> : null;
-  return <BotStudio key={app.slug} app={app} embedded />;
+  return <BotStudio key={app.slug} app={app} embedded onExit={onExit} />;
 }

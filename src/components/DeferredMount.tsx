@@ -21,7 +21,7 @@ const queue: Array<() => void> = [];
 const queuedAt = new WeakMap<() => void, number>();
 // Never let a queued section wait longer than this, even mid-scroll — an empty
 // black gap is far worse than one extra commit during momentum scrolling.
-const MAX_WAIT_MS = 450;
+const MAX_WAIT_MS = 200;
 let flushing = false;
 let lastScrollAt = 0;
 let scrollBound = false;
@@ -79,7 +79,7 @@ function scheduleFlush() {
     const head = queue[0];
     const waited = head ? performance.now() - (queuedAt.get(head) ?? performance.now()) : 0;
     if (performance.now() - lastScrollAt < quietWindow && waited < MAX_WAIT_MS) {
-      window.setTimeout(run, 120);
+      window.setTimeout(run, 32);
       return;
     }
 
@@ -88,7 +88,7 @@ function scheduleFlush() {
 
     if (queue.length > 0) {
       const ric = window.requestIdleCallback;
-      if (ric) ric(run, { timeout: 100 });
+      if (ric) ric(run, { timeout: 50 });
       else window.setTimeout(run, 32);
     } else {
       flushing = false;
@@ -96,7 +96,7 @@ function scheduleFlush() {
   };
 
   const ric = window.requestIdleCallback;
-  if (ric) ric(run, { timeout: 100 });
+  if (ric) ric(run, { timeout: 50 });
   else window.setTimeout(run, 16);
 }
 
@@ -144,7 +144,7 @@ const DeferredMount = ({ children, delay = 100, fallback = null, mountOnVisible 
             request();
           }
         },
-        { rootMargin: '1200px 0px' }
+        { rootMargin: '600px 0px' }
       );
       observer.observe(placeholderRef.current);
 

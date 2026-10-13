@@ -213,7 +213,7 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
             </DialogDescription>
             {open && (
               <Suspense fallback={<p className="p-8 text-center text-sm text-muted-foreground">Opening {name}…</p>}>
-                <InSiteGptRunner tool={{ ...tool, title: app?.tool_title || tool.title }} appSlug={app?.slug} fallbackBot={fallback} showLoading />
+                <InSiteGptRunner tool={{ ...tool, title: app?.tool_title || tool.title }} appSlug={app?.slug} fallbackBot={fallback} showLoading onExit={() => setOpen(false)} />
               </Suspense>
             )}
           </DialogContent>
