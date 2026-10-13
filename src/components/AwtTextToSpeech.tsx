@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import AwtSoundEffects from "@/components/AwtSoundEffects";
 import { requestAudio, useGeneratedAudio } from "@/hooks/useGeneratedAudio";
@@ -64,6 +64,7 @@ const AwtTextToSpeech: React.FC = () => {
   const { clipUrl, playing } = audio;
   const previewCache = useRef<Map<string, Blob>>(new Map());
   const request = useRef<AbortController | null>(null);
+  useEffect(() => () => request.current?.abort(), []);
 
   const previewSample = async (id: string) => {
     if (loading || previewing) return;
@@ -221,6 +222,7 @@ const AwtTextToSpeech: React.FC = () => {
                 const active = voice === v.id;
                 return (
                   <Button
+                    variant="outline"
                     key={v.id}
                     type="button"
                     onClick={() => void previewSample(v.id)}
@@ -254,10 +256,11 @@ const AwtTextToSpeech: React.FC = () => {
 
           <div className="mt-5 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             <Button
+              variant="outline"
               type="button"
               onClick={generate}
               disabled={!text.trim() || loading || previewing !== null}
-              className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-2.5 text-sm font-bold text-foreground transition hover:opacity-90 disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-2.5 text-sm font-bold transition hover:opacity-90 disabled:opacity-50"
               
             >
               {loading ? (
@@ -269,9 +272,10 @@ const AwtTextToSpeech: React.FC = () => {
             </Button>
 
             <Button
+              variant="outline"
               type="button"
               onClick={togglePlay}
-              disabled={!clipUrl && !loading && !previewing}
+              disabled={!clipUrl || loading || previewing !== null}
               className="inline-flex items-center gap-2 rounded-full border border-primary/50 px-5 py-2.5 text-sm font-bold text-primary transition hover:bg-primary/10 disabled:opacity-40"
             >
               {playing ? <Pause className="h-4 w-4" aria-hidden="true" /> : <Play className="h-4 w-4" aria-hidden="true" />}
@@ -279,6 +283,7 @@ const AwtTextToSpeech: React.FC = () => {
             </Button>
 
             <Button
+              variant="outline"
               type="button"
               onClick={stop}
               disabled={!clipUrl && !loading && !previewing}
@@ -289,6 +294,7 @@ const AwtTextToSpeech: React.FC = () => {
             </Button>
 
             <Button
+              variant="gold"
               type="button"
               onClick={download}
               disabled={!clipUrl}

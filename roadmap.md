@@ -1,10 +1,10 @@
 # Chatbot completion roadmap
 
 # Voice previews and homepage audio (Oct 13)
-- [ ] Repair all voice previews, unlock playback from the click, preserve character voice directions, and verify all eleven voices
-- [ ] Repair homepage voice generation, natural delivery, replay, stop, and MP3 downloads
-- [ ] Add text-to-sound-effects generator below voices using the connected ElevenLabs account; verify generation, playback, and download
-- [ ] Run audio tests and verify phone/desktop controls
+- [x] Repair voice previews and click-based audio unlock; all eleven homepage voices return playable audio, Time Machine preview returns 200 SSE with character directions
+- [x] Repair homepage voice generation and natural-delivery directions; actual MP3 download validated (6.3 seconds), stop and cached previews verified
+- [ ] Complete sound-effect generation verification: interface and server deployed below voice generator, but ElevenLabs key lacks sound_generation permission (401); reconnect declined. Real SFX playback/download blocked until owner grants permission.
+- [x] Thirteen audio tests pass, changed frontend lint clean, phone/desktop controls inspected, build OK; physical phone sound quality not tested
 
 # Reply celebrations and community creator (Oct 13)
 - [x] Add 20 lightweight reply sound/visual combinations with mute and reduced-motion support; count test passes, real reply triggers effect, overlay cleans up, effects-off verified
