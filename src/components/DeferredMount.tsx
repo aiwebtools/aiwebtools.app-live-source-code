@@ -87,7 +87,7 @@ function scheduleFlush() {
     next?.();
 
     if (queue.length > 0) {
-      const ric = (window as any).requestIdleCallback;
+      const ric = window.requestIdleCallback;
       if (ric) ric(run, { timeout: 100 });
       else window.setTimeout(run, 32);
     } else {
@@ -95,7 +95,7 @@ function scheduleFlush() {
     }
   };
 
-  const ric = (window as any).requestIdleCallback;
+  const ric = window.requestIdleCallback;
   if (ric) ric(run, { timeout: 100 });
   else window.setTimeout(run, 16);
 }
