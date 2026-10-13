@@ -194,12 +194,11 @@
     touch-action: pan-y !important;
   }
   
-  /* Disable complex grid animations */
+  /* Only individual cards skip offscreen painting (performance.css).
+     Containing every nested grid hides sections and studio controls in Safari. */
   .tools-grid,
-  .efficient-grid,
-  [class*="grid"] {
-    contain: layout !important;
-    content-visibility: auto !important;
+  .efficient-grid {
+    content-visibility: visible;
   }
   
   /* Optimize search components */
