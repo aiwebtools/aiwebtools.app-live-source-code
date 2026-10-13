@@ -1,8 +1,8 @@
 # Chatbot completion roadmap
 
 # Unlimited economy chat (Oct 13)
-- [ ] Remove guest and member daily chat caps while retaining usage accounting
-- [ ] Default to the cheapest verified supported chat model and test a real reply
+- [x] Remove guest and member daily chat caps while retaining usage accounting; deployed handler and three tests pass
+- [x] Default to GPT-6 Luna, lowest-priced supported non-deprecated text model in the authenticated catalog; real phone-sized Time Machine reply returned 200 and preserved Father Time persona
 
 # Promotional pop-ups and clone destination (Oct 13)
 - [x] Space automatic promotions at least 15 minutes apart, preserving user-triggered dialogs
