@@ -1,6 +1,8 @@
-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MatrixRainBackdrop from "@/components/effects/MatrixRainBackdrop";
+import { playTimeWarpVoice } from "@/utils/effects/timeWarpVoice";
 
 /**
  * TEMPORARY ACCESS-CODE GATE
@@ -22,6 +24,19 @@ const AccessCodeGate = ({ children }: { children: ReactNode }) => {
   const [unlocked, setUnlocked] = useState<boolean>(bypass);
   const [code, setCode] = useState("");
   const [error, setError] = useState(false);
+  const [granted, setGranted] = useState(false);
+  const opening = useRef(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
+
+  const grantAccess = () => {
+    if (opening.current) return;
+    opening.current = true;
+    setGranted(true);
+    setError(false);
+    playTimeWarpVoice();
+    timer.current = setTimeout(() => setUnlocked(true), 900);
+  };
 
   // Close the Matrix loading screen so the code prompt is visible.
   useEffect(() => {
@@ -39,7 +54,7 @@ const AccessCodeGate = ({ children }: { children: ReactNode }) => {
   const submit = (e: FormEvent) => {
     e.preventDefault();
     if (acceptsAccessCode(code)) {
-      setUnlocked(true);
+      grantAccess();
     } else {
       setError(true);
       setCode("");
@@ -68,9 +83,12 @@ const AccessCodeGate = ({ children }: { children: ReactNode }) => {
           autoComplete="off"
           autoFocus
           value={code}
+          disabled={granted}
           onChange={(e) => {
-            setCode(e.target.value);
+            const value = e.target.value;
+            setCode(value);
             setError(false);
+            if (acceptsAccessCode(value)) grantAccess();
           }}
           aria-label="Access code"
           aria-invalid={error}
@@ -78,6 +96,7 @@ const AccessCodeGate = ({ children }: { children: ReactNode }) => {
           placeholder="••••"
           className="w-full rounded-full border border-primary/40 bg-background px-5 py-3 text-center text-xl tracking-[0.5em] text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/40"
         />
+        {granted && <p role="status" className="flex items-center justify-center gap-2 text-primary"><CheckCircle2 className="h-6 w-6" />Access granted</p>}
         {error && (
           <p role="alert" className="text-sm text-destructive">
             That code isn't right. Please try again.
@@ -86,9 +105,10 @@ const AccessCodeGate = ({ children }: { children: ReactNode }) => {
         <Button
           variant="outline"
           type="submit"
+          disabled={granted}
           className="w-full rounded-full bg-primary px-5 py-3 font-semibold text-primary-foreground transition hover:opacity-90"
         >
-          Enter
+          {granted ? "WebTools initializing…" : "Enter"}
         </Button>
       </form>
     </main>
