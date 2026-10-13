@@ -2,7 +2,7 @@ import { useState } from "react";
 import timeMachineImage from "@/assets/og-time-machine-hero.jpg";
 import academyImage from "@/assets/college-professor-gpt-hero.jpg";
 import blueprintImage from "@/assets/construction-gpt-hero.jpg";
-import chambersImage from "@/assets/legal-draftsmith-gpt-hero.jpg";
+import chambersImage from "@/assets/perplexity-bot-legal-hero.jpg";
 import clinicImage from "@/assets/dental-gpt-hero.jpg";
 import fieldImage from "@/assets/agronomus-farming-gpt-hero.jpg";
 import forgeImage from "@/assets/diy-repair-gpt-hero.jpg";
