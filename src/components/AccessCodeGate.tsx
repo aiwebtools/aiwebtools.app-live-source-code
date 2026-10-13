@@ -80,6 +80,7 @@ const AccessCodeGate = ({ children }: { children: ReactNode }) => {
           }}
           aria-label="Access code"
           aria-invalid={error}
+          style={{ borderRadius: "9999px" }}
           placeholder="••••"
           className="w-full rounded-full border border-primary/40 bg-background px-5 py-3 text-center text-xl tracking-[0.5em] text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/40"
         />
