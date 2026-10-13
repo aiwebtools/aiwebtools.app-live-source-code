@@ -1,4 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import AwtSoundEffects from "@/components/AwtSoundEffects";
+import { requestAudio, useGeneratedAudio } from "@/hooks/useGeneratedAudio";
 import { Volume2, Square, Download, Mic2, Loader2, Play, Pause } from "lucide-react";
 
 /**
@@ -6,10 +9,6 @@ import { Volume2, Square, Download, Mic2, Loader2, Play, Pause } from "lucide-re
  * Audio is generated server-side so every voice genuinely sounds different
  * and the resulting clip can be saved to the visitor's device.
  */
-
-const FUNCTION_URL = "https://huupailptzvcykyqdkar.supabase.co/functions/v1/awt-tts";
-const ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1dXBhaWxwdHp2Y3lreXFka2FyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg5MTMzODIsImV4cCI6MjA2NDQ4OTM4Mn0.IEqsLF3r-cyubqwwHOpkbSzz_IGt6v1U6LxO5fowHcQ";
 
 const VOICES = [
   { id: "alloy", label: "Alloy — balanced neutral" },
@@ -60,183 +59,81 @@ const AwtTextToSpeech: React.FC = () => {
   const [speed, setSpeed] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [clipUrl, setClipUrl] = useState<string | null>(null);
-  const [playing, setPlaying] = useState(false);
   const [previewing, setPreviewing] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const urlRef = useRef<string | null>(null);
-  const previewCache = useRef<Map<string, string>>(new Map());
-  const previewAudioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(
-    () => () => {
-      if (urlRef.current) URL.revokeObjectURL(urlRef.current);
-      previewCache.current.forEach((u) => URL.revokeObjectURL(u));
-      previewAudioRef.current?.pause();
-      audioRef.current?.pause();
-    },
-    []
-  );
+  const audio = useGeneratedAudio();
+  const { clipUrl, playing } = audio;
+  const previewCache = useRef<Map<string, Blob>>(new Map());
+  const request = useRef<AbortController | null>(null);
 
   const previewSample = async (id: string) => {
-    setVoice(id);
-    setError(null);
-    previewAudioRef.current?.pause();
-    audioRef.current?.pause();
-
-    const cached = previewCache.current.get(id);
-    if (cached) {
-      const a = new Audio(cached);
-      previewAudioRef.current = a;
-      void a.play();
-      return;
-    }
-
-    setPreviewing(id);
+    if (loading || previewing) return;
+    setVoice(id); setError(null); setPreviewing(id); audio.stop();
+    const controller = new AbortController(); request.current = controller;
     try {
-      const label = VOICES.find((v) => v.id === id)?.label.split("—")[0].trim() ?? id;
-      const res = await fetch(FUNCTION_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          apikey: ANON_KEY,
-          Authorization: `Bearer ${ANON_KEY}`,
-        },
-        body: JSON.stringify({
-          text: `Hi, I'm ${label}. This is how I sound on AI Web Tools.`,
-          voice: id,
-          speed: 1,
-          instructions: "",
-        }),
-      });
-      if (!res.ok) throw new Error("Could not load that voice sample.");
-      const url = URL.createObjectURL(await res.blob());
-      previewCache.current.set(id, url);
-      const a = new Audio(url);
-      previewAudioRef.current = a;
-      await a.play().catch(() => undefined);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not load that voice sample.");
-    } finally {
-      setPreviewing(null);
-    }
+      await audio.unlock();
+      let blob = previewCache.current.get(id);
+      if (!blob) {
+        const name = VOICES.find(v => v.id === id)?.label.split("—")[0].trim() || id;
+        blob = await requestAudio("awt-tts", { text: `Hi, I'm ${name}. Let's bring your words to life.`, voice: id, speed: 1, instructions: "Warm, relaxed, expressive human conversation, speaking to a friend." }, controller.signal);
+        previewCache.current.set(id, blob);
+      }
+      if (!controller.signal.aborted) await audio.load(blob);
+    } catch (e) { if (!controller.signal.aborted) setError(e instanceof Error ? e.message : "Voice preview could not play."); }
+    finally { setPreviewing(null); request.current = null; }
   };
-
 
   const generate = async () => {
-    const trimmed = text.trim();
-    if (!trimmed || loading) return;
-    setLoading(true);
-    setError(null);
-    audioRef.current?.pause();
-    setPlaying(false);
-
-    const instructionBits = [
-      language ? `Speak entirely in ${language}.` : "",
-      style ? `Delivery: ${style}.` : "",
-    ].filter(Boolean);
-
+    if (!text.trim() || loading || previewing) return;
+    setLoading(true); setError(null); audio.stop();
+    const controller = new AbortController(); request.current = controller;
     try {
-      const res = await fetch(FUNCTION_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          apikey: ANON_KEY,
-          Authorization: `Bearer ${ANON_KEY}`,
-        },
-        body: JSON.stringify({
-          text: trimmed,
-          voice,
-          speed,
-          instructions: instructionBits.join(" "),
-        }),
-      });
-
-      if (!res.ok) {
-        let message = "The voice studio could not generate that clip.";
-        try {
-          const data = await res.json();
-          if (data?.error) message = data.error;
-        } catch {
-          /* binary or empty error body */
-        }
-        throw new Error(message);
-      }
-
-      const blob = await res.blob();
-      if (urlRef.current) URL.revokeObjectURL(urlRef.current);
-      const url = URL.createObjectURL(blob);
-      urlRef.current = url;
-      setClipUrl(url);
-
-      const audio = new Audio(url);
-      audio.onended = () => setPlaying(false);
-      audio.onpause = () => setPlaying(false);
-      audio.onplay = () => setPlaying(true);
-      audioRef.current = audio;
-      await audio.play().catch(() => setPlaying(false));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+      await audio.unlock();
+      const instructions = [language ? `Speak entirely in ${language}.` : "", style ? `Delivery: ${style}.` : "Warm, natural conversational delivery."].join(" ");
+      const blob = await requestAudio("awt-tts", { text: text.trim(), voice, speed, instructions }, controller.signal);
+      if (!controller.signal.aborted) await audio.load(blob);
+    } catch (e) { if (!controller.signal.aborted) setError(e instanceof Error ? e.message : "Voice generation failed."); }
+    finally { setLoading(false); request.current = null; }
   };
-
-  const togglePlay = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (audio.paused) void audio.play();
-    else audio.pause();
-  };
-
-  const stop = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    audio.pause();
-    audio.currentTime = 0;
-    setPlaying(false);
-  };
-
+  const togglePlay = () => void audio.toggle().catch(e => setError(e.message));
+  const stop = () => { request.current?.abort(); audio.stop(); };
   const download = () => {
     if (!clipUrl) return;
     const link = document.createElement("a");
-    link.href = clipUrl;
-    link.download = `aiwebtools-voice-${voice}-${Date.now()}.mp3`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    link.href = clipUrl; link.download = `aiwebtools-voice-${voice}.mp3`;
+    document.body.appendChild(link); link.click(); link.remove();
   };
 
   const charCount = text.length;
 
   return (
+    <>
     <section
       aria-label="Free AI Web Tools text to speech generator"
       className="py-12 md:py-16 relative overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #0a0a0a 0%, #001400 50%, #0a0a0a 100%)" }}
+      
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
-            <span className="text-green-400" style={{ textShadow: "0 0 20px rgba(0, 255, 0, 0.5)" }}>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+            <span className="text-primary" >
               🔊 FREE AWT TEXT-TO-SPEECH GENERATOR
             </span>
           </h2>
-          <p className="text-green-200 max-w-2xl mx-auto">
-            Type anything, pick a real studio voice and language, hear it instantly — then download
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Type anything, pick a real studio voice and language, hear it — then download
             it as an MP3. Free, no account, no limits.
           </p>
         </div>
 
-        <div className="max-w-3xl mx-auto rounded-2xl border border-green-500/30 bg-slate-950/80 p-4 sm:p-6 shadow-2xl shadow-green-500/10">
+        <div className="max-w-3xl mx-auto rounded-2xl border border-primary/30 bg-card/80 p-4 sm:p-6 shadow-2xl shadow-primary/10">
           <div className="flex items-center gap-2 mb-3">
-            <span className="grid h-8 w-8 place-items-center rounded-full border border-green-500/40 bg-green-500/10">
-              <Mic2 className="h-4 w-4 text-green-400" aria-hidden="true" />
+            <span className="grid h-8 w-8 place-items-center rounded-full border border-primary/40 bg-primary/10">
+              <Mic2 className="h-4 w-4 text-primary" aria-hidden="true" />
             </span>
-            <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-green-400">
+            <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-primary">
               AWT Voice Studio
             </span>
-            <span className="ml-auto text-[10px] text-green-200/70">
+            <span className="ml-auto text-[10px] text-muted-foreground/70">
               {charCount.toLocaleString()} / 4,000 characters
             </span>
           </div>
@@ -248,16 +145,16 @@ const AwtTextToSpeech: React.FC = () => {
             maxLength={4000}
             placeholder="Type or paste the words you want spoken out loud…"
             aria-label="Text to speak"
-            className="w-full resize-y rounded-xl border border-green-500/25 bg-black/60 p-3 text-sm text-green-100 placeholder:text-green-200/40 focus:border-green-400 focus:outline-none focus:ring-2 focus:ring-green-500/30 min-h-[120px]"
+            className="w-full resize-y rounded-xl border border-primary/25 bg-background/60 p-3 text-sm text-foreground placeholder:text-muted-foreground/40 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 min-h-[120px]"
           />
 
           <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <label className="flex flex-col gap-1">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-green-300/80">Voice</span>
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-primary/80">Voice</span>
               <select
                 value={voice}
                 onChange={(e) => setVoice(e.target.value)}
-                className="w-full rounded-lg border border-green-500/25 bg-black/70 px-2 py-2 text-xs text-green-100 focus:border-green-400 focus:outline-none"
+                className="w-full rounded-lg border border-primary/25 bg-background/70 px-2 py-2 text-xs text-foreground focus:border-primary focus:outline-none"
               >
                 {VOICES.map((v) => (
                   <option key={v.id} value={v.id}>
@@ -268,11 +165,11 @@ const AwtTextToSpeech: React.FC = () => {
             </label>
 
             <label className="flex flex-col gap-1">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-green-300/80">Language</span>
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-primary/80">Language</span>
               <select
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
-                className="w-full rounded-lg border border-green-500/25 bg-black/70 px-2 py-2 text-xs text-green-100 focus:border-green-400 focus:outline-none"
+                className="w-full rounded-lg border border-primary/25 bg-background/70 px-2 py-2 text-xs text-foreground focus:border-primary focus:outline-none"
               >
                 {LANGUAGES.map((l) => (
                   <option key={l.label} value={l.id}>
@@ -283,11 +180,11 @@ const AwtTextToSpeech: React.FC = () => {
             </label>
 
             <label className="flex flex-col gap-1">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-green-300/80">Style</span>
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-primary/80">Style</span>
               <select
                 value={style}
                 onChange={(e) => setStyle(e.target.value)}
-                className="w-full rounded-lg border border-green-500/25 bg-black/70 px-2 py-2 text-xs text-green-100 focus:border-green-400 focus:outline-none"
+                className="w-full rounded-lg border border-primary/25 bg-background/70 px-2 py-2 text-xs text-foreground focus:border-primary focus:outline-none"
               >
                 {STYLES.map((s) => (
                   <option key={s.label} value={s.id}>
@@ -298,7 +195,7 @@ const AwtTextToSpeech: React.FC = () => {
             </label>
 
             <label className="flex flex-col gap-1">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-green-300/80">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-primary/80">
                 Speed · {speed.toFixed(2)}x
               </span>
               <input
@@ -308,14 +205,14 @@ const AwtTextToSpeech: React.FC = () => {
                 step={0.05}
                 value={speed}
                 onChange={(e) => setSpeed(Number(e.target.value))}
-                className="accent-green-400 mt-2"
+                className="accent-primary mt-2"
                 aria-label="Speech speed"
               />
             </label>
           </div>
 
           <div className="mt-4">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-green-300/80">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-primary/80">
               Preview the voices
             </span>
             <div className="mt-2 flex flex-wrap gap-2">
@@ -323,16 +220,16 @@ const AwtTextToSpeech: React.FC = () => {
                 const name = v.label.split("—")[0].trim();
                 const active = voice === v.id;
                 return (
-                  <button
+                  <Button
                     key={v.id}
                     type="button"
                     onClick={() => void previewSample(v.id)}
-                    disabled={previewing !== null}
+                    disabled={previewing !== null || loading}
                     aria-label={`Preview the ${name} voice`}
                     className={`inline-flex min-h-10 items-center gap-1.5 rounded-full border px-3 py-2 text-xs font-semibold transition disabled:opacity-50 ${
                       active
-                        ? "border-green-400 bg-green-500/15 text-green-200"
-                        : "border-green-500/30 text-green-300/80 hover:bg-green-500/10"
+                        ? "border-primary bg-primary/15 text-muted-foreground"
+                        : "border-primary/30 text-primary/80 hover:bg-primary/10"
                     }`}
                   >
                     {previewing === v.id ? (
@@ -341,7 +238,7 @@ const AwtTextToSpeech: React.FC = () => {
                       <Play className="h-3 w-3" aria-hidden="true" />
                     )}
                     {name}
-                  </button>
+                  </Button>
                 );
               })}
             </div>
@@ -350,18 +247,18 @@ const AwtTextToSpeech: React.FC = () => {
 
 
           {error && (
-            <p role="alert" className="mt-4 rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs text-red-200">
+            <p role="alert" className="mt-4 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-xs text-destructive">
               {error}
             </p>
           )}
 
           <div className="mt-5 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-            <button
+            <Button
               type="button"
               onClick={generate}
-              disabled={!text.trim() || loading}
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 px-6 py-2.5 text-sm font-bold text-white transition hover:from-green-600 hover:to-emerald-700 disabled:opacity-50"
-              style={{ boxShadow: "0 0 20px rgba(0, 255, 0, 0.3)" }}
+              disabled={!text.trim() || loading || previewing !== null}
+              className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-2.5 text-sm font-bold text-foreground transition hover:opacity-90 disabled:opacity-50"
+              
             >
               {loading ? (
                 <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
@@ -369,29 +266,29 @@ const AwtTextToSpeech: React.FC = () => {
                 <Volume2 className="h-4 w-4" aria-hidden="true" />
               )}
               {loading ? "Generating…" : "Speak It"}
-            </button>
+            </Button>
 
-            <button
+            <Button
               type="button"
               onClick={togglePlay}
-              disabled={!clipUrl}
-              className="inline-flex items-center gap-2 rounded-full border border-green-500/50 px-5 py-2.5 text-sm font-bold text-green-300 transition hover:bg-green-500/10 disabled:opacity-40"
+              disabled={!clipUrl && !loading && !previewing}
+              className="inline-flex items-center gap-2 rounded-full border border-primary/50 px-5 py-2.5 text-sm font-bold text-primary transition hover:bg-primary/10 disabled:opacity-40"
             >
               {playing ? <Pause className="h-4 w-4" aria-hidden="true" /> : <Play className="h-4 w-4" aria-hidden="true" />}
               {playing ? "Pause" : "Replay"}
-            </button>
+            </Button>
 
-            <button
+            <Button
               type="button"
               onClick={stop}
-              disabled={!clipUrl}
-              className="inline-flex items-center gap-2 rounded-full border border-green-500/50 px-5 py-2.5 text-sm font-bold text-green-300 transition hover:bg-green-500/10 disabled:opacity-40"
+              disabled={!clipUrl && !loading && !previewing}
+              className="inline-flex items-center gap-2 rounded-full border border-primary/50 px-5 py-2.5 text-sm font-bold text-primary transition hover:bg-primary/10 disabled:opacity-40"
             >
               <Square className="h-4 w-4" aria-hidden="true" />
               Stop
-            </button>
+            </Button>
 
-            <button
+            <Button
               type="button"
               onClick={download}
               disabled={!clipUrl}
@@ -399,15 +296,17 @@ const AwtTextToSpeech: React.FC = () => {
             >
               <Download className="h-4 w-4" aria-hidden="true" />
               Download MP3
-            </button>
+            </Button>
           </div>
 
-          <p className="mt-4 text-center text-[10px] uppercase tracking-[0.18em] text-green-200/60">
+          <p className="mt-4 text-center text-[10px] uppercase tracking-[0.18em] text-muted-foreground/60">
             100% free · no sign-up · 11 studio voices · downloadable MP3 · AIWEBTOOLS.APP
           </p>
         </div>
       </div>
     </section>
+    <AwtSoundEffects />
+    </>
   );
 };
 

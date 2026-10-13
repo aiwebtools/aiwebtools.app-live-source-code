@@ -1,4 +1,5 @@
 import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors';
+import { requestSpeech } from './speech-request.ts';
 
 const VOICES = new Set([
   'alloy', 'ash', 'ballad', 'coral', 'echo', 'fable',
@@ -43,22 +44,9 @@ Deno.serve(async (req) => {
 
     if (body?.engine === 'gemini') {
       const style = typeof body?.style === 'string' ? body.style.replace(/[\n:]/g, ' ').slice(0, 120).trim() : '';
-      const prompt = `Read aloud as a real, warm human speaker${style ? ` (${style})` : ''}, at a brisk, natural conversational pace with lively expression: ${text}`;
+      const prompt = `Read only the text below. Use a natural human conversational voice with connected phrases, subtle emotion, varied intonation and realistic emphasis. Avoid mechanical rhythm, exaggerated breathiness or an announcer voice. ${style ? `Voice character: ${style}.` : ''} ${instructions}\nText to read:\n${text}`;
       const wantsStream = body.stream === true;
-      const gem = await fetch('https://ai.gateway.lovable.dev/v1/audio/speech', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'google/gemini-3.1-flash-tts-preview',
-          contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          generationConfig: {
-            responseModalities: ['AUDIO'],
-            speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: GEMINI_VOICES[voice] } } },
-          },
-          ...(wantsStream ? { stream_format: 'sse' } : {}),
-        }),
-        signal: req.signal,
-      });
+      const gem = await requestSpeech({ baseURL: 'https://ai.gateway.lovable.dev', apiKey: key, model: 'google/gemini-3.1-flash-tts-preview', format: 'gemini', voice: GEMINI_VOICES[voice] }, prompt, !wantsStream, req.signal);
       if (!gem.ok) {
         const details = await gem.json().catch(() => ({}));
         const message = details?.error?.message || details?.message || (gem.status === 402
@@ -92,7 +80,7 @@ Deno.serve(async (req) => {
         response_format: 'mp3',
         stream_format: 'audio',
         ...(Number.isFinite(speed) && speed >= 0.25 && speed <= 4 ? { speed } : {}),
-        ...(instructions ? { instructions } : {}),
+        instructions: `Speak naturally to one person, with warm human expression, connected phrases, varied intonation and subtle emotion. Never use a robotic, flat, sing-song or exaggerated announcer delivery. ${instructions}`,
       }),
       signal: req.signal,
     });

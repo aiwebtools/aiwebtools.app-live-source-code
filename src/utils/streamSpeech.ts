@@ -41,7 +41,7 @@ export type SpeechClip = {
  * away so the next sentence is ready before the current one finishes playing.
  */
 export const beginSpeechClip = (url: string, init: RequestInit, outer: AbortSignal): SpeechClip => {
-  let samples: Float32Array<ArrayBuffer>[] = [];
+  const samples: Float32Array<ArrayBuffer>[] = [];
   let finished = false;
   let error: Error | null = null;
   let started = false;
@@ -89,13 +89,15 @@ export const beginSpeechClip = (url: string, init: RequestInit, outer: AbortSign
         },
       });
 
-      const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
       try {
         for (;;) {
           const chunk = await reader.read();
           if (chunk.done) break;
-          parser.feed(chunk.value);
+          parser.feed(decoder.decode(chunk.value, { stream: true }));
         }
+        parser.feed(decoder.decode());
         parser.reset({ consume: true });
       } finally {
         reader.releaseLock();
@@ -125,9 +127,17 @@ let context: AudioContext | null = null;
 const liveSources = new Set<AudioBufferSourceNode>();
 
 const audioContext = () => {
-  if (!context) context = new AudioContext();
-  if (context.state === "suspended") void context.resume();
+  const AudioContextClass = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+  if (!AudioContextClass) throw new Error("Audio playback is not supported in this browser.");
+  if (!context || context.state === "closed") context = new AudioContextClass();
   return context;
+};
+
+/** Call directly from a click, before a network request, to unlock mobile audio. */
+export const unlockSpeechPlayback = async () => {
+  const ctx = audioContext();
+  if (ctx.state === "suspended") await ctx.resume();
+  if (ctx.state !== "running") throw new Error("Audio is paused by your browser. Tap Play again to enable it.");
 };
 
 /** Silence anything playing right now — used by stop, mute and new replies. */
@@ -146,6 +156,7 @@ export const stopSpeechPlayback = () => {
  * delivered has been heard.
  */
 export const playSpeechClip = async (clip: SpeechClip, speed = 1): Promise<void> => {
+  await unlockSpeechPlayback();
   const ctx = audioContext();
   const rate = Math.min(1.6, Math.max(0.5, speed));
   let playhead = ctx.currentTime + 0.05;

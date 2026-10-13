@@ -1,5 +1,11 @@
 # Chatbot completion roadmap
 
+# Voice previews and homepage audio (Oct 13)
+- [ ] Repair all voice previews, unlock playback from the click, preserve character voice directions, and verify all eleven voices
+- [ ] Repair homepage voice generation, natural delivery, replay, stop, and MP3 downloads
+- [ ] Add text-to-sound-effects generator below voices using the connected ElevenLabs account; verify generation, playback, and download
+- [ ] Run audio tests and verify phone/desktop controls
+
 # Reply celebrations and community creator (Oct 13)
 - [x] Add 20 lightweight reply sound/visual combinations with mute and reduced-motion support; count test passes, real reply triggers effect, overlay cleans up, effects-off verified
 - [x] Fix phone/desktop bot builder submission and verify ethics-approved bots appear in the selectable library; close competing drawer, visible validation, safe storage failures and retry reuse; phone UI publication and real replies verified
