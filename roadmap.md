@@ -1,5 +1,10 @@
 # Chatbot completion roadmap
 
+# Reply celebrations and community creator (Oct 13)
+- [ ] Add 20 lightweight reply sound/visual combinations with mute and reduced-motion support
+- [ ] Fix phone/desktop bot builder submission and verify ethics-approved bots appear in the selectable library
+- [ ] Submit five genuinely new useful community bots through the existing ethics review and verify their images and replies
+
 # Chat replies and sidebar portraits (Oct 13)
 - [x] Live replies verified; repair swallowed stream errors and final frames without changing bot instructions or economy default; original intermittent failure not reproduced
 - [x] Show matching avatar images beside all selectable GPT names on desktop and phone; all 422 images loaded, existing art retained with local subject-image fallbacks
