@@ -735,12 +735,14 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
   .studio-dialog > button:last-child { top: 3px; right: 10px; width: 32px; height: 32px; border-image: none !important; border-radius: 50%; background: hsl(var(--background)); color: hsl(var(--destructive)); border-color: hsl(var(--destructive) / .6); }
 }
 @media (max-width: 359px) {
-  .studio-brand { font-size: 13px; }
+  .studio .studio-brand { font-size: 12px; }
+  .studio .studio-topbar { padding-inline: 8px; gap: 6px; }
+  .studio .studio-topbar > div { gap: 6px; }
   .studio-bot-header { grid-template-columns: 40px minmax(0, 1fr) auto; padding: 10px 8px; gap: 6px; }
   .studio-bot-header .gpt-room-avatar { width: 40px; height: 52px; }
   .studio-bot-header h1 { font-size: 14px; }
-  .studio-input-tools { gap: 6px; padding-inline: 8px; }
-  .studio-input-tools > button { width: 38px; height: 40px; }
+  .studio .studio-input-tools { gap: 4px; padding-inline: 6px; }
+  .studio .studio-input-tools > button { width: 36px; height: 40px; }
 }
 @media (max-height: 560px) and (max-width: 639px) {
   .studio-topbar { height: 48px; }
