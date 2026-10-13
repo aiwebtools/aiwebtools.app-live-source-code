@@ -37,6 +37,7 @@ Deno.serve(async (req) => {
       typeof body?.instructions === 'string' ? body.instructions.slice(0, 600) : '';
 
     if (!text) return json({ error: 'Please type something to speak.' }, 400);
+    if (!/[\p{L}\p{N}]/u.test(text)) return json({ error: 'Nothing speakable in that text.' }, 400);
     if (text.length > MAX_CHARS) {
       return json({ error: `Please keep it under ${MAX_CHARS} characters.` }, 400);
     }
