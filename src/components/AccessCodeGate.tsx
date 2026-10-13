@@ -10,7 +10,7 @@ const ACCESS_CODE = "1111";
 const STORAGE_KEY = "awt-access-code-ok";
 
 const CRAWLER_PATTERN =
-  /bot|crawl|spider|slurp|googlebot|bingbot|duckduckbot|baiduspider|yandex|facebookexternalhit|twitterbot|linkedinbot|embedly|whatsapp|telegrambot|lighthouse|headless/i;
+  /bot|crawl|spider|slurp|googlebot|bingbot|duckduckbot|baiduspider|yandex|facebookexternalhit|twitterbot|linkedinbot|embedly|whatsapp|telegrambot|lighthouse/i;
 
 const isCrawler = () =>
   typeof navigator !== "undefined" && CRAWLER_PATTERN.test(navigator.userAgent || "");
