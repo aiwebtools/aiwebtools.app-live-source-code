@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { expect, test } from "bun:test";
-import { decodePCM } from "./streamSpeech";
+import { beginSpeechClip, decodePCM } from "./streamSpeech";
 
 const bytes = (...values: number[]) => Uint8Array.from(values);
 
@@ -22,4 +22,15 @@ test("carries a split sample across streamed chunks instead of dropping it", () 
   expect(second.samples.length).toBe(1);
   expect(second.samples[0]).toBe(0.5);
   expect(second.pending.length).toBe(0);
+});
+
+test("streamed preview rejects missing completion rather than silently succeeding", async () => {
+  const original = globalThis.fetch;
+  globalThis.fetch = async () => new Response('data: {"type":"speech.audio.delta","audio":"AEA="}\n\n', { headers: { "Content-Type": "text/event-stream" } });
+  try {
+    const clip = beginSpeechClip("/test", {}, new AbortController().signal);
+    while (!clip.finished) await clip.wait();
+    expect(clip.started).toBe(true);
+    expect(clip.error?.message).toBe("The voice clip ended before it was complete.");
+  } finally { globalThis.fetch = original; }
 });
