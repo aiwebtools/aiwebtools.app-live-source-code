@@ -3,6 +3,7 @@ import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MatrixRainBackdrop from "@/components/effects/MatrixRainBackdrop";
 import { playTimeWarpVoice } from "@/utils/effects/timeWarpVoice";
+import accessClock from "@/assets/access-1111-clock.jpg";
 
 /**
  * TEMPORARY ACCESS-CODE GATE
@@ -77,6 +78,7 @@ const AccessCodeGate = ({ children }: { children: ReactNode }) => {
         </h1>
         <p className="text-sm text-muted-foreground">Enter the access code to continue.</p>
         <p className="text-sm text-primary">Hint: Angel Numbers</p>
+        <img src={accessClock} alt="AIWebTools.ai green digital clock showing 11:11" width={1088} height={608} className="aspect-video w-full rounded-lg object-contain" />
         <input
           type="password"
           inputMode="numeric"
@@ -99,7 +101,7 @@ const AccessCodeGate = ({ children }: { children: ReactNode }) => {
         {granted && <p role="status" className="flex items-center justify-center gap-2 text-primary"><CheckCircle2 className="h-6 w-6" />Access granted</p>}
         {error && (
           <p role="alert" className="text-sm text-destructive">
-            That code isn't right. Please try again.
+            bro the code is straight up right in front of you 1111 bro it's right there
           </p>
         )}
         <Button
