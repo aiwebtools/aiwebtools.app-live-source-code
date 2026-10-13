@@ -1,5 +1,10 @@
 # Chatbot completion roadmap
 
+# Scrolling and featured labels (Oct 13)
+- [ ] Diagnose and repair homepage scroll/loading delays without removing content
+- [ ] Rename in-site featured actions and ChatGPT destination buttons
+- [ ] Verify phone/desktop scrolling, actions, and preview health
+
 # Voice previews and homepage audio (Oct 13)
 - [x] Repair voice previews and click-based audio unlock; all eleven homepage voices return playable audio, Time Machine preview returns 200 SSE with character directions
 - [x] Repair homepage voice generation and natural-delivery directions; actual MP3 download validated (6.3 seconds), stop and cached previews verified

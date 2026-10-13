@@ -1,7 +1,6 @@
-# Matrix bot studio upgrade
+# Smooth scrolling and clear GPT actions
 
-1. Reuse the existing initialization clip on clicked bot launches and instruction downloads.
-2. Apply the uploaded command-center design to one shared bot interface, preserving bot-specific branding, instructions, microphone, speech, web search and images.
-3. Add browser-saved separate conversations, thread URLs, bot navigation, and mobile drawers without requiring login.
-4. Offer only verified model choices and keep the original bot model as the default.
-5. Check real chat, PDF, sound, history restoration and responsive layouts; report browser/credit limitations honestly.
+1. Check homepage loading and scrolling on the current phone size and desktop, including delayed sections and errors.
+2. Repair confirmed loading bottlenecks without removing tools, media, effects, or search functionality.
+3. Rename featured in-site chat buttons to “Open insite version” and external ChatGPT buttons to “CHAT GPT VERSION”, preserving destinations and other platform labels.
+4. Verify scrolling, loaded sections, button destinations, and a clean preview; keep unrelated blocked tasks unchanged.

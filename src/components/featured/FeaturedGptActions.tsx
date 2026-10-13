@@ -184,7 +184,7 @@ const FeaturedGptActions = ({ titles, tool }: { titles: string[]; tool: Tool }) 
         className={btn}
         title={`Try ${name} right here, running on its operational instructions`}
       >
-        <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" /> Try It Here
+        <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" /> Open insite version
       </Button>
       {hasDoc ? (
         <OpInstructionsButton
