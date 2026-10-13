@@ -315,7 +315,7 @@ const TabletMenu = () => {
                 <DropdownMenuItem 
                   onClick={(e) => { 
                     e.preventDefault(); 
-                    createTimePortalEffect('https://lovable.dev/projects/c6134e40-21cf-4136-aebd-49c9868dd2ad?utm_source=lovable-badge');
+                    createTimePortalEffect('https://lovable.dev/projects/bad09a84-f9cd-4cda-9d42-9c4cfafc2867?utm_source=lovable-badge');
                   }}
                   className="text-yellow-100 hover:bg-gradient-to-r hover:from-yellow-500/20 hover:to-amber-500/20 rounded flex items-center space-x-2 bg-gradient-to-r from-yellow-600/10 to-amber-600/10 border border-yellow-500/30 p-2 font-semibold"
                 >
