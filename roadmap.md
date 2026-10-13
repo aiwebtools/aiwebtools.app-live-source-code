@@ -1,9 +1,9 @@
 # Chatbot completion roadmap
 
 # Scrolling and featured labels (Oct 13)
-- [ ] Diagnose and repair homepage scroll/loading delays without removing content
-- [ ] Rename in-site featured actions and ChatGPT destination buttons
-- [ ] Verify phone/desktop scrolling, actions, and preview health
+- [x] Repair deferred loading gaps with persistent skeletons, cancellable queued mounts, and near-viewport priority
+- [x] Rename in-site featured actions and ChatGPT destination buttons, retaining destinations and other platform actions
+- [x] Verify 408px phone scrolling (9,749px), no horizontal overflow or page errors, usable popup composer, desktop labels, focused lint and build OK; unpublished
 
 # Voice previews and homepage audio (Oct 13)
 - [x] Repair voice previews and click-based audio unlock; all eleven homepage voices return playable audio, Time Machine preview returns 200 SSE with character directions
