@@ -1,5 +1,10 @@
 # Chatbot completion roadmap
 
+# Chat replies and sidebar portraits (Oct 13)
+- [x] Live replies verified; repair swallowed stream errors and final frames without changing bot instructions or economy default; original intermittent failure not reproduced
+- [x] Show matching avatar images beside all selectable GPT names on desktop and phone; all 422 images loaded, existing art retained with local subject-image fallbacks
+- [x] Verify real Time Machine and Einstein conversations, sidebar selection, phone/desktop screenshots, eight tests and build OK; project-wide lint has pre-existing errors, focused files have no errors
+
 # Unlimited economy chat (Oct 13)
 - [x] Remove guest and member daily chat caps while retaining usage accounting; deployed handler and three tests pass
 - [x] Default to GPT-6 Luna, lowest-priced supported non-deprecated text model in the authenticated catalog; real phone-sized Time Machine reply returned 200 and preserved Father Time persona
