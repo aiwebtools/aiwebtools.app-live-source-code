@@ -23,10 +23,17 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
   const [share, setShare] = useState(true);
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState("");
-  const valid = name.trim().length > 1 && instructions.trim().length >= 10;
+  const [savedBot, setSavedBot] = useState<CustomBot | null>(null);
   const save = async () => {
-    if (!valid || busy) return;
-    const bot = saveCustomBot({ display_name: name.trim().slice(0, 80), tagline: tagline.trim().slice(0, 160), instructions: instructions.trim().slice(0, 20000), voice });
+    if (busy) return;
+    if (name.trim().length < 2) { setStatus("Add a title with at least 2 characters."); return; }
+    if (instructions.trim().length < (share ? 30 : 10)) { setStatus(share ? "Add at least 30 characters of instructions for the ethics review." : "Add at least 10 characters of instructions."); return; }
+    setBusy(true);
+    let bot: CustomBot;
+    try {
+      bot = saveCustomBot({ ...(savedBot ? { slug: savedBot.slug } : {}), display_name: name.trim(), tagline: tagline.trim(), instructions: instructions.trim(), voice });
+      setSavedBot(bot);
+    } catch { setStatus("Your browser could not save this bot. Check available device storage and try again."); setBusy(false); return; }
     let publishedSlug: string | undefined;
     if (share) {
       setBusy(true); setStatus("AI ethics review in progress…");
@@ -39,7 +46,7 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
       } catch { setStatus("Saved on this device. Publishing failed — check your connection."); setBusy(false); return; }
       setBusy(false);
     }
-    setName(""); setTagline(""); setInstructions(""); setStatus("");
+    setBusy(false); setSavedBot(null); setName(""); setTagline(""); setInstructions(""); setStatus("");
     onSaved(bot, publishedSlug);
   };
   const field = "w-full rounded-md border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary";
@@ -68,7 +75,8 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
         </div>
         <label className="flex items-start gap-2 text-sm text-foreground"><input type="checkbox" className="mt-1 accent-primary" checked={share} onChange={(e) => setShare(e.target.checked)} /><span>Share it in the public Community GPT library. An AI ethics review checks it first, then it is published automatically for everyone.</span></label>
         {status && <p role="status" className="rounded-md border border-primary/40 p-3 text-xs text-foreground">{status}</p>}
-        <Button className="studio-new w-full gap-2" disabled={!valid || busy} onClick={() => void save()}><Wand2 className="h-4 w-4" />{busy ? "Reviewing…" : share ? "Save, review & publish" : "Save & launch my bot"}</Button>
+        <Button type="button" className="studio-new w-full gap-2" disabled={busy} onClick={() => void save()}><Wand2 className="h-4 w-4" />{busy ? "Reviewing & creating artwork…" : share ? "Save, review & publish" : "Save & launch my bot"}</Button>
+        {savedBot && !busy && status && <Button type="button" variant="outline" className="w-full" onClick={() => onSaved(savedBot)}>Open my saved bot</Button>}
       </div>
     </DialogContent>
   </Dialog>;

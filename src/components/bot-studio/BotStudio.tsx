@@ -33,6 +33,7 @@ import { Trash2, Wand2 } from "lucide-react";
 import StudioImageActions from "./StudioImageActions";
 import { Tool, ToolHeader, ToolContent } from "@/components/ai-elements/tool";
 import type { BotActivity } from "@/utils/botConversations";
+import { celebrateReply } from "@/utils/replyCelebrations";
 
 export default function BotStudio({ app, threadId, embedded = false }: { app: StudioBot; threadId?: string; embedded?: boolean }) {
   const navigate = useNavigate();
@@ -42,6 +43,11 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
   const [bots, setBots] = useState<StudioBot[]>([]);
   const [customBots, setCustomBots] = useState(readCustomBots);
   const [builderOpen, setBuilderOpen] = useState(false);
+  const [celebrations, setCelebrations] = useState(true);
+  const [celebrationSound, setCelebrationSound] = useState(true);
+  const studioRef = useRef<HTMLElement | null>(null);
+  const celebrationCleanup = useRef<(() => void) | null>(null);
+  const celebrationIndex = useRef(Math.floor(Math.random() * 20));
   const [query, setQuery] = useState("");
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
@@ -81,6 +87,7 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
     if (!embedded && !threadId) navigate(conversationPath(app.slug, thread.id), { replace: true });
   }, [app.slug, embedded, navigate, thread.id, threadId]);
   useEffect(() => () => abortRef.current?.abort(), []);
+  useEffect(() => () => celebrationCleanup.current?.(), []);
   useEffect(() => {
     if (!streaming && window.matchMedia("(pointer: fine)").matches) inputRef.current?.focus({ preventScroll: true });
   }, [streaming, thread.id]);
@@ -141,6 +148,10 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
         if (done) break;
       }
       speech.flush();
+      if (assistant.trim() && celebrations && studioRef.current && !controller.signal.aborted) {
+        celebrationCleanup.current?.();
+        celebrationCleanup.current = celebrateReply(celebrationIndex.current++, celebrationSound, studioRef.current);
+      }
       if (!assistant.trim()) setNotice("The reply ended without an answer. Your message is saved; please try again.");
     } catch (error) {
       if (!controller.signal.aborted) setNotice(error instanceof Error ? error.message : "The reply could not load.");
@@ -148,7 +159,7 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
       commit({ ...base, serverId, messages: assistant || activities.length ? [...messages, { role: "assistant", content: assistant, activities: activities.map((activity) => activity.state === "input-available" ? { ...activity, state: "output-error", error: "This action was interrupted." } : activity) }] : messages, updatedAt: Date.now() });
       setStreaming(false); abortRef.current = null;
     }
-  }, [app.slug, commit, session, speech, streaming]);
+  }, [app.slug, app.custom, app.display_name, app.tagline, celebrations, celebrationSound, commit, session, speech, streaming]);
   const mic = useVoiceInput((text) => { if (streaming) setInput(text); else void send(text); }, speech.pauseForMicrophone, speech.resumeAfterMicrophone);
 
   const chooseThread = (item: BotConversation) => {
@@ -169,7 +180,7 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
   };
   const sidebar = <>
     <Button className="studio-new w-full gap-2" onClick={newChat} disabled={streaming}><Plus className="h-4 w-4" />New chat</Button>
-    <Button variant="ghost" className="studio-row mt-3 w-full gap-2 gpt-room-accent" onClick={() => setBuilderOpen(true)} disabled={streaming}><Wand2 className="h-4 w-4" />Create your own custom model</Button>
+    <Button variant="ghost" className="studio-row mt-3 w-full gap-2 gpt-room-accent" onClick={() => { setLeftOpen(false); setBuilderOpen(true); }} disabled={streaming}><Wand2 className="h-4 w-4" />Create your own custom model</Button>
     {customBots.length > 0 && <><h2 className="studio-label mt-5"><Wand2 className="h-4 w-4" />My creations</h2><div className="mt-2">{customBots.map((bot) => <div key={bot.slug} className="flex items-center gap-1"><Button variant="ghost" disabled={streaming} onClick={() => chooseBot(bot.slug)} title={bot.display_name} className={`studio-row flex-1 ${bot.slug === app.slug ? "studio-selected" : ""}`}>{sidebarPortrait(bot)}<span className="truncate">{bot.display_name}</span></Button><Button variant="ghost" size="icon" aria-label={`Delete ${bot.display_name}`} title="Delete from this device" onClick={() => { if (window.confirm(`Delete ${bot.display_name} from this device?`)) { deleteCustomBot(bot.slug); setCustomBots(readCustomBots()); } }}><Trash2 className="h-3.5 w-3.5" /></Button></div>)}</div></>}
     <h2 className="studio-label mt-6"><Bot className="h-4 w-4" />My GPTs</h2>
     <div className="relative my-3"><Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" /><input aria-label="Search bots" placeholder="Find an assistant…" value={query} onChange={(e) => setQuery(e.target.value)} className="studio-search w-full rounded-md border bg-background pl-9 pr-2 text-sm" /></div>
@@ -181,6 +192,7 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
     <p className="mt-4 text-xs text-muted-foreground">Saved on this device · {threads.length} conversations</p>
   </>;
   const settings = <>
+    <div className="mb-5 flex gap-2"><Button variant="outline" aria-pressed={celebrations} onClick={() => { setCelebrations(!celebrations); celebrationCleanup.current?.(); }}>Reply effects {celebrations ? "on" : "off"}</Button><Button variant="ghost" size="icon" aria-label={celebrationSound ? "Mute celebration sounds" : "Enable celebration sounds"} title="Celebration sounds" onClick={() => setCelebrationSound(!celebrationSound)}>{celebrationSound ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}</Button></div>
     <h2 className="studio-label"><Settings2 className="h-4 w-4" />Model selection</h2>
     <Select value={thread.model} disabled={streaming} onValueChange={(model) => commit({ ...threadRef.current, model })}><SelectTrigger className="mt-3" aria-label="Choose AI model"><SelectValue /></SelectTrigger><SelectContent>{STUDIO_MODELS.map((model) => <SelectItem key={model.id} value={model.id}>{model.label}</SelectItem>)}</SelectContent></Select>
     <p className="mt-2 break-words text-xs text-muted-foreground">{thread.model === "default" ? app.model : thread.model}</p>
@@ -188,7 +200,7 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
     <div className="studio-setting-section"><h2 className="studio-label">Tools & capabilities</h2>{[[Globe, "Live web search"], [ImageIcon, "Image generation"], [Mic, mic.supported ? "Voice conversation" : "Microphone unavailable"], [History, "Device memory"]].map(([Icon, label]) => { const Component = Icon as typeof Globe; return <div className="studio-capability" key={String(label)}><Component className="h-4 w-4" /><span>{String(label)}</span>{label === "Microphone unavailable" ? <span className="ml-auto text-muted-foreground">—</span> : <Check className="ml-auto h-4 w-4 text-primary" />}</div>; })}</div>
     <div className="studio-setting-section">{app.custom ? <Button variant="ghost" className="w-full gap-2" onClick={() => { const href = URL.createObjectURL(new Blob([`${app.display_name}\n${app.tagline || ""}\n\n${app.custom!.instructions}`], { type: "text/plain;charset=utf-8" })); const a = document.createElement("a"); a.href = href; a.download = `${app.slug}-instructions.txt`; a.click(); setTimeout(() => URL.revokeObjectURL(href), 10000); }}><Download className="h-4 w-4" />Instructions (TXT)</Button> : <OpInstructionsButton slug={app.slug} name={app.display_name} singleOnly compact label="Instructions (PDF)" />}<Button variant="ghost" className="mt-3 w-full gap-2" onClick={exportChat}><Download className="h-4 w-4" />Export conversation</Button></div>
   </>;
-  return <section id="try-bot" aria-label={`Run ${app.display_name} here`} className={`gpt-room studio ${embedded ? "studio-embedded" : "studio-full"}`} data-room-pattern={theme.pattern} style={themeVars}>
+  return <section ref={studioRef} id="try-bot" aria-label={`Run ${app.display_name} here`} className={`relative gpt-room studio ${embedded ? "studio-embedded" : "studio-full"}`} data-room-pattern={theme.pattern} style={themeVars}>
     <MatrixRainBackdrop className="studio-rain" intensity={embedded ? 0.55 : 0.8} />
     <div className="studio-topbar"><Link to="/" className="studio-brand"><span>AI</span>WEBTOOLS<span>.APP</span></Link><span className="studio-label hidden sm:flex"><span className="studio-live-dot" />AI CONVERSATION STUDIO</span><div className="ml-auto flex gap-1"><Button variant="ghost" size="icon" className="studio-nav-control lg:hidden" onClick={() => setLeftOpen(true)} aria-label="Open bots and chat history"><Menu className="h-4 w-4" /></Button><Button variant="ghost" size="icon" className="studio-nav-control xl:hidden" onClick={() => setRightOpen(true)} aria-label="Open model and voice settings"><Settings2 className="h-4 w-4" /></Button></div></div>
     <div className="studio-grid">
