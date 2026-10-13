@@ -13,6 +13,7 @@
 - Attach small text/CSV/JSON excerpts through the existing message transport; do not advertise unsupported binary-file analysis.
 - Publish community GPTs only through the publish-community-gpt function, which runs an AI ethics review before inserting into gpt_apps/gpt_app_prompts with a community- slug, so public bots reuse the same studio, routing and runtime as official bots.
 - Device-only custom bots use custom- slugs and send their own instructions to run-gpt-app; they are never stored server-side or in conversation history.
-- Resolve bot chat avatars in BotStudio as per-slug portrait (`botAvatars.ts`, files in `src/assets/bot-avatars/<slug>.jpg`), then tool hero image by title/name, then theme emblem image, so named figures keep a matching portrait without replacing tool media.
+- Resolve chat and selectable sidebar avatars through the same BotStudio lookup: per-slug portrait, bot/community image, tool hero image by title/name, then theme emblem image; this keeps bot identities consistent without replacing tool media.
+- Preserve terminal upstream SSE error events and final unterminated frames in hosted chat transport so failures cannot silently become empty replies.
 - Surface community GPTs in search and directories through `src/utils/communityBots.ts` (live `gpt_apps` rows with community- slugs, linking to `/app/<slug>`), so newly approved bots appear without rebuilding the static search catalog.
 - Resolve studio starter questions through `getBotStarters`, preserving operational instructions and using subject-based fallbacks for newly created bots so all room placements share relevant starters.

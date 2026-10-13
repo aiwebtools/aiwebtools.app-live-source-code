@@ -2,6 +2,7 @@
 // Supports image generation (Nano Banana) for bots whose instructions require it.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import { selectBotModel } from "./model-selection.ts";
+import { readChatStreamEvent } from "./stream-events.ts";
 import { createLovableAiGatewayRunIdFetch, getLovableAiGatewayResponseHeaders } from "../_shared/run-id.ts";
 
 const corsHeaders = {
@@ -415,16 +416,17 @@ Deno.serve(async (req) => {
     let buffer = "";
     while (true) {
       const { done, value } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
+      buffer += done ? decoder.decode() : decoder.decode(value, { stream: true });
       const lines = buffer.split("\n");
-      buffer = lines.pop() ?? "";
+      buffer = done ? "" : lines.pop() ?? "";
       for (const line of lines) {
         if (!line.startsWith("data: ")) continue;
         const payload = line.slice(6).trim();
         if (!payload || payload === "[DONE]") continue;
-        try {
-          const delta = JSON.parse(payload)?.choices?.[0]?.delta;
+        // Complete lines are complete SSE payloads; provider error events must
+        // terminate the reply instead of being swallowed as partial JSON.
+        {
+          const delta = readChatStreamEvent(payload);
           if (typeof delta?.content === "string" && delta.content) {
             assistant += delta.content;
             controller.enqueue(frame(delta.content));
@@ -438,10 +440,9 @@ Deno.serve(async (req) => {
               if (tc.function?.arguments) calls[index].args += tc.function.arguments;
             }
           }
-        } catch {
-          /* partial frame */
         }
       }
+      if (done) break;
     }
     return calls.filter(Boolean);
   };
@@ -512,6 +513,7 @@ Deno.serve(async (req) => {
         finalStatus = "stream_error";
         finalError = err instanceof Error ? err.message : "Unknown stream error";
         console.error("stream error", err);
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: finalError })}\n\n`));
       } finally {
         if (conversationId && assistant.trim()) {
           await admin.from("gpt_messages").insert({

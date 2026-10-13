@@ -123,7 +123,7 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
           if (!line.startsWith("data: ")) continue;
           const payload = line.slice(6).trim(); if (!payload || payload === "[DONE]") continue;
           let parsed; try { parsed = JSON.parse(payload); } catch { continue; }
-          if (parsed.error) { setNotice(parsed.error); continue; }
+          if (parsed.error) throw new Error(typeof parsed.error === "string" ? parsed.error : parsed.error.message || "The assistant could not finish this reply.");
           if (parsed.activity) {
             const activity = parsed.activity as BotActivity;
             const found = activities.findIndex((item) => item.id === activity.id);
