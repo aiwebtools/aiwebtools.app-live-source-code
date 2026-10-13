@@ -5,7 +5,7 @@ import { useEffect, useState, type FormEvent, type ReactNode } from "react";
  * Set ACCESS_GATE_ENABLED to false to turn the gate off completely.
  * Search-engine crawlers are let through so SEO is never affected.
  */
-export const ACCESS_GATE_ENABLED = false;
+export const ACCESS_GATE_ENABLED = true;
 const ACCESS_CODE = "1111";
 const STORAGE_KEY = "awt-access-code-ok";
 
@@ -68,6 +68,7 @@ const AccessCodeGate = ({ children }: { children: ReactNode }) => {
           AIWebTools.ai
         </h1>
         <p className="text-sm text-muted-foreground">Enter the access code to continue.</p>
+        <p className="text-sm text-primary">Hint: Angel Numbers</p>
         <input
           type="password"
           inputMode="numeric"
