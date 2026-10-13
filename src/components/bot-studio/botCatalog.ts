@@ -24,9 +24,10 @@ export function loadStudioBots(): Promise<StudioBot[]> {
   return catalogPromise;
 }
 
-// Exact IDs from the authenticated workspace catalog; the original bot model stays the default.
+// Exact budget IDs from the authenticated workspace catalog; default resolves server-side.
 export const STUDIO_MODELS = [
   { id: "default", label: "Economy (cheapest)" },
+  { id: "openai/gpt-6-luna", label: "GPT-6 Luna (cheapest)" },
   { id: "google/gemini-3-flash-preview", label: "Gemini 3 Flash Preview" },
   { id: "google/gemini-3.1-flash-lite", label: "Gemini 3.1 Flash Lite" },
 ];
