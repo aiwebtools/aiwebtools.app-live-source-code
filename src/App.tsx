@@ -28,6 +28,7 @@ import { GlobalEmailSignupHost } from "@/components/JoinEmailListButton";
 
 // Eager load only the disclaimer gate; lazy-load heavy app routes to avoid black-screen startup
 import DisclaimerGate from "./pages/DisclaimerGate";
+import AccessCodeGate from "./components/AccessCodeGate";
 
 // Generic retry wrapper for non-component dynamic imports (e.g., side-effect modules).
 // Prevents "Failed to fetch dynamically imported module" from breaking the app.
@@ -654,6 +655,7 @@ function App() {
 
   return (
     <ErrorBoundary>
+      <AccessCodeGate>
       <QueryClientProvider client={queryClient}>
         <HelmetProvider>
           <FavoritesProvider>
@@ -673,6 +675,7 @@ function App() {
           </FavoritesProvider>
         </HelmetProvider>
       </QueryClientProvider>
+      </AccessCodeGate>
     </ErrorBoundary>
   );
 }
