@@ -5,7 +5,7 @@ import { useEffect, useState, type FormEvent, type ReactNode } from "react";
  * Set ACCESS_GATE_ENABLED to false to turn the gate off completely.
  * Search-engine crawlers are let through so SEO is never affected.
  */
-export const ACCESS_GATE_ENABLED = true;
+export const ACCESS_GATE_ENABLED = false;
 const ACCESS_CODE = "1111";
 const STORAGE_KEY = "awt-access-code-ok";
 
