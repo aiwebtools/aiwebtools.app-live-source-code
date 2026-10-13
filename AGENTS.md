@@ -15,7 +15,7 @@
 - Store device conversations separately by bot and thread, with dedicated `/app/:slug/chat/:threadId` URLs so reloads restore the exact conversation.
 - Validate runtime model choices against a server-side allowlist and default every bot to the cheapest allowed model; instructions stay per-bot so engine changes never alter persona.
 - Keep studio image download/revision actions in `StudioImageActions` and route revisions through the existing conversation so generated visuals retain story context.
-- Attach small text/CSV/JSON excerpts through the existing message transport; do not advertise unsupported binary-file analysis.
+- Parse supported text data attachments in a browser worker, send bounded summaries/excerpts separately through the existing message transport, and preserve their context in saved chats; this supports larger datasets without blocking the phone or repeatedly billing for full files. Never advertise unsupported binary-file analysis or imply excerpts include every record.
 - Publish community GPTs only through the publish-community-gpt function, which runs an AI ethics review before inserting into gpt_apps/gpt_app_prompts with a community- slug, so public bots reuse the same studio, routing and runtime as official bots.
 - Device-only custom bots use custom- slugs and send their own instructions to run-gpt-app; they are never stored server-side or in conversation history.
 - Resolve chat and selectable sidebar avatars through the same BotStudio lookup: per-slug portrait, bot/community image, tool hero image by title/name, then theme emblem image; this keeps bot identities consistent without replacing tool media.
