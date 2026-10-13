@@ -60,13 +60,13 @@ export default function BotStudio({ app, threadId, embedded = false }: { app: St
   const profile = useMemo(() => ({ ...defaultProfile, voice, speed }), [defaultProfile, voice, speed]);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const speech = useSpeechReader(profile);
-  const botAvatar = (bot: StudioBot) => getBotPortrait(bot.slug)
+  const botAvatar = (bot: Pick<StudioBot, "slug" | "display_name" | "tagline"> & Partial<StudioBot>) => getBotPortrait(bot.slug)
     || bot.image_url || getBundledCommunityImage(bot.slug)
     || (bot.tool_title ? imageMap?.get(bot.tool_title.trim().toLowerCase()) : null)
     || imageMap?.get(bot.display_name.trim().toLowerCase())
     || getGptAvatar(getGptRoomTheme(bot.slug, bot.tagline || "", bot.display_name).key);
   const avatar = botAvatar(app);
-  const sidebarPortrait = (bot: StudioBot) => {
+  const sidebarPortrait = (bot: Pick<StudioBot, "slug" | "display_name" | "tagline"> & Partial<StudioBot>) => {
     const room = getGptRoomTheme(bot.slug, bot.tagline || "", bot.display_name);
     return <BotPortrait key={bot.slug} src={botAvatar(bot)} name={bot.display_name} themeKey={room.key} emblem={room.emblem} className="h-8 w-8 shrink-0 rounded-md object-cover" />;
   };
