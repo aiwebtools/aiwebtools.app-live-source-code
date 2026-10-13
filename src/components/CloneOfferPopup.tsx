@@ -91,7 +91,7 @@ const CloneOfferPopup = () => {
 
   const handleClone = (e: React.MouseEvent) => {
     e.preventDefault();
-    const cloneUrl = "https://lovable.dev/projects/c6134e40-21cf-4136-aebd-49c9868dd2ad?utm_source=lovable-badge";
+    const cloneUrl = "https://lovable.dev/projects/bad09a84-f9cd-4cda-9d42-9c4cfafc2867?utm_source=lovable-badge";
     
     // Close popup immediately
     closePopup();
