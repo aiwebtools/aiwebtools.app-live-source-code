@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { splitSpeechText } from "@/utils/speechText";
 import { useToast } from "@/hooks/use-toast";
-import { beginSpeechClip, playSpeechClip, stopSpeechPlayback, type SpeechClip } from "@/utils/streamSpeech";
+import { beginSpeechClip, playSpeechClip, stopSpeechPlayback, unlockSpeechPlayback, type SpeechClip } from "@/utils/streamSpeech";
 import type { GptVoiceProfile } from "@/utils/gptVoiceProfiles";
 
 const STORAGE_KEY = "awt-voice-enabled";
@@ -68,7 +68,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json", apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` },
-          body: JSON.stringify({ text, voice: profile?.voice, engine: "gemini", style: profile?.label, stream: true }),
+          body: JSON.stringify({ text, voice: profile?.voice, engine: "gemini", style: profile?.label, instructions: profile?.instructions, stream: true }),
         },
         signal,
       ),
@@ -121,7 +121,8 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       void (async () => {
         try {
           while (generation === generationRef.current && pendingRef.current.length) {
-            const clip = pendingRef.current.shift()!;
+            const clip = pendingRef.current.shift();
+            if (!clip) break;
             if (generation !== generationRef.current || controller.signal.aborted) return;
             await playSpeechClip(clip, clipSpeed(profile.speed));
           }
@@ -165,9 +166,9 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       // break or a long run, so the voice starts within the first line.
       const first = spokenRef.current === 0;
       let lastBreak = -1;
-      for (const m of pending.matchAll(/[.!?:;]\s|\n/g)) lastBreak = m.index!;
+      for (const m of pending.matchAll(/[.!?:;]\s|\n/g)) lastBreak = m.index ?? -1;
       if (lastBreak < 0 && first && pending.length > 28) {
-        for (const m of pending.matchAll(/[,—–-]\s/g)) lastBreak = m.index!;
+        for (const m of pending.matchAll(/[,—–-]\s/g)) lastBreak = m.index ?? -1;
       }
       if (lastBreak < 0 && pending.length > (first ? 70 : 180)) lastBreak = pending.lastIndexOf(" ");
       if (lastBreak < 0) return;
@@ -231,7 +232,9 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
         return;
       }
       if (profile) {
-        void speakStudio(text);
+        void unlockSpeechPlayback().then(() => speakStudio(text)).catch((error) => {
+          toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Tap Play again to enable audio.", variant: "destructive" });
+        });
         return;
       }
       const clean = stripForSpeech(text);
@@ -244,7 +247,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       setSpeaking(true);
       window.speechSynthesis.speak(utterance);
     },
-    [profile, speakStudio, speaking, stop, supported],
+    [profile, speakStudio, speaking, stop, supported, toast],
   );
 
   useEffect(() => () => {
