@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, Suspense, useEffect, useRef, useState } from 'react';
 
 interface DeferredMountProps {
   children: ReactNode;
@@ -59,10 +59,11 @@ const isTouchDevice = () =>
  */
 const enqueueUrgent = (mount: () => void) => {
   bindScroll();
+  const existing = queue.indexOf(mount);
+  if (existing >= 0) queue.splice(existing, 1);
+  queuedAt.set(mount, performance.now() - MAX_WAIT_MS);
   queue.unshift(mount);
-  const next = queue.shift();
-  next?.();
-  if (queue.length > 0) scheduleFlush();
+  scheduleFlush();
 };
 
 function scheduleFlush() {
@@ -87,7 +88,7 @@ function scheduleFlush() {
 
     if (queue.length > 0) {
       const ric = (window as any).requestIdleCallback;
-      if (ric) ric(run, { timeout: 1000 });
+      if (ric) ric(run, { timeout: 100 });
       else window.setTimeout(run, 32);
     } else {
       flushing = false;
@@ -95,7 +96,7 @@ function scheduleFlush() {
   };
 
   const ric = (window as any).requestIdleCallback;
-  if (ric) ric(run, { timeout: 1000 });
+  if (ric) ric(run, { timeout: 100 });
   else window.setTimeout(run, 16);
 }
 
@@ -119,13 +120,14 @@ const DeferredMount = ({ children, delay = 100, fallback = null, mountOnVisible 
   useEffect(() => {
     let mounted = true;
     let queued = false;
+    const mount = () => {
+      if (mounted) setShouldMount(true);
+    };
 
     const request = () => {
       if (queued || !mounted) return;
       queued = true;
-      enqueueMount(() => {
-        if (mounted) setShouldMount(true);
-      });
+      enqueueMount(mount);
     };
 
     // Near-viewport mounting still goes through the global queue. Several
@@ -142,7 +144,7 @@ const DeferredMount = ({ children, delay = 100, fallback = null, mountOnVisible 
             request();
           }
         },
-        { rootMargin: '2400px 0px' }
+        { rootMargin: '1200px 0px' }
       );
       observer.observe(placeholderRef.current);
 
@@ -153,15 +155,13 @@ const DeferredMount = ({ children, delay = 100, fallback = null, mountOnVisible 
           if (entries.some((e) => e.isIntersecting)) {
             urgentObserver?.disconnect();
             observer?.disconnect();
-            if (!queued && mounted) {
+            if (mounted) {
               queued = true;
-              enqueueUrgent(() => {
-                if (mounted) setShouldMount(true);
-              });
+              enqueueUrgent(mount);
             }
           }
         },
-        { rootMargin: '900px 0px' }
+        { rootMargin: '400px 0px' }
       );
       urgentObserver.observe(placeholderRef.current);
     }
@@ -170,6 +170,8 @@ const DeferredMount = ({ children, delay = 100, fallback = null, mountOnVisible 
 
     return () => {
       mounted = false;
+      const pending = queue.indexOf(mount);
+      if (pending >= 0) queue.splice(pending, 1);
       observer?.disconnect();
       urgentObserver?.disconnect();
       window.clearTimeout(timerId);
@@ -184,7 +186,7 @@ const DeferredMount = ({ children, delay = 100, fallback = null, mountOnVisible 
     );
   }
 
-  return <>{children}</>;
+  return <Suspense fallback={fallback}>{children}</Suspense>;
 };
 
 export default DeferredMount;
