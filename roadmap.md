@@ -1,5 +1,9 @@
 # Chatbot completion roadmap
 
+# Unlimited economy chat (Oct 13)
+- [ ] Remove guest and member daily chat caps while retaining usage accounting
+- [ ] Default to the cheapest verified supported chat model and test a real reply
+
 # Promotional pop-ups and clone destination (Oct 13)
 - [x] Space automatic promotions at least 15 minutes apart, preserving user-triggered dialogs
 - [x] Update every active clone link to Master's specified remix project, including CSV metadata

@@ -10,8 +10,6 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-const DAILY_LIMIT = 60;
-const GUEST_DAILY_LIMIT = 10;
 const MAX_HISTORY = 120;
 const MAX_CLIENT_HISTORY = 500;
 const EARLIER_CONTEXT_CHARS = 20_000;
@@ -141,7 +139,7 @@ Deno.serve(async (req) => {
     return json({ error: "Invalid request" }, 400);
   }
 
-  // Guests may run tools for free with a smaller daily allowance.
+  // Guests and members can chat without an application-level daily cap.
   const isGuest = !userId;
   let guestKey = "";
   if (isGuest) {
@@ -181,9 +179,8 @@ Deno.serve(async (req) => {
     : recentMessages;
   if (recentMessages.length === 0) return json({ error: "Invalid request" }, 400);
 
-  // Daily usage cap (members get the full allowance, guests a free taster)
+  // Retain usage accounting without imposing a daily message allowance.
   const today = new Date().toISOString().slice(0, 10);
-  const limit = isGuest ? GUEST_DAILY_LIMIT : DAILY_LIMIT;
   const { data: usage } = isGuest
     ? await admin
         .from("gpt_guest_usage")
@@ -198,16 +195,6 @@ Deno.serve(async (req) => {
         .eq("usage_date", today)
         .maybeSingle();
   const used = usage?.message_count ?? 0;
-  if (used >= limit) {
-    return json(
-      {
-        error: isGuest
-          ? `You have used today's ${GUEST_DAILY_LIMIT} free messages. Create a free account to keep going, or come back tomorrow.`
-          : `You have reached today's limit of ${DAILY_LIMIT} messages. It resets at midnight UTC.`,
-      },
-      429,
-    );
-  }
 
   // Device-saved custom bots built in the Matrix studio carry their own instructions.
   const isCustom = slug.startsWith("custom-");
@@ -313,6 +300,7 @@ Deno.serve(async (req) => {
 
   const basePayload = {
     model: selectedModel,
+    ...(selectedModel === "openai/gpt-6-luna" ? { reasoning_effort: "none" } : {}),
     stream: true,
     tools: [IMAGE_TOOL, SEARCH_TOOL],
   };
