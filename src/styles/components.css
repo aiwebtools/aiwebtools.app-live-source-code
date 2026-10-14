@@ -701,6 +701,11 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
 .studio .gpt-room-send:disabled { opacity: .55; }
 .studio .gpt-room-scroll { border-image: none !important; border-radius: 50%; }
 .studio-status { gap: 6px; letter-spacing: 0; }
+.studio .studio-labeled-tools { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; width: 100%; }
+.studio .studio-labeled-tools > .studio-tool-action { display: flex; flex-direction: column; justify-content: center; gap: 4px; width: 100%; height: 54px; min-width: 0; padding: 4px 2px; font-size: 11px; line-height: 1.15; white-space: normal; letter-spacing: 0; }
+.studio .studio-labeled-tools > .studio-tool-action svg { width: 18px; height: 18px; flex-shrink: 0; }
+.studio-attachment-photo { max-height: 180px; max-width: 100%; object-fit: contain; }
+@media (min-width: 768px) { .studio .studio-labeled-tools { grid-template-columns: repeat(8, minmax(0, 1fr)); } }
 .studio-status > span:last-child { min-width: 0; color: hsl(var(--primary)); }
 @media (max-width: 639px) {
   .studio-full { border-radius: 0; min-height: 0; }

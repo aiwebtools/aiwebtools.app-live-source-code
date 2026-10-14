@@ -2,11 +2,19 @@ import Papa from "papaparse";
 
 export const MAX_DATA_FILE_BYTES = 10 * 1024 * 1024;
 export const MAX_ATTACHMENT_CONTEXT = 24000;
-export interface BotAttachment { name: string; size: number; context: string }
+export interface BotAttachment { name: string; size: number; context: string; imageUrl?: string }
+export const ATTACHMENT_ACCEPT = ".jpg,.jpeg,.png,.webp,.gif,.pdf,.docx,.xlsx,.txt,.md,.csv,.tsv,.json,.xml,.html,.css,.js,.ts,.tsx,.jsx,.py,.sql,.yaml,.yml,.log";
+
+export function validateChatFile(name: string, size: number) {
+  if (!size) throw new Error("This file is empty.");
+  if (size > MAX_DATA_FILE_BYTES) throw new Error("Choose a file up to 10 MB.");
+  const extension = name.toLowerCase().match(/\.[^.]+$/)?.[0];
+  if (!extension || !ATTACHMENT_ACCEPT.split(",").includes(extension)) throw new Error("This format cannot be analyzed yet. Use a photo (JPG, PNG, WebP, GIF), PDF, DOCX, XLSX, or text/code/data file. Export older Office files to DOCX/XLSX; convert HEIC to JPG. Audio, video and archives are not supported.");
+}
 
 export function validateDataFile(name: string, size: number) {
   if (size > MAX_DATA_FILE_BYTES) throw new Error("Choose a data file up to 10 MB.");
-  if (!/\.(txt|md|csv|tsv|json)$/i.test(name)) throw new Error("Choose a TXT, Markdown, CSV, TSV or JSON file.");
+  if (!/\.(txt|md|csv|tsv|json|xml|html|css|js|ts|tsx|jsx|py|sql|yaml|yml|log)$/i.test(name)) throw new Error("Choose a supported text, code or data file.");
   if (!size) throw new Error("This file is empty.");
 }
 

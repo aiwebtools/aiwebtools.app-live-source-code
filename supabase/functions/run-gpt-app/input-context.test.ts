@@ -1,9 +1,19 @@
 // @ts-ignore -- Bun test runtime
 import { expect, test } from "bun:test";
-import { normalizeMessage, requiresFirstSearch } from "./input-context.ts";
+import { normalizeMessage, toModelMessage, requiresFirstSearch } from "./input-context.ts";
 
 test("first response must search when the user asks for web research", () => {
   expect(requiresFirstSearch("Search the web for NASA's latest news", "You are Father Time.")).toBe(true);
+});
+test("JPEG attachments become real image inputs, not just filenames", () => {
+  const message = normalizeMessage({ role: "user", content: "What is in this photo?", attachments: [{ name: "photo.jpeg", size: 3000, context: "User photo", imageUrl: "data:image/jpeg;base64,/9j/AAAA" }] });
+  expect(toModelMessage(message).content).toEqual([{ type: "text", text: message.content }, { type: "image_url", image_url: { url: "data:image/jpeg;base64,/9j/AAAA" } }]);
+});
+test("image payloads reject arbitrary URLs, oversized data and assistant uploads", () => {
+  for (const url of ["https://example.org/photo.jpg", "data:text/html;base64,YQ==", "data:image/jpeg;base64," + "A".repeat(3000000)]) {
+    expect(normalizeMessage({ role: "user", content: "Test", attachments: [{ name: "photo.jpg", size: 1000, context: "Photo", imageUrl: url }] }).images).toEqual([]);
+  }
+  expect(normalizeMessage({ role: "assistant", content: "Test", attachments: [{ name: "photo.jpg", size: 1000, context: "Photo", imageUrl: "data:image/jpeg;base64,AAAA" }] }).images).toEqual([]);
 });
 test("instruction-mandated first-response search works without a search button", () => {
   expect(requiresFirstSearch("What happened with NASA launches?", "Always search the web before answering.")).toBe(true);

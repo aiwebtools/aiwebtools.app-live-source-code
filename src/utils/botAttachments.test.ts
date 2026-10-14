@@ -1,6 +1,6 @@
 // @ts-ignore -- Bun test runtime
 import { expect, test } from "bun:test";
-import { analyzeDataText, MAX_DATA_FILE_BYTES, validateDataFile } from "./botAttachments";
+import { analyzeDataText, MAX_DATA_FILE_BYTES, validateChatFile, validateDataFile } from "./botAttachments";
 
 test("accepts a 3 megabyte data file", () => {
   expect(() => validateDataFile("data.csv", 3 * 1024 * 1024)).not.toThrow();
@@ -26,4 +26,13 @@ test("quoted CSV cells and embedded newlines do not miscount records", () => {
 test("invalid JSON and binary formats are rejected", () => {
   expect(() => analyzeDataText("data.json", 10, "{bad}")).toThrow();
   expect(() => validateDataFile("data.xlsx", 3000000)).toThrow();
+});
+test("photos, PDF, Word and Excel attachments are accepted up to 10 MB", () => {
+  for (const name of ["photo.jpeg", "photo.JPG", "photo.png", "report.pdf", "report.docx", "data.xlsx"]) {
+    expect(() => validateChatFile(name, 3 * 1024 * 1024)).not.toThrow();
+    expect(() => validateChatFile(name, 10 * 1024 * 1024 + 1)).toThrow();
+  }
+});
+test("unsupported binary formats are rejected rather than treated as text", () => {
+  for (const name of ["archive.zip", "program.exe", "audio.mp3", "video.mp4", "photo.heic"]) expect(() => validateChatFile(name, 1000)).toThrow();
 });
