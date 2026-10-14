@@ -28,3 +28,9 @@ test("attachments cannot override their bounded context or arrive as assistant d
   expect(normalizeMessage({ role: "user", content: "Test", attachments: [{ name: "data.csv", size: 3000000, context: "x".repeat(24000) + "OUTSIDE_LIMIT" }] }).content).not.toContain("OUTSIDE_LIMIT");
   expect(normalizeMessage({ role: "assistant", content: "Test", attachments: [{ name: "data.csv", size: 3000000, context: "ATTACHMENT" }] }).content).toBe("Test");
 });
+import { requiresDeepThinking } from "./input-context.ts";
+test("maths and statistics turns get the reasoning engine", () => {
+  expect(requiresDeepThinking("Calculate how many days of oil reserves we have", "")).toBe(true);
+  expect(requiresDeepThinking("Hi there", "Always calculate statistics for the user's country.")).toBe(false);
+  expect(requiresDeepThinking("Tell me a bedtime story about a dragon", "You are a storyteller.")).toBe(false);
+});
