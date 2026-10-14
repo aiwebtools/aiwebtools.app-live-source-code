@@ -18,7 +18,7 @@ self.onmessage = async (event: MessageEvent<File>) => {
       const sheets = await readWorkbook(await file.arrayBuffer());
       const summaries = sheets.map((sheet) => {
         const csv = Papa.unparse(sheet.data.map((row) => row.map((value) => value instanceof Date ? value.toISOString() : value ?? "")));
-        return `Sheet: ${sheet.name}\n${analyzeDataText("sheet.csv", Math.max(1, Math.min(file.size, 10 * 1024 * 1024)), csv).context}`;
+        return `Sheet: ${sheet.sheet}\n${analyzeDataText("sheet.csv", Math.max(1, Math.min(file.size, 10 * 1024 * 1024)), csv).context}`;
       });
       if (!summaries.length) throw new Error("This spreadsheet has no worksheets.");
       self.postMessage({ attachment: { name: file.name, size: file.size, context: `Workbook: ${sheets.length} sheets. Cell values only; charts/macros are not executed. Bounded sheet summaries follow.\n${summaries.join("\n\n")}`.slice(0, 24000) } });
