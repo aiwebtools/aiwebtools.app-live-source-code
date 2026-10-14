@@ -1,5 +1,10 @@
 # Chatbot completion roadmap
 
+# Phone chat labels and richer attachments (Oct 14)
+- [ ] Label bottom controls and add phone camera/photo attachment access without crowding the composer.
+- [ ] Support images, PDFs and common document/data formats through the existing bot conversation; preserve context and cheap models.
+- [ ] Run attachment regressions and phone/desktop browser checks; report any AI-credit or physical-camera verification blocker.
+
 # First-response web search and larger data uploads (Oct 13)
 - [x] Repair first-turn search selection and report genuine failures instead of disguising Wikipedia/background knowledge as live web research; real first-turn tool call verified
 - [x] Accept supported data files up to 10 MB; CSV statistics cover every row, JSON/text use labeled bounded excerpts; original instructions and inexpensive models preserved
