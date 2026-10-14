@@ -29,3 +29,4 @@
 - Generate sound effects server-side through the linked ElevenLabs account, preserving provider errors and keeping its key out of the browser.
 - Select first-turn web research when the request or operational instructions require it and expose failed retrieval as a failed activity; never substitute encyclopedia results or model knowledge as successful live web research.
 - Build web workers as ES modules (`worker.format: "es"`); the attachment worker code-splits and IIFE workers fail the build.
+- Log every bot failure (gateway, search, image, attachment, analysis, dropped stream) to gpt_chat_logs with a distinct status, including browser-side reports, so chat-watchdog alerts on all of them; show search failure once per reply and keep notices out of speech.
