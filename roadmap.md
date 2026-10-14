@@ -1,9 +1,10 @@
 # Chatbot completion roadmap
 
 # Phone chat labels and richer attachments (Oct 14)
-- [ ] Label bottom controls and add phone camera/photo attachment access without crowding the composer.
-- [ ] Support images, PDFs and common document/data formats through the existing bot conversation; preserve context and cheap models.
-- [ ] Run attachment regressions and phone/desktop browser checks; report any AI-credit or physical-camera verification blocker.
+- [x] Label bottom controls in a fitted phone grid and add a separate rear-camera/photo attachment control.
+- [x] Support JPG/PNG/WebP/GIF, text-searchable PDF, DOCX, XLSX and text/code/data up to 10 MB; preserve cheap models and saved attachment context. Scanned PDFs, HEIC, legacy Office binaries, archives, audio and video are explicitly unsupported.
+- [x] 21 regression tests pass; JPEG/PDF/DOCX/XLSX/3 MB CSV attachments verified; real photo color and PDF revenue answers correct and restored on reload; 320/390/768/1280px screenshots show no overflow or page errors; build OK, focused lint clean. Server deployed; frontend unpublished.
+- [ ] Physical phone camera capture: rear-camera input verified in browser, but actual camera permission/capture requires a physical phone.
 
 # First-response web search and larger data uploads (Oct 13)
 - [x] Repair first-turn search selection and report genuine failures instead of disguising Wikipedia/background knowledge as live web research; real first-turn tool call verified
