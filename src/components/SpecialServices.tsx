@@ -4336,7 +4336,7 @@ const SpecialServices = () => {
                   className={`w-full bg-gradient-to-r ${gpt.color} hover:opacity-90 text-white text-[10px] md:text-xs py-1.5 font-medium transition-all duration-300 group-hover:shadow-lg ${isHumanRightsCard ? "min-h-11 text-sm font-black uppercase tracking-[0.18em] shadow-[0_0_24px_hsl(var(--primary)/0.55)]" : ""}`}
                   onClick={(e) => handleLaunchGPT(gpt.directUrl, gpt.title, gpt.badge, e)}
                 >
-                  {/https?:\/\/(?:chatgpt\.com|chat\.openai\.com)(?:\/|$)/i.test(gpt.directUrl) ? "CHAT GPT VERSION" : isHumanRightsCard ? "⚖️ Preserve Humanity →" : "🚀 Launch GPT →"}
+                  {/https?:\/\/(?:chatgpt\.com|chat\.openai\.com)(?:\/|$)/i.test(gpt.directUrl) ? "CHAT GPT VERSION" : isHumanRightsCard ? "⚖️ Preserve Humanity →" : "🚀 Launch Custom Chat GPT Version →"}
                 </Button>
               </CardContent>
             </Card>
