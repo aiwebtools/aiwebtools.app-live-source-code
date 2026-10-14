@@ -86,7 +86,11 @@ const webSearch = async (query: string): Promise<string> => {
         if (out.length >= 6) break;
         const g = (tag: string) => dec(item.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`))?.[1] || "");
         const link = g("link");
-        if (link) out.push(`- ${g("title")} (${link}): ${g("description")}`);
+        const text = `${g("title")} ${g("description")} ${link}`.toLowerCase();
+        const words = query.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter((w) => w.length > 2);
+        const hits = words.filter((w) => text.includes(w)).length;
+        // Drop unrelated feed items so junk never reaches the bot as "sources".
+        if (link && words.length && hits >= Math.max(1, Math.ceil(words.length / 2))) out.push(`- ${g("title")} (${link}): ${g("description")}`);
       }
     } catch (e) { console.error("bing feed failed", e); }
   }
