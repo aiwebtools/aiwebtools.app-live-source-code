@@ -17,3 +17,8 @@ export function requiresFirstSearch(message: string, instructions: string) {
   const directed = /(?:must|always|required|first|before (?:answering|responding))[^.\n]{0,100}(?:web search|search the web|search the internet|browse the web)|(?:web search|search the web)[^.\n]{0,100}(?:first|before (?:answering|responding)|every (?:answer|response))/i.test(instructions);
   return request || (directed && message.trim().length > 10 && !/^(?:hi|hello|hey|thanks|thank you)[!.\s]*$/i.test(message));
 }
+/** Turns that need multi-step maths, statistics or forecasting get a reasoning-capable engine. */
+export function requiresDeepThinking(message: string, instructions: string) {
+  const ask = /\b(calculate|calculation|compute|statistic|statistics|percentage|probabilit|forecast|predict|projection|estimate how|how (?:many|much|long)|run the numbers|analy[sz]e (?:the )?data|regression|average|median|compare the numbers)\b/i;
+  return ask.test(message) || (ask.test(instructions) && message.trim().length > 25);
+}

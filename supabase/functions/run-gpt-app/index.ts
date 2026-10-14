@@ -3,7 +3,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import { selectBotModel } from "./model-selection.ts";
 import { readChatStreamEvent } from "./stream-events.ts";
-import { normalizeMessage, toModelMessage, requiresFirstSearch, type IncomingMessage } from "./input-context.ts";
+import { normalizeMessage, toModelMessage, requiresFirstSearch, requiresDeepThinking, type IncomingMessage } from "./input-context.ts";
 import { createLovableAiGatewayRunIdFetch, getLovableAiGatewayResponseHeaders } from "../_shared/run-id.ts";
 
 const corsHeaders = {
@@ -293,9 +293,13 @@ Deno.serve(async (req) => {
       body: JSON.stringify(payload),
     });
 
+  // Maths/statistics turns on the default engine move to the reasoning model; an explicit user pick is always kept.
+  const thinkingTurn = (body.model === undefined || body.model === "default") && requiresDeepThinking(lastUser?.content?.split("USER DATA ATTACHMENT")[0] || "", basePrompt);
+  const turnModel = thinkingTurn ? "google/gemini-3-flash-preview" : selectedModel;
   const basePayload = {
-    model: selectedModel,
-    ...(selectedModel === "openai/gpt-6-luna" ? { reasoning_effort: "none" } : {}),
+    model: turnModel,
+    ...(turnModel === "openai/gpt-6-luna" ? { reasoning_effort: "none" } : {}),
+    ...(thinkingTurn ? { reasoning_effort: "low" } : {}),
     stream: true,
     tools: [IMAGE_TOOL, SEARCH_TOOL],
   };
@@ -312,6 +316,13 @@ Deno.serve(async (req) => {
     let safeMessage = "The AI could not respond right now.";
     try { const parsed = JSON.parse(detail); safeMessage = parsed.message || parsed.error?.message || (typeof parsed.error === "string" ? parsed.error : safeMessage); } catch { /* non-JSON gateway failure */ }
     if (upstream.status === 402) safeMessage = "Our bots are resting — the site's AI credits have run out. Please check back soon.";
+    const { error: logErr } = await admin.from("gpt_chat_logs").insert({
+      app_slug: slug, is_guest: isGuest, user_id: userId ?? null, model: basePayload.model,
+      turn_count: recentMessages.length, prompt_chars: lastUser?.content?.length ?? 0, reply_chars: 0,
+      image_requested: false, image_succeeded: false, latency_ms: 0, status: "gateway_error",
+      error: `HTTP ${upstream.status}: ${(detail || safeMessage).slice(0, 500)}`, user_message: lastUser?.content?.slice(0, 8000) ?? null, assistant_reply: null,
+    });
+    if (logErr) console.error("chat log failed", logErr.message);
     return json({ error: safeMessage }, upstream.status);
   }
 
@@ -327,6 +338,8 @@ Deno.serve(async (req) => {
   let imageSucceeded = false;
   let finalStatus = "ok";
   let finalError: string | null = null;
+  let searchFailed = false;
+  const SEARCH_FALLBACK = "LIVE SEARCH UNAVAILABLE: no sources were retrieved and search is disabled for the rest of this reply. Do NOT call web_search again and do NOT apologize repeatedly. The user has already been shown a one-line notice, so do not restate it. Continue the operational instructions now: use your best background knowledge, label figures as approximate estimates (not verified live data), show any calculation step by step, and finish the task.";
 
   const writeChatLog = async () => {
     const { error } = await admin.from("gpt_chat_logs").insert({
@@ -461,16 +474,22 @@ Deno.serve(async (req) => {
             if (call.name === "web_search") {
               const q = String(parsed.query || "").slice(0, 300);
               controller.enqueue(activityFrame(id, call.name, q, "input-available"));
+              if (searchFailed) {
+                toolResults.push({ role: "tool", tool_call_id: id, content: SEARCH_FALLBACK });
+                controller.enqueue(activityFrame(id, call.name, q, "output-error", "Skipped: live search already unavailable this turn."));
+                continue;
+              }
               controller.enqueue(frame(`\n\n_Searching the web for “${q}”…_\n\n`));
               try {
                 toolResults.push({ role: "tool", tool_call_id: id, content: (await webSearch(q)).slice(0, 6000) });
                 controller.enqueue(activityFrame(id, call.name, q, "output-available"));
               } catch (error) {
                 const reason = error instanceof Error ? error.message : "Live search failed.";
-                finalStatus = "search_error"; finalError = reason;
-                toolResults.push({ role: "tool", tool_call_id: id, content: reason });
+                searchFailed = true;
+                if (finalStatus === "ok") { finalStatus = "search_error"; finalError = `${reason} | query: ${q}`; }
+                toolResults.push({ role: "tool", tool_call_id: id, content: SEARCH_FALLBACK });
                 controller.enqueue(activityFrame(id, call.name, q, "output-error", reason));
-                controller.enqueue(frame(`\n\n_${reason}_\n\n`));
+                controller.enqueue(frame(`\n\n_⚠ Live web sources were unavailable — continuing with background knowledge, clearly labeled._\n\n`));
               }
               continue;
             }
@@ -492,7 +511,7 @@ Deno.serve(async (req) => {
               finalError = error instanceof Error ? error.message : "Unknown picture error";
               toolResult = finalError;
               controller.enqueue(activityFrame(id, call.name, imagePrompt, "output-error", finalError));
-              controller.enqueue(frame(`\n\n_${toolResult}_\n\n`));
+              controller.enqueue(frame(`\n\n_⚠ ${toolResult}_\n\n`));
             }
             toolResults.push({ role: "tool", tool_call_id: id, content: toolResult });
           }
@@ -502,7 +521,7 @@ Deno.serve(async (req) => {
             tool_calls: used.map((c) => ({ id: c.id, type: "function", function: { name: c.name, arguments: c.args || "{}" } })),
           } as ChatMsg, ...toolResults);
           turnTextStart = assistant.length;
-          const follow = await callGateway({ ...basePayload, messages: convo });
+          const follow = await callGateway({ ...basePayload, ...(searchFailed ? { tools: [IMAGE_TOOL] } : {}), messages: convo });
           if (!follow.ok || !follow.body) {
             const detail = await follow.json().catch(() => ({}));
             finalStatus = "stream_error";

@@ -60,6 +60,7 @@ interface RoomTrouble {
   replyFailures: number;
   imageFailures: number;
   emptyReplies: number;
+  toolFailures: number;
   lastError: string | null;
 }
 
@@ -112,12 +113,13 @@ Deno.serve(async (req) => {
     const slug = (row as { app_slug?: string }).app_slug || "unknown";
     let r = rooms.get(slug);
     if (!r) {
-      r = { slug, total: 0, replyFailures: 0, imageFailures: 0, emptyReplies: 0, lastError: null };
+      r = { slug, total: 0, replyFailures: 0, imageFailures: 0, emptyReplies: 0, toolFailures: 0, lastError: null };
       rooms.set(slug, r);
     }
     r.total += 1;
     const status = (row as { status?: string }).status || "";
-    if (status === "stream_error") r.replyFailures += 1;
+    if (status === "stream_error" || status === "gateway_error") r.replyFailures += 1;
+    if (status === "search_error" || status === "attachment_error" || status === "analysis_error") r.toolFailures += 1;
     if (status === "empty_reply") r.emptyReplies += 1;
     if (status === "image_error") r.imageFailures += 1;
     const imageRequested = (row as { image_requested?: boolean }).image_requested;
@@ -128,10 +130,10 @@ Deno.serve(async (req) => {
   }
 
   const troubled = Array.from(rooms.values())
-    .filter((r) => r.replyFailures + r.imageFailures + r.emptyReplies > 0)
+    .filter((r) => r.replyFailures + r.imageFailures + r.emptyReplies + r.toolFailures > 0)
     .sort((a, b) =>
-      (b.replyFailures + b.imageFailures + b.emptyReplies) -
-      (a.replyFailures + a.imageFailures + a.emptyReplies)
+      (b.replyFailures + b.imageFailures + b.emptyReplies + b.toolFailures) -
+      (a.replyFailures + a.imageFailures + a.emptyReplies + a.toolFailures)
     );
 
   const totalMessages = (logs || []).length;
@@ -165,6 +167,7 @@ Deno.serve(async (req) => {
         <td align="right" style="padding:4px 8px;color:#ff6b6b;">${r.replyFailures}</td>
         <td align="right" style="padding:4px 8px;color:#ffd166;">${r.emptyReplies}</td>
         <td align="right" style="padding:4px 8px;color:#f78fb3;">${r.imageFailures}</td>
+        <td align="right" style="padding:4px 8px;color:#7ee0ff;">${r.toolFailures}</td>
         <td style="padding:4px 8px;font-size:11px;">${escapeHtml(r.lastError || "—")}</td>
       </tr>`).join("");
 
@@ -185,7 +188,7 @@ Deno.serve(async (req) => {
                 <tr>
                   <th align="left">Room</th><th align="right">Msgs</th>
                   <th align="right">Reply fails</th><th align="right">Empty</th>
-                  <th align="right">Picture fails</th><th align="left">Last error</th>
+                  <th align="right">Picture fails</th><th align="right">Search/file fails</th><th align="left">Last error</th>
                 </tr>
                 ${rowsHtml}
               </table>
