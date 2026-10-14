@@ -76,7 +76,7 @@ const webSearch = async (query: string): Promise<string> => {
   if (!out.length) {
     // Backup source: Bing's results feed (approved by the owner as the free fallback).
     try {
-      const r = await fetch(`https://www.bing.com/search?format=rss&setlang=en&cc=us&q=${encodeURIComponent(query)}`, {
+      const r = await fetch(`https://www.bing.com/search?format=rss&q=${encodeURIComponent(query)}`, {
         headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36", "Accept-Language": "en-US,en;q=0.9" },
       });
       if (!r.ok) throw new Error(`Bing feed returned ${r.status}`);
