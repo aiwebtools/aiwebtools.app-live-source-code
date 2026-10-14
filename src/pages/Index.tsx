@@ -11,11 +11,16 @@ import { lazyWithRetry as lazy } from "@/utils/lazyWithRetry";
 import { useMobile } from "@/hooks/useMobile";
 import CategoryPageSelection from "@/components/CategoryPageSelection";
 
-const SpecialServices = lazy(() => import("@/components/SpecialServices"));
+const loadSpecialServices = () => import("@/components/SpecialServices");
+const loadFeaturedTools = () => import("@/components/LazyFeaturedTools");
+// Warm the featured GPT cards immediately (even behind the access/disclaimer
+// screens) so they are ready the moment the visitor reaches them.
+if (typeof window !== "undefined") { void loadSpecialServices().catch(() => {}); window.setTimeout(() => { void loadFeaturedTools().catch(() => {}); }, 400); }
+const SpecialServices = lazy(loadSpecialServices);
 const Footer = lazy(() => import("@/components/Footer"));
 const ScrollToTop = lazy(() => import("@/components/ui/scroll-to-top"));
 const BookPromotionCard = lazy(() => import("@/components/BookPromotionCard"));
-const LazyFeaturedTools = lazy(() => import("@/components/LazyFeaturedTools"));
+const LazyFeaturedTools = lazy(loadFeaturedTools);
 const LazySearchPortal = lazy(() => import("@/components/LazySearchPortal"));
 const InteractiveMatrixBackground = lazy(() => import("@/components/InteractiveMatrixBackground"));
 const AnimatedBackground = lazy(() => import("@/components/AnimatedBackground"));
