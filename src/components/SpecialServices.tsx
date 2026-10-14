@@ -262,7 +262,7 @@ const HeroImage = ({
       alt={`${title} - ${description?.slice(0, 100) || 'AI Tool'}...`}
       title={`${title} AI Tool - ${badge}`}
       className="w-full h-full object-cover"
-      loading="lazy"
+      loading="eager"
       decoding="async"
       itemProp="image"
       onError={() => setHasError(true)}
