@@ -3,7 +3,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import { selectBotModel } from "./model-selection.ts";
 import { readChatStreamEvent } from "./stream-events.ts";
-import { normalizeMessage, requiresFirstSearch, type IncomingMessage } from "./input-context.ts";
+import { normalizeMessage, toModelMessage, requiresFirstSearch, type IncomingMessage } from "./input-context.ts";
 import { createLovableAiGatewayRunIdFetch, getLovableAiGatewayResponseHeaders } from "../_shared/run-id.ts";
 
 const corsHeaders = {
@@ -79,7 +79,7 @@ const webSearch = async (query: string): Promise<string> => {
 
 interface ChatMsg {
   role: string;
-  content: string | null;
+  content: string | { type: "text"; text: string }[] | { type: "image_url"; image_url: { url: string } }[] | ReturnType<typeof toModelMessage>["content"] | null;
   tool_calls?: unknown;
   tool_call_id?: string;
 }
@@ -303,7 +303,7 @@ Deno.serve(async (req) => {
   const upstream = await callGateway({
     ...basePayload,
     ...(requiresFirstSearch(lastUser?.content?.split("USER DATA ATTACHMENT")[0] || "", basePrompt) ? { tool_choice: { type: "function", function: { name: "web_search" } } } : {}),
-    messages: [{ role: "system", content: systemPrompt }, ...messages],
+    messages: [{ role: "system", content: systemPrompt }, ...messages.map((message) => toModelMessage({ ...message, images: "images" in message ? message.images : [] }))],
   });
 
   if (!upstream.ok || !upstream.body) {
@@ -446,7 +446,7 @@ Deno.serve(async (req) => {
     async start(controller) {
       try {
         let calls = await pump(upstream, controller);
-        const convo: ChatMsg[] = [{ role: "system", content: systemPrompt }, ...messages];
+        const convo: ChatMsg[] = [{ role: "system", content: systemPrompt }, ...messages.map((message) => toModelMessage({ ...message, images: "images" in message ? message.images : [] }))];
         let turnTextStart = 0;
         for (let round = 0; round < 4 && calls.length > 0; round++) {
           const used = calls.filter((c) => c.name === "generate_image" || c.name === "web_search").slice(0, 4);
