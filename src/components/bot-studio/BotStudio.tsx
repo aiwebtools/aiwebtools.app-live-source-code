@@ -162,12 +162,16 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
       }
       if (!assistant.trim()) setNotice("The reply ended without an answer. Your message is saved; please try again.");
     } catch (error) {
-      if (!controller.signal.aborted) setNotice(error instanceof Error ? error.message : "The reply could not load.");
+      if (!controller.signal.aborted) { const msg = error instanceof Error ? error.message : "The reply could not load."; setNotice(msg); reportFailure("stream_error", msg); }
     } finally {
       commit({ ...base, serverId, messages: assistant || activities.length ? [...messages, { role: "assistant", content: assistant, activities: activities.map((activity) => activity.state === "input-available" ? { ...activity, state: "output-error", error: "This action was interrupted." } : activity) }] : messages, updatedAt: Date.now() });
       setStreaming(false); abortRef.current = null;
     }
   }, [app.slug, app.custom, app.display_name, app.tagline, celebrations, celebrationSound, commit, session, speech, streaming, attachment, readingFile]);
+  /** Fire-and-forget failure report so the chat watchdog sees browser-side problems too. */
+  const reportFailure = (kind: string, message: string, detail = "") => {
+    void fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/run-gpt-app`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ slug: app.slug, report: { kind, message, detail } }) }).catch(() => undefined);
+  };
   const attachFile = async (file: File) => {
     attachmentWorker.current?.terminate();
     try { validateChatFile(file.name, file.size); } catch (error) { setNotice(error instanceof Error ? error.message : "Unsupported file."); return; }
@@ -175,15 +179,15 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
     try {
       const visual = await prepareVisualAttachment(file);
       if (visual) { setAttachment(visual); setReadingFile(false); return; }
-    } catch (error) { setNotice(error instanceof Error ? error.message : "This file could not be opened."); setReadingFile(false); return; }
+    } catch (error) { const msg = error instanceof Error ? error.message : "This file could not be opened."; setNotice(msg); reportFailure("attachment_error", msg, `${file.type || "unknown"} ${(file.size / 1048576).toFixed(2)}MB`); setReadingFile(false); return; }
     const worker = new Worker(new URL("../../utils/botAttachment.worker.ts", import.meta.url), { type: "module" });
     attachmentWorker.current = worker;
     worker.onmessage = (event: MessageEvent<{ attachment?: BotAttachment; error?: string }>) => {
       if (event.data.attachment) setAttachment(event.data.attachment);
-      if (event.data.error) setNotice(event.data.error);
+      if (event.data.error) { setNotice(event.data.error); reportFailure("analysis_error", event.data.error, file.type || file.name.split(".").pop() || ""); }
       setReadingFile(false); worker.terminate(); attachmentWorker.current = null;
     };
-    worker.onerror = () => { setNotice("This file could not be analyzed. Please try again."); setReadingFile(false); worker.terminate(); attachmentWorker.current = null; };
+    worker.onerror = () => { setNotice("This file could not be analyzed. Please try again."); reportFailure("analysis_error", "File worker crashed", file.type || ""); setReadingFile(false); worker.terminate(); attachmentWorker.current = null; };
     worker.postMessage(file);
   };
   const mic = useVoiceInput((text) => { if (streaming) setInput(text); else void send(text); }, speech.pauseForMicrophone, speech.resumeAfterMicrophone);

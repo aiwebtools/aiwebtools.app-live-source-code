@@ -127,11 +127,26 @@ Deno.serve(async (req) => {
     guestId?: string;
     model?: string;
     custom?: { name?: string; tagline?: string; instructions?: string };
+    report?: { kind?: string; message?: string; detail?: string };
   } = {};
   try {
     body = await req.json();
   } catch {
     return json({ error: "Invalid request" }, 400);
+  }
+
+  // Browser-side failures (file reading, photo prep, dropped streams) are logged for the watchdog without any AI call.
+  if (body.report) {
+    const kinds = new Set(["attachment_error", "analysis_error", "stream_error", "client_error"]);
+    const kind = kinds.has(String(body.report.kind)) ? String(body.report.kind) : "client_error";
+    const { error: logErr } = await admin.from("gpt_chat_logs").insert({
+      app_slug: String(body.slug || "unknown").slice(0, 120), is_guest: !userId, user_id: userId ?? null, model: "client",
+      turn_count: 0, prompt_chars: 0, reply_chars: 0, image_requested: false, image_succeeded: false, latency_ms: 0,
+      status: kind, error: `${String(body.report.message || "").slice(0, 400)}${body.report.detail ? ` | ${String(body.report.detail).slice(0, 200)}` : ""}`,
+      user_message: null, assistant_reply: null,
+    });
+    if (logErr) console.error("client report log failed", logErr.message);
+    return json({ ok: true });
   }
 
   // Guests and members can chat without an application-level daily cap.
