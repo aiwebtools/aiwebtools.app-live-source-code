@@ -1,9 +1,10 @@
 # Chatbot completion roadmap
 
 # Full original instruction audit (Oct 15)
-- [ ] Compare every hosted bot with its corresponding original document and seed instructions; preserve variations and community-authored prompts.
-- [ ] Restore confirmed shortened/missing instructions through the shared server-only resolver, without inventing replacements or changing bot identities.
-- [ ] Add provenance/preservation tests, deploy and verify real bot replies; identify any originals that cannot be located.
+- [x] Audit 425 hosted bots: 336 seeded official bots, 83 summary-only official rooms and six community bots. Match exact source filenames and existing text against both original ZIP sets; preserve alternate versions and genuinely short authored instructions.
+- [x] Install full server-only brains for 418 official bots; restore 83 generic room summaries and 13 clipped ordinary seed originals, preserving complete paragraph text. Synchronize 335 seed records; leave community instructions, identities, models and media unchanged.
+- [x] 435 tests pass, including individual source/hash/model-prefix checks for all 418 brains. Deploy run-gpt-app, seed-gpt-apps and watchdog; real 3D Print reply follows source diagnostics/required questions, screenshot verified, no page errors, build OK. All 425 bots remain in directory.
+- [ ] Gospel of Deployment source is a 1,965,857-character anthology, not a normal operational prompt. Full-book retrieval requires a separate design; its chat now explicitly reports/logs instruction_error instead of silently using the first 9,000 characters. No source text deleted, book remains archived, no paid service added.
 
 # Professional bot names and instruction fidelity (Oct 15)
 - [x] Clean 13 confirmed compliance/version/document labels and spelling errors in hosted names and seed records; preserve all identifiers, prompts, original documents and media.
