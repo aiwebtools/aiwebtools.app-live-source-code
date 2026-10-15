@@ -25,6 +25,8 @@ import { useRecentlyVisitedTools } from "@/hooks/useRecentlyVisitedTools";
 import { playMtvFlash } from "@/utils/mtvFlash";
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import DownloadLibraryButton from "@/components/DownloadLibraryButton";
+import BotSuiteMenuSection from "./BotSuiteMenuSection";
+
 
 const DesktopMenu = () => {
   const navigate = useNavigate();
@@ -208,6 +210,7 @@ const DesktopMenu = () => {
                 </DropdownMenuItem>
               </div>
               
+<BotSuiteMenuSection onNavigate={closeMenu} />
               {/* Compact Download Button */}
               <DownloadLibraryButton
                 compact

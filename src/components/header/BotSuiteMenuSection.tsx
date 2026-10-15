@@ -1,0 +1,76 @@
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Bot, ChevronDown, Search, Wand2 } from "lucide-react";
+import { loadStudioBots, type StudioBot } from "@/components/bot-studio/botCatalog";
+import { groupBotsByCategory } from "@/components/bot-studio/botCategories";
+
+/** Header fast-track into every in-site bot room plus the community bot builder. */
+export default function BotSuiteMenuSection({ onNavigate }: { onNavigate?: () => void }) {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [bots, setBots] = useState<StudioBot[] | null>(null);
+  const [error, setError] = useState("");
+  const [query, setQuery] = useState("");
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!open || bots) return;
+    loadStudioBots().then(setBots).catch((e: Error) => setError(e.message));
+  }, [open, bots]);
+
+  const groups = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return groupBotsByCategory((bots || []).filter((b) => !q || `${b.display_name} ${b.tagline || ""}`.toLowerCase().includes(q)));
+  }, [bots, query]);
+
+  const go = (path: string) => { onNavigate?.(); navigate(path); };
+  const stop = (e: React.SyntheticEvent) => e.stopPropagation();
+
+  return (
+    <div className="mb-4 grid gap-2" onKeyDown={stop} onPointerDown={stop}>
+      <button type="button" aria-expanded={open} onClick={() => setOpen((v) => !v)}
+        className="flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border border-primary/60 bg-primary/10 px-3 text-left text-sm font-bold text-primary hover:bg-primary/20">
+        <span className="flex items-center gap-2"><Bot className="h-4 w-4" />AWT Custom Creative Bot Suite{bots ? <span className="text-[10px] font-normal opacity-70">{bots.length}</span> : null}</span>
+        <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+      <button type="button" onClick={() => go("/app/custom-gpt-maker?builder=1")}
+        className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-accent/60 bg-accent/10 px-3 text-sm font-bold text-accent-foreground hover:bg-accent/20">
+        <Wand2 className="h-4 w-4" />CUSTOM GPT MAKER
+      </button>
+      {open && (
+        <div className="rounded-lg border border-primary/30 bg-background/95 p-2">
+          <label className="flex items-center gap-2 rounded-md border border-primary/30 px-2">
+            <Search className="h-4 w-4 text-primary" />
+            <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Find a bot…" aria-label="Find a bot in the AWT bot suite"
+              className="h-9 w-full bg-transparent text-sm text-foreground outline-none" />
+          </label>
+          <div className="mt-2 max-h-80 overflow-y-auto overscroll-contain">
+            {error && <p className="p-2 text-xs text-destructive">{error}</p>}
+            {!bots && !error && <p className="p-2 text-xs text-muted-foreground">Loading bots…</p>}
+            {bots && groups.length === 0 && <p className="p-2 text-xs text-muted-foreground">No bots match.</p>}
+            {groups.map(([category, families]) => {
+              const expanded = Boolean(query) || openGroup === category;
+              return (
+                <div key={category} className="border-b border-primary/10 last:border-0">
+                  <button type="button" onClick={() => setOpenGroup(expanded && !query ? null : category)} aria-expanded={expanded}
+                    className="flex w-full items-center justify-between py-2 text-left text-xs font-semibold uppercase tracking-wide text-primary">
+                    {category}<span className="text-[10px] text-muted-foreground">{families.length}</span>
+                  </button>
+                  {expanded && families.slice(0, query ? 40 : 400).map(({ key, base, versions }) => (
+                    <div key={key} className="flex items-center gap-1 py-0.5 pl-2">
+                      <button type="button" onClick={() => go(`/app/${base.slug}`)} className="min-w-0 flex-1 truncate rounded px-1 py-1 text-left text-sm text-foreground hover:bg-primary/15">{base.display_name}</button>
+                      {versions.length > 1 && versions.map((v, i) => (
+                        <button key={v.slug} type="button" onClick={() => go(`/app/${v.slug}`)} aria-label={`${base.display_name} version ${i + 1}`}
+                          className="shrink-0 rounded border border-primary/40 px-1 text-[10px] text-primary hover:bg-primary/20">V{i + 1}</button>
+                      )).slice(0, 8)}
+                    </div>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

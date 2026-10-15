@@ -21,6 +21,8 @@ import GlobalSearchBar from "@/components/LazyGlobalSearchBar";
 import Logo from "./Logo";
 import { useRecentlyVisitedTools } from "@/hooks/useRecentlyVisitedTools";
 import DownloadLibraryButton from "@/components/DownloadLibraryButton";
+import BotSuiteMenuSection from "./BotSuiteMenuSection";
+
 
 const TabletMenu = () => {
   const navigate = useNavigate();
@@ -276,6 +278,7 @@ const TabletMenu = () => {
                   <a href="tel:+14758008096">475-800-8096</a>
                 </DropdownMenuItem>
 
+<BotSuiteMenuSection onNavigate={() => setIsMenuOpen(false)} />
                 {/* Download ALL AI tools CSV - tablet only */}
                 <div className="py-1">
                   <DownloadLibraryButton

@@ -21,6 +21,8 @@ import Logo from "./Logo";
 import GlobalSearchBar, { prefetchGlobalSearchBar } from "@/components/LazyGlobalSearchBar";
 import JoinEmailListButton from "@/components/JoinEmailListButton";
 import DownloadLibraryButton from "@/components/DownloadLibraryButton";
+import BotSuiteMenuSection from "./BotSuiteMenuSection";
+
 
 import { useRecentlyVisitedTools } from "@/hooks/useRecentlyVisitedTools";
 
@@ -301,6 +303,7 @@ const MobileMenu = () => {
                 <GlobalSearchBar autoFocus />
               </div>
 
+<BotSuiteMenuSection onNavigate={closeMenu} />
               {/* Downloads stay above the fold when opened from the header icon. */}
               <div className="mb-4 grid gap-2 border-y border-primary/30 py-3">
                 <DownloadLibraryButton
