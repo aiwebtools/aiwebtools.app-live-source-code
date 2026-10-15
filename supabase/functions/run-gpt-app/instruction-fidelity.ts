@@ -1,9 +1,9 @@
-import alanWattsOriginal from "./alan-watts-original.json" with { type: "json" };
+import officialInstructions from "./official-instructions.json" with { type: "json" };
 
-// Recover the documented source only for the known truncated legacy prompt.
+const originals: Record<string, string> = officialInstructions;
+// Official document text is the brain; community and device instructions remain their authors' own.
 export function resolveOperationalInstructions(saved: string, slug: string): string {
-  return slug === "alan-watts-gpt-page" && saved.startsWith("You are Alan Watts GPT, a philosophical guide in the spirit of Alan Watts,") && saved.length < 1000
-    ? alanWattsOriginal : saved;
+  return originals[slug] ?? saved;
 }
 
 // Runtime guidance is separate from the saved verbatim operational instructions.

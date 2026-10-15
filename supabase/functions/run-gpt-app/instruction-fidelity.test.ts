@@ -11,9 +11,10 @@ test("Alan's recovered runtime prompt matches the existing original DOCX text", 
   const original = [...xml.matchAll(/<w:p(?:\s[^>]*)?>[\s\S]*?<\/w:p>/g)].map(([p]) => [...p.matchAll(/<w:t(?:\s[^>]*)?>([\s\S]*?)<\/w:t>/g)].map((m) => decode(m[1])).join("")).join("\n");
   expect(resolveOperationalInstructions("You are Alan Watts GPT, a philosophical guide in the spirit of Alan Watts, created by AIWebTools.ai.", "alan-watts-gpt-page")).toBe(original);
 });
-test("specific recovery never replaces other bots or an updated Alan prompt", () => {
-  expect(resolveOperationalInstructions("New original", "alan-watts-gpt-page")).toBe("New original");
-  expect(resolveOperationalInstructions("Original cannabis instructions", "cannabis-gpt-not-gpt4o1-compliant")).toBe("Original cannabis instructions");
+test("community, device and unknown bots retain their own complete authored instructions", () => {
+  for (const slug of ["community-my-guide", "custom-my-guide", "unregistered-bot"]) {
+    expect(resolveOperationalInstructions("My full original\n  with spacing", slug)).toBe("My full original\n  with spacing");
+  }
 });
 
 test("verbatim instructions remain the exact prefix including whitespace", () => {
