@@ -58,7 +58,23 @@ const SEARCH_TOOL = {
 
 const webSearch = async (query: string): Promise<string> => {
   const out: string[] = [];
-  try {
+  // Primary: Perplexity Search (managed connection, 4 short results to keep cost/tokens minimal).
+  const lovKey = Deno.env.get("LOVABLE_API_KEY"), pplxKey = Deno.env.get("PERPLEXITY_API_KEY");
+  if (lovKey && pplxKey) {
+    try {
+      const r = await fetch("https://connector-gateway.lovable.dev/perplexity/search", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${lovKey}`, "X-Connection-Api-Key": pplxKey, "Content-Type": "application/json" },
+        body: JSON.stringify({ query: query.slice(0, 300), max_results: 4 }),
+      });
+      if (!r.ok) throw new Error(`Perplexity search [${r.status}]: ${(await r.text()).slice(0, 300)}`);
+      const data = await r.json();
+      for (const x of (data.results || []).slice(0, 4)) {
+        if (x?.url) out.push(`- ${x.title || x.url} (${x.url})${x.date ? ` [${x.date}]` : ""}: ${String(x.snippet || "").replace(/\s+/g, " ").slice(0, 400)}`);
+      }
+    } catch (e) { console.error("perplexity failed", e); }
+  }
+  if (!out.length) try {
     const r = await fetch(`https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`, {
       headers: { "User-Agent": "Mozilla/5.0 (compatible; AIWebToolsBot/1.0)" },
     });
@@ -77,8 +93,9 @@ const webSearch = async (query: string): Promise<string> => {
   if (!out.length) {
     // Backup source: Bing's results feed (approved by the owner as the free fallback).
     try {
-      const r = await fetch(`https://www.bing.com/search?format=rss&q=${encodeURIComponent(query)}`, {
-        headers: { Accept: "*/*", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36" },
+      // Force US-English market so server location (e.g. Sweden) cannot skew results.
+      const r = await fetch(`https://www.bing.com/search?format=rss&mkt=en-US&setlang=en-US&cc=US&q=${encodeURIComponent(query)}`, {
+        headers: { Accept: "*/*", "Accept-Language": "en-US,en;q=0.9", Cookie: "_EDGE_CD=m=en-us&u=en-us; SRCHHPGUSR=SRCHLANG=en&ADLT=STRICT", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36" },
       });
       if (!r.ok) throw new Error(`Bing feed returned ${r.status}`);
       const xml = await r.text();
