@@ -12,7 +12,7 @@ const archives = new Map<string, ReturnType<typeof unzipSync>>();
 const decode = (s: string) => s.replace(/&#x([\da-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16))).replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n))).replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
 function documentText(data: Uint8Array): string {
   const xml = new TextDecoder().decode(unzipSync(data)["word/document.xml"]);
-  return [...xml.matchAll(/<w:p(?:\s[^>]*)?>[\s\S]*?<\/w:p>/g)].map(([paragraph]) =>
+  return [...xml.matchAll(/<w:p(?:\s[^>]*?)?\/>|<w:p(?:\s[^>]*)?>[\s\S]*?<\/w:p>/g)].map(([paragraph]) =>
     [...paragraph.matchAll(/<w:t(?:\s[^>]*)?>([\s\S]*?)<\/w:t>|<w:(tab|br|cr)\b[^>]*\/>/g)]
       .map((match) => match[2] ? match[2] === "tab" ? "\t" : "\n" : decode(match[1])).join("")
   ).join("\n");
