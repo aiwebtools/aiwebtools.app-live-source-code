@@ -253,7 +253,13 @@ Deno.serve(async (req) => {
       .eq("app_slug", slug)
       .maybeSingle();
     if (!promptRow?.system_prompt) return json({ error: "This tool is not available." }, 404);
-    basePrompt = resolveOperationalInstructions(promptRow.system_prompt, slug);
+    try {
+      basePrompt = resolveOperationalInstructions(promptRow.system_prompt, slug);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Original operational instructions are unavailable.";
+      await admin.from("gpt_chat_logs").insert({ app_slug: slug, is_guest: !userId, user_id: userId, status: "instruction_error", error: message, turn_count: messages.length });
+      return json({ error: message }, 503);
+    }
   }
   const selectedModel = selectBotModel(app.model || "openai/gpt-6-astra", body.model);
   if (!selectedModel) return json({ error: "That model is not supported by this assistant." }, 400);

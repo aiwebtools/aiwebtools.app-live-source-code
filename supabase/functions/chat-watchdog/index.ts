@@ -118,7 +118,7 @@ Deno.serve(async (req) => {
     }
     r.total += 1;
     const status = (row as { status?: string }).status || "";
-    if (status === "stream_error" || status === "gateway_error") r.replyFailures += 1;
+    if (status === "stream_error" || status === "gateway_error" || status === "instruction_error") r.replyFailures += 1;
     if (status === "search_error" || status === "attachment_error" || status === "analysis_error") r.toolFailures += 1;
     if (status === "empty_reply") r.emptyReplies += 1;
     if (status === "image_error") r.imageFailures += 1;

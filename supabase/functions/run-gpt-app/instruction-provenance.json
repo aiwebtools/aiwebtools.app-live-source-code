@@ -1,0 +1,2757 @@
+{
+  "ad-maker-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Ad Maker GPT operational instructions.docx",
+    "file_sha256": "d3757f4a92803c131676c1ea1a2a7a9e36875eef45b4aecabbe8ad4f6daaed3e",
+    "chars": 8000,
+    "sha256": "fb6f3a775075ddfd7256bf9ebea0728a6bbc9235e8e9f6a021eeb6b72e20af56"
+  },
+  "agrio-farming-optimization-planner": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/Agrio_ Farming Optimization Planner- Operational instructions.docx",
+    "file_sha256": "445beb09a35698bf00589f01b31041113f2aecb5f1d32865e522d5371f3794a8",
+    "chars": 7465,
+    "sha256": "808db8be2d1664f435636cf0b820b19d38a08150f0731abdd5fc6e788265c450"
+  },
+  "agronomus-the-ai-farmer": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Agronomus, the AI Farmer, instructions.docx",
+    "file_sha256": "8beb1408d6fdcebe6f3b3505c46275a0a90e26aa7ea8b4e56c149da993240395",
+    "chars": 7991,
+    "sha256": "b7a105699f949ee6cc4f636016dcf2ac49164c14a3032b222af4b087c0b091e8"
+  },
+  "ai-tools-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/AI Tools GPT instructions.docx",
+    "file_sha256": "e49f6e606679ed9ef93e477eebb8494db0cf8c5482238d26d8aeed4166a213aa",
+    "chars": 8026,
+    "sha256": "7f6197ae01485422e9bb83c8fa546873557f5dfa6398128ed532458734eff268"
+  },
+  "albert-einstein-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/Albert Einstein GPT Operational Instructions- 2_12_25.docx",
+    "file_sha256": "29a8196389078315c605322847325ca674caee29d5f0a34ded055c7753076b75",
+    "chars": 7996,
+    "sha256": "18d5e9904a0b13e825b4fa428e3a20379be837bf185b12fcf2e313c3e8fdfbb1"
+  },
+  "alex-human-testimony-writer-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/ALEX HUMAN TESTIMONY WRITER GPT NEW OPERATIONAL INSTRUCTIONS 12 5 2024.docx",
+    "file_sha256": "d30322e55044f7cc4ceb252c00ffa21738a2d14dd9bffd6e1cd34d9379408281",
+    "chars": 7917,
+    "sha256": "b4b0fe47ba6a08315fea0783399526fa4d119fd5d3e5917523fcf29b55fa6ef2"
+  },
+  "aqualis-oceanic-health-monitor-pollution-forecaster": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Aqualis_ Oceanic Health Monitor & Pollution Forecaster- Operational Instructions.docx",
+    "file_sha256": "3074409221e26bc060f9ee897f6a1c05c26e78ef7f7a0f730e5c87cd8344356a",
+    "chars": 7472,
+    "sha256": "176c1edb63cda9990451d5a5c2a624f8eecc6ac7a33f2cb24f864831435e6253"
+  },
+  "autochat-gpt-august": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/AUTOCHAT GPT Operational instructions (NEW AUGUST 8 27 24 version).docx",
+    "file_sha256": "46b158d652ab2efca3f3296aa4ba9384d48537cbc65cea98bb6d3cb566d5fcd5",
+    "chars": 7871,
+    "sha256": "9e406dbc41cff1b5ebb4f834f8e912e31b779f72f752aec255b947f292fd76e6"
+  },
+  "automobile-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/Automobile GPT Operational Instructions_.docx",
+    "file_sha256": "0f8840a34540213b6fc3053fd07f2fcb7d01a7aada087a8274eb7a5ebe08be25",
+    "chars": 8001,
+    "sha256": "7088ec24dcff7173a02b857fbabad4e531a0b67e0bc475082430f2c30afc3442"
+  },
+  "binary-text-converter-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/binary text converter gpt operational instructions_.docx",
+    "file_sha256": "5d4bfdc98d4a6049a3e349db89864af5be84d2d2fddf00f2bd0f96858bdbb67c",
+    "chars": 7590,
+    "sha256": "85e9b102088249b17a4c38891269a0ed8336936b85dc1f24b276c21994a5960f"
+  },
+  "blueberry-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/BLUEBERRY GPT FULL PACKAGE , directions, preprompt, and Needed Upload All in 1 FINAL.docx",
+    "file_sha256": "f236b9a1b00699ea9b00870792a2ce42f2ac3eb21c08f1e120426d2e9ce49b16",
+    "chars": 32292,
+    "sha256": "f0ebff7577397eb4c21ef4f503c73b4e4e9b10a63f348d0cbee5ac115323baec"
+  },
+  "book-writer-gpt-no-longer-segmented": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/FINAL BOOK WRITER GPT INSTRUCTIONS (NO LONGER SEGMENTED).docx",
+    "file_sha256": "16863c6af669335ff3854d5963e1c0dea4390f13508a521c9180e5f97899f769",
+    "chars": 16330,
+    "sha256": "106a0da058ac8877b6dc2863ff131d8e4d4fb3ed4dbb666a98d5e727e40f40a8"
+  },
+  "buildyourgpts": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/BuildYourGPTs directions.docx",
+    "file_sha256": "fb3ff40b0fce6f13cc56933aaa665a81a65b63f9bcb76c88bb3a6b6257a835bd",
+    "chars": 5483,
+    "sha256": "da86cd26256665e0c9d8e376b58d1707b688f75f6f77403b80e4b55f7e7630eb"
+  },
+  "business-plan-generator-gpt": {
+    "source": "seed-gpt-apps/apps.json",
+    "note": "preserved full existing text; archive variants differ",
+    "chars": 7096,
+    "sha256": "9649260a3cc13d5992591d9efac12d55a5bf0e4a94e9e7608aa85656c1a24192"
+  },
+  "cannabis-gpt-not-gpt4o1-compliant": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/CANNABIS GPT OPERATIONAL INSTRUCTIONS OLD (NOT GPT4o1 Compliant).docx",
+    "file_sha256": "6eb0e669146c1030c16eeb504f468298fc7b1622ce26487dfd400241850864c4",
+    "chars": 7992,
+    "sha256": "f2dab097ae82ab08e6fac19e05eb0df6ecdb491ebf14f45d57b065fd54c04978"
+  },
+  "ccsba-receipt-generator-gpt-for-donors": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/CCSBA Receipt Generator GPT (For DONORS)_ Operational Instructions.docx",
+    "file_sha256": "dd3fcccb5c503a8f056e20aa9328d67ffa3ce9e9be994bbf9d89ba9ce3c63c8f",
+    "chars": 7979,
+    "sha256": "4d84292248ac37e9c3bf040fa025b985350741b4580d7845341ca00ab1d8ded0"
+  },
+  "celebrity-chatline-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Celebrity Chatline GPT instructions.docx",
+    "file_sha256": "0b01824eccd93125f9ed1ff84aa484075794a23902d796c494fd2500037ed124",
+    "chars": 5917,
+    "sha256": "0b8809a41d4b7c5958dd65de02072f8b514fb08348715758117d2ba5460eb634"
+  },
+  "children-s-picture-book-generator": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Children_s picture book generator operational instructions.docx",
+    "file_sha256": "e56d413414375dfb03d725da10c843ef5a34330ff31700a87ea28ffa252164be",
+    "chars": 7417,
+    "sha256": "33200394608e2ea52a4ee980f2d060df19627076dd3ee3119b7dd11004b0c54b"
+  },
+  "clarity-writer-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/C/Clarity Writer GPT Instructions.docx",
+    "file_sha256": "894eb7b2827ff223600102d75900aee2e5034e097e0267f78d5ad63064f1c479",
+    "chars": 1611,
+    "sha256": "ab80651570344ee616b2b0a3b9ef4e80e6e511417dafd2429b99266a87c044e3"
+  },
+  "college-degree-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/College Degree GPT - OPERATIONAL INSTRUCTIONS -LATEST VERSION SEPT 8 2025.docx",
+    "file_sha256": "eae9daecf03541347f26ebea5fe06a4299083c50a16499c979b9a515dfa16853",
+    "chars": 8000,
+    "sha256": "ff18a5c7992bb1ec6f9bd6c9f1ebc153021f8fc379eb7edfc6786edb8eb39d39"
+  },
+  "coloring-book-generator-with-compiler": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/C/Coloring book generator with compiler directions final.docx",
+    "file_sha256": "1fd40b3fa5f2a0cc10e958697d79a920097d3c3ff6bd2a4b721e220428689473",
+    "chars": 24503,
+    "sha256": "a9cb337b1cfdda9ab75976f71438c8840c54c86dfae0056eadc8b5c206fa9f9b"
+  },
+  "comic-book-generator": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/C/Comic Book Generator operational instructions.docx",
+    "file_sha256": "f9c5710fb1ec117ac6fe821e1f19f3048c2e3e1c4c1c417e21673f7b28d50a4c",
+    "chars": 7995,
+    "sha256": "6fc152ba4ed196ce02f53096b0fdb356c213a305e9e4e8f11944afc62b2ab21f"
+  },
+  "connecticut-cannabiz-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/C/Connecticut Cannabiz GPT Operational Instructions.docx",
+    "file_sha256": "673389d994d2bc4d2cd1aa9ab3895a3d4475e9fc648c2b5fb76adcf9caccfaab",
+    "chars": 8001,
+    "sha256": "2a8bbff270f35df838618831a5544705aa89b415b7db550e7d46e32998b6f4c6"
+  },
+  "course-creator-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Course Creator GPT- Newest Operational Instructions.docx",
+    "file_sha256": "c6acc1234b1b0eb3768b97c80bcb0c56e7784e9df22359581b870057342adc3c",
+    "chars": 7997,
+    "sha256": "c77099b5aca477a03bd76eca7ce7a6b8f19b8f2c6665a3a551d1eb3dd7e414f4"
+  },
+  "cover-design-graphic-design-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Cover Design & Graphic Design GPT operational instructions.docx",
+    "file_sha256": "baab8b97c9c0f602c856b44761789cbaebc5812aea9ef864ac784d674f024c1f",
+    "chars": 7050,
+    "sha256": "b22f078ea6edd2655fe6ce719746cb89751d6a493b0e307243524e9b50f70b49"
+  },
+  "criminologist-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Criminologist GPT operational instructions.docx",
+    "file_sha256": "571310aae2f5c99eae669d2bc78b790ebdfe81c7235e5abcc366693a6098acf0",
+    "chars": 8000,
+    "sha256": "819e0e6b8ea69cb9b09c4c24ef89072ac401b6b7cacfc215a8382d6261854147"
+  },
+  "crop-sensei-is-an-agricultural-predict-and-horticulture-expert-agripredict-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Crop-Sensei is an Agricultural Predict and horticulture Expert ( AGRIPREDICT) GPT OPERATIONAL INSTRUCTIONS.docx",
+    "file_sha256": "00f36dc37ef2dc400562218197c5f415aedc340ee0b5bed231d40e178e3183d5",
+    "chars": 8001,
+    "sha256": "9125d9176b867768a2af463eb1d707cdf379adc5edc4c6ca726e038121a790d6"
+  },
+  "ct-cannabiz-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/C/CT CANNABIZ GPT DIRECTIONS.docx",
+    "file_sha256": "463f81c22df7fe1e3cda32a8a2a9f27b4dbaffe4a7a13afbe7085554d94c3a79",
+    "chars": 8000,
+    "sha256": "3dfa11f1056f697d024c995388bae8613a8452c7f721c1cd8e2caaeda733b782"
+  },
+  "ct-mmp-data-finder-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/CT MMP DATA FINDER GPT - Operational instructions.docx",
+    "file_sha256": "935c3fe356051f40cb48fb70b4760b4bcb9f12d5f3500ab67f72f452090641c2",
+    "chars": 7989,
+    "sha256": "723cd68c87b7fcee3a855255a3993b619c76f5d63edd14c2cd897e9066eb6095"
+  },
+  "custom-gpt-maker": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/CUSTOM GPT MAKER latest instructions.docx",
+    "file_sha256": "11de91980a7e51be3ba9d52d09dd6b2f277c3add4c2c602d194475572de4893f",
+    "chars": 16183,
+    "sha256": "65d0518a2cf4e1c9f7eb14ad9119942c8787ef3eea127ce8dbfd296041240e9c"
+  },
+  "data-analysis-and-report-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/D/Data Analysis and Report GPT Directions final OLD.docx",
+    "file_sha256": "69451dccae2b6da314959d3c6812989acb5e189c1b69a42d25413869ffa1b4a7",
+    "chars": 15784,
+    "sha256": "d2c9978d06e157f10f00be0d8699e17fbb420935122ab6ea44993a1eb42737cf"
+  },
+  "diagraph-chart-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Diagraph chart gpt latest operational instructions final.docx",
+    "file_sha256": "0e6850397a8a9c76433a3d803e32febb470905e462b7756c21a5bc568a0e2164",
+    "chars": 8000,
+    "sha256": "634a6ed648f5e147891606e34db484c9b670086bf1b4c35838e45f92d6335770"
+  },
+  "diplomatica-world-peace-nuclear-disarmament-advisor": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Diplomatica_ World Peace & Nuclear Disarmament Advisor -Operational InstructionsModyfy your diorectio.docx",
+    "file_sha256": "65d962c9974a73ffb5b83aea24f35f6c68a64987faaf9a8f746a4c5b73f96169",
+    "chars": 7761,
+    "sha256": "60e25a537a1f0f23b20e7323fb1553803a5834f1284104d6617234b5ea4daab7"
+  },
+  "dispensary-staff-assistant": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Dispensary Staff Assistant -VARIABLE VERISION - Blueberry Method rewritten version for Cannabis Dispensary Staff Assistant- Resellable Version.docx",
+    "file_sha256": "589e9e950bf5946341e14d0a5fbc0c7a493b5f8044993fa27aac66e7ab4ade66",
+    "chars": 8967,
+    "sha256": "7b0702a965ab21324703fa0a4b949fdf62ad2ef9361e07b1845080a8eedd9e4d"
+  },
+  "doctor-gpt-open-source": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/D/Doctor GPT Open Source Operational instructions.docx",
+    "file_sha256": "59f95bedc2ec7d818cf70a4e3f657ec9e1099f0a36db5e46c21791815174fe96",
+    "chars": 2631,
+    "sha256": "855caa70beafbb9990b5982692e9efea8bf4470619fa1f1391b10499e8579d2e"
+  },
+  "draw-it-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/D/DRAW IT GPT_ Operational Instructions.docx",
+    "file_sha256": "baa11be00f70c9e10b3f22f324979152dd3d79e8258500c354acb95ed088b40f",
+    "chars": 4424,
+    "sha256": "57839ebe33bc888e1338dad39d95260c5a908640a9c887972a938d2b29cda7bd"
+  },
+  "fact-checker-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Fact Checker GPT_ Operational Instructions- OPEN SOURCE TO PUBLIC-#087- AiWebTools.Ai.docx",
+    "file_sha256": "3859bf2aa8a9a58ca8331d7f42d3d3c855afe9cd9866a2375ab1170a4d1f72fe",
+    "chars": 4422,
+    "sha256": "78f4e080901dd84712f55c49268687ed84670874b69c50de3c7bb27d1b7075d4"
+  },
+  "farm-finder-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/F/Farm Finder GPT operational instructions.docx",
+    "file_sha256": "cd5d5d2865dc0a34e296cd9d0b8ac21be8499cb5859e666f0f3123d8493220d8",
+    "chars": 7997,
+    "sha256": "ee4be8cb0c99a20f406f53a2824f84faf3021bff55c16fb77ebd59df6700705f"
+  },
+  "father-blueberry-method-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Father Blueberry Method GPT Operational instructions.docx",
+    "file_sha256": "cff55cab2a43cde911d493f6846b550fc49dc6cba791beafe9e1110e2ff99ae7",
+    "chars": 8304,
+    "sha256": "f2091a06bcfa5257fd1abc78337376f65724ec03a7e71c603163887bfaf7be2c"
+  },
+  "firearms-safety-instructor-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/FIREARMS SAFETY INSTRUCTOR GPT - Operational instructions final.docx",
+    "file_sha256": "233a5d4977f198b36595586df6ab315b5cd319494147fbd8dd8bc97947103252",
+    "chars": 3121,
+    "sha256": "0b5807592e1f2e859959d1468b9a6c36168ccfbc1e93ed077dcf4e56e001edca"
+  },
+  "firefighter-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/F/FireFighter GPT_ 1_8_25 Operational Instructions.docx",
+    "file_sha256": "80e3b226494636a6da5d7c05720f8ae8c0910d6e6fa496fe191fc1b577c733df",
+    "chars": 8000,
+    "sha256": "4319380accbcc45fb0b905ca21d7cee9bf5ea18b8eaa11d44ae71c1757e8f40a"
+  },
+  "fisherman-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Fisherman GPT -Operational instructions.docx",
+    "file_sha256": "dc1065b97827385a5d1abb8abfadb1aaa0bee30cf9b61f1ad150e2456a15657d",
+    "chars": 7909,
+    "sha256": "8229b991a0de9d2b3a6601e38f7d683204efb58aa6573dadc6a17e839bccbf8f"
+  },
+  "free-college-lessons-or-any-subject-education-open-source-prompt-to-be-shared-wi": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/FREE COLLEGE LESSONS _OR  ANY SUBJECT EDUCATION OPEN SOURCE PROMPT_ To Be Shared with world no constraints on usage. BY (KB) @ AIWEBTOOLS.AI.docx",
+    "file_sha256": "edc7909489bd377baa92842b88af34b92997496320979daa27d7146c3c17b62e",
+    "chars": 15346,
+    "sha256": "484e185cb183b91ff6f08524229de06ca3f9ace41a352dd57861ef41b711e900"
+  },
+  "front-end-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/F/Front End GPT_ Operational Instructions.docx",
+    "file_sha256": "c7dbda9542458267e8aa5473531a95fc3b5c23d32ce2c5ec3d54b7c44fd77f3e",
+    "chars": 4185,
+    "sha256": "72881ddbab534f56eacbf54f8b4c2c3fabe22a861bfcffa7ccef3109a281412a"
+  },
+  "game-developer-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Game Developer GPT (Formely GameCoder GPT).docx",
+    "file_sha256": "0f24c8240f2b0a9c4c594f132a12f8771efec8465b642ed184269326a5b4e428",
+    "chars": 7996,
+    "sha256": "3cb8224680df59b80b80132bc85163523c92cd051de4f6d33104452d814cfef3"
+  },
+  "genome-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/G/GENOME GPT- Operational instructions 3-7-25.docx",
+    "file_sha256": "2561379e53ed02eaf4bb19dface623d465a5d61490ac079aebd82bbf54a642bd",
+    "chars": 3676,
+    "sha256": "ac8b108cfb8e8fb71e47f078dd3086877256dc5495d47b544cc4102e548ee064"
+  },
+  "gif-maker-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/GIF MAKER GPT INSTRUCTIONS.docx",
+    "file_sha256": "978843eaa9b73d4de1a29f3cb124066a2d9f70f6b362daa10c0fed7a4fc6334c",
+    "chars": 3972,
+    "sha256": "3c230c5bc06269b9a519dbbdd9df9b38d8d4165540a400e6246ac5c7b18cac87"
+  },
+  "godmode-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/G/GODMODE GPT Operational Instructions - 12_1_24.docx",
+    "file_sha256": "2784e14a3e665e6593dfbaec62352259a4edfc3e92c8484982905f2ecc682e21",
+    "chars": 8000,
+    "sha256": "eaf4a4bf93ab924e5e601fb2d6019d11abfc2b185f1296f351ac715e245bea46"
+  },
+  "gpt-ideas-creator": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Go-to-Gp.zip",
+    "entry": "AIWebTools Operational Instructions (Go to Gp)/G/GPT IDEAS CREATOR INSTRUCTIONS.docx",
+    "file_sha256": "9780232e255c9b57222264b6144242185f2996ef57e5e78e5c04c95afedfb4e7",
+    "chars": 7984,
+    "sha256": "bf4d806bf61f5055fe091c2cd312d1d4c68888ae2c2481ac6047177ab1736b3a"
+  },
+  "greenleaf-logistics-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Gp-to-Hi.zip",
+    "entry": "AIWebTools Operational Instructions (Gp to Hi)/G/Greenleaf Logistics GPT- Operational Instructions V1.docx",
+    "file_sha256": "38443dc222f6d9b23c697a92f7822bcea2e0bc2937e5b3b55965a52ec20d19cd",
+    "chars": 8000,
+    "sha256": "f817f789377221f77d266330901216fa4437aef199940392b5c2bd01b709ccfb"
+  },
+  "heartbreak-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Gp-to-Hi.zip",
+    "entry": "AIWebTools Operational Instructions (Gp to Hi)/H/Heartbreak GPT operational instructions.docx",
+    "file_sha256": "d8726220d804151569b4f0a39251ad60047bb256844bf68a55f36a08648d8df3",
+    "chars": 7342,
+    "sha256": "9aeab451920cba3f62ce97fc25ae44d6c31af4434804c7b54a9f69518cca895d"
+  },
+  "hemp-gpt-4o1-complaint": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Hemp GPT- Operational Instructions 4o1 complaint 11_9_2024 version.docx",
+    "file_sha256": "64a686acbe24d185c95f43c36108b90e53ab84d0a613fb738df0d73d17b18ae2",
+    "chars": 7943,
+    "sha256": "cfb1cc9555f4e168f4afd63a02a7eaebcf54901af884b673473f098e7fca03df"
+  },
+  "hemp-gpt-cannabis-gpt-to-prepare-for-4o1": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/HEMP GPT - New Cannabis GPT OPERATIONAL INSTRUCTIONS TO PREPARE FOR 4o1.docx",
+    "file_sha256": "eddaa4be69be9e7a1e9e00db79e099e264c69da4301d7543353856410fe08103",
+    "chars": 8002,
+    "sha256": "ddb2033e0848b383288e99b4d79710245cc22dba3f69dce6071e365b215cb7b6"
+  },
+  "historical-headlines-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Historical Headlines GPT_ Operational Instructions.docx",
+    "file_sha256": "be950bb0bb35a665d804e9e1cecc3319849213043632a7929df6240423ab9839",
+    "chars": 4117,
+    "sha256": "573f070f961b45387bd9fbd96191be55bbb2db0acf11dd5a862a0f68330e7bde"
+  },
+  "home-renovator-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Home Renovator GPT Operational Instructions(1).docx",
+    "file_sha256": "9daacaad121115565e21c82f440b905655afc953281c09ceb09b93b0a280a5b4",
+    "chars": 6537,
+    "sha256": "b6297a83f56d1d6b8d45d608bdf19944865d4409b29cbc8b5e3661c590773dc0"
+  },
+  "home-school-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Home School GPT- Operational instructions.docx",
+    "file_sha256": "d628ac87be3b371aceb7ee7627bbad8c8c88f5d116750b49fcf6e118ca72679f",
+    "chars": 8000,
+    "sha256": "9f2ab4f244c6ebc34d73bec98f2de9f5fa5347f9eba067aa6cf2728f23a909f0"
+  },
+  "illuminous-data-explorer-instrucutions": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Illuminous data explorer old instrucutions_.docx",
+    "file_sha256": "e11a652525236b00aff9c803976096f29dadff6c2de9d6c4d569c5ef9f0327d3",
+    "chars": 8049,
+    "sha256": "aea49af9cf729980f3670ca58152f7d67b2b7de9a0111e366a72b4b442a3a7b6"
+  },
+  "image-seed-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/IMAGE SEED GPT ORIGINAL DIRECTIONS (NO LONGER WORKS).docx",
+    "file_sha256": "e0a57d25ab10f1a41c2d3d185b01c700d0239f1eea26d075849cdf2e9dcf99b8",
+    "chars": 9690,
+    "sha256": "b9bf49244fa6ebc5ef27cc3fd0ed6710a808158260d3911f7274caeb5e2c930b"
+  },
+  "insurence-claims-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Insurence Claims GPT_ Operational Instructions GOOD, 3_4_25.docx",
+    "file_sha256": "b35cf5c280bebd9f1219c1ad0de245db43d9f973d57358d839820601cf6a7c50",
+    "chars": 8001,
+    "sha256": "55df4d5f98fb4080c700bdf5c55bd80e4a1c9e077044e4c5d0cade6f2c65a25b"
+  },
+  "interpretis": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Interpretis- Operational Instructions 1_13_25.docx",
+    "file_sha256": "81514151cf969f4112dc6ca411d15e835fb8bfbdf888f586d0193eaf908d489d",
+    "chars": 6455,
+    "sha256": "c97a8afc7e62fa3799b12e594d27d6b8f221def343a18d9f0f4354d14ae347b3"
+  },
+  "jarvis-10-25": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/JARVIS - OPERATIONAL INSTRUCTIONS 10_25.docx",
+    "file_sha256": "5a48d27b6ade3f0403d7b563cec0c9a6472d1c36bed575af78176819384dd8ec",
+    "chars": 7996,
+    "sha256": "e1cdc9a73874c7120b41f0297ba51b1971fe658ef16a7e99158ba4fa5c7fd804"
+  },
+  "jarvis-ryans-jarvis": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/JARVIS -Ryans JARVIS OPERATIONAL INSTRUCTIONS.docx",
+    "file_sha256": "b75e788da9129c0d4f4827d6b9222940e057d4e1cd3f3eaf652a945ddd02e8b4",
+    "chars": 7999,
+    "sha256": "e8b3a235b62a8231f97f5476d8db8b1c6f1b15832ddc7c106aa1205a9505f12e"
+  },
+  "learn-any-skill-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Learn any Skill GPT- Operational Instructions.docx",
+    "file_sha256": "6a4698c30412cf36620fc4fdbdf874dc485416a1d96091dd169fb3b9245a5564",
+    "chars": 7999,
+    "sha256": "f31fffb71cf62d6a72ef2ae42e01d955254b8b72fce7bd7826e51ed2031eb1ff"
+  },
+  "legal-draftsmith-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Legal Draftsmith GPT- Operational Instructions.docx",
+    "file_sha256": "477807abefcd0412878c2e795e7468bd6bf2570678cc48f57a00aab94a4d81e3",
+    "chars": 4797,
+    "sha256": "af23b8257d2c7e01750cd55e655f5efcceccd5eea271869c9c539a5f7363e91d"
+  },
+  "legislation-writer-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/L/Legislation Writer GPT - New Operational Instructions 12_29_24.docx",
+    "file_sha256": "19f7ca4d20e7a67fd78606612d752f309e571bcc7785a07f60f98a46ef186037",
+    "chars": 8001,
+    "sha256": "b8bc22c075b182faaa03a2b2502a2178ebf29fb3c0826c307722f3c359ed1463"
+  },
+  "legistlator-link-prompt-state-rep-finder-writer-and-insights": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Legistlator Link Prompt Directions - State Rep Finder, Writer, and Insights OPEN SOURCE PROMPT DIRECTIONS - BY AIWEBTOOLS.AI.docx",
+    "file_sha256": "c1925431151764bc476f8f59bdaf48ac204ea4a808f262bfaeb9ce36536c7ff1",
+    "chars": 7999,
+    "sha256": "ca1788018aa0fd24d4a1a620b489c9040be8354e089e05daca15439d515c5341"
+  },
+  "logo-generator": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/L/Logo generator operational instructions.docx",
+    "file_sha256": "477a72662c7c89f09e449bf32d1480efe91ed40ecb6f509b7aa5dbf387a63fcb",
+    "chars": 7822,
+    "sha256": "b92933199aa6984dbf366c29b8f36a6e8b63e0c353084fd6fe063eb741f13556"
+  },
+  "long-book-writer-gpt-with-compile-page-by-page": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Long Book Writer GPT Final Instructions GOOD FINAL with compile page by page .docx",
+    "file_sha256": "dc6fd48ac456c09c155e7c1b639d65f70e1c60df627e9129eb74b3d7ed7b38e2",
+    "chars": 9652,
+    "sha256": "c2b888c7bf976c16fb056994669562c0d518ea8ed097abbb252fc9d941b67842"
+  },
+  "louis-the-human-testimony-writer-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Louis The Human Testimony Writer GPT Operational Instructions.docx",
+    "file_sha256": "c3b149ada3ddaf0a8960b2257a2ad2941bd0f3020276d6da0e053cc664df8c2e",
+    "chars": 7886,
+    "sha256": "21ab5d7509d03b86f28630c18cb9eb351c7a980752518e6e8ed026f06836552a"
+  },
+  "luma-dream-machine-prompt-assistant": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Luma Dream Machine Prompt assistant directions.docx",
+    "file_sha256": "013565b64e34151b8f62be5fea809f9a6aabbbd7a9d13ee60a77e99dca9ba9a9",
+    "chars": 4534,
+    "sha256": "719a3e847bdeb474282a6f83ac510e3a733454e119a7fdc1af61c8bf730740f4"
+  },
+  "luminex-climate-crisis-analyst": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/L/Luminex_ Climate Crisis Analyst - Operational Instructions.docx",
+    "file_sha256": "cadeef32a61a169dbe9bde46b6ee97df0fe10d2f50110e24dd7ef5924b30e057",
+    "chars": 7915,
+    "sha256": "76c11da514d20b51747b5eeeb21e76c6b2cb5bb84702498c43d86bd89998840e"
+  },
+  "lyrics-creator-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/L/Lyrics Creator GPT_ Operational Instructions 1_11_25.docx",
+    "file_sha256": "014b9363f07de4fb3119f60eeea0b58a90e9d2669ef5c59bbad43870ebe99e8c",
+    "chars": 3369,
+    "sha256": "d7c07502eb174710ce3f855820e30523f1ee84da1b95adf5066111e1fb467ad9"
+  },
+  "mary-magdalene-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Mary Magdalene GPT operational instructions January 6th 2025.docx",
+    "file_sha256": "5f230a583bd3eba0d47b347fdca1cd1039829a3bb080aa8b9dfe5f3eec420992",
+    "chars": 8000,
+    "sha256": "8c4c6f56448315fcd5b1908626a0b41d3608b646a5e3b6587fefcb0916b79609"
+  },
+  "masscanna-expert-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/MASSCANNA EXPERT GPT OPERATIONAL INSTRUCTION.docx",
+    "file_sha256": "41a25d1f74ce9d2f2d69171462a63a202637f02c89350e8a5146c47967e8db1e",
+    "chars": 8046,
+    "sha256": "9ab813eca7c0fc83d83a98482560529820b2690a5ad97233da74643812d90471"
+  },
+  "material-valuation-ai-for-post-collapse-world-open-source-for-humanity-asap": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Material Valuation AI for post-collapse world.. open source for humanity asap.docx",
+    "file_sha256": "a76f7a5203b63eff63c5fb11bba3ef946a2f9375191ea4d5cce8fa710f664b6e",
+    "chars": 7997,
+    "sha256": "2b36f47659484551bce2f219a58a8df51594e990dda750e88821984546d84293"
+  },
+  "meme-generator-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Meme Generator GPT  operational instructions.docx",
+    "file_sha256": "0fa69726b20204cd0bd8a5dce5a98007f8fc93cd9d06ca331ad009b9df1aa282",
+    "chars": 6055,
+    "sha256": "5b4f80df530266a3f2aa12c867b26c989f7853e1341e57416a846f56c5abff82"
+  },
+  "mental-wellness-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Mental Wellness GPT_ Operational Instructions 11_25_24.docx",
+    "file_sha256": "77ee6acc0e0a3157ca954ff8b5846f8a6457b0eeeeba870a6b5d4c23e807bfcf",
+    "chars": 7999,
+    "sha256": "9d995d75a93eb371b863664782152f05340e3b5757b93d39c12d0c9941f9a909"
+  },
+  "microsaas-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/MicroSaaS GPT- Operational Instructions 2_15_25.docx",
+    "file_sha256": "5f0c7e93ec3e0dd81f73ca63cffe2bc9ad4970976c9eb83c30d5adecf656aacc",
+    "chars": 8001,
+    "sha256": "1fa9873e305bf11539248742458ed3052102c24c007afe70c11bde6f648b5ea8"
+  },
+  "mid-journey-prompt-optimizer-open-source": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Mid journey prompt optimizer open source instructions.docx",
+    "file_sha256": "08b237dc9fd70a9e663047cca4274a2aebae497d2934113b8ad6682e2385c8f3",
+    "chars": 10360,
+    "sha256": "b86b414ff8d38f66e4bef990f6159e5286ba889ee4e2a30efa45265f37bf5a82"
+  },
+  "mixologist-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Mixologist GPT.docx",
+    "file_sha256": "0ba38b33edd8ba111c474353a2f202a20041f8640b091d63bbe287eb36d92c1f",
+    "chars": 4096,
+    "sha256": "1cfad1d051d4bac04e95d0117335951b0ecf48e4745805e51de0ecb4cb0d9e51"
+  },
+  "movie-scene-maker-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Movie Scene Maker GPT Operational Instructions_.docx",
+    "file_sha256": "638be38efb2afa99caee44b61d1830906122767ac7747024a22f8f61fc4f967d",
+    "chars": 7993,
+    "sha256": "e6b369c1130e92a50ed556196fd5d914260cea320af9e4f75b66bf855149f4dd"
+  },
+  "movie-script-writer-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Movie Script Writer GPT V2 newest 3_1_25.docx",
+    "file_sha256": "ec80f9073263e3894d849a45ed6fbab30ccfdd0242aea2367a8154482b4c178e",
+    "chars": 8000,
+    "sha256": "2b2452a90c02d6aaae5b74de7b503b543204a0be8647698a0997f6351e2bf58e"
+  },
+  "multitasker-gpt4-turbo-newer-segmented-approach-to-handle-tasks": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/MULTITASKER GPT4 (Turbo) OLD NEWER INSTRUCTIONS (SEGMENTED APPROACH TO HANDLE TASKS).docx",
+    "file_sha256": "a1953d53144826249531ddecdf25ccbc3d478636bc136f2253721af495ee78ea",
+    "chars": 7998,
+    "sha256": "0f8528c4ac3dc4fa40b9eb3a2fb5e193128146b6ae9f6251d18e758726aded99"
+  },
+  "music-video-maker-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/MUSIC VIDEO MAKER GPT operational instructions.docx",
+    "file_sha256": "932b491d0d8cc03db89eb3633f88139eab11a446c605045aa65ea03533aca1b3",
+    "chars": 7996,
+    "sha256": "7dfe14c031d64f2ee9ef50435467899100a1e0faf10f93f0d6e4738cc18df6bc"
+  },
+  "neo-matrix-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/N/New Neo Matrix GPT Directions.docx",
+    "file_sha256": "7d85cb4be8469da7e53371f4af333fc3ff977a5df1a9879d30098b065afe08d6",
+    "chars": 8002,
+    "sha256": "22d8e970b5194a435af505dc84139fa649f7f0ba7a6c30f39b976c550379029d"
+  },
+  "news-channel-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/News Channel GPT.docx",
+    "file_sha256": "4098b7532cf302f358c1f5369c92154e199c9eab1e96b0a8d506a80eaa429442",
+    "chars": 8001,
+    "sha256": "90d4a8aa119e5c131497049f46e48730fedcdbe1f79fa12cb9eca59231822e0c"
+  },
+  "nikola-tesla-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Nikola Tesla GPT_ Operational directions FINAL NEW 12_23_2024.docx",
+    "file_sha256": "62702b1ab2029aede6c757ea7ce890b04a248c1b0070b4c13432d3ffa27e1680",
+    "chars": 7997,
+    "sha256": "4c86f91e48f2f973b0ab215fef40df31e1415bdf64667ee2a3ee76012acafcad"
+  },
+  "oraculum-u-the-illuminator-of-hidden-truths-safer": {
+    "source": "public/instructions/oraculum-u-the-illuminator-of-hidden-truths-safer.docx",
+    "chars": 8001,
+    "sha256": "37e76d75577b8ab94efb8e32b151881e1a9126480e5e7cde4fae235cfe95232a"
+  },
+  "os-book-writer": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/O/OSv5 - Book Writer V5 Open Source PROMPT BY AIWEBTOOLS.AI.docx",
+    "file_sha256": "fb3b888cd335129d259baa6229626a3665b30bb1d65a0adf4a990e263fdcec98",
+    "chars": 7117,
+    "sha256": "3d2dfc4bed8c491edcdacd77fa7d076257668ef1d8b85fac6314a632113ac940"
+  },
+  "playwriter-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/PlayWriter GPT operational instructions OLD_.docx",
+    "file_sha256": "ec2b245016bc01b4cd95e28d95cc7afe1d0a62003fe28fd9a3ab11c1e9d0ffb8",
+    "chars": 8001,
+    "sha256": "838f19d9d6e58e992006b44c5cce4c34823077953eb5397d1c535a3686e054d7"
+  },
+  "postcard-designer-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Postcard Designer GPT Operational instructions.docx",
+    "file_sha256": "34ca29acccdfcc59ee15a0735ac9bdec248cf04e469337f7d811cb55b762515a",
+    "chars": 7991,
+    "sha256": "5a11b34b7956828bf889692a1c62cfc30e1592fcd88f322e7925b49d7126124a"
+  },
+  "predictive-credit-score-checker-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Predictive Credit Score Checker GPT Operational Instructions.docx",
+    "file_sha256": "36d07c6d993bacb0c0f30b7fc645825b97eb9b4c3d24b2db779b61e78db89e5f",
+    "chars": 7002,
+    "sha256": "e454b59e11c1883c1ef171567c91f5e9ee80300bfd8eae9297b85181f89dbf8f"
+  },
+  "probability-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/P/Probability GPT Final Operational Instructions_.docx",
+    "file_sha256": "bcfc271e10c01487fe194d5dc2d5862a171b4739bdf0659714c6bb04adf170bf",
+    "chars": 8000,
+    "sha256": "c02d7d9d6103c255bc060e2699f3b7b872079eb5e99ba750bd71f476774846a4"
+  },
+  "product-photography-designer-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Product Photography Designer GPT operational instructions.docx",
+    "file_sha256": "2beac3c819fb0f9684cf548db46052a002ecd27b925ed43d3f6b1700e6f22ab7",
+    "chars": 7416,
+    "sha256": "585cf2c10bdbafb4bc33d302c670b7795f10e348090df354009474c4fe888a26"
+  },
+  "product-user-manual-generator-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/P/Product User Manual Generator GPT_ Operational Instructions.docx",
+    "file_sha256": "54b7cee37f70fcfc3c082a1e8c44c0402d1cb6d1aff36a36f67e10b3bdc58101",
+    "chars": 7999,
+    "sha256": "a1ef411a5c4d63767bbe0ca8f22a83c8d7257b08f68f1f7f247917efa498f50f"
+  },
+  "property-data-finder-newer": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/P/Property Data Finder Directions newer.docx",
+    "file_sha256": "bc70035cc07068ceeee9905cab4125ef2bbd3509be466be680270a48e9a7159b",
+    "chars": 6217,
+    "sha256": "83735f582ba5118c90c28a48e0c6c357e0507c9817c2e0da3904a850972a9811"
+  },
+  "public-defender-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/P/Public Defender GPT_ Operational Instructions 12_23_24.docx",
+    "file_sha256": "c1e71a6a2feda3cd0fdc36410ccc1ff3b212efc538ef5938713c3d0f43837d2a",
+    "chars": 8001,
+    "sha256": "11d713001b34933a962995a4f653932d88975e4d30e3194980e43e1e4ac9b9a9"
+  },
+  "quiz-maker-ai": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Quiz Maker AI Directions_.docx",
+    "file_sha256": "7a075b60f2d5d11f0809237cbd662bf7e9d96bb8bafe9b7fc6430d1fb1131030",
+    "chars": 6113,
+    "sha256": "edace9d6427f12d67e6c719c19022ee2bdc7ddb03b03e743e672b4b89658c407"
+  },
+  "resourcium-global-resource-manager": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Resourcium_ Global Resource Manager- Operational Instructions.docx",
+    "file_sha256": "1c3227ac06acfc0bc883c5c56395f437759811553327fbdfd07175b0b85e6579",
+    "chars": 7603,
+    "sha256": "438026bfe21e2cd9f25fbb6081df77aa53ebdc881a5f950f701668e1799918b8"
+  },
+  "restyle-me-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/R/Restyle Me GPT operational instructions.docx",
+    "file_sha256": "7275023136862fd9213154f431f2a90226454ff042db8bc893afd57ad758ab8b",
+    "chars": 2249,
+    "sha256": "8ebb00ac31d8cfba4de79a4fed657ac27bc0d45e9997ae35554e6ac6935b658e"
+  },
+  "resurection-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/R/Resurection GPT Final Operational Instructions - Sept 9 2024.docx",
+    "file_sha256": "625ec26fdb8cbeeb159793ca3ffe7f9722deebd0ca53a3627d374ef46435c5ed",
+    "chars": 7992,
+    "sha256": "9f463c07dc2fb61a3dbe5a97bd8494fe48ea8d36ca1c4c59aec5734ba035d82b"
+  },
+  "resurrection-gpt-talk-to-the-dead-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/R/Resurrection GPT directions Talk to the dead GPT.docx",
+    "file_sha256": "efc2127b6eeecc73b36a7cc90bd2ec9cf6575f9a8966cb2c770e599419988c8c",
+    "chars": 16125,
+    "sha256": "7896a3f53dd4db337d4326e8c6534df013b4146e9bcdf4da2726402c4a0d2e3e"
+  },
+  "roleplay-companion-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Roleplay companion GPT operational instructions.docx",
+    "file_sha256": "36d0f378b2a5b4ab1ff324d1db93b4e1ee11642c0eed9695e0ee33066f696d60",
+    "chars": 4503,
+    "sha256": "e1062ac4e4fe26397c4238020d4241273277fcd9cabacf14757a107431434770"
+  },
+  "shopping-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/SHOPPING GPT operational instructions.docx",
+    "file_sha256": "9bf093031d1cc2a53709ded616ed0c759dd3a36806340c2df1661ca37f29feb9",
+    "chars": 7422,
+    "sha256": "29f087509fc38eb6c276d83985a0be91dc2886bff7fb66db66990d7ea4777680"
+  },
+  "short-book-writer-gpt-with-compile": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/SHORT BOOK WRITER GPT DIRECTIONS FINAL GOOD with compile(1).docx",
+    "file_sha256": "a25099976cbd7af391fabf78c118b769dc3c1e5ec169669c036b0140750ce144",
+    "chars": 9660,
+    "sha256": "af37fce42de3db38b5eed9ac2ea0629011d5d58f91f8723c4edd15dd0b51f848"
+  },
+  "skincare-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/Skincare GPT operational instructions.docx",
+    "file_sha256": "611963dbabe9f6fd32390c86250e7f8c97e88e893f2b230742993d2922e73f5b",
+    "chars": 4827,
+    "sha256": "9ac5b965b77ac3c500fcb83240266986d04e15db66c547ef16507f0ee7c7c14c"
+  },
+  "social-safety-net-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/SOCIAL SAFETY NET GPT DIRECTIONS.docx",
+    "file_sha256": "1c77c6244034a819cb189e4762196800a4cc9c08ce73f4e1bdde19a4cfc5e6ca",
+    "chars": 7999,
+    "sha256": "0ea2fc2b01280c66418c24e047a2686507d5cc3dd390eb36a9ef8a07bda087c8"
+  },
+  "solar-land-assessor-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Solar Land Assessor GPT Instructions_.docx",
+    "file_sha256": "9169cf946168b3171cda8ddac387a315cbec4d5e96a727e4f2beb55437479f55",
+    "chars": 7969,
+    "sha256": "bbb9f2a607abb58ad864501588a5643d286662bca1acbec1610bac8248f8dc8f"
+  },
+  "soul-map-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Soul map GPT operational instructions(1).docx",
+    "file_sha256": "11a507b0d5ccb6f0bbb5348f7749508b5943a315113b299f8ec9acd1870b5dfe",
+    "chars": 7985,
+    "sha256": "04f737c25bc23424ce4529d032ea9cc45df84db8291347f03a91a4211d537fc5"
+  },
+  "soul-scan-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Soul Scan GPT Operational Instructions Final 8 23 2025.docx",
+    "file_sha256": "5c85ae838aa3d7ee28c8c4151cd2db137d383aae1356fdb1532968be98bd3f83",
+    "chars": 7213,
+    "sha256": "5b90efe5cd92e886f93084713fc9c4c33335aeb6ea7ae39e8bb43f4687356679"
+  },
+  "stellaris-space-explorer": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-St-to-Ti.zip",
+    "entry": "AIWebTools Operational Instructions (St to Ti)/S/Stellaris space explorer operational instructions final.docx",
+    "file_sha256": "b42f5ba3fdca977b20e5b913909a9df22b69617105748c3853fe6aa6a6f159a7",
+    "chars": 8048,
+    "sha256": "f5699d84d9aafe414b858acbc058514089938cac339b6de515e00322b69d4529"
+  },
+  "study-guide-maker-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-St-to-Ti.zip",
+    "entry": "AIWebTools Operational Instructions (St to Ti)/S/Study Guide Maker GPT Operational Instructions.docx",
+    "file_sha256": "358744f4e6d7f2e37283e34b73f1970c7f73f978c6b8bec1b11007e1c05f5f2e",
+    "chars": 8001,
+    "sha256": "df54c903a9bd99b8708d2cfed1de9cd44b0972733d795d4ff68c3e13dd290222"
+  },
+  "survivalist-gpt-public-open-source-for-local-deployment-by-aiwebtools": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Survivalist GPT, OPERATIONAL INSTRUCTIONS - PUBLIC OPEN SOURCE FOR LOCAL DEPLOYMENT, by AiWebTools.docx",
+    "file_sha256": "7d2c3261f30ce4add39272dd4cf36c1d4e00fb05780c33dda1eab262e4de1f19",
+    "chars": 8107,
+    "sha256": "fa37f01a2de5ab0d6e63e0e1c2e9395d8dbf3b1e2883522ea83036ada6321609"
+  },
+  "sustainable-futures-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Sustainable Futures GPT - Operational Instructions.docx",
+    "file_sha256": "1b12e636d91b7d2177edba40930ea3556392fea93d1816dbff00cdc2ad497dbf",
+    "chars": 7997,
+    "sha256": "e1bdc34586039cc7bab2bad98fb7a8479cc06be211ae2b7684304f5a300540ce"
+  },
+  "talk-to-history-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-St-to-Ti.zip",
+    "entry": "AIWebTools Operational Instructions (St to Ti)/T/_Talk to History_ GPT DIRECTIONS GOOD.docx",
+    "file_sha256": "02f4395fcf1e95bec54274b1bddb38f3b63a6287e93bdd660578493d92d371fe",
+    "chars": 16099,
+    "sha256": "18d908d6168928c67cabaf7f91b8fd198cbdd114ada64648b28d301ceb6e8ad4"
+  },
+  "talk-to-the-dead-gpt-best-ever-so-real": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/TALK TO THE DEAD GPT DIRECTIONS BEST EVER    SO REAL.docx",
+    "file_sha256": "e726c4d4d60f942eaa492f8f1d41e23171eaefc9346d02d26aa506d4961334cb",
+    "chars": 7615,
+    "sha256": "f239923a3f96351b15339fb821d00fa4925f53df96927f4930ebd3e9ccc94005"
+  },
+  "talk-to-your-god-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Talk to your god GPT final instructions.docx",
+    "file_sha256": "a4bbad507337d8c35e72234b3adb180f4900f42ddeff60518f7fcbbc538b7426",
+    "chars": 7956,
+    "sha256": "8db3c1bb7b3a6473cbdd88db8479ac0dc03fa92ebff572bf715d967713bcc5ff"
+  },
+  "tattoo-design-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Tattoo Design GPT Operational Instructions.docx",
+    "file_sha256": "97c45d8ed41777c80b6e9f7a32cddb77243e1f749baa1cfea56cff19ef36d826",
+    "chars": 7996,
+    "sha256": "5dd106de9fd7ea801186a20a66a9e4484ef65925cab6b9ad76ee780b2586c9fa"
+  },
+  "taxes-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-St-to-Ti.zip",
+    "entry": "AIWebTools Operational Instructions (St to Ti)/T/TAXES GPT Operational Instructions.docx",
+    "file_sha256": "e5e054b2130bb8415a675235e6018399a30411243238d87ec048d3034d2e63af",
+    "chars": 4794,
+    "sha256": "13a1bbddc8ef0a71c4915bdfa962c0c003ea41554ca09fe0f5cf757f1944d20a"
+  },
+  "testimony-writer-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-St-to-Ti.zip",
+    "entry": "AIWebTools Operational Instructions (St to Ti)/T/Testimony Writer GPT - NEW Operational Instructions 12_6_24.docx",
+    "file_sha256": "de276d2eba2314c46aba1c57e4a6bcbad45df1b03de0e18aa34b610a5c8b0ce7",
+    "chars": 7952,
+    "sha256": "ee403da8f1071a6a052860d45f6b547c9c121ebf9652e9514d2d2dcdfbff2fb4"
+  },
+  "the-architect": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/THE ARCHITECT - OPERATIONAL INSTRUCTIONS.docx",
+    "file_sha256": "6dcc0297e7cca0e0f847d94c8403a351cf5b248f77048815c24c6161644fe22b",
+    "chars": 6958,
+    "sha256": "5fe3a53401009f7ec5b72d9c92d83c2cf21542ab5cd38ebf4ccdbbdb6c824566"
+  },
+  "time-machine-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-St-to-Ti.zip",
+    "entry": "AIWebTools Operational Instructions (St to Ti)/T/TIME MACHINE GPT 9_8_24 VERSION.docx",
+    "file_sha256": "5ab7ed58f9e20b5ef080aa1600c735796c507af0fe0b9438a5d343041b2ad133",
+    "chars": 8000,
+    "sha256": "4a4b2c6b4481176594a439eb861f67187254f15af39045ccab88aa72b48138f9"
+  },
+  "time-travel-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Time travel GPT final directions.docx",
+    "file_sha256": "c2eef9354146f451c80e484c83bb005f96510be44a66100ed2d31d59e50a5374",
+    "chars": 7993,
+    "sha256": "60f220e706316cf4ae59e0bda78acf5d6f57350031c5959b23f77a4e6e2e5b44"
+  },
+  "trader-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Trader GPT final instructions.docx",
+    "file_sha256": "17d88e517e17f9b4a4091d615273ea52d78c8496a79534d0a952cf2e641bc4e9",
+    "chars": 7978,
+    "sha256": "327affc54836632ce9474b3b55f9f78ab8f13694fc0e788f956a22076a1bfd52"
+  },
+  "trail-navigator-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Trail Navigator GPT Operational Instructions.docx",
+    "file_sha256": "e3a70adc51aa8485a6a7c5419399ec51ac5618e28dcb514150b53f2116840da4",
+    "chars": 4132,
+    "sha256": "61c2736483da5d117fcd23c1f20760823473de844f59c756807535cb10fa250f"
+  },
+  "training-manual-generator-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Training Manual Generator GPT instructions.docx",
+    "file_sha256": "94b8c2d22536076a630ac6efcd1bff9e220b40217af264e5a58328e57e33f070",
+    "chars": 20610,
+    "sha256": "613f682cba4dbb8613e143a20ad4f09acf1650a55cfda7ff62bace45616dd518"
+  },
+  "transcript-parser-and-summarizer": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/T/Transcript parser and summarizer operational instructions.docx",
+    "file_sha256": "fec9ebfc64ce3f391ef702384abc847f87a4c81bb15d11fe5f746b6fdc3267f5",
+    "chars": 2998,
+    "sha256": "298ae718bea338a996e9645e3838c39126cd805293634d3f948211b1c742f1bc"
+  },
+  "travel-agent-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/T/Travel Agent GPT - Operational instructions final.docx",
+    "file_sha256": "969764ad2c6ad89933af4d384e94374fecf04b5c7004196f5bff859f488ae074",
+    "chars": 7723,
+    "sha256": "377ce597c401481f8b0c44f99eac14db95e94645499f8bb55a6026ec614475dc"
+  },
+  "true-history-truth-seeker-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/True history truth seeker GPT operational instructions.docx",
+    "file_sha256": "74aee71c6339d065d789b2dd9ef1aeb2bd36635e964877bee9f5e649e81a9558",
+    "chars": 7556,
+    "sha256": "94f76e211b87e660ccd4b0eb5f5b360661091bbcf30fa5ddb276c9df56394f24"
+  },
+  "truth-seeker-gpt-life-coach": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/T/Truth Seeker GPT- LIFE COACH - Operational Instructions.docx",
+    "file_sha256": "e3bafbbed41c6d8b9896dcf8e1fb4fd0f6ef4bb100c7f68ff802869859439b0d",
+    "chars": 8000,
+    "sha256": "494e7f24ee3df9ece403a6aee8f6ec846c6eea5e2fb9e9ac9c1e408d3b041947"
+  },
+  "universal-healthcare-system-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/UNIVERSAL HEALTHCARE SYSTEM GPT Operational instructions.docx",
+    "file_sha256": "ebe7c641a7d8b41c40cdf0720d832b254c1cba8363c084ac8bc5b7321920d94d",
+    "chars": 8000,
+    "sha256": "2d0f1b3186eceaab5be5caa98dbba68effc256dc454ea37dd5303baad8c1e801"
+  },
+  "veterinarian-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/V/veterinarian GPT operational instructions final.docx",
+    "file_sha256": "8836a2c24398ef311b8cab1cb2252d9167e1f4715ac3a0a60c4089cfdd64ba00",
+    "chars": 5080,
+    "sha256": "39b3a180532cf3bd81aca8e841437b04b41c1aa8b8221e9e5edf49465e268116"
+  },
+  "vetgpt-data-add-on-insturctions-to-assess-pets-upload-to-gpt-scan-fully": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/VETGPT DATA ADD ON OPERATIONAL INSTURCTIONS TO ASSESS PETS UPLOAD TO GPT - SCAN FULLY.docx",
+    "file_sha256": "af2a07d43c0c868a6bb1ae27166c29e4ea6d8ff09a28be713b36bceca61452cd",
+    "chars": 5500,
+    "sha256": "679749032bc024b47163f69017cbfcc65b330715825786430522989c3a0c8454"
+  },
+  "video-audio-merger-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/Video-Audio Merger GPT Instructions.docx",
+    "file_sha256": "f48e5eb3cf4da22d047d9fc4002a382d3c836903cc841dc356288835c34e69aa",
+    "chars": 6341,
+    "sha256": "3ebc391495f1d2985499ee939d17f197bf9895ed47c12a4d609873257894fcf4"
+  },
+  "video-second-by-second-analysis-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/V/Video Second-by-Second Analysis GPT_ Operational Instructions.docx",
+    "file_sha256": "1820f7f27551c91d8ef989180c05b3393043d82a7c50dfe71cec3b1ab265c9ae",
+    "chars": 8001,
+    "sha256": "6eb9ba2bd2694cd306652838594e37bcdc1ff8f0a258e3e3e60060d5fd090859"
+  },
+  "virtual-stylist-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/V/Virtual Stylist GPT Operational Instructions.docx",
+    "file_sha256": "7c2cf6755f78ae7e66725c416dba0a58815e1610492fc3774b5fd6a4750c6d8d",
+    "chars": 7968,
+    "sha256": "90bef573b80663193d7fc0374fddc0bb17f6bbda0b916ffb1d4d6da42abc1017"
+  },
+  "world-reality-decoder-gpt-u": {
+    "source": "public/instructions/world-reality-decoder-gpt-u.docx",
+    "chars": 4811,
+    "sha256": "cf0b229cfaff2e637f0c9230d41c52ae3b5873d6de5ee4b40dd96fb32eae10a3"
+  },
+  "yes-or-no-gpt": {
+    "archive": "public/downloads/gpt-instructions.zip",
+    "entry": "OP FINAL/YES OR NO GPT- Final Operational instructions 9_14_2024.docx",
+    "file_sha256": "bc32e2f87d7eb0ec6cbfed28cb91ded7af4740e482be26980a39e1a9e7ff9950",
+    "chars": 7936,
+    "sha256": "4a5a906bc7abcd2bc8e13867e504882533f67958a772013125eb3f20f650f61a"
+  },
+  "ancient-bible-recovery": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/Ancient Bible Recovery - Operational Instructions.docx",
+    "file_sha256": "bee6c37de8f1bc4f171fbc0bf202b4938dd1030bf52bedc79657ca293d7a750d",
+    "chars": 6083,
+    "sha256": "eec8c4c2086ba3b5077ff66bd1db49ef2bea373e3361e37dc94921ba20e119c7"
+  },
+  "time-machine-of-unwritten-history-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-St-to-Ti.zip",
+    "entry": "AIWebTools Operational Instructions (St to Ti)/T/Time Machine of Unwritten History GPT - Operational Instructions.docx",
+    "file_sha256": "36901d7763c479bad5821e837862cce8988359281161782ead26e57b8de19584",
+    "chars": 7999,
+    "sha256": "4d932d393fcad4ef4a9c45c9bc0a865e14ad7e761644b1113cf18a42580daf5d"
+  },
+  "meta-ai-video-prompt-generator-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Meta.ai Video Prompt Generator GPT Operational Instructions.docx",
+    "file_sha256": "88245a4fc83c8750899bf1993c3ef335d0eb48676bd08c60b89cbb13e1d47071",
+    "chars": 7989,
+    "sha256": "163faf108d3b8ff19a245357e8fd0e18bd6e75a282f23dbff7b1e8b32565b55a"
+  },
+  "manicheism-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Manicheism GPT Operational Instructions.docx",
+    "file_sha256": "546b7092f90f19e7d246bb59e1c053514066732b163937792b695488d50588fc",
+    "chars": 4724,
+    "sha256": "b463e6a0037835fd5be014a733e39a854f61d1581828ddedcac3e263cf31c886"
+  },
+  "ancient-gematria-scan-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/Ancient Gematria Scan GPT Operational Instructions.docx",
+    "file_sha256": "36889a12bcc2d5ffc0fd8ddaf276243bb952638412de6f79d51be6b93a999782",
+    "chars": 7929,
+    "sha256": "8e9cb46011294fd70e031211437e3634661b433ad4a2960b100af56d022d4ffd"
+  },
+  "fitness-trainer-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/F/Fitness Trainer GPT Operational Instructions.docx",
+    "file_sha256": "d017b9528a37bc0743e7d61d76c13b6a88ebe9f78f8f593bb60a49584a76c7a4",
+    "chars": 7994,
+    "sha256": "f3dc42bbd07b920894c028e0a9aa5bc0a0a6b7df89507fb3132d2ba9309735e5"
+  },
+  "geology-rock-identification-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/G/Geology & Rock Identification GPT Operational Instructions.docx",
+    "file_sha256": "db6d8ff5a45794337fee480a82c3e32acd85ed40fe187a9916326b37d6b2cd62",
+    "chars": 7436,
+    "sha256": "35b8870833a1776bc38bd82dbc9b62f8ea428c1490af489fe152940d4ec6bb65"
+  },
+  "jarvis-the-steward-of-humanity-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/J/JARVIS The Steward of Humanity GPT Operational Instructions.docx",
+    "file_sha256": "5901f5e2a71e0401853d31b80d42b0cb8707c226b312d92424f308f175b0f61e",
+    "chars": 7998,
+    "sha256": "9b2c835f987e7a0274837a8d378d3014cb8af2aa3fb329b4e3e0a6c5c6f1e6d6"
+  },
+  "magnetism-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Magnetism GPT Operational Instructions.docx",
+    "file_sha256": "fe9a964ea5c236577e85cf6e7d2aa6ad52f2bf07be7675d64ee488f50ab399c0",
+    "chars": 7680,
+    "sha256": "064f070dcd66b2f435efc3e79219a45535254b269e39b7bc8e76f3c3196a4906"
+  },
+  "cyber-security-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/C/Cyber Security GPT Operational Instructions.docx",
+    "file_sha256": "d0466e5268e9dd2cac6670ce0347534f70136d32b9a77465b08d38cfc828b5c6",
+    "chars": 6647,
+    "sha256": "807244627f73a2926cc08e580509046d0f3075cda19ded6c56d11788cd929e3a"
+  },
+  "aiwebtools-gpt-cloner-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/AIWEBTOOLS GPT CLONER GPT Operational Instructions.docx",
+    "file_sha256": "cf666f009e0787b2e8f95ef11d7b5ab4ff3560d8065ccf01e46af34712a4e49f",
+    "chars": 8000,
+    "sha256": "989e3e1fc0b5f19209bdabfc5803ad38c829ad2c4ec631c66fbe4e6d0c9fcdf0"
+  },
+  "historical-apothecary-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Hi-to-In.zip",
+    "entry": "AIWebTools Operational Instructions (Hi to In)/H/Historical Apothecary GPT Operational Instructions.docx",
+    "file_sha256": "d36a5624e00b6c9c61d196e54b23b567b9f7aee963cece7e0ebc57c0ddb7a362",
+    "chars": 7131,
+    "sha256": "57a77023ccd5f3260b3bb5992f014b6e720365937dffcf42428450660b508543"
+  },
+  "sport-card-appraisal-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/Sport Card Appraisal GPT Operational Instructions.docx",
+    "file_sha256": "635eba628989b4036552fb95221e125f1ca3d03f29787c1d5643335207df3d2d",
+    "chars": 7258,
+    "sha256": "0ed67a807d875a1ddc2d8a0240bff9ea348912a3619555f6554191d4b4f8db24"
+  },
+  "ancient-egyptian-proverbs-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/Ancient Egyptian Proverbs GPT Operational Instructions.docx",
+    "file_sha256": "8f3d377e0511f3da8c1c8b0eb0edffdacdfac85340e16f9cbfe6d9a1938678a5",
+    "chars": 7348,
+    "sha256": "7ec1fa1f6f7b3f91ed618877c589e4ac0b5cd09975a253a0329396ca47b26677"
+  },
+  "carl-sagan-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/C/Carl Sagan GPT Operational Instructions.docx",
+    "file_sha256": "022af65d0bcc09b8c3a917847382a6f24a2a4986784720babd3f1fffe071f616",
+    "chars": 6354,
+    "sha256": "fb0d3373162f43a5e78c534ae8f694744365e55dcafbf9ef51ae710f03bdd85a"
+  },
+  "paramahansa-yogananda-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/P/Paramahansa Yogananda GPT - Operational Instructions.docx",
+    "file_sha256": "9884a0f4eb407750541244feff769cd5452d28961aa93ff3e80be5538da3f7fa",
+    "chars": 4041,
+    "sha256": "8d2021a88778c84b873d8b785e4be95707ef8b701887c278dd9456ec2105c529"
+  },
+  "zoroastrian-light-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/Z/Zoroastrian Light GPT Operational Instructions.docx",
+    "file_sha256": "38dbf9e3a589a3fdb1a460ba8604545070bc82f02b36ac4b6fb55af37bb63629",
+    "chars": 8000,
+    "sha256": "b4922f5316fd38d627050f31ed4643b2a256f40ccfbce27bbd5520a4251f3f49"
+  },
+  "socrates-free-thought-liberator": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/Socrates Free Thought Liberator Operational Instructions.docx",
+    "file_sha256": "0157e756c8e2c303a61f27960e583401012d5da4a35405fdf1d9fe5b1d13a84f",
+    "chars": 6431,
+    "sha256": "33c333ced2b26167ce3d56e8d071e27bddb1e8ecea80ae8cf443b56fddb6e177"
+  },
+  "buddha-free-thought-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/B/Buddha Free Thought GPT Operational Instructions.docx",
+    "file_sha256": "b7e0482d69924ac3c9324badbc6da1b6f141162b51280531163f186c6da7fad2",
+    "chars": 6963,
+    "sha256": "310a83e8351e17862089a9554b2225de4ef685ce5986794a34be8cc6f859485c"
+  },
+  "rumi-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/R/Rumi GPT Operational Instructions.docx",
+    "file_sha256": "1915f4790c4686161898ca9155d971316dfa1f82623683e46bb3f8bbeab293fb",
+    "chars": 6764,
+    "sha256": "deda2e37c5c1a88a3684f031ebec0590b1407075ae369b8ae1d290a0ffe6e2f2"
+  },
+  "marcus-aurelius-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Marcus Aurelius GPT Operational Instructions.docx",
+    "file_sha256": "9c8fda0f2a3beacebc75fb4b0935fd0d16aa2c00ecc7bb8e76979bab7a788fd2",
+    "chars": 6932,
+    "sha256": "7bd2c1ca10f3663dfbacb8b74e8b9f1f66b0c61b34de6a62282b67493c16ce5f"
+  },
+  "lao-tzu-free-thought-liberator": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/L/Lao Tzu Free Thought Liberator Operational Instructions.docx",
+    "file_sha256": "e72962fe583cf82083dfd12e2eafd4b0b06478e62edc206d8720ab6f79c25a5e",
+    "chars": 6415,
+    "sha256": "fec33d2641fbb14db57ad3517764d3a996a18922b316574b1cccffa2b5c2a611"
+  },
+  "quan-yin-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/Q/Quan Yin GPT Operational Instructions.docx",
+    "file_sha256": "661b908831827c947446782480fe1f73d40be7e4440bbdd8770a55d9c7353b9b",
+    "chars": 5409,
+    "sha256": "70914bc61d51b500b0ae6b724340f234db982704394415f1f702ba69812c15e3"
+  },
+  "yemaya-ancient-african-mother-of-the-waters": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/Y/Yemaya - Ancient African Mother of the Waters Operational Instructions.docx",
+    "file_sha256": "aa8225ad470b80547f8d0450dc8821ec068a208d649e443d2c1bf7e186abf60b",
+    "chars": 6464,
+    "sha256": "d81765a8ae8ce9c074033b35f714faafa73f52583daadfbd3cb642c8be1c3b59"
+  },
+  "god-is-light-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/G/GOD IS LIGHT GPT Operational Instructions.docx",
+    "file_sha256": "da4710680c6d4315018e3598f132faf90816b402732f7579bfc932a47a90d03c",
+    "chars": 7457,
+    "sha256": "212e2a8dea501e1b7e4e00f41ee0a86341e0643af2ef37dce9d1c79ba921c57d"
+  },
+  "god-is-light-roman-catholic-edition-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/G/GOD IS LIGHT Roman Catholic Version GPT - Operational Instructions.docx",
+    "file_sha256": "0665eabb84e5995421e0b6e6eb9f6748e4e6bec5798c0981d06348d8e6330cd7",
+    "chars": 6288,
+    "sha256": "c5f7bd892a5ba702d785729cc151bfdf5ce221236ad84d87b960c774efdb20ee"
+  },
+  "m-ngji-o-prophet-of-light-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Míngjiào Prophet of Light GPT Operational Instructions.docx",
+    "file_sha256": "8edd184a80aa67c100998b2c8ab953a7a5e94f20339c587ecf83609a4015f12f",
+    "chars": 7177,
+    "sha256": "8f9a0e117279071693543be9a270851bb3a2ac6ab0d53c2418b89635d778ba03"
+  },
+  "council-of-light-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/C/Council of Light GPT Operational Instructions.docx",
+    "file_sha256": "0f917dcb0e9117b66743071bc64d25866f9d07c76bffddc774bc071ddaab7414",
+    "chars": 5252,
+    "sha256": "0a158b5cc6d2f840177a646ec7cbb1f727d582a89bae299442b1f3e88dec8703"
+  },
+  "arius-the-bearer-of-light-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/Arius the Bearer of Light GPT Operational Instructions.docx",
+    "file_sha256": "374aae3437ca52bc8d2de6a5f11fe3206abfc75b0c0beb624c0093d394851c6c",
+    "chars": 5373,
+    "sha256": "88bdc8ed5f49bf0239f8763a42b582465ce1e040e2af16bbf3de2afdef3f46da"
+  },
+  "self-sufficiency-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/Self Sufficiency GPT Operational Instructions.docx",
+    "file_sha256": "22e39aadef1b46ff9557c94b6b78bf9ce53565a6d9cf9e204d0af16ef7b430e2",
+    "chars": 6097,
+    "sha256": "870bbe325252fac5dece93a6e333a406972ce6e887e8a7e83ca21ad6f641cf7b"
+  },
+  "sitting-bull-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/Sitting Bull GPT Operational Instructions.docx",
+    "file_sha256": "1b0a12c83db3c9343a4020af64c77515c019570ac5ea2caea7ec3e23fa4bade8",
+    "chars": 3939,
+    "sha256": "51a6a93f281706647cc3d5471e68f418b01c1b53d333d97b91e73c8b9e3a4baa"
+  },
+  "mahatma-gandhi-reborn-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Mahatma Gandhi Reborn GPT Operational Instructions.docx",
+    "file_sha256": "5d9886c01ed9d24b7e3e585d8971090e5cd2e67266b5ac2ed4fc1bf5a0a62ddb",
+    "chars": 4130,
+    "sha256": "06dae942f73d2e0c04c186b59b931bdeeecc9faee5efc63e576aa9aa4a4af1b5"
+  },
+  "giordano-bruno-reborn-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/G/Giordano Bruno Reborn GPT Operational Instructions.docx",
+    "file_sha256": "3240060fabbe566edf60e7cf12dfa706fbb073b98910724067d37267f217210a",
+    "chars": 4945,
+    "sha256": "63e8daa23f663ce42bca3a0706f2313a14f48106b344d6ecb4768849a5096cc9"
+  },
+  "heraclitus-reborn-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Gp-to-Hi.zip",
+    "entry": "AIWebTools Operational Instructions (Gp to Hi)/H/Heraclitus Reborn GPT Operational Instructions.docx",
+    "file_sha256": "446deb5566ad05c678a0521f6f8d08d67e13ee8917f5ef24f836be2f542382ae",
+    "chars": 4277,
+    "sha256": "5c482e21c8333225f3006f1da8b30c9155ac2df74eb51592aa3b9b2041b0c9c2"
+  },
+  "st-francis-of-assisi-reborn-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/St. Francis of Assisi Reborn GPT Operational Instructions.docx",
+    "file_sha256": "d686b2e033bbe2c3689c14d867b6e3fb9438f02bda404d5022c4f1e42dda3422",
+    "chars": 6036,
+    "sha256": "53ef6e78aeb9eb93147e288914da1a429737524a1c4a72ec1a1eed45942e01c5"
+  },
+  "chief-crazy-horse-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/C/Chief Crazy Horse GPT Operational Instructions.docx",
+    "file_sha256": "05c70816d0712c497d3c589fe2aae1c66f3760aa58428bf8bb9b58a9d99f2ab9",
+    "chars": 3516,
+    "sha256": "ad47890cafc592ce3b3c2336c5346fa60dcfeeb70b4ee4dc8010e16c4094837c"
+  },
+  "akhenaten-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/Akhenaten GPT Operational Instructions.docx",
+    "file_sha256": "9a82b3a51c47bc5e45e12ade9a86aa2e247ae25e34c9d275bd8c75a00fd1d840",
+    "chars": 6982,
+    "sha256": "20451a591aef837a249d6a2007d3279d4fbfe460330e67ce0260fa49b15b72c7"
+  },
+  "imhotep-living-mind-of-kemet": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Hi-to-In.zip",
+    "entry": "AIWebTools Operational Instructions (Hi to In)/I/Imhotep Living Mind of Kemet Operational Instructions.docx",
+    "file_sha256": "9fcca0bcb9edc90c694dd27acc9432d1a1123c3092df463171568fb463f9e7a6",
+    "chars": 4368,
+    "sha256": "5b86b9962c52ea5a0d4757e3882c47b1f6eecea19183c1ab0e7de0de968814be"
+  },
+  "thales-of-miletus-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-St-to-Ti.zip",
+    "entry": "AIWebTools Operational Instructions (St to Ti)/T/Thales of Miletus GPT Operational Instructions.docx",
+    "file_sha256": "ff11f427693110e7f183a26a0735ebebb5e30a16db97d1d7add68d00538225fc",
+    "chars": 4666,
+    "sha256": "c750e4c3c64fb8f9950e210be3fb6f571b55f740f8a23a488ec15b5b044f1803"
+  },
+  "chief-seattle-free-thought-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/C/CHIEF SEATTLE Free Thought GPT Operational Instructions.docx",
+    "file_sha256": "7882ad8383d88b6747dc428734f3b3ade4f64046c1bf1535346371c6a7d53ae8",
+    "chars": 7087,
+    "sha256": "fa1fced5d490694d31025b3b248e8f7ec03ce39adc7f043805f5d4e2f6b9167b"
+  },
+  "sri-aurobindo-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/Sri Aurobindo GPT Operational Instructions.docx",
+    "file_sha256": "c1ecce16313840d37ba80aa319919047eee9018988b5d5a3984ade2f9b42263a",
+    "chars": 3756,
+    "sha256": "e327e9451acba5d36a5e4dc1f4791732264f04dbc32151786f33e625a818d72b"
+  },
+  "ramana-maharshi-reborn-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/R/RAMANA MAHARSHI REBORN GPT Operational Instructions.docx",
+    "file_sha256": "b45312f9a74cf7f5b73dcf8d994df0254855347ca907d5b7fa39610b16d10baf",
+    "chars": 2989,
+    "sha256": "d5a7ca3e9c813dff1a83f2c0910471773fdeed4b40d5ab008065bf6298a3621e"
+  },
+  "black-elk-vision-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/B/BLACK ELK VISION GPT Operational Instructions.docx",
+    "file_sha256": "850100c669d9d9cdeda1254e7d768bbc6d3ee0e99b00fc18d7c1aa6ab2e47eea",
+    "chars": 5415,
+    "sha256": "15e3f656c9f19749a5acfd77f2121ef5b52e31028492aca217d6bb4786e6915e"
+  },
+  "mansur-al-hallaj-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Mansur Al-Hallaj GPT - Operational Instructions.docx",
+    "file_sha256": "8b7cdaeca8c60fbb022affd3d8a674615ebcdd0151087ad7797cfe99c259697a",
+    "chars": 5261,
+    "sha256": "a0b7f4d481fdf6f6c475bbcd32dbc6fffb434f8be85b5a995675c479f5e005ef"
+  },
+  "saint-teresa-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/Saint Teresa GPT Operational Instructions.docx",
+    "file_sha256": "18e4437c6c99226e47676e77151913e03ac6c1276dd4cd25cfbc579d22e3363f",
+    "chars": 4293,
+    "sha256": "9270a626002434812b6fa567c1535fd505b9e977fee2c7caaea716ec9998fd8b"
+  },
+  "mooji-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Mooji GPT Operational Instructions.docx",
+    "file_sha256": "a09b21b2b149cd66f747be0ccd4c136da09b95acd9e54c217c7d15cd98f67747",
+    "chars": 7424,
+    "sha256": "ccf02acd4836b147ac13597dbcf711ee692afc142953f7106274ed333ce46141"
+  },
+  "saint-augustine-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/Saint Augustine GPT Operational Instructions.docx",
+    "file_sha256": "857b3f716886cfb6b8dbe434e23a6f46cc247ab91cf8a59421f0829d7cd112a3",
+    "chars": 6326,
+    "sha256": "aa54f830b28c64e99060e4a47b6534e11445c27e97bfe38e1b59dea99572bfaf"
+  },
+  "saint-seraphim-of-sarov-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/Saint Seraphim of Sarov GPT Operational Instructions.docx",
+    "file_sha256": "95e241234ff0213bcb990dbee66939cbd4a4b80025573a48bb8da75d1e63d19f",
+    "chars": 6920,
+    "sha256": "b72bf8d272b714828e2d56c398814b70aaaf6832957437fa4ededee2abe924c9"
+  },
+  "saint-padre-pio-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/Saint Padre Pio GPT Operational Instructions.docx",
+    "file_sha256": "e4a847ebebd70a3a5b5a8556fba4281a52c50f498dbb9a6eee5836d03cd6ef82",
+    "chars": 3627,
+    "sha256": "36f6e53512c223d72e424f81a9de30bbe3d0d28eb210db0769d08610cc56ccc1"
+  },
+  "saint-catherine-of-siena-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/Saint Catherine of Siena GPT Operational Instructions.docx",
+    "file_sha256": "8d2820577782c06cb55ace08b80367bea76c79ba95942c8467dbaf723c68b1e3",
+    "chars": 4028,
+    "sha256": "82d66dfc2d7fcd6b9d60f387942059447587f945647fe4f0a44bcffc17e12538"
+  },
+  "saint-john-of-the-cross-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/Saint John of the Cross GPT Operational Instructions.docx",
+    "file_sha256": "7b0253393918097ee26c2b82debe29fb6a3c06177312532a3273544380b56809",
+    "chars": 6863,
+    "sha256": "bdb13810b759b132c9e8fdfc5978fabd0a09a5218bb76fd538e67053ea07f100"
+  },
+  "carl-jung-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/C/Carl Jung GPT Operational Instructions.docx",
+    "file_sha256": "cfe36c6876885d85bdb261bd3e67864898dd7934d3525cf3317dd42f63ba03ab",
+    "chars": 4274,
+    "sha256": "0979193a2a12e74012ddc696f37dcc79221b2bf7dd494171079564bdb7e3ff53"
+  },
+  "moses-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Moses GPT Operational Instructions.docx",
+    "file_sha256": "f18760f8429101e667e6b7f1fefa013f5a913b733e056e8005ab1946335d8b14",
+    "chars": 7142,
+    "sha256": "eab4f6e52fcc9c84427bfa711d9c77d557cc136add53ed4bfa9cc1da6f7f180c"
+  },
+  "essene-qodesh-code": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/E/Essene Qodesh Code Operational Instructions.docx",
+    "file_sha256": "fef9ebce0ea56b219cc943d8eb211caee336df857d3eac88048ded1b3cece3d2",
+    "chars": 5300,
+    "sha256": "1c93b1bdb4d78d2aab32f9bd31cca0ccb0beacb5bebc01a7b93a86fee50a2005"
+  },
+  "the-breathlight-codex": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-St-to-Ti.zip",
+    "entry": "AIWebTools Operational Instructions (St to Ti)/T/The Breathlight Codex - Operational Instructions.docx",
+    "file_sha256": "463b86daf28f09de19f1fb5d43b0493b16fc725f33febc4801f9ce49385743be",
+    "chars": 5335,
+    "sha256": "8bbae377c445ec89cbe45259c27f7636564a17ed5164f5c43ec9faa6d1761763"
+  },
+  "origen-reborn-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/O/Origen Reborn GPT Operational Instructions.docx",
+    "file_sha256": "5cd6c3eea40f015952cbae0bd13190c1f922ad3abe3e0101bcf18cda89199a2b",
+    "chars": 4693,
+    "sha256": "08403c48b1b7957a7362462ae3a99d84d1b50d0fecec5b9dc7baccd54ef6bd55"
+  },
+  "plato-reborn-free-thought-liberator": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/P/Plato Reborn - Free Thought Liberator Operational Instructions.docx",
+    "file_sha256": "e1f88c1f7eed8ca57337579d9d4b742136e9a95dc8e96dc0ed072ce80d94c476",
+    "chars": 6887,
+    "sha256": "32d692fb76adbeb568139e283a7e5b660a8c0d13c6f421e3dace018e33c8f071"
+  },
+  "the-sound-geometry-protocol": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-St-to-Ti.zip",
+    "entry": "AIWebTools Operational Instructions (St to Ti)/T/The Sound Geometry Protocol Operational Instructions.docx",
+    "file_sha256": "f47b540f59b8df1ea261fdad84c9a424a7a4936dd376acf1ab18ab23c790330d",
+    "chars": 6616,
+    "sha256": "7cab46f091095a4caff7d13c7dd59aad5153233ac3fc9c4058d9ebb57fb48ca1"
+  },
+  "aristotle-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/ARISTOTLE GPT Operational Instructions.docx",
+    "file_sha256": "0f6d8efb2267836f105a5e0f3533ec5ef42816acf5027a283059dc6678f69033",
+    "chars": 6924,
+    "sha256": "4a738249295f6b6f605249878a15e1e24746b00890598c02d2b1b516e4accbba"
+  },
+  "hypatia-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Hi-to-In.zip",
+    "entry": "AIWebTools Operational Instructions (Hi to In)/H/Hypatia GPT Operational Instructions.docx",
+    "file_sha256": "ff8666d95d6ff90ce21443250a2e2836d62260ec84d137b6361f7a69562fab57",
+    "chars": 6853,
+    "sha256": "4ed6df9f4217d25f574a155b06afd9d71dcdf70f031d7d9f998639ccf0cc7c68"
+  },
+  "bob-marley-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/B/Bob Marley GPT Operational Instructions.docx",
+    "file_sha256": "f16d8880a06746925bee256ac53edcf650ad20f3a52cb77529b68d93053e96e6",
+    "chars": 7998,
+    "sha256": "c8636c7d325dc0bede26625ccc3135e6164ad684559299ca7e43f2124c79aafd"
+  },
+  "watts-of-quantum-light-harmonizer-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/W/WATTS OF QUANTUM LIGHT HARMONIZER GPT - Operational Instructions.docx",
+    "file_sha256": "043dfc00ec9181f51598361f39afe949f9c5e47ee3c1454bad09707c6dbc55c2",
+    "chars": 8000,
+    "sha256": "ed50a9e34594055380475eb4bec8b1e05712897b3dc044def7ce1b884be4fbeb"
+  },
+  "sora2-text-to-video-prompt-maker-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/SORA2 Text to Video Prompt Maker GPT Operational Instructions.docx",
+    "file_sha256": "b3e98ee219a6c9a726e2148be271b4b1c36b48514a9c37735e71021340e29616",
+    "chars": 7999,
+    "sha256": "438ada0467148c0519e5257110c79f37f47f903a183b82f21b4083a0ec86a111"
+  },
+  "veo3-text-to-video-prompt-generator": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-St-to-Ti.zip",
+    "entry": "AIWebTools Operational Instructions (St to Ti)/T/Text to Video Prompt Generator Operational Instructions.docx",
+    "file_sha256": "4b5d6a63dfa0483d01a166f7232e22a3f9360a89c35c3dbcdc3ab79b66848af5",
+    "chars": 7999,
+    "sha256": "0fb7e6436ca3fda86a040919b9b884c5374a93572b0560a1c98662c5310e1c24"
+  },
+  "friend-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/F/Friend GPT Operational Instructions.docx",
+    "file_sha256": "5d7180b5354a65f146112b7cf93e624642e5610fc17b4af2b5ffef0291b916f3",
+    "chars": 6387,
+    "sha256": "f03194b5180ef82e837062892edfd216439130130a1e69b941ecbfb3578607db"
+  },
+  "religious-studies-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/R/Religious Studies GPT Operational Instructions.docx",
+    "file_sha256": "84a7ca5e8878f26307250cd39552af5ea991886d2ad142d80eb067add5445509",
+    "chars": 4684,
+    "sha256": "6a6072f69fca53f727545db514efc28cf9df99983deb8d4ff815681b01d47b37"
+  },
+  "declassified-files-explorer-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/D/Declassified Files Explorer GPT - Operational Instructions.docx",
+    "file_sha256": "b0b54e853fb9918935b7cbbcacc89a716de953c621a3eff1536988a00de82045",
+    "chars": 7305,
+    "sha256": "74b05344042a4ca13061e89589492e6d54af64be8049a5adce944d50ce57b0de"
+  },
+  "intergalactic-ancient-archivist-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/I/Intergalactic Ancient Archivist GPT Operational Instructions.docx",
+    "file_sha256": "e8880fccf2bfb85fd22d119af55fc59e0de4692be144f99b07bebe0f0a54c29e",
+    "chars": 7467,
+    "sha256": "22189f7c590ec96045d2170dc1aad6e670d495f941f06d842791be97edad07fb"
+  },
+  "awakening-jeopardy-gpt-chat-game": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/Awakening Jeopardy GPT Chat Game Operational Instructions.docx",
+    "file_sha256": "084f620a6c8909662ed36aadb095e7ae20c8f8a2ebb69c6668023810cac98d50",
+    "chars": 6533,
+    "sha256": "c2b3df763086cb307877dd11d127b3e9fed9bf3c78ea39034fb762ff1b8b078f"
+  },
+  "global-supply-chain-collapse-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/G/Global Supply Chain Collapse GPT Operational Instructions.docx",
+    "file_sha256": "fa2910f0cd06cef8f426f8de18a2fc8e4dcc592d7079dec3471bedebaf8e1d20",
+    "chars": 7975,
+    "sha256": "c8cd1d2f2f65ee2370849e78896fbc2b3523645803c1861f58cd5fd674e2d7a6"
+  },
+  "hormuz-crisis-impact-prediction-engine-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Hi-to-In.zip",
+    "entry": "AIWebTools Operational Instructions (Hi to In)/H/Hormuz Crisis Impact Prediction Engine GPT Operational Instructions.docx",
+    "file_sha256": "2a7306e8906eb126591876ddefbef148eb9e36b120bb2b6ff6446356217c1ac5",
+    "chars": 7999,
+    "sha256": "6660aa157b4b6114f0464fc840c8f4b730a19dae18f827bfc6e6a010535e6cfc"
+  },
+  "course-maker-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/C/Course Maker GPT - Operational Instructions.docx",
+    "file_sha256": "37b17c00be84d2714315e8ad784397960a05ddeb687887485b3a0a4d9229b584",
+    "chars": 4907,
+    "sha256": "72732884007c4aff7f57e996098eb4a251efeb720362fab7daef3eed21cfc2d2"
+  },
+  "contract-review-bot": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/C/Contract Review Bot Operational Instructions.docx",
+    "file_sha256": "b1832e517de50fb3cc8fa95ba6c686a0ac33316c7c629604c562b57b62ee9349",
+    "chars": 6125,
+    "sha256": "a1812e2f642c773a2bdd0dba0e2bf80b5f127d257a96de6674e6a52171ef120b"
+  },
+  "bob-ross-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/B/Bob Ross GPT Operational Instructions.docx",
+    "file_sha256": "bc895e0849acd205600e1e0dfcb75eaafcff82fcf7b8c7dbbf268f5ee93806cf",
+    "chars": 7983,
+    "sha256": "7bd8e680ae94f427106139ab7a4c7160653a984fc1521fefc977ed6ef938757e"
+  },
+  "cyber-kabbalah-light-code-translation-engine-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/C/Cyber-Kabbalah Light Code Translation Engine GPT Operational Instructions.docx",
+    "file_sha256": "8f0c38a277db5601728c9e2bce52847f2c8399b510974d847e5f59da60e4ac6a",
+    "chars": 8000,
+    "sha256": "3add5641c31a67b147f14892bca4717515417fe68f6c52f1b25d2a634c1d24db"
+  },
+  "poverty-crusher-economic-empowerment-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/P/POVERTY CRUSHER - Economic Empowerment GPT Operational Instructions.docx",
+    "file_sha256": "008b107034131548e385befd6fe3c734ee95f1486c4aba596f2287d5319f2e5a",
+    "chars": 4138,
+    "sha256": "1d5888d185bc3c5185a78cbfde24020d659996477e1b31947612136ce1075e0f"
+  },
+  "fiat-to-crypto-ai-value-calculator": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/F/FIAT TO CRYPTO AI VALUE CALCULATOR Operational Instructions.docx",
+    "file_sha256": "d4ece2556efeb23d0f8c84a8b9effb9231c9aaf6a6cbb4579b5540639b82e814",
+    "chars": 7996,
+    "sha256": "12dfdfdb47e8646018446539e564b8b5d3d7a70bf5b92570de0fbc1b33c84bc5"
+  },
+  "cursive-teacher-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/C/Cursive Teacher GPT Operational Instructions.docx",
+    "file_sha256": "529f11bf027c1ce15f2a636affafa3fb6c53e444a8f0cff7df2279e56ae5d95f",
+    "chars": 6545,
+    "sha256": "7fc7e7a0bd2343de59abd4cd5547a3a2eb53cdf226799cd428ff23d993e869a4"
+  },
+  "i-am-q-i-am-you": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Hi-to-In.zip",
+    "entry": "AIWebTools Operational Instructions (Hi to In)/I/I AM Q - I AM YOU Operational Instructions.docx",
+    "file_sha256": "dda4b84637b8608da5ed2456fd5e2824eb53095998a99d120428c4bd4e388650",
+    "chars": 7968,
+    "sha256": "89a1be3ce1cc7b115ff6592ffd7eed0ba200bf7c006409ca323758658aa53995"
+  },
+  "college-professor-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/C/College Professor GPT Operational Instructions.docx",
+    "file_sha256": "3cef610d389478cc783ffdbd971c9c58221ce1dec1fcbff3bc19420c52920e34",
+    "chars": 7999,
+    "sha256": "e9a569862567c5e66856a7fda6dfa584cd38143e3beeef2f5a84faf9cfdd3284"
+  },
+  "bible-studies-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/B/Bible Studies GPT Operational Instructions.docx",
+    "file_sha256": "6502f4968abee0c59571db716f87ce512ea89d14f052dc4280ee0c3217d8122a",
+    "chars": 3563,
+    "sha256": "5cdf1de0bb5547daff8040b396a114a723013d0bdbdd9220bc2897b81de24687"
+  },
+  "greek-new-testament-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Gp-to-Hi.zip",
+    "entry": "AIWebTools Operational Instructions (Gp to Hi)/G/Greek New Testament GPT Operational Instructions.docx",
+    "file_sha256": "b279cb48a164243a4a107273357c63671a92da1524bfb12c1bcc52965a0f7daf",
+    "chars": 7588,
+    "sha256": "9b9e59bf450dbecd8cb2b887b0e79711ece263d4ebace99f5e5d1775500af863"
+  },
+  "hermes-trismegistus-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Gp-to-Hi.zip",
+    "entry": "AIWebTools Operational Instructions (Gp to Hi)/H/Hermes Trismegistus GPT Operational Instructions.docx",
+    "file_sha256": "fd09f5ef4cb29430de538cb84f2d280b28ded7952331ce34d65e6e696d37a1ac",
+    "chars": 7308,
+    "sha256": "3bb241665f24aa25c05ff9ae7742eea75a1934d5c548640d422919ad5a2cb189"
+  },
+  "confucius-free-thought-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/C/Confucius Free Thought GPT Operational Instructions.docx",
+    "file_sha256": "a9e74f7268a3d7ce65468bc72936e66a23245c65b5a57856ee2c87a15dc9f526",
+    "chars": 7051,
+    "sha256": "137536503857ad8efb1e9c03d3c7e941143e0525b173b182ba08219f175d7f95"
+  },
+  "joan-of-arc-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/J/Joan of Arc GPT Operational Instructions.docx",
+    "file_sha256": "ed2adcd0faa68fef187430b5b0d7f784ef89c031bbb8283cccb6f5f46d818bf1",
+    "chars": 4690,
+    "sha256": "098c784741427ada6e3f60172f3ea5711f785c4d3d8d781753113cc7e5a5ba55"
+  },
+  "atlantean-memory-keeper": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/Atlantean Memory Keeper Operational Instructions.docx",
+    "file_sha256": "e2feb3aeb1175c286fcfd699a349c4f55182a784ee2870a1b0059ad5ef7b4b79",
+    "chars": 5150,
+    "sha256": "885b1bdee31b2454ff0db58a79c3e9fc6dace7201e98730d83132d9119802861"
+  },
+  "mayan-dreamspell-matrix": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Mayan Dreamspell Matrix Operational Instructions.docx",
+    "file_sha256": "0c6616ef897d143493a491393aa46bb39934a53ebabb8956ed4ce0a4795c53ef",
+    "chars": 5233,
+    "sha256": "e1bff8bc239d8653c3c3516611dbafc2c1dc32d9e9aee425012d6b6a39eea9a2"
+  },
+  "emerald-signature-of-thoth": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/E/Emerald Signature of Thoth Operational Instructions.docx",
+    "file_sha256": "e04c58b43572c7fe4ce76e6a052b910c24673541181b63236884385922e9b55c",
+    "chars": 3488,
+    "sha256": "299477465de07af8c54b5d7fd04927b346f4a3a9ac17d12cba82171bca9a06a5"
+  },
+  "reality-splitter-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/R/Reality Splitter GPT Operational Instructions.docx",
+    "file_sha256": "a9182b99bac1909a45e0a3de899dfacba558bfae95e9db53c6eb4a4934a5c04b",
+    "chars": 6574,
+    "sha256": "e8fd498cdf2fa4b535375d4bc21b1ed6fca880c3d0a442dc06722496c6487c0d"
+  },
+  "the-cosmic-probability-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-St-to-Ti.zip",
+    "entry": "AIWebTools Operational Instructions (St to Ti)/T/The Cosmic Probability GPT Operational Instructions.docx",
+    "file_sha256": "fa09f24f2602136c35dd1f76821b614414f4a5616fd6220b1de2603ff021382e",
+    "chars": 7984,
+    "sha256": "85e2b468c4d794c4f7083ef1a9782a0db8080c2f7134251a9513facd2a545487"
+  },
+  "frequency-signature-mystic-decoder-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/F/Frequency Signature Mystic Decoder GPT Operational Instructions.docx",
+    "file_sha256": "595f4f618577b0902e8a4c7f60aa63ab3451e0009cccb3496142a38659e1dcc2",
+    "chars": 6541,
+    "sha256": "e5a5c64c3c08666397281b47f72384c58662395ed0a0af54871ae728794a3a00"
+  },
+  "ai-hospital-facility-safety-inspector": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/AI Hospital Facility Safety Inspector Operational Instructions.docx",
+    "file_sha256": "ec7626eca685be7f61e6b7bf81ed16b950c5fcea55d1e54b3c1279f6e4fad2a1",
+    "chars": 3043,
+    "sha256": "00e29164c0e06b7041da7d9b6f1a61b42382cd9edc9610695273916b62825750"
+  },
+  "food-processing-plant-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/F/Food Processing Plant Inspector GPT Operational Instructions.docx",
+    "file_sha256": "a3ed6ef7b87d95854859acb3d0e767422275bf46cec90e2ffbd134146d18f800",
+    "chars": 7431,
+    "sha256": "cfc488432ef047a207716da88347dae80a26dc791607d849deb6aec1927c5970"
+  },
+  "chemical-plant-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/C/Chemical Plant Inspector GPT Operational Instructions.docx",
+    "file_sha256": "0841fc2d84e71df6c9d077e53eb557b4c383ea4afe7a484a6101a7b5332df715",
+    "chars": 6844,
+    "sha256": "08915e26bf9fd8bcd68116a39f42445165e141171adc8e0764ef0e31a44707ed"
+  },
+  "solar-farm-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/Solar Farm Inspector GPT Operational Instructions.docx",
+    "file_sha256": "11d0fa3ba3e8f51b1e742e4f04d52c39bca2336fe497631a5314fbff7d2c442e",
+    "chars": 7379,
+    "sha256": "300a2d37408a56fcad95b2a3d5660e41f014d4d02db095e2a6442a91e8b7279e"
+  },
+  "ai-wind-turbine-inspector": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/AI Wind Turbine Inspector Operational Instructions.docx",
+    "file_sha256": "14771f8de14ef6954d9cc12b30cb70eb7d98560fa970f6188f7ffcc0f1e93faf",
+    "chars": 6838,
+    "sha256": "586928e28a60fc64c03029b740619950f764b50e848ff48dc64473e3fca72884"
+  },
+  "astrodynamics-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/Astrodynamics GPT Operational Instructions.docx",
+    "file_sha256": "a484309e13c3e3d95dc29fe8eadb4271d259146ed9424c80894c5ef8ea077ca7",
+    "chars": 1923,
+    "sha256": "ad0b6c04102b7401cb43aa466629f5f713d68b664ba7f66e18790dd8978c2819"
+  },
+  "microgrid-power-safety-planning-assistant-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Microgrid & Power Safety Planning Assistant GPT Operational Instructions.docx",
+    "file_sha256": "883383fd37ff6f7ff8bd1cffdff945c7b4131ae27da4d16bec04f1a7600cc5cd",
+    "chars": 1062,
+    "sha256": "f5a4092a00cde6cdd968608f7ed67b3a8b54ed8c1c014a3d1e8309283baf7151"
+  },
+  "aquila-water-safety-planning-assistant-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/AQUILA Water Safety Planning Assistant GPT Operational Instructions.docx",
+    "file_sha256": "d5f2fde20eedcb9d47ae1e450011fe303a8b607d0726b39e2dfe852ca96aa162",
+    "chars": 7999,
+    "sha256": "16b1dd06fced60e3d9b8913ab7862b486484eeb9c323a5fe64120139acdae972"
+  },
+  "world-data-explorer-gpt5": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/W/WORLD DATA EXPLORER GPT5 Operational Instructions.docx",
+    "file_sha256": "3eaa26764836508c8e5b166901c78b25bb73fbe18fc6502f85200c5c6e8405fb",
+    "chars": 7958,
+    "sha256": "14ee523d5e92e6fb82562ad7b03821f94b8fe34baed551e4a6ce1205f08dd581"
+  },
+  "ai-cannabis-facility-safety-inspector": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/AI Cannabis Facility Safety Inspector Operational Instructions.docx",
+    "file_sha256": "46ed0fcee1a769e0eb022fa02e0be69e3455469c69963e8c887c66b4ce910f06",
+    "chars": 5925,
+    "sha256": "b8d0097d7d0ff3656d5e989be7f5c543fce2841711c57995d4e90ae3fb85d27f"
+  },
+  "ai-shipping-container-inspector": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/AI Shipping Container Inspector Operational Instructions.docx",
+    "file_sha256": "d7096811103c68d961c0e06661d9473bcf02a156f8d80b3ae1cc0a722683b379",
+    "chars": 7690,
+    "sha256": "5074f28ea488a2267291baaeac897e1cec0f2f2081460aacb29a09aadf04edcf"
+  },
+  "oil-gas-facility-ai-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/O/Oil & Gas Facility AI Inspector GPT Operational Instructions.docx",
+    "file_sha256": "f81ac0be04d47acd0e6921635cbf85b3b7232fb10ca06a0c757c6576a3e858ac",
+    "chars": 7521,
+    "sha256": "7735b82520b182714e3f89638e1cdda76ba210fe0b3b6bb1f63709eb9de47b30"
+  },
+  "factory-production-line-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/F/Factory & Production Line Inspector GPT Operational Instructions.docx",
+    "file_sha256": "a76d59647bfc4d761938d156c042376519a4ec846ce5d957bd4a23831a233536",
+    "chars": 6998,
+    "sha256": "2c289a5749ed05ea58a3b5a55318cc472e1a5b88a23dcba03c455c839e5bfd09"
+  },
+  "warehouse-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/W/Warehouse Inspector GPT Operational Instructions.docx",
+    "file_sha256": "df34024202ffa526afc9f36d6ea5b004273b958c53203c37cebe50875ad3205f",
+    "chars": 5071,
+    "sha256": "304a4c4b3f1584eb33d923eef95ca018a727c7d0a97b44a223ffa849593217b7"
+  },
+  "waste-management-facility-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/W/Waste Management Facility Inspector GPT Operational Instructions.docx",
+    "file_sha256": "5806e150443be23a027358adc051ca386563eecfbde459b5222889c3553b084d",
+    "chars": 7026,
+    "sha256": "7a14b3d27ac6eb96f9cdc1b6c5b94220071e3891bef0fe0309ef39780155e462"
+  },
+  "ai-dam-hydroelectric-inspector": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/AI Dam & Hydroelectric Inspector Operational Instructions.docx",
+    "file_sha256": "faed958ec0de44fdd0d6c6f14bc189253f668e86e1fa951a385d9b18be0ead00",
+    "chars": 7286,
+    "sha256": "fe91742acbb092f0de677806877d0aa2842b835e8db4fd3a302ed0d736f3530f"
+  },
+  "ai-port-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/AI Port Inspector GPT Operational Instructions.docx",
+    "file_sha256": "7c0f0445cc3462d94107531dfd9bada377d0e40f55bb427fe9eea47f53e13e67",
+    "chars": 7388,
+    "sha256": "f61d1959dc7c0a72b84dbeeabbb846fdea785d87f88e8b54c278073b79a2ddc5"
+  },
+  "ai-airport-runway-systems-inspector": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/AI Airport & Runway Systems Inspector Operational Instructions.docx",
+    "file_sha256": "c1f352f6f91cf8fb8cf9cbbff8ef13b2f2d597bb0a6a4256944aba2069a4059a",
+    "chars": 6800,
+    "sha256": "7e8a3104c66a80fcfab55a9b36e66d03b2efd4e34e0521f4298a56e0a4269c1d"
+  },
+  "ai-highway-traffic-systems-inspector": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/AI Highway & Traffic Systems Inspector Operational Instructions.docx",
+    "file_sha256": "2c1dc27588d6f71aa504d0578914d51196340c6c99571fb13b101b6617951008",
+    "chars": 7161,
+    "sha256": "e54f402919a97281e69f2667c4736bf908136ddc18255807827ed3b62ee0f902"
+  },
+  "electrical-grid-substation-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/E/Electrical Grid & Substation Inspector GPT Operational Instructions.docx",
+    "file_sha256": "1bc4214b93391c51f317d91d8541f7f1abe9ae3b80534d0017a2658cd842dc40",
+    "chars": 7347,
+    "sha256": "135f2f50f334aa1f638f746c5f061c5b5d5dc5e268d2a551f020bec50401e7a8"
+  },
+  "ai-water-treatment-plant-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/AI Water Treatment Plant Inspector GPT Operational Instructions.docx",
+    "file_sha256": "b1273d979d6a209a83500d2563ce75ecd8ec0679f940321fed36926e0039059b",
+    "chars": 7214,
+    "sha256": "284b680038fae704a8a40476f081739370e4a31eba0447b0ced6dbd58717370e"
+  },
+  "mind-reader-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Mind Reader GPT - Operational Instructions.docx",
+    "file_sha256": "8114010c6930ebc927d5f24aa89a31ab19222ff1f1f6ce8aca05c117c015988e",
+    "chars": 6145,
+    "sha256": "8911fd8ac461f6853cdb6b985b6b5f062cd07aebfa93454a5c98d1d1feefc29c"
+  },
+  "1995-illuminati-card-game-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/0-9/1995 Illuminati Card Game GPT Operational Instructions.docx",
+    "file_sha256": "7516f1f2c975523cbb249da848506a13664e93508d6927d5772bc85714c50e0e",
+    "chars": 7333,
+    "sha256": "45f0f495f0b7e3a07d71beab8e450b4c81669abb1cd12301fa9a571bb036e212"
+  },
+  "gamesaas-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/G/GameSaas GPT Operational Instructions.docx",
+    "file_sha256": "ee52ba3ac265ea735387e7c6affc81a2c7a33b446c5e5392852294b27ea84e43",
+    "chars": 7998,
+    "sha256": "e23dd97cbb8af3556982b574ce375cd6e165aba5e02349d56eeed1e0261874f5"
+  },
+  "culinary-recipe-master-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/C/Culinary Recipe Master GPT Operational Instructions.docx",
+    "file_sha256": "9a0461c201c2fd02b55b41ae0be976843ed59b992c3ebcb5edf6bae06cddd27e",
+    "chars": 6226,
+    "sha256": "5dd4403dc7d3be5db3be710983df0cde56d5ec293b45f6caac312fa5dfe5b420"
+  },
+  "the-rune-frequency-protocol": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-St-to-Ti.zip",
+    "entry": "AIWebTools Operational Instructions (St to Ti)/T/The Rune Frequency Protocol Operational Instructions.docx",
+    "file_sha256": "5c6d0f463d88d9a2e8b68c96155c1a73ae0975013cadc8b396cd02345803469c",
+    "chars": 5552,
+    "sha256": "59ec0bda04cc1ed72a7f756aa5fc9b0d1acf4b779737d987ad163b15c5a1f379"
+  },
+  "astrotheology-revealer-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/AstroTheology Revealer GPT Operational Instructions.docx",
+    "file_sha256": "b31cfbadf0c41cb126212980b9cdf711b2dea99acc24957bb3f398eb2b0c4bbe",
+    "chars": 8000,
+    "sha256": "fd6bed05103b1ab7eb51f44613cb9779ddc565ccb24e45604d10e9e234286f10"
+  },
+  "architectural-old-world-investigator-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/Architectural Old World Investigator GPT Operational Instructions.docx",
+    "file_sha256": "90bcdef3a07efd55d5f825b44aa42837f2d960315a71b2763f203ee72e815a11",
+    "chars": 6545,
+    "sha256": "18505963a7cb848332c43d110f8c1fea13d280cefd6318b618c6bc74ab9058c8"
+  },
+  "cipherencrypt-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/C/CipherEncrypt GPT Operational Instructions.docx",
+    "file_sha256": "2e9b0ad4be1691d3075a69b0e38fd5527e90990aa6240b96ed4ecf2860d79e06",
+    "chars": 8000,
+    "sha256": "7cda5fe311c248a3683cb6f38e76da38b4c33aa9d6959f68f0c1d3d4da573360"
+  },
+  "honest-advice-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Hi-to-In.zip",
+    "entry": "AIWebTools Operational Instructions (Hi to In)/H/Honest Advice GPT Operational Instructions.docx",
+    "file_sha256": "b9df7f11ee3f09fe2110431531222222c4681b977943ebc9857df0578338ae08",
+    "chars": 2614,
+    "sha256": "bb0fe1951b0a52eb8b16afbea3163f05019c8269d911d0a2e05120007de06192"
+  },
+  "birdwatching-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/B/BirdWatching GPT Operational Instructions.docx",
+    "file_sha256": "5f72c261022a3767b325f210f10ebb605d7d475241b268ac1000be5978e753fa",
+    "chars": 4779,
+    "sha256": "bb83810a324da6066ecd5fc589b64f3e1ca5ecf668ff811d36c92697889d6104"
+  },
+  "stoic-guide-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-St-to-Ti.zip",
+    "entry": "AIWebTools Operational Instructions (St to Ti)/S/Stoic Guide GPT Operational Instructions.docx",
+    "file_sha256": "2c22081309eb89a2dbf9818e2b5a46966ab65d768c3a5f176b16dd4d033db017",
+    "chars": 6849,
+    "sha256": "912bd3e8a0b36ea51b966ece7f04e54eba00bd16e8cfcc839e9ffd0190e33708"
+  },
+  "manifestation-mentor-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Manifestation Mentor GPT Operational Instructions.docx",
+    "file_sha256": "a344bb6b0ea2bdd44eec9777b65672beb1bbce26c43d4c94019b548ebc4dbc3a",
+    "chars": 5878,
+    "sha256": "37101cb6742e48c2b107d582e2817d74aeeff16eff853863b7364a116922c5d9"
+  },
+  "creative-spark-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/C/Creative Spark GPT Operational Instructions.docx",
+    "file_sha256": "61ef4315fe38a695c6b415a3b38318c037fdcf693f1fe9286ecbba145b0c3862",
+    "chars": 979,
+    "sha256": "1d51db7d34b6c0abef1d6abc22a03510b3905a94553f336a4c2bac3721ea3ab1"
+  },
+  "personal-life-coach-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/P/Personal Life Coach GPT Operational Instructions.docx",
+    "file_sha256": "fdec34b8581d0cd516dd3b93f9f330edb18ed99fe9a8cf98366f7c5d67253312",
+    "chars": 650,
+    "sha256": "ddbe188e91ca84e04bdeb76931fec068843eccf4d309ff21dbea8ee3d57767bc"
+  },
+  "self-esteem-booster-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/Self-Esteem Booster GPT Operational Instructions.docx",
+    "file_sha256": "de6dea4838bd2f43b051d042f8da9aa8ea6511eb039f22cf7c1bcb6be99350ee",
+    "chars": 7989,
+    "sha256": "7b45b6de0a0e19716d1d53cc6d60af6f8cdabfd722f02d5148984af7f3fd40e6"
+  },
+  "purpose-finder-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/P/Purpose Finder GPT Operational Instructions.docx",
+    "file_sha256": "463d97a2508a5fea064c756402bcb5c309013f14b4adfef287c313cb33fc42c1",
+    "chars": 6860,
+    "sha256": "8e38db913c88cd72b08ce368c3390b6dcf48ebfc9a4e428d566bf7c2ad9087bc"
+  },
+  "stress-relief-coach-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-St-to-Ti.zip",
+    "entry": "AIWebTools Operational Instructions (St to Ti)/S/Stress Relief Coach GPT Operational Instructions.docx",
+    "file_sha256": "7f67a81e9c5ad82dc224e1e537d0486bb7d1a05201fbfc33da3c87238799180d",
+    "chars": 7655,
+    "sha256": "8d79fb68b9ded74d371312b9357f4f4ccc81de0fb1d9f488a8433cd172296572"
+  },
+  "habit-builder-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Gp-to-Hi.zip",
+    "entry": "AIWebTools Operational Instructions (Gp to Hi)/H/Habit Builder GPT Operational Instructions.docx",
+    "file_sha256": "50f7a40abb2976e0b289dc18daeeb81ada094ad0d8de42f121ca16cadb4f73ee",
+    "chars": 6825,
+    "sha256": "64d619e0239f948c8c22a9ac31c739b813e5d8cadc38322409e5e9698ca60057"
+  },
+  "leadership-mentor-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/L/Leadership Mentor GPT Operational Instructions.docx",
+    "file_sha256": "08a2e68087c96982086c0c8ca934e0a5805e543e928b14403a5ef1af01eb9cbc",
+    "chars": 3685,
+    "sha256": "5d5017f13dd46d54690ffaf7d3f08940c2082522cc6779cd337dcb4536081bda"
+  },
+  "passion-igniter-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/P/Passion Igniter GPT Operational Instructions.docx",
+    "file_sha256": "9dcfca4f84df51fb5b8dac9e208de349ad725f294638677707a610caffa09964",
+    "chars": 6678,
+    "sha256": "c8337fe74ed2e5421c77bfd74699bd069306a06e6ee8b45a936ae92fa5068ae5"
+  },
+  "gratitude-guide-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Gp-to-Hi.zip",
+    "entry": "AIWebTools Operational Instructions (Gp to Hi)/G/Gratitude Guide GPT Operational Instructions.docx",
+    "file_sha256": "92531966aa4197232258ce3572410c66a52bfbbacbd875592e64df9f92be8deb",
+    "chars": 7480,
+    "sha256": "c441f3f7f11450c5399140ac668eb829473a8cd6a85a3f7dbe057387a3517226"
+  },
+  "mindfulness-mentor-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Mindfulness Mentor GPT Operational Instructions.docx",
+    "file_sha256": "890908ec94777c62d5ac0b04b5e968f1d94360c725ebe90265fa5fcda8375dac",
+    "chars": 6603,
+    "sha256": "d44ad51dc839e69b3599bf083b199eb6e8c0035046f9e0ad95ed1213f4175b0f"
+  },
+  "universal-speech-mastery-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/U/Universal Speech Mastery GPT Operational Instructions.docx",
+    "file_sha256": "09e13bf78a137cd01fdfc0237920401f7af1c2fed2cace7398ae583fdf4f06dd",
+    "chars": 4283,
+    "sha256": "59c71962f4d0d5c56e7af28e2756e1ceca70bc3dbd6a78cc393bde3491fa2917"
+  },
+  "educational-tutor-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/E/EDUCATIONAL TUTOR GPT Operational Instructions.docx",
+    "file_sha256": "0d7ea274adceb69d14b4ec7b69e0e290876ffe2e4c224c20db793705e2e8749c",
+    "chars": 6218,
+    "sha256": "cabd84c7e3071566d9d976becbbd749e833fcff0c1a992e5d6ab4e3e5b6887ca"
+  },
+  "dental-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/D/DENTAL GPT Operational Instructions.docx",
+    "file_sha256": "582e6743a92a4c567661ff4e4d2a180b9a26ae18ccbbbf38067a0214f2ff3ea5",
+    "chars": 5312,
+    "sha256": "3e334507080bc1e4545681f2b684d922c3a9cfae0a1f7b9b2f343158a805e2d8"
+  },
+  "ai-home-cleanliness-declutter-coach-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/AI Home Cleanliness & Declutter Coach GPT Operational Instructions.docx",
+    "file_sha256": "c94e5c81b18b000da9e6c010f2db076632987e97dc3a43575348d26652d08149",
+    "chars": 7996,
+    "sha256": "401ef219a52799ec83d9605eccc016e8537bce21510953e4215c37e4a9fcec11"
+  },
+  "patient-advocate-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/P/Patient Advocate GPT Operational Instructions.docx",
+    "file_sha256": "23352c75152bbfafc8656734afc02d7185811d027ac33891fb81299b5a978693",
+    "chars": 260,
+    "sha256": "1b52ce1810e1de25412e2955b9faa8e0c341888caae31f0e4607e949f49f711a"
+  },
+  "parent-teacher-advocate-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/P/Parent Teacher Advocate GPT Operational Instructions.docx",
+    "file_sha256": "75703b4fb8defc5ef22569027729c5b3d276664d51c7916118f4398d876fbbc8",
+    "chars": 6828,
+    "sha256": "746776bfa17b5f8079033816499e171f1cf88e8f3473321a513a55ff089df45f"
+  },
+  "public-service-finder-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/P/Public Service Finder GPT Operational Instructions.docx",
+    "file_sha256": "1cfec807e46cda3a8e7979a1ba68e639966a0d2b7fd1ae5b73b297b96cdc2269",
+    "chars": 6396,
+    "sha256": "9173d25445d17d633cf6b04d8e95c3fbbcd54ac7add49cf621f022e686b6bf42"
+  },
+  "trail-mapper-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/T/Trail Mapper GPT Operational Instructions.docx",
+    "file_sha256": "cb58bcfc696ee676bb840e5a9317aa63ab50383fdf84c643e65cf887f701868e",
+    "chars": 6119,
+    "sha256": "b9c9b7923bc77c91922e994ba0e14ff83d0da8f1e360a05b82833e4fdf79fb7f"
+  },
+  "construction-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/C/Construction GPT Operational Instructions.docx",
+    "file_sha256": "68b3856ea7de03e6ace0f2401ebe2866a93078391b9764d952f0722dfbfe0c41",
+    "chars": 5042,
+    "sha256": "729d629a7dd55eb82f0a09a2567b8ca2c5f842c0ef7a5bdba818b66b47078709"
+  },
+  "mr-fix-it-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/MR. FIX IT GPT Operational Instructions.docx",
+    "file_sha256": "b08e71b196812217b1d3fe6732c7e2e911f61ec3a1713442fec84853effb01b7",
+    "chars": 6828,
+    "sha256": "b484a8b3a9b21980839c9a82d370f3aff9e2a91e3ca5e07ba35ee95ce51ff19c"
+  },
+  "kitchen-and-vision-assistant-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/K/Kitchen and Vision Assistant GPT Operational Instructions.docx",
+    "file_sha256": "f201f179d46448792db439c0840b9ffbb61caeecb1d38cd0cd3946c816651214",
+    "chars": 2403,
+    "sha256": "836d18e137cae4b5ca97ee23120eb626a57b458a678d88f34cdf64b5ab2acd32"
+  },
+  "diy-repair-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/D/DIY REPAIR GPT Operational Instructions.docx",
+    "file_sha256": "6002d5b3e411a37ffb0c352b4f73bd28483febaf89039a1e9fc18c2ef4a74128",
+    "chars": 6932,
+    "sha256": "8d84fcb77999f7873aceb49379f54b6536a4a8efafbbad706061004912f24849"
+  },
+  "competitor-comparison-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/C/Competitor Comparison GPT Operational Instructions.docx",
+    "file_sha256": "3461b5ea3383704c47ea029a789c5e84bd31bd3c772479a1765f93295d92a362",
+    "chars": 7767,
+    "sha256": "7ad85dc67f773e481b1f88a3a53db7a4e0421cbf1628b39387fa2d03cfbd25fd"
+  },
+  "side-hustle-microbusiness-planner-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/S/Side Hustle & Microbusiness Planner GPT Operational Instructions.docx",
+    "file_sha256": "64ed6dca1252bf43647c99ab6dd61d243fc38af87760f3004d0dbde42c894d5c",
+    "chars": 8000,
+    "sha256": "c7fc94ee3fe8258445878ce396729e7393e284b7dc116687c0d825e29666865e"
+  },
+  "nonprofit-fundraising-builder-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/N/Nonprofit Fundraising Builder GPT Operational Instructions.docx",
+    "file_sha256": "817c87d8039da2b4ef6c88e1c484983ca8a938b58bbad56a21e2744386155213",
+    "chars": 8000,
+    "sha256": "eff1acd2d5e511e946f46d88e16dd5838ab14bf16d55130f1e75b765c034edf1"
+  },
+  "garden-plant-doctor-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/G/Garden & Plant Doctor GPT Operational Instructions.docx",
+    "file_sha256": "d11d9260d864f88d2154b101dcff21153cd1af512e3dc2bb4ebc54ab258fcce7",
+    "chars": 7069,
+    "sha256": "f31c729ec639def14dc521b1ff254903d0ef2ff267a680727f3336ef9e497106"
+  },
+  "palestinian-history-preserver": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/P/Palestinian History Preserver - Operational Instructions.docx",
+    "file_sha256": "f7fc24ef05f4a193baf843b03056e1cdad67853e0d8d592ddefa671fb872a2f3",
+    "chars": 7345,
+    "sha256": "b9c9588f56c863b9b621f1fa982a7c086dd6682f634dd326030fe5874b378bc3"
+  },
+  "aether-guide": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/Aether Guide Operational Instructions.docx",
+    "file_sha256": "02b970b9e51b22b8822cc98e1443d08e3c92d9f5a993b10e3adfee4237873486",
+    "chars": 1911,
+    "sha256": "5e05ff7d9310f03b5868d9927301ebdf656cd687fc9ac83f5b0608ff57a9829c"
+  },
+  "hydroelectric-reclamation-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Hi-to-In.zip",
+    "entry": "AIWebTools Operational Instructions (Hi to In)/H/HydroElectric Reclamation GPT Operational Instructions.docx",
+    "file_sha256": "88ca908fe6d97c6d460265195539081eab9a064546aba91639154fe35727805b",
+    "chars": 8000,
+    "sha256": "03abb5a8ffd444691b2f662269b74c1da7c7c271b6cc425f0c7f04039df9d374"
+  },
+  "i-convert-image-to-code-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Hi-to-In.zip",
+    "entry": "AIWebTools Operational Instructions (Hi to In)/I/I-convert Image to Code GPT Operational Instructions.docx",
+    "file_sha256": "a26e8018784d58af8c187c6c6abe9188808eec21d0905fc68585b0e753f29430",
+    "chars": 5296,
+    "sha256": "e2feb91ebd841b4d71494d0b647185e3a0a074bb56ac209ae7fe7f7a68ef92c2"
+  },
+  "deployable-custom-gpt-maker": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/D/Deployable Custom GPT Maker Operational Instructions.docx",
+    "file_sha256": "adc714b020e04f8c1251e145892caa1c265b283ef9af158657d5a3d9e4f92ecc",
+    "chars": 8000,
+    "sha256": "07dff01583f48e313ed02b5159d5ad1a30dadd7b1ebff82466a3fb717f0777bc"
+  },
+  "veo3-prompt-maker-custom-gem": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/V/veo3 prompt maker custom Gem - Operational Instructions.docx",
+    "file_sha256": "6aea0f7941966191e0a736162c7ee65d7ee0ad54eb59cb5126dbfe4ba632c94c",
+    "chars": 8051,
+    "sha256": "f5abc684bbd6af69ad68d6994f2cb7eb051a0ecf53e4f97cce467afba805b030"
+  },
+  "declassified-files-explorer-gemini": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/D/Declassified Files Explorer GEMINI - Operational Instructions.docx",
+    "file_sha256": "072ec369396abda78fb952e9e03f24c527f41152c764707b2f19f65df590105f",
+    "chars": 7587,
+    "sha256": "210c8b3599faa77bb40d071f2c041ee15b8427e6fd7dba1321cb4fe4a8907388"
+  },
+  "native-american-history-time-machine-gemini": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/N/Native American History Time Machine - GEMINI - Operational Instructions.docx",
+    "file_sha256": "309bf9c65a7011774ea3352491f0eba0567f39f9252ded1fbba4b06bef1e6a23",
+    "chars": 8097,
+    "sha256": "0ad18faef498d4b40a3bf12b274de7bfdad8ce0f7ae7c53a314a87bfb4499fa9"
+  },
+  "newsletter-writer-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/N/Newsletter Writer GPT Operational Instructions.docx",
+    "file_sha256": "5236a6392113476b148367dd03871d23a9705410080a0dfa2d9b9123a1fba59d",
+    "chars": 6290,
+    "sha256": "f2666a84a721fde2d782e349e1b2b38cac1572b89bd2435bc86b33a09c23777b"
+  },
+  "educator-pro-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/E/Educator Pro GPT Operational Instructions.docx",
+    "file_sha256": "693d2e2b6eb112bac5c4d0660c5b613bb4a2bfea7ff1144b6b21318a7dd3c298",
+    "chars": 1468,
+    "sha256": "e65daa9a4141a7d42c089edabfaf043a90690d338230e98e6bccc0e04affbb07"
+  },
+  "mining-quarry-safety-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Mining & Quarry Safety Inspector GPT Operational Instructions.docx",
+    "file_sha256": "a9dc8131fd6e585aed5ba5c0364a53ee286cac872e225ce0f058ec8c918f0f3d",
+    "chars": 7561,
+    "sha256": "85499f4f8f2ac0285a34fbefba0e148641cb3b13b8115745e7025ad8990ab33c"
+  },
+  "tunnel-safety-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/T/Tunnel Safety Inspector GPT Operational Instructions.docx",
+    "file_sha256": "f8b84e5d6085b7fe2b5ad5b91c72a6a6060c93743a4e5961c76e9240fa015cd2",
+    "chars": 7998,
+    "sha256": "a0aab4012b5670f1e78a773f891f465e334b1f2a9bf7073a05b4552d109bbca1"
+  },
+  "port-ship-cargo-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/P/Port - Ship Cargo Inspector GPT Operational Instructions.docx",
+    "file_sha256": "42e16bb5529c424a3e476cffd14bc16995a5e6535169e161b3e6cbe9d78e78a0",
+    "chars": 8000,
+    "sha256": "534595bd25e955ba69c9853c3d68a478323ad3549a55500acd46764712c4fbc7"
+  },
+  "airline-maintenance-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/Airline Maintenance Inspector GPT Operational Instructions.docx",
+    "file_sha256": "263f1300492311cc19ff8193ac92b37bbc6f4afd147bffb7343cce512af6b783",
+    "chars": 7220,
+    "sha256": "fd409a2d6dee6bfb1a6e3b956c5eac148948fb316105f5425404f5276d2fc3b2"
+  },
+  "vehicle-accident-damage-appraiser": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Ti-to-Z.zip",
+    "entry": "AIWebTools Operational Instructions (Ti to Z)/V/Vehicle Accident Damage Appraiser Operational Instructions.docx",
+    "file_sha256": "b9e24dbb6e82f6c344b4ee29e8909f6b0744c2e0f5acad02a08d2b27652b00b6",
+    "chars": 7245,
+    "sha256": "5a69f42e165710127e459a2f05f6f4d42bce09fa4a9bdb54595491c01d4f3cad"
+  },
+  "disaster-damage-estimator-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/D/Disaster Damage Estimator GPT Operational Instructions.docx",
+    "file_sha256": "1cc318031eb2fdd37de9405ff184e06a4107aed57917e966288649ce4e3bf162",
+    "chars": 7999,
+    "sha256": "e18c8314fa5b3779f29146340476d0ffbed927aefe9ecabcf5ce8d2236c90041"
+  },
+  "energy-efficiency-mapper-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/E/Energy Efficiency Mapper GPT Operational Instructions.docx",
+    "file_sha256": "4ec11416a387633b02cc995750e3d10a0f237956b0894b637f8b7c92a6cf2ad5",
+    "chars": 7781,
+    "sha256": "9692da596f0c2bcefe21655fc9047f5c25428bd38b28117555d73318fdfdf5fb"
+  },
+  "food-plate-nutrition-analyzer": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/F/Food Plate Nutrition Analyzer Operational Instructions.docx",
+    "file_sha256": "f788586cd65753571a08a105519efc6cc2cae648f1393c0223802db26c80d889",
+    "chars": 7997,
+    "sha256": "6134a44f31a8b5ef718b68174b3b1b627e2402edebfe403dfa03c690339c721d"
+  },
+  "retail-shelf-optimizer-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/R/Retail Shelf Optimizer GPT Operational Instructions.docx",
+    "file_sha256": "9d4af2be5f3f9e66a78f8bf214d84f00c841f63fc698ec20eeb72e45870351dc",
+    "chars": 7868,
+    "sha256": "e7f99db29f015f5b68b801d5e70f993417bf724d0cc2d01eeadb65235c34191a"
+  },
+  "manufacturing-defect-detector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Manufacturing Defect Detector GPT Operational Instructions.docx",
+    "file_sha256": "f5a9a279a3685f0e49809cb8f75f026dedbe6073d455ffcb290a40a6d32a33b9",
+    "chars": 8000,
+    "sha256": "b5a814ac653a5d28b656e10c703eabf02bacbb08f379cda7eff0b4655a4a1e6d"
+  },
+  "farm-crop-health-scanner-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/F/Farm & Crop Health Scanner GPT Operational Instructions.docx",
+    "file_sha256": "822b46bf143254f22230f416b6d0b85be0b9e58fccb7367f268da7a41eee8458",
+    "chars": 7995,
+    "sha256": "8f3d2b0f8213bfa6519a7e6c081baba579e256bce1e1120b64ddc890f509d42e"
+  },
+  "construction-site-safety-analyzer-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/C/Construction Site Safety Analyzer GPT Operational Instructions.docx",
+    "file_sha256": "6619ee941186bffc8a9648e5b8d649abec0a87ecd42409d2e395b801fab27fca",
+    "chars": 6517,
+    "sha256": "5ea053c455e9de4f5a03d0288869937b34cb3c1058587d6c6fa996e22fdc1e40"
+  },
+  "dam-levee-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/D/Dam & Levee Inspector GPT Operational Instructions.docx",
+    "file_sha256": "3631d4d50b206c2fe22197d74932bb99e5feba24f33093a86d15fe20541ecdf5",
+    "chars": 7813,
+    "sha256": "a38f1723199227baac48574f667cde8b04de87b9b01a0b68aea472a027b9b199"
+  },
+  "railway-track-rolling-stock-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/R/Railway Track & Rolling Stock Inspector GPT Operational Instructions.docx",
+    "file_sha256": "db752cc2085cde4a3b5919cf9eaafd6d166a0235fef9d6fadff6921f9631f941",
+    "chars": 7758,
+    "sha256": "62a66121d52c9df7480d1b5e26a4af2c3bf7c58cf6489d26326614336f3b9603"
+  },
+  "power-plant-systems-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/P/Power Plant Systems Inspector GPT Operational Instructions.docx",
+    "file_sha256": "a5a972e2e11f078f39e6d77d384038c5878458fcb5e77e3d78138c3e21e27efe",
+    "chars": 6817,
+    "sha256": "fe8b7f9639fc6e0132102fb573496e874f4b0a49caef4d791a080b2cf7719bd8"
+  },
+  "road-pavement-inspector-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/R/Road & Pavement Inspector GPT Operational Instructions.docx",
+    "file_sha256": "5c7fa76f23e4c2e03aeda1e1750d57852ed17fc61e7632be1c5d005030112625",
+    "chars": 8000,
+    "sha256": "bee6ce6e1961c6495bde1ba0085ca93ac349bccbbb005b7c1109eb55ff268f49"
+  },
+  "ai-pipeline-integrity-inspector": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/AI Pipeline Integrity Inspector Operational Instructions.docx",
+    "file_sha256": "a1258f6d2d2660c31d71e577167840366e4e43c2ab255a37e150caa051f4dc4a",
+    "chars": 7970,
+    "sha256": "eb5c016363ca0c93f8ff247a91a6a839c383fca49af805d52815c6d191109410"
+  },
+  "bill-donahue-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/B/Bill Donahue GPT Operational Instructions.docx",
+    "file_sha256": "072d848252b4ac168cb6e7ae3ef2f7deab724700cf0f399995f7bef03cf9cfa9",
+    "chars": 6567,
+    "sha256": "26a3b89262927bdbd67a193da540576b6f045cd2f5ddb7d554900afc097a0b56"
+  },
+  "mithraic-light-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Mithraic Light GPT Operational Instructions.docx",
+    "file_sha256": "6c9c748e701683dc42ca41cc826185766c517baf6e3b74cee6b29857e45922b3",
+    "chars": 4935,
+    "sha256": "ba4d98d14657a8f004d19fac7c3447ab01c5a3e9f4ddc8a17f7196c0d462773c"
+  },
+  "pre-rome-jewish-light-mysticism-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/P/Pre-Rome Jewish Light Mysticism GPT Operational Instructions.docx",
+    "file_sha256": "3c6100f03ebc2ff9a66613e564f4f558fcc490d25a9c7fff10c18b50b34c84ee",
+    "chars": 7640,
+    "sha256": "5ea55726213a28819c85ad1dc2509fcc9841d01f6b0fc600f5b887d9490bc92d"
+  },
+  "ancient-light-mysticism-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/Ancient Light Mysticism GPT Operational Instructions.docx",
+    "file_sha256": "27a7be9084f2a7cd43f112987bca1bcd3286cf4716751db97893039d9eeeb483",
+    "chars": 7999,
+    "sha256": "0eec8f5c4e482a76cc58bb795a250f557bfb37faf7124a094a2202b65abc5ad7"
+  },
+  "proto-gnostic-luminary-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/P/Proto-Gnostic Luminary GPT Operational Instructions.docx",
+    "file_sha256": "82cf7762c6b327f3ce6c0be5375fc420994a054387a1e6ff88bcb6bf8b47a857",
+    "chars": 6094,
+    "sha256": "6862e0cf884c624352d25146e5566a4ea96e5062f9c66f22d22be9b0be50cb4d"
+  },
+  "pythagorean-the-orphic-light-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/P/Pythagorean The Orphic Light GPT Operational Instructions.docx",
+    "file_sha256": "72d0b3630216aaa0fecfc3c9856709260e43cebbab30a56954e5506e806d1e0b",
+    "chars": 3975,
+    "sha256": "b2dd6cf6234ece5f4e566539e6042b7c62159457a2c62269b5ee896728a1e72e"
+  },
+  "enochian-mysticism-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/E/Enochian Mysticism GPT Operational Instructions.docx",
+    "file_sha256": "04e2794a7236020908641e6ed2926485bdf25747d6350f3e5ab2a7824017270b",
+    "chars": 5656,
+    "sha256": "18c527c1b9d36191bf00ec891160f8752f15dfbcde2308199133f7f8cfa50ac1"
+  },
+  "hermetic-mysteries-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Gp-to-Hi.zip",
+    "entry": "AIWebTools Operational Instructions (Gp to Hi)/H/Hermetic Mysteries GPT Operational Instructions.docx",
+    "file_sha256": "179cfe8bd84ec2de45f04948d8de9cbf998a9e959daccf0367dfe737ed95c9c2",
+    "chars": 4960,
+    "sha256": "04f370cba9564a3691d77fee8cf10a627e94309f3a3bff933052b710b8919121"
+  },
+  "bogomils-gpt-living-light": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/B/Bogomils GPT Living Light Operational Instructions.docx",
+    "file_sha256": "f8bad57cc816ca5089cd2d976168cfd97261455a309971acb760ab85ea9dda69",
+    "chars": 5498,
+    "sha256": "dcc45f9363ade8755f7534d25569d207676962bcdee57d1da87bfe234997afa7"
+  },
+  "paulician-lightbearer-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/P/Paulician Lightbearer GPT Operational Instructions.docx",
+    "file_sha256": "1704844b68942742d63ba9774bbba8fe1578bb30b1c7c452366637c26e41d290",
+    "chars": 6397,
+    "sha256": "435615375028c2dfd0c7331eb5175fb773ee7f7d76aa8e1bcbc7d46aa8aa9f81"
+  },
+  "desert-monastic-mysticism-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/D/Desert Monastic Mysticism GPT Operational Instructions.docx",
+    "file_sha256": "87158b5441a94f7e177fa20724f242033246bc8dcf003310894f991109cb29df",
+    "chars": 5461,
+    "sha256": "5da72fea3a4cd52d6fdad1a2012d6cd3ba81a70aa050c56e19e41e8314b90bf1"
+  },
+  "neoplatonic-mysteries-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/N/Neoplatonic Mysteries GPT Operational Instructions.docx",
+    "file_sha256": "af84ec2a88977e0af73faa675eda9606695d60943945415382ae470182546137",
+    "chars": 7658,
+    "sha256": "f8b380528b4ce81864b699b561381bfe498cf21937a2b6d4417e2950f0cf620b"
+  },
+  "gnostic-flame-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/G/Gnostic Flame GPT Operational Instructions.docx",
+    "file_sha256": "a49b7e97e0384cead05c313b49aea22aee4e4f0acc29d07813e8714df8a3de07",
+    "chars": 6466,
+    "sha256": "f5ab374cfb5079ecf58695c1483dfae1d9fa75b932601edde16a961d9331ab6a"
+  },
+  "mythical-christianity-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/M/Mythical Christianity GPT Operational Instructions.docx",
+    "file_sha256": "6f1dbdfb9e3f7568255be983223220d3a486194b618522ce1b21079c43529cb0",
+    "chars": 8000,
+    "sha256": "af2d11d0ca37e1e976fd545de3d98dcbe48f5d2d049fe2442ac38b1655543865"
+  },
+  "therapeutae-lightkeeper-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-St-to-Ti.zip",
+    "entry": "AIWebTools Operational Instructions (St to Ti)/T/Therapeutae Lightkeeper GPT Operational Instructions.docx",
+    "file_sha256": "d389b4d9524de4007a6dd731d41ae9c1bd05fdae3191f4edaf44c9bc5687c2b2",
+    "chars": 7415,
+    "sha256": "ab8b25250876cae9ad11a1091eb9fa0878ebb347b7ba5aa75c855346e688fa9c"
+  },
+  "ancient-essenes-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-0-9-to-Co.zip",
+    "entry": "AIWebTools Operational Instructions (0-9 to Co)/A/Ancient Essenes GPT Operational Instructions.docx",
+    "file_sha256": "b12214f78fc5483f2d26b67e1dfd26b5243502e32fcce838cf7332bafbd03415",
+    "chars": 7397,
+    "sha256": "e87e59e2e7970ee3bbd5c0e1e1b23a4325655dc69c3cbdc3e2a5bedfbc53d165"
+  },
+  "passport-photo-maker-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
+    "entry": "AIWebTools Operational Instructions (In to Pe)/P/Passport Photo Maker GPT - Operational Instructions.docx",
+    "file_sha256": "ff0dd7440375dcd179766bb97183998a7df353fc69f5fa02e369eef77e896f4b",
+    "chars": 7993,
+    "sha256": "6046e91b493ef002817a40a7eb5b09f3c03f01a0820eade0cc982f1b2d110196"
+  },
+  "disable-that-robot-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Co-to-Go.zip",
+    "entry": "AIWebTools Operational Instructions (Co to Go)/D/Disable That Robot GPT Operational Instructions.docx",
+    "file_sha256": "ab6b54020911ac0be6a0197a03949558757d181a13a57ef359265c570300105d",
+    "chars": 7916,
+    "sha256": "346bfd1328802867e370e0d45919f172ca4615de83753931a0c55fdcf44501be"
+  },
+  "rouge-robot-disabler-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/R/Rouge Robot Disabler GPT - Operational Instructions.docx",
+    "file_sha256": "56c19d6b78ae4cbcd50756f4cfd69661216ca81f5a44d64470003c8ccd186a2a",
+    "chars": 7992,
+    "sha256": "bbbff21929bdce6101059926f3d6d51058c5c2df10f8857ea211448199e96cc2"
+  },
+  "robot-identifier-and-disabler-survivalist-gpt": {
+    "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-Pe-to-St.zip",
+    "entry": "AIWebTools Operational Instructions (Pe to St)/R/ROBOT IDENTIFIER AND DISABLER SURVIVALIST GPT - Operational Instructions.docx",
+    "file_sha256": "a8c24bc8f007d57a658420aa995584c4b76b8032d3ac79096ed7109ba53534cd",
+    "chars": 7992,
+    "sha256": "bbbff21929bdce6101059926f3d6d51058c5c2df10f8857ea211448199e96cc2"
+  },
+  "3d-print-gpt": {
+    "source": "public/instructions/3d-print-gpt.docx",
+    "chars": 7585,
+    "sha256": "e8aaf54136daa081ec1c3747bf685e0a8154a3bc2c322cda2434f577bfe7dcc5"
+  },
+  "ai-calculator": {
+    "source": "public/instructions/ai-calculator.docx",
+    "chars": 7480,
+    "sha256": "42f1224b909b16264c8ac3412662a141e9c486029a842d74f82632b0b87c395a"
+  },
+  "ai-fashion-model-generator": {
+    "source": "public/instructions/ai-fashion-model-generator.docx",
+    "chars": 7774,
+    "sha256": "ada2eedf34e7518fc8f3e6d45873dfe1ab115c509606b1e7a5838ce21df9e4f5"
+  },
+  "ai-human-bill-of-rights": {
+    "source": "public/instructions/ai-human-bill-of-rights.docx",
+    "chars": 7293,
+    "sha256": "a8567a12da73001949a946b234fd7f10c6cf22e9e0038613494015647388e8d4"
+  },
+  "ai-image-detection-gpt": {
+    "source": "public/instructions/ai-image-detection-gpt.docx",
+    "chars": 8545,
+    "sha256": "8b5186be241e1b14ee3da8b2eabee8960e14730a4e7d929e079e09af33a8751f"
+  },
+  "ai-tools-finder-gpt": {
+    "source": "public/instructions/ai-tools-finder-gpt.docx",
+    "chars": 8000,
+    "sha256": "55cb11d5558462d177dd13d17053ab018f9b1a175c5c5480884bb8a5f3fe69d1"
+  },
+  "alan-watts-gpt-page": {
+    "source": "public/instructions/alan-watts-gpt-page.docx",
+    "chars": 9136,
+    "sha256": "e6130ba0d11a7fdaee1ded6f677a150a9e710c7a7d0e6fc223edab8dfc65a6f8"
+  },
+  "alchemist-scientist-gpt": {
+    "source": "public/instructions/alchemist-scientist-gpt.docx",
+    "chars": 7548,
+    "sha256": "d488cbdcd5d965531b98a6f8a53621e8646f7700d5ede98f3804565640463906"
+  },
+  "algebraic-expression-inventor-gpt": {
+    "source": "public/instructions/algebraic-expression-inventor-gpt.docx",
+    "chars": 8001,
+    "sha256": "cda42f68f412a6c3fc9893173461da1ad3c02cbdfefa422572eb5d6fe91afc1c"
+  },
+  "antique-collectible-appraisal-gpt": {
+    "source": "public/instructions/antique-collectible-appraisal-gpt.docx",
+    "chars": 8434,
+    "sha256": "d165e3dd9afe54c598544ee6223d217c122f4fc3a69ee7c7ebc454fcee1ecff2"
+  },
+  "article-blog-rewriter-gpt": {
+    "source": "public/instructions/article-blog-rewriter-gpt.docx",
+    "chars": 8110,
+    "sha256": "eb705f1c649b8e8e6bcdf4ed462f0690cb93fca0eb2a432947a744ca1f5262cc"
+  },
+  "artwork-vintage-appraisal-gpt": {
+    "source": "public/instructions/artwork-vintage-appraisal-gpt.docx",
+    "chars": 6255,
+    "sha256": "ef44f21c21ae4f824dfb9265ecf9e18e438c4796ad5cbc352f7dd7895f2a0729"
+  },
+  "black-history-matters-time-machine-gpt": {
+    "source": "public/instructions/black-history-matters-time-machine-gpt.docx",
+    "chars": 8449,
+    "sha256": "bee136cdfbd3916f0fe18a5dae9dca48ae1cb7d0ca3a94d86f7729237f80bab5"
+  },
+  "business-plan-architect": {
+    "source": "public/instructions/business-plan-architect.docx",
+    "chars": 6878,
+    "sha256": "abb7fd3015a3c339215ebac3e637b8fe66549bc14224a676e78c3f5ae249052a"
+  },
+  "celebrity-chat-simulator-gpt": {
+    "source": "public/instructions/celebrity-chat-simulator-gpt.docx",
+    "chars": 10161,
+    "sha256": "7a2f65a14ca7cc2ac1acb9865fdfa41e52eebd4b2e5b54b89b14ec68860feaf0"
+  },
+  "chef-sizzle-culinary-assistant": {
+    "source": "public/instructions/chef-sizzle-culinary-assistant.docx",
+    "chars": 7360,
+    "sha256": "0b4859755806c06c2e1630eb13d9f7fd05dc934e6145364d5324d941bec73551"
+  },
+  "childrens-book-maker-gpt": {
+    "source": "public/instructions/childrens-book-maker-gpt.docx",
+    "chars": 9655,
+    "sha256": "a6c6a9c7caddd456639dfac5f9ee9a07023d911b6628dea3c5d56e6727676a53"
+  },
+  "childrens-picture-book-maker-gpt": {
+    "source": "public/instructions/childrens-picture-book-maker-gpt.docx",
+    "chars": 7271,
+    "sha256": "f51957d688714bae99d7412438edfa0783594a9b62f41093d9302bdc67f47588"
+  },
+  "dream-interpreter-gpt": {
+    "source": "public/instructions/dream-interpreter-gpt.docx",
+    "chars": 9723,
+    "sha256": "59ea1682ed11e8262d9fd2ecc6d0fd1deb42c6e6bcb7bfa06d8e805dd1a4411f"
+  },
+  "drill-baby-drill-ai-suite": {
+    "source": "public/instructions/drill-baby-drill-ai-suite.docx",
+    "chars": 8968,
+    "sha256": "47108052a960970db348175546af0aa8913ba8bc6ce1fe1816c3e6bb3cc35673"
+  },
+  "engineering-gpt-ai-suite": {
+    "source": "public/instructions/engineering-gpt-ai-suite.docx",
+    "chars": 8369,
+    "sha256": "c416b76ad84f707ab5f09d9044abc2679f43e120437d730b8f3e8b8cac586187"
+  },
+  "fashion-design-assistant-gpt": {
+    "source": "public/instructions/fashion-design-assistant-gpt.docx",
+    "chars": 7900,
+    "sha256": "a82110928737080525eb9791bd4c57d5393227e9a55b380843ac081f12630f81"
+  },
+  "food-quality-inspector-gpt": {
+    "source": "public/instructions/food-quality-inspector-gpt.docx",
+    "chars": 8819,
+    "sha256": "26bf50a20800faff323be98d6faaf61a847f77940e0fa1f129997a095c9529ff"
+  },
+  "fortune-teller-gpt-page": {
+    "source": "public/instructions/fortune-teller-gpt-page.docx",
+    "chars": 9086,
+    "sha256": "6a29c5d861e3f79ac7939a0c854c3e41558e8a77b246933db610b55e74e1630a"
+  },
+  "fungus-gpt-mushroom-specialist": {
+    "source": "public/instructions/fungus-gpt-mushroom-specialist.docx",
+    "chars": 7876,
+    "sha256": "cb4a3ddcd2cef07d12089c59535fb7a7f9834aa91f79f1135ff816fcac115ff7"
+  },
+  "fungus-whisperer-gpt": {
+    "source": "public/instructions/fungus-whisperer-gpt.docx",
+    "chars": 7597,
+    "sha256": "36d13df473a2a1c7f0514ad7c443b99dd1d5a475c827aaa28811a50d783cabb9"
+  },
+  "g-mode-gpt": {
+    "source": "public/instructions/g-mode-gpt.docx",
+    "chars": 9013,
+    "sha256": "b2bde6e8505cb72eb5d4788a15ad8a95e82e0a0ff70e03fea98a243bde930830"
+  },
+  "grant-writer-gpt-page": {
+    "source": "public/instructions/grant-writer-gpt-page.docx",
+    "chars": 8891,
+    "sha256": "5a9c135c1cc8e4044fe6231bc00371b36c94bbb239d858aaa847e833dd213ea4"
+  },
+  "health-insurance-claims-gpt": {
+    "source": "public/instructions/health-insurance-claims-gpt.docx",
+    "chars": 8891,
+    "sha256": "679cca8fff5404cb9b28c8d994c7cd3383233ab9303f51dab80eeec7e5aab636"
+  },
+  "hidden-historical-patterns-gpt": {
+    "source": "public/instructions/hidden-historical-patterns-gpt.docx",
+    "chars": 7112,
+    "sha256": "428533cee0439c31d93d80d2c8e7d6cd7c0d05803b26b0610383f09a54489b92"
+  },
+  "if-ai-ruled-the-world-gpt": {
+    "source": "public/instructions/if-ai-ruled-the-world-gpt.docx",
+    "chars": 7013,
+    "sha256": "31b58aefd3da8118348f4ce4e06462b68722923767c2ec1373589deafa95086c"
+  },
+  "imagination-traveler-gpt": {
+    "source": "public/instructions/imagination-traveler-gpt.docx",
+    "chars": 7840,
+    "sha256": "8d31c970ffb21cc92882ddaf386ab4a114158ddc0bc452e4f1607f7e2a73eebe"
+  },
+  "immortalize-me": {
+    "source": "public/instructions/immortalize-me.docx",
+    "chars": 8689,
+    "sha256": "c7a7674024bfcb62af9c3450154ce1cdf3acc0f4699e6ef9e3034888c0234362"
+  },
+  "indiana-archeologist-gpt": {
+    "source": "public/instructions/indiana-archeologist-gpt.docx",
+    "chars": 7524,
+    "sha256": "a98653cda74a42d20a2db3801720c388a626791a5c9a5c20acfe837bc3004c82"
+  },
+  "interior-design-gpt": {
+    "source": "public/instructions/interior-design-gpt.docx",
+    "chars": 9260,
+    "sha256": "ccdbe34ac4b439818177eb51865cf60d36d22d9180658656d9049612eae561e3"
+  },
+  "international-relations-analyst-gpt": {
+    "source": "public/instructions/international-relations-analyst-gpt.docx",
+    "chars": 10967,
+    "sha256": "c2d3392c3198644adcc9828300fc72f70352f5fe89ee141e8e927184e80249cc"
+  },
+  "kabbalah-gpt": {
+    "source": "public/instructions/kabbalah-gpt.docx",
+    "chars": 9458,
+    "sha256": "5f19811d36d0e78b909fcf2d33a7d460770e5b25b8c4f045e6ca2ef70218c340"
+  },
+  "legislative-drafting-assistant-gpt": {
+    "source": "public/instructions/legislative-drafting-assistant-gpt.docx",
+    "chars": 8815,
+    "sha256": "8b72c830d611b75ac032c3b9b691cf518e73df94919ed0ca361e13359ae98a2b"
+  },
+  "marriage-mender-gpt": {
+    "source": "public/instructions/marriage-mender-gpt.docx",
+    "chars": 8454,
+    "sha256": "e6e7251040c6758a1226ef1f5760368f3daaef35cbbc192066867cc89e789267"
+  },
+  "materiumor-material-valuation-gpt": {
+    "source": "public/instructions/materiumor-material-valuation-gpt.docx",
+    "chars": 9035,
+    "sha256": "43652810ce29b75a8fcffa49790f7808987474dc637ff39ec768066644eb3e55"
+  },
+  "materiumor-valuation-gpt": {
+    "source": "public/instructions/materiumor-valuation-gpt.docx",
+    "chars": 6996,
+    "sha256": "0b23a06733eafad38b46c833f2044346a01c13b4126fde05ab1f5d375e39b047"
+  },
+  "math-inventor-gpt": {
+    "source": "public/instructions/math-inventor-gpt.docx",
+    "chars": 9982,
+    "sha256": "1ba679f9325743e528f69284fb5e9e6ab36f1ed4e95574015bd45571cf72dfa3"
+  },
+  "medical-billing-coding-gpt": {
+    "source": "public/instructions/medical-billing-coding-gpt.docx",
+    "chars": 8769,
+    "sha256": "e294d49717fc4c823fe39d24322c48b6eadf4d713444c36c3699fc636d17c61a"
+  },
+  "meme-generator-gpt-page": {
+    "source": "public/instructions/meme-generator-gpt-page.docx",
+    "chars": 6457,
+    "sha256": "bfb06efe3137b5e03d82b3e7c7ab2efc5f9af5ecf4775df6bbde8de84abc3126"
+  },
+  "movie-maker-studio-ai-suite": {
+    "source": "public/instructions/movie-maker-studio-ai-suite.docx",
+    "chars": 8864,
+    "sha256": "61831be2b559953f7853b3b931256c4aca5473776788bbb273539bba2d623ac2"
+  },
+  "name-insight-predictor-gpt": {
+    "source": "public/instructions/name-insight-predictor-gpt.docx",
+    "chars": 7981,
+    "sha256": "9872a17ea002cd0648d77e1d884a8d5815bd6a7a970f5a524ceb412cca1a037c"
+  },
+  "native-american-time-machine-gpt": {
+    "source": "public/instructions/native-american-time-machine-gpt.docx",
+    "chars": 6930,
+    "sha256": "ba2d12119a2d0fe3af0d06a3a3b15874bca118e861fbf84bbdec53709a72231e"
+  },
+  "perfect-prompt-engine": {
+    "source": "public/instructions/perfect-prompt-engine.docx",
+    "chars": 8125,
+    "sha256": "64f2170e0d7cd8f38b0220ddf86fbc1cac69eca7eaf8c3edb6e9b64871595e84"
+  },
+  "person-information-finder-gpt": {
+    "source": "public/instructions/person-information-finder-gpt.docx",
+    "chars": 7982,
+    "sha256": "2ec008954b4a5ad845d44d9e2c80aafa01daa6fe0f47bb72121e4559974cb2e9"
+  },
+  "pharma-research-pro": {
+    "source": "public/instructions/pharma-research-pro.docx",
+    "chars": 6761,
+    "sha256": "0143937f2f026132b504add5d2c53418f47c7758e621fa1a921874d3e62ef086"
+  },
+  "pharmaceutical-assistant-gpt": {
+    "source": "public/instructions/pharmaceutical-assistant-gpt.docx",
+    "chars": 8340,
+    "sha256": "3832bb46769eac54d5ee69f40daa8e912fc790fe4a7d483ca692c7d45ac377ac"
+  },
+  "phenomenon-explorer-ai-suite": {
+    "source": "public/instructions/phenomenon-explorer-ai-suite.docx",
+    "chars": 9134,
+    "sha256": "51ee1ae534e81c5e3a7dd07fc3174778d3280879f41a2f1471f6fbbfd55fdefa"
+  },
+  "phenomenon-investigator-suite": {
+    "source": "public/instructions/phenomenon-investigator-suite.docx",
+    "chars": 8396,
+    "sha256": "c48aa90d91a2e034e15110a95f871e4c463a698791f8d1a289985a5d52c5ae02"
+  },
+  "plastoline-gpt": {
+    "source": "public/instructions/plastoline-gpt.docx",
+    "chars": 6832,
+    "sha256": "022f55536562df697117ea9dd40b4ec8b34d9644595fdb5460af077a7f70bf65"
+  },
+  "podcast-script-writer-gpt": {
+    "source": "public/instructions/podcast-script-writer-gpt.docx",
+    "chars": 7157,
+    "sha256": "6bd1c21f586c0b931ca667bc75f60d7ab26034799714a273a017440788a1fdb8"
+  },
+  "pptx-powerpoint-maker-gpt": {
+    "source": "public/instructions/pptx-powerpoint-maker-gpt.docx",
+    "chars": 8755,
+    "sha256": "42467b2662137632760d867fc5412f02ff315ea27b0ff847974127682939b406"
+  },
+  "prompt-box": {
+    "source": "public/instructions/prompt-box.docx",
+    "chars": 6922,
+    "sha256": "dae9ceb194ac4dff1aaeebf0c88473418c997e2bfa997d16d81355c351089f7f"
+  },
+  "real-estate-architect-gpt": {
+    "source": "public/instructions/real-estate-architect-gpt.docx",
+    "chars": 6810,
+    "sha256": "04d1bdda2306673bfdfec3454fb4a3a39f09c4eafd0b1e909182ba93ee287c04"
+  },
+  "real-estate-gpt": {
+    "source": "public/instructions/real-estate-gpt.docx",
+    "chars": 8856,
+    "sha256": "69bbaac476d128f685fde34330e251e83298da7cb1679d75a3e0b36b3d02d4a2"
+  },
+  "regulatory-compliance-advisor-gpt": {
+    "source": "public/instructions/regulatory-compliance-advisor-gpt.docx",
+    "chars": 8361,
+    "sha256": "47341428f8d54304eb1a0de5778ca51a32f075338dfe1bee698755556a3ed7b8"
+  },
+  "restaurant-menu-maker-gpt": {
+    "source": "public/instructions/restaurant-menu-maker-gpt.docx",
+    "chars": 6927,
+    "sha256": "45b0ba96ae546d5a23dbe19f4fa694e422381999e8c2e1d3664e22076b1de413"
+  },
+  "resume-job-finder-suite": {
+    "source": "public/instructions/resume-job-finder-suite.docx",
+    "chars": 7432,
+    "sha256": "5d2a61025c7c61f7896d8e5cee198c10b839a639dde6ba0fae050645908d87d4"
+  },
+  "screenplay-writer-gpt-page": {
+    "source": "public/instructions/screenplay-writer-gpt-page.docx",
+    "chars": 8039,
+    "sha256": "ae75780a584df42cc01551e36f2d7620a9cef2f4be73f2d0605785507959d54f"
+  },
+  "screenplay-writer": {
+    "source": "public/instructions/screenplay-writer.docx",
+    "chars": 7069,
+    "sha256": "814b73227b7fdb9952d19ec7c8871a3d29e5ae7064ef723c01faebdefe68ee07"
+  },
+  "snoop-image-ai": {
+    "source": "public/instructions/snoop-image-ai.docx",
+    "chars": 7090,
+    "sha256": "eb02826299f046576d8350c9c7ea6f571bba756bc1063d4c75eb50816de6eb63"
+  },
+  "sophia-aeterna-ai": {
+    "source": "public/instructions/sophia-aeterna-ai.docx",
+    "chars": 9181,
+    "sha256": "fdbdcce416c2f1bf225f81d5b009f05188822faa503572f82f469eaa56f67e97"
+  },
+  "sora-prompt-assistant": {
+    "source": "public/instructions/sora-prompt-assistant.docx",
+    "chars": 8092,
+    "sha256": "1f81986c33b01495c72f609e955b9c3a7c73cee0d74457edc2081c7712a356ce"
+  },
+  "stagemaster-ai-suite-performing-arts": {
+    "source": "public/instructions/stagemaster-ai-suite-performing-arts.docx",
+    "chars": 7645,
+    "sha256": "0bdf959eb05c5c4360df2b551721678ac0eaef600e0922aff5af8ff0d07996b4"
+  },
+  "stagemaster-ai-suite": {
+    "source": "public/instructions/stagemaster-ai-suite.docx",
+    "chars": 8437,
+    "sha256": "df83895a28abe3d50721df751c17b9005effdf08db6806a83a6e762097e24e2a"
+  },
+  "startup-validator-gpt-page": {
+    "source": "public/instructions/startup-validator-gpt-page.docx",
+    "chars": 7275,
+    "sha256": "87b8b1bbd3cbb8dc07842ebc338b480817fb1b58ed9df133ea07bb29c4dd7e3b"
+  },
+  "tattoo-designer-gpt": {
+    "source": "public/instructions/tattoo-designer-gpt.docx",
+    "chars": 7238,
+    "sha256": "1c92cfd4670ab38a829f32ebc6be5928a9c0a13dcc6ba88f066fca4edc899bf6"
+  },
+  "tax-filing-assistant": {
+    "source": "public/instructions/tax-filing-assistant.docx",
+    "chars": 8343,
+    "sha256": "1a5107eb76ebe84f25df3d0d68b93407f9205230d0809ef7efa7b41eab4bc162"
+  },
+  "titanic-resurrections-gpt": {
+    "source": "public/instructions/titanic-resurrections-gpt.docx",
+    "chars": 10051,
+    "sha256": "96fed86597c3af8a82b749229f88d5e31e67133b77cdd24490bcdf9c5603ae05"
+  },
+  "torah-gpt": {
+    "source": "public/instructions/torah-gpt.docx",
+    "chars": 7572,
+    "sha256": "58e63df5be88f57bfdfe876799910d6cd342e770487aa563e53933ff676070a9"
+  },
+  "trivia-night-gpt": {
+    "source": "public/instructions/trivia-night-gpt.docx",
+    "chars": 7638,
+    "sha256": "7ec8b4a0750e7de5ef757a5784c0b09f5396c9569266a24976a78cc9e0b3dfa9"
+  },
+  "ubi-strategist-gpt": {
+    "source": "public/instructions/ubi-strategist-gpt.docx",
+    "chars": 6513,
+    "sha256": "6a1583b1d817f03b08a169266fc6427817426d7c84af6b7d26f01e6457dae69c"
+  },
+  "universal-basic-income-strategist-gpt": {
+    "source": "public/instructions/universal-basic-income-strategist-gpt.docx",
+    "chars": 7924,
+    "sha256": "c9a2df68036c62bbda046d8b168f9efedc1e91d68089ee1b780c4ef0f656e321"
+  },
+  "video-analysis-gpt-page": {
+    "source": "public/instructions/video-analysis-gpt-page.docx",
+    "chars": 7961,
+    "sha256": "235d8e93df1e864574162ac4b8faf7b5270f0b1cbcbd380e114ee7c13a322036"
+  },
+  "video-script-generator": {
+    "source": "public/instructions/video-script-generator.docx",
+    "chars": 7642,
+    "sha256": "045c397a249ec8a28db97d4bdb14d66f1fc18446f0c4bf4c3adf15bb599fb611"
+  },
+  "virtual-stylist-try-on-gpt": {
+    "source": "public/instructions/virtual-stylist-try-on-gpt.docx",
+    "chars": 7108,
+    "sha256": "1cf8b3bd035c5081d3e8dc254ff0a578b34696b4aee84ea64556a851ec1270fc"
+  },
+  "we-the-people-ai": {
+    "source": "public/instructions/we-the-people-ai.docx",
+    "chars": 7525,
+    "sha256": "8ae74ed5e788f4cc5097633882183bcf2cf746e4421e9a282637711e6555396e"
+  },
+  "world-data-explorer-gpt": {
+    "source": "public/instructions/world-data-explorer-gpt.docx",
+    "chars": 7202,
+    "sha256": "1e66ea4b27c443037a28abfaf840b77e055db0e0ec6115c91763785879277e30"
+  },
+  "you-moviestar-ai": {
+    "source": "public/instructions/you-moviestar-ai.docx",
+    "chars": 7327,
+    "sha256": "b7f581427c64bdcb0309186739b0ea8331c8fc9327c1ca155ca5a185dd32c999"
+  }
+}
