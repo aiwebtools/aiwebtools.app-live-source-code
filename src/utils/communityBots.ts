@@ -19,25 +19,35 @@ let cache: CommunityBotTool[] | null = null;
 let pending: Promise<CommunityBotTool[]> | null = null;
 
 /** Approved community GPTs (passed the AI ethics review), shaped like directory tools. */
+type Row = { slug: string; display_name: string; tagline: string | null; image_url?: string | null };
+async function fetchCommunityRows(): Promise<Row[]> {
+  const rows: Row[] = [];
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await supabase.from("gpt_apps").select("slug, display_name, tagline, image_url").like("slug", "community-%").eq("is_active", true).order("created_at", { ascending: false }).order("slug").range(from, from + 999);
+    if (error) throw error;
+    rows.push(...((data ?? []) as Row[]));
+    if (!data || data.length < 1000) break;
+  }
+  return rows;
+}
+
+/** Community GPTs shaped like directory tools. Archived extra versions (-vN) open from their base bot's room. */
 export function loadCommunityBots(): Promise<CommunityBotTool[]> {
   if (cache) return Promise.resolve(cache);
   if (!pending) {
-    pending = Promise.resolve(
-      supabase.from("gpt_apps").select("slug, display_name, tagline, image_url").like("slug", "community-%").eq("is_active", true).order("created_at", { ascending: false }).limit(500),
-    ).then(({ data, error }) => {
+    pending = fetchCommunityRows().then((data) => {
       pending = null;
-      if (error) return [];
-      cache = (data ?? []).map((b: { slug: string; display_name: string; tagline: string | null; image_url?: string | null }) => ({
+      cache = data.filter((b) => !/-v\d+$/.test(b.slug)).map((b) => ({
         title: b.display_name,
-        description: (b.tagline || "Community GPT").replace(/\s*·\s*Community GPT$/, "") + " — a community-built AI assistant, ethics-reviewed and published on AIWebTools.",
+        description: (b.tagline || "Community GPT").replace(/\s*·\s*Community GPT$/, "") + " — a community AI assistant published on AIWebTools.",
         category: "Community GPTs",
         imageUrl: b.image_url || BUNDLED[b.slug] || undefined,
         categoryPath: `/app/${b.slug}`,
-        tags: ["community gpt", "custom gpt", "ai assistant", "chatbot"],
+        tags: ["community gpt", "custom gpt", "ai assistant", "chatbot", ...b.display_name.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 2)],
         isCommunityGpt: true as const,
       }));
       return cache;
-    });
+    }).catch(() => { pending = null; return []; });
   }
   return pending;
 }
