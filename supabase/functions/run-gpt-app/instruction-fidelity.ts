@@ -3,6 +3,9 @@ import officialInstructions from "./official-instructions.json" with { type: "js
 const originals: Record<string, string> = officialInstructions;
 // Official document text is the brain; community and device instructions remain their authors' own.
 export function resolveOperationalInstructions(saved: string, slug: string): string {
+  if (slug === "gospel-of-deployment-full-book") {
+    throw new Error("This bot's original is a 1.96-million-character book, not a short prompt. Full-book retrieval is not configured; its truncated summary cannot be used as the instruction brain.");
+  }
   return originals[slug] ?? saved;
 }
 

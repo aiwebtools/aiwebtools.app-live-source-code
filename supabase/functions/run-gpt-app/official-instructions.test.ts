@@ -46,4 +46,5 @@ test("every ordinary official bot has full source coverage; oversized book is ex
   expect(Object.keys(originals)).toHaveLength(418);
   const missing = seeds.filter((bot) => !(bot.slug in originals)).map((bot) => bot.slug);
   expect(missing).toEqual(["gospel-of-deployment-full-book"]);
+  expect(() => resolveOperationalInstructions("truncated book", "gospel-of-deployment-full-book")).toThrow("truncated summary cannot be used");
 });
