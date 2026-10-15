@@ -23,3 +23,6 @@ verify_jwt = false
 
 [functions.chat-watchdog]
 verify_jwt = false
+
+[functions.seed-community-library]
+verify_jwt = false

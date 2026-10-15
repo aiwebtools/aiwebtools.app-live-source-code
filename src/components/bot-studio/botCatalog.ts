@@ -14,15 +14,25 @@ export interface StudioBot {
 }
 let catalogPromise: Promise<StudioBot[]> | null = null;
 export function refreshStudioBots() { catalogPromise = null; return loadStudioBots(); }
-export function loadStudioBots(): Promise<StudioBot[]> {
-  if (!catalogPromise) {
-    catalogPromise = Promise.resolve(supabase.from("gpt_apps").select("slug, display_name, tool_title, tagline, greeting, starter_prompts, supports_images, model, image_url").eq("is_active", true).order("display_name")).then(({ data, error }) => {
-      if (error) { catalogPromise = null; throw new Error("The assistant directory could not load. Please try again."); }
-      return ((data ?? []) as StudioBot[]).filter((bot) => bot.slug && bot.display_name);
-    });
+const PAGE = 1000;
+async function fetchAllBots(): Promise<StudioBot[]> {
+  const rows: StudioBot[] = [];
+  for (let from = 0; ; from += PAGE) {
+    const { data, error } = await supabase.from("gpt_apps").select("slug, display_name, tool_title, tagline, greeting, starter_prompts, supports_images, model, image_url").eq("is_active", true).order("display_name").order("slug").range(from, from + PAGE - 1);
+    if (error) throw new Error("The assistant directory could not load. Please try again.");
+    rows.push(...((data ?? []) as StudioBot[]));
+    if (!data || data.length < PAGE) break;
   }
+  return rows.filter((bot) => bot.slug && bot.display_name);
+}
+export function loadStudioBots(): Promise<StudioBot[]> {
+  if (!catalogPromise) catalogPromise = fetchAllBots().catch((error) => { catalogPromise = null; throw error; });
   return catalogPromise;
 }
+
+/** Version family: official rooms and their archived community-…-vN versions share one key. */
+export const botFamilyKey = (slug: string) => slug.replace(/^community-/, "").replace(/-v\d+$/, "");
+export const botVersionNumber = (slug: string) => Number(slug.match(/-v(\d+)$/)?.[1] || 1);
 
 // Exact budget IDs from the authenticated workspace catalog; default resolves server-side.
 export const STUDIO_MODELS = [

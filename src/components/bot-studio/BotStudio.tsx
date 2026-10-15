@@ -26,7 +26,7 @@ import { playTimeWarpVoice } from "@/utils/effects/timeWarpVoice";
 import { conversationTitle, displayConversationTitle, conversationPath, openBotConversation, readBotConversations, saveBotConversation, type BotConversation, type BotMessage } from "@/utils/botConversations";
 import { loadToolImageMap } from "@/utils/search/toolImageMap";
 import { groupBotsByCategory } from "./botCategories";
-import { loadStudioBots, refreshStudioBots, STUDIO_MODELS, type StudioBot } from "./botCatalog";
+import { botFamilyKey, loadStudioBots, refreshStudioBots, STUDIO_MODELS, type StudioBot } from "./botCatalog";
 import BotPortrait from "./BotPortrait";
 import BotBuilder from "./BotBuilder";
 import { deleteCustomBot, readCustomBots } from "@/utils/customBots";
@@ -75,11 +75,15 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
   const fileRef = useRef<HTMLInputElement | null>(null);
   const cameraRef = useRef<HTMLInputElement | null>(null);
   const speech = useSpeechReader(profile);
-  const botAvatar = (bot: Pick<StudioBot, "slug" | "display_name" | "tagline"> & Partial<StudioBot>) => getBotPortrait(bot.slug)
-    || bot.image_url || getBundledCommunityImage(bot.slug)
-    || (bot.tool_title ? imageMap?.get(bot.tool_title.trim().toLowerCase()) : null)
-    || imageMap?.get(bot.display_name.trim().toLowerCase())
-    || getGptAvatar(getGptRoomTheme(bot.slug, bot.tagline || "", bot.display_name).key);
+  const botAvatar = (bot: Pick<StudioBot, "slug" | "display_name" | "tagline"> & Partial<StudioBot>): string => {
+    const family = botFamilyKey(bot.slug);
+    const base = family !== bot.slug ? bots.find((b) => b.slug === family || b.slug === `community-${family}`) : undefined;
+    return getBotPortrait(bot.slug) || bot.image_url || getBundledCommunityImage(bot.slug)
+      || (base && base.slug !== bot.slug ? botAvatar(base) : null)
+      || (bot.tool_title ? imageMap?.get(bot.tool_title.trim().toLowerCase()) : null)
+      || imageMap?.get(bot.display_name.replace(/\s*\(V\d+\)$/, "").trim().toLowerCase())
+      || getGptAvatar(getGptRoomTheme(bot.slug, bot.tagline || "", bot.display_name).key);
+  };
   const avatar = botAvatar(app);
   const sidebarPortrait = (bot: Pick<StudioBot, "slug" | "display_name" | "tagline"> & Partial<StudioBot>) => {
     const room = getGptRoomTheme(bot.slug, bot.tagline || "", bot.display_name);
@@ -225,7 +229,9 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
     <div className="relative my-3"><Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" /><input aria-label="Search bots" placeholder="Find an assistant…" value={query} onChange={(e) => setQuery(e.target.value)} className="studio-search w-full rounded-md border bg-background pl-9 pr-2 text-sm" /></div>
     <p className="text-[11px] text-muted-foreground">{bots.length} assistants · grouped by subject</p>
     <div className="studio-bots">
-      {groupBotsByCategory(bots.filter((bot) => `${bot.display_name} ${bot.tagline}`.toLowerCase().includes(query.toLowerCase()))).map(([category, list]) => <details key={category} open={Boolean(query) || list.some((bot) => bot.slug === app.slug)} className="mt-2"><summary className="studio-label cursor-pointer select-none py-1">{category} <span className="ml-auto text-[10px] text-muted-foreground">{list.length}</span></summary>{list.map((bot) => <Tooltip key={bot.slug}><TooltipTrigger asChild><Button variant="ghost" disabled={streaming} onClick={() => chooseBot(bot.slug)} className={`studio-row ${bot.slug === app.slug ? "studio-selected" : ""}`}>{sidebarPortrait(bot)}<span className="truncate">{bot.display_name}</span>{bot.slug.startsWith("community-") && <span className="ml-auto shrink-0 text-[10px] text-primary">COMMUNITY</span>}</Button></TooltipTrigger><TooltipContent side="right" className="max-w-64 break-words">{bot.display_name}</TooltipContent></Tooltip>)}</details>)}
+      {groupBotsByCategory(bots.filter((bot) => `${bot.display_name} ${bot.tagline}`.toLowerCase().includes(query.toLowerCase()))).map(([category, families]) => <details key={category} open={Boolean(query) || families.some((f) => f.versions.some((bot) => bot.slug === app.slug))} className="mt-2"><summary className="studio-label cursor-pointer select-none py-1">{category} <span className="ml-auto text-[10px] text-muted-foreground">{families.length}</span></summary>{families.map(({ key, base, versions }) => versions.length === 1
+        ? <Tooltip key={base.slug}><TooltipTrigger asChild><Button variant="ghost" disabled={streaming} onClick={() => chooseBot(base.slug)} className={`studio-row ${base.slug === app.slug ? "studio-selected" : ""}`}>{sidebarPortrait(base)}<span className="truncate">{base.display_name}</span>{base.slug.startsWith("community-") && <span title="Community GPT" aria-label="Community GPT" className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />}</Button></TooltipTrigger><TooltipContent side="right" className="max-w-64 break-words">{base.display_name}</TooltipContent></Tooltip>
+        : <details key={key} data-testid="version-accordion" open={versions.some((bot) => bot.slug === app.slug)} className="studio-versions"><summary className={`studio-row flex list-none items-center gap-2 cursor-pointer select-none [&::-webkit-details-marker]:hidden ${versions.some((bot) => bot.slug === app.slug) ? "studio-selected" : ""}`}>{sidebarPortrait(base)}<span className="truncate">{base.display_name}</span><span className="ml-auto shrink-0 rounded border border-primary/40 px-1 text-[10px] text-primary">{versions.length} versions</span></summary><div className="ml-6 grid grid-cols-4 gap-1 py-1">{versions.map((bot, i) => <Button key={bot.slug} size="sm" variant={bot.slug === app.slug ? "default" : "outline"} disabled={streaming} onClick={() => chooseBot(bot.slug)} title={bot.display_name} aria-label={`${base.display_name} version ${i + 1}`} className="h-7 px-1 text-xs">V{i + 1}</Button>)}</div></details>)}</details>)}
     </div>
     <h2 className="studio-label mt-5"><History className="h-4 w-4" />Recent chats</h2>
     <div className="studio-history mt-2">{threads.filter((item) => item.messages.length > 0 || item.id === thread.id).map((item) => <Button key={item.id} variant="ghost" disabled={streaming} onClick={() => chooseThread(item)} className={`studio-row ${item.id === thread.id ? "studio-selected" : ""}`}><History className="h-3.5 w-3.5 shrink-0" /><span className="truncate" title={displayConversationTitle(item)}>{displayConversationTitle(item)}</span></Button>)}</div>

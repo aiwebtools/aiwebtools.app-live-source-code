@@ -6,6 +6,7 @@ import { loadCommunityBots, getCommunityBotsSync, type CommunityBotTool } from "
 /** Ethics-approved community GPTs, shown in the main directories. Renders nothing until some exist. */
 const CommunityGptStrip = () => {
   const [bots, setBots] = useState<CommunityBotTool[] | null>(getCommunityBotsSync);
+  const [shown, setShown] = useState(12);
   useEffect(() => { if (!bots) loadCommunityBots().then(setBots).catch(() => setBots([])); }, [bots]);
   if (!bots?.length) return null;
   return (
@@ -14,7 +15,7 @@ const CommunityGptStrip = () => {
         <Users className="h-5 w-5" /> Community GPTs <span className="text-xs font-normal text-green-500/70">· AI ethics reviewed</span>
       </h2>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {bots.map((b) => (
+        {bots.slice(0, shown).map((b) => (
           <Link key={b.categoryPath} to={b.categoryPath} className="group overflow-hidden rounded-xl border border-green-500/30 bg-black/70 hover:border-green-400">
             <div className="aspect-video bg-green-950/40">
               {b.imageUrl && <img src={b.imageUrl} alt={`${b.title} — community AI GPT on AIWebTools`} loading="lazy" decoding="async" className="h-full w-full object-cover" />}
@@ -26,6 +27,7 @@ const CommunityGptStrip = () => {
           </Link>
         ))}
       </div>
+      {shown < bots.length && <button type="button" onClick={() => setShown((n) => n + 24)} className="mt-4 w-full rounded-lg border border-green-500/40 py-2 font-mono text-sm text-green-300 hover:border-green-400">Show more community GPTs ({bots.length - shown} more)</button>}
     </section>
   );
 };
