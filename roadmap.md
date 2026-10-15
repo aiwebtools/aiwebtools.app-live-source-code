@@ -1,5 +1,10 @@
 # Chatbot completion roadmap
 
+# Full original instruction audit (Oct 15)
+- [ ] Compare every hosted bot with its corresponding original document and seed instructions; preserve variations and community-authored prompts.
+- [ ] Restore confirmed shortened/missing instructions through the shared server-only resolver, without inventing replacements or changing bot identities.
+- [ ] Add provenance/preservation tests, deploy and verify real bot replies; identify any originals that cannot be located.
+
 # Professional bot names and instruction fidelity (Oct 15)
 - [x] Clean 13 confirmed compliance/version/document labels and spelling errors in hosted names and seed records; preserve all identifiers, prompts, original documents and media.
 - [x] Review recent interactions: persona drift, unsupported Python/download promises and search errors. Recover Alan's full 9,136-character DOCX instruction text only for the known truncated legacy runtime prompt; add a separate shared execution/persona supplement. Economy models unchanged; handler deployed.
