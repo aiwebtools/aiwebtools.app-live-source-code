@@ -1,3 +1,11 @@
+import alanWattsOriginal from "./alan-watts-original.json" with { type: "json" };
+
+// Recover the documented source only for the known truncated legacy prompt.
+export function resolveOperationalInstructions(saved: string, slug: string): string {
+  return slug === "alan-watts-gpt-page" && saved.startsWith("You are Alan Watts GPT, a philosophical guide in the spirit of Alan Watts,") && saved.length < 1000
+    ? alanWattsOriginal : saved;
+}
+
 // Runtime guidance is separate from the saved verbatim operational instructions.
 export function appendInstructionFidelity(original: string, slug: string, displayName: string): string {
   const historicalPersona = /alan.?watts|einstein|tesla|talk.?to.?history|titanic|mary.?magdalene/i.test(`${slug} ${displayName}`);
