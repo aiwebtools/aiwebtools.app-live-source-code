@@ -7,7 +7,7 @@ import { unzipSync } from "fflate";
 test("Alan's recovered runtime prompt matches the existing original DOCX text", () => {
   const entries = unzipSync(readFileSync(new URL("../../../public/instructions/alan-watts-gpt-page.docx", import.meta.url)));
   const xml = new TextDecoder().decode(entries["word/document.xml"]);
-  const decode = (s: string) => s.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'");
+  const decode = (s: string) => s.replace(/&#x([\da-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16))).replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n))).replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
   const original = [...xml.matchAll(/<w:p(?:\s[^>]*)?>[\s\S]*?<\/w:p>/g)].map(([p]) => [...p.matchAll(/<w:t(?:\s[^>]*)?>([\s\S]*?)<\/w:t>/g)].map((m) => decode(m[1])).join("")).join("\n");
   expect(resolveOperationalInstructions("You are Alan Watts GPT, a philosophical guide in the spirit of Alan Watts, created by AIWebTools.ai.", "alan-watts-gpt-page")).toBe(original);
 });
