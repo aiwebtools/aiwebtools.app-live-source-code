@@ -176,3 +176,6 @@
 - [x] Test microphone-event submission and phone/tablet/desktop controls without horizontal overflow
 - [ ] Physical microphone and Safari/Firefox verification: requires actual devices; automated check used simulated recognition events
 - [ ] Signed-in history restoration: external unmanaged authentication prevents an authenticated end-to-end check
+
+- [x] Import archived instruction library as community rooms with V1..Vn version accordions (1,044 rooms, verbatim-verified)
+- [ ] PikaStory Vision GPT picture: image service refused; uses themed emblem
