@@ -61,7 +61,7 @@ export const aiWebToolsHealthGPTs: Tool[] = [
   {
     icon: User,
     title: "🐾Veterinarian GPT",
-    description: "Veterinarian GPT is a compassionate virtual veterinarian simulation offering expert advice on pet health and well-being. It utilizes advanced Ai features to analyze your pet's health and provide tailored care recommendations. This multimodal AI tool allows you to upload data or images of your pets for detailed assessments and receive practical solutions to ensure their optimal health. 🐾 Disclaimer: Veterinarian GPT is for informational purposes only and is not a substitute for professional veterinary advice, diagnosis, or treatment. GPT 4o1 Compliant Version: PETCARE GPT OR TRY PET ADVISOR GPT",
+    description: "Veterinarian GPT is a compassionate virtual veterinarian simulation offering expert advice on pet health and well-being. It utilizes advanced Ai features to analyze your pet's health and provide tailored care recommendations. This multimodal AI tool allows you to upload data or images of your pets for detailed assessments and receive practical solutions to ensure their optimal health. 🐾 Disclaimer: Veterinarian GPT is for informational purposes only and is not a substitute for professional veterinary advice, diagnosis, or treatment.",
     emoji: "🐾",
     color: "from-green-500 to-blue-600",
     directUrl: "https://petcaregpt.lovable.app/?via=aiwebtools",
