@@ -1,7 +1,11 @@
-# Bot research and larger data attachments
-1. Make first replies use web search when the request or bot instructions require current research; show source links and honest search errors.
-2. Accept text, Markdown, CSV, TSV and JSON data files up to 10 MB. Compute CSV statistics across every row and include clearly identified representative excerpts, without sending megabytes repeatedly or changing original documents.
-3. Keep attachments separate from the typing box, retain their analysis context in saved chats, and test a real 3 MB upload and first-turn web research on phone and desktop.
+# Professional bot names and faithful conversations
+
+1. Rename Cannabis GPT and confirmed Hemp GPT compliance/version labels; preserve every bot, existing link, picture and original document.
+2. Review recent chat records for persona drift, unsupported promises and recorded failures.
+3. Check Alan Watts against the original instruction source. Keep original text intact and append a separate supplement for faithful character, opening questions, task sequence, continuity and honest tool use.
+4. Verify unchanged instructions and bot identifiers with focused tests, then check real conversations and phone/computer names.
 
 ## Technical details
-Use a browser worker for parsing and summaries, bounded attachment context in the existing chat transport, and retain the current inexpensive model choices, voice, image generation and per-bot instructions.
+- Keep existing low-cost model choices and monitoring; no paid search service or new AI system.
+- Historical personas may speak immersively in first person, but must answer honestly when asked whether they are the actual person.
+- Do not claim Python execution, generated downloads or verified research without a successful supported action.

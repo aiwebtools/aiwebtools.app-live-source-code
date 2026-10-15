@@ -1,5 +1,10 @@
 # Chatbot completion roadmap
 
+# Professional bot names and instruction fidelity (Oct 15)
+- [ ] Clean confirmed compliance/version clutter from public bot names without changing identifiers, tools or original documents.
+- [ ] Review recent recorded interactions and add a separate instruction-fidelity/persona supplement; preserve original operational instructions and economy models.
+- [ ] Test preservation rules and verify real bot replies and visible names; report remaining service failures honestly.
+
 # Phone chat labels and richer attachments (Oct 14)
 - [x] Label bottom controls in a fitted phone grid and add a separate rear-camera/photo attachment control.
 - [x] Support JPG/PNG/WebP/GIF, text-searchable PDF, DOCX, XLSX and text/code/data up to 10 MB; preserve cheap models and saved attachment context. Scanned PDFs, HEIC, legacy Office binaries, archives, audio and video are explicitly unsupported.
