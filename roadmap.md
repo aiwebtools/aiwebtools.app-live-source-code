@@ -1,9 +1,10 @@
 # Chatbot completion roadmap
 
 # Professional bot names and instruction fidelity (Oct 15)
-- [ ] Clean confirmed compliance/version clutter from public bot names without changing identifiers, tools or original documents.
-- [ ] Review recent recorded interactions and add a separate instruction-fidelity/persona supplement; preserve original operational instructions and economy models.
-- [ ] Test preservation rules and verify real bot replies and visible names; report remaining service failures honestly.
+- [x] Clean 13 confirmed compliance/version/document labels and spelling errors in hosted names and seed records; preserve all identifiers, prompts, original documents and media.
+- [x] Review recent interactions: persona drift, unsupported Python/download promises and search errors. Recover Alan's full 9,136-character DOCX instruction text only for the known truncated legacy runtime prompt; add a separate shared execution/persona supplement. Economy models unchanged; handler deployed.
+- [x] 16 tests pass, including exact DOCX text preservation; real Alan question and divine-simulation follow-up maintain character and context without unsolicited AI denials. Cannabis phone title verified with screenshot, no overflow/page errors; build OK.
+- [ ] Reliable live web retrieval remains blocked: searches returned no sources during real Alan tests and were logged as search_error; requires an approved usable search source, no paid service added.
 
 # Phone chat labels and richer attachments (Oct 14)
 - [x] Label bottom controls in a fitted phone grid and add a separate rear-camera/photo attachment control.
