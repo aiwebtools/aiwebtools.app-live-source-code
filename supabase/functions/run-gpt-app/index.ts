@@ -2,6 +2,7 @@
 // Supports image generation (Nano Banana) for bots whose instructions require it.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import { selectBotModel } from "./model-selection.ts";
+import { appendInstructionFidelity } from "./instruction-fidelity.ts";
 import { readChatStreamEvent } from "./stream-events.ts";
 import { normalizeMessage, toModelMessage, requiresFirstSearch, requiresDeepThinking, type IncomingMessage } from "./input-context.ts";
 import { createLovableAiGatewayRunIdFetch, getLovableAiGatewayResponseHeaders } from "../_shared/run-id.ts";
@@ -261,7 +262,7 @@ Deno.serve(async (req) => {
     ? await admin.from("profiles").select("display_name").eq("id", userId).maybeSingle()
     : { data: null as { display_name?: string } | null };
 
-  let systemPrompt = basePrompt;
+  let systemPrompt = appendInstructionFidelity(basePrompt, slug, app.display_name);
   if (profile?.display_name) {
     systemPrompt += `\n\nThe member you are speaking with is called ${profile.display_name}. Remember details they share during this conversation and refer back to them naturally.`;
   }

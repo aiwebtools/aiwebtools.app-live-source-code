@@ -13,7 +13,7 @@
 - Keep studio drawers above embedded dialogs and close their parent dialog before route changes; phone bot switching must never remain hidden behind the previous room.
 - Apply offscreen paint containment only to individual tool cards, never all nested grids; homepage sections and studio controls must stay visible across browsers.
 - Store device conversations separately by bot and thread, with dedicated `/app/:slug/chat/:threadId` URLs so reloads restore the exact conversation.
-- Validate runtime model choices against a server-side allowlist and default every bot to the cheapest allowed model; instructions stay per-bot so engine changes never alter persona.
+- Validate models server-side and default to the cheapest allowed; append execution/persona guidance via instruction-fidelity without rewriting per-bot verbatim prompts.
 - Keep studio image download/revision actions in `StudioImageActions` and route revisions through the existing conversation so generated visuals retain story context.
 - Parse text, DOCX and XLSX in a browser worker, extract PDF text with PDF.js, and send resized photo previews as validated image parts through the existing model transport; preserve bounded attachment context in device chats and explicitly reject unsupported binaries to avoid misleading analysis and excessive payloads.
 - Publish community GPTs only through the publish-community-gpt function, which runs an AI ethics review before inserting into gpt_apps/gpt_app_prompts with a community- slug, so public bots reuse the same studio, routing and runtime as official bots.
