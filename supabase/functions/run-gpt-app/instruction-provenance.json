@@ -609,9 +609,8 @@
   },
   "oraculum-u-the-illuminator-of-hidden-truths-safer": {
     "source": "public/instructions/oraculum-u-the-illuminator-of-hidden-truths-safer.docx",
-    "note": "exact preserved seed text matches corresponding document; archive filename unavailable",
-    "chars": 8000,
-    "sha256": "1fcf903d8976bf21e6099abed079814ad31e75bdbe9d8f6a901b118677d71280"
+    "chars": 8001,
+    "sha256": "37e76d75577b8ab94efb8e32b151881e1a9126480e5e7cde4fae235cfe95232a"
   },
   "os-book-writer": {
     "archive": "public/downloads/operational-instructions/AIWebTools-Operational-Instructions-In-to-Pe.zip",
@@ -951,9 +950,8 @@
   },
   "world-reality-decoder-gpt-u": {
     "source": "public/instructions/world-reality-decoder-gpt-u.docx",
-    "note": "exact preserved seed text matches corresponding document; archive filename unavailable",
-    "chars": 4810,
-    "sha256": "c5683f4baa5e45eea23c37bb6f24b7650a507fc0b66ef53233cf1976706966a2"
+    "chars": 4811,
+    "sha256": "cf0b229cfaff2e637f0c9230d41c52ae3b5873d6de5ee4b40dd96fb32eae10a3"
   },
   "yes-or-no-gpt": {
     "archive": "public/downloads/gpt-instructions.zip",
