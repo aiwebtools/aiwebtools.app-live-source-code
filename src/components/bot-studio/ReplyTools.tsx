@@ -5,7 +5,7 @@ import { runPythonOnDevice, type PythonResult } from "@/utils/pyodideRunner";
 
 const plain = (md: string) => md.replace(/!\[[^\]]*\]\([^)]*\)/g, "").replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1 ($2)").replace(/^#{1,6}\s*/gm, "").replace(/\*\*|__|`/g, "").trim();
 const fileBase = (name: string) => `${name.replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase() || "reply"}-aiwebtools`;
-const escapeHtml = (s: string) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]!));
+const escapeHtml = (s: string) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c] || c));
 export const pythonBlocks = (text: string) => [...text.matchAll(/```(?:python|py)\s*\n([\s\S]*?)```/gi)].map((m) => m[1].trim()).filter(Boolean);
 
 function save(blob: Blob, filename: string) {

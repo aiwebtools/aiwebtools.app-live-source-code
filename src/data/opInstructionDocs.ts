@@ -1,4 +1,5 @@
 // Original operational instruction documents, exactly as authored by AIWebTools.ai.
+import communityDocs from "./communityInstructionDocs.json";
 // Files are served verbatim from /public/instructions/<slug>.docx — never rewritten.
 export const OP_INSTRUCTION_DOCS: Record<string, string> = {
   "ad-maker-gpt": "Ad Maker GPT operational instructions.docx",
@@ -427,7 +428,15 @@ export const OP_INSTRUCTION_DOCS: Record<string, string> = {
  * is the original document reproduced verbatim, plus the untouched source .docx.
  */
 export const getOpInstructionDoc = (slug?: string | null) => {
-  if (!slug || !OP_INSTRUCTION_DOCS[slug]) return null;
+  if (!slug) return null;
+  const communityName = (communityDocs as Record<string, string>)[slug];
+  if (communityName) return {
+    href: `/instructions/community/${slug}.pdf`,
+    download: `${communityName} (AIWEBTOOLS.AI).pdf`,
+    docxHref: "",
+    source: communityName,
+  };
+  if (!OP_INSTRUCTION_DOCS[slug]) return null;
   const source = OP_INSTRUCTION_DOCS[slug];
   return {
     href: `/instructions/${slug}.pdf`,

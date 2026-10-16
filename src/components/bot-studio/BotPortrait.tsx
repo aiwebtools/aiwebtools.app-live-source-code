@@ -22,7 +22,7 @@ export default function BotPortrait({ src, name, themeKey, emblem, className = "
   const image = themeKey === "time-machine" && name.toLowerCase().includes("time machine") ? timeMachineImage : src;
   const fallback = subjectImages[themeKey] || matrixImage;
   const resolved = failedSource === image ? fallback : image;
-  return <span className={`relative inline-block overflow-hidden ${className}`} title={name}>
+  return <span className={`relative z-10 inline-block overflow-hidden ${className}`} title={name}>
     <img src={fallback} alt="" aria-hidden="true" width={80} height={80} className="absolute inset-0 h-full w-full object-cover" />
     <img src={resolved} alt={`${name} avatar`} width={80} height={80} loading="lazy" decoding="async"
       className={`relative h-full w-full object-cover ${loadedSource === resolved ? "opacity-100" : "opacity-0"}`}

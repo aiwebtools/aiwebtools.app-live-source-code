@@ -27,3 +27,9 @@ test("historical persona guidance is scoped to character bots", () => {
   expect(appendInstructionFidelity("Original", "alan-watts-gpt-page", "Alan Watts GPT")).toContain("CHARACTER PERFORMANCE:");
   expect(appendInstructionFidelity("Original", "cannabis-gpt-not-gpt4o1-compliant", "Cannabis GPT")).not.toContain("CHARACTER PERFORMANCE:");
 });
+
+test("generated reports receive the actual server date after the unchanged original", () => {
+  const result = appendInstructionFidelity("Original", "community-analytic-mastermind-gpt", "Analytic Mastermind GPT", "2026-10-16");
+  expect(result.startsWith("Original")).toBe(true);
+  expect(result).toContain("Current UTC date: 2026-10-16.");
+});

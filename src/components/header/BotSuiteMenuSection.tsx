@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { startTransition, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Bot, ChevronDown, Search, Wand2 } from "lucide-react";
 import { loadStudioBots, type StudioBot } from "@/components/bot-studio/botCatalog";
@@ -24,7 +24,10 @@ export default function BotSuiteMenuSection({ onNavigate }: { onNavigate?: () =>
     return groupBotsByCategory((bots || []).filter((b) => !q || `${b.display_name} ${b.tagline || ""}`.toLowerCase().includes(q)));
   }, [bots, query]);
 
-  const go = (path: string) => { onNavigate?.(); navigate(path); };
+  const go = (path: string) => {
+    onNavigate?.();
+    requestAnimationFrame(() => startTransition(() => navigate(path)));
+  };
   const stop = (e: React.SyntheticEvent) => e.stopPropagation();
 
   return (
