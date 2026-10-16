@@ -18,9 +18,9 @@
 - Parse text, DOCX and XLSX in a browser worker, extract PDF text with PDF.js, and send resized photo previews as validated image parts through the existing model transport; preserve bounded attachment context in device chats and explicitly reject unsupported binaries to avoid misleading analysis and excessive payloads.
 - Visitor community GPTs publish via publish-community-gpt (ethics review); the archived library imports verbatim via secret-gated upsert-only seed-community-library. Variants are `<base>-vN` rooms grouped by `botFamilyKey`; page catalog reads by 1000.
 - Device-only custom bots use custom- slugs and send their own instructions to run-gpt-app; they are never stored server-side or in conversation history.
-- Resolve chat and selectable sidebar avatars through the same BotStudio lookup: per-slug portrait, bot/community image, tool hero image by title/name, then theme emblem image; this keeps bot identities consistent without replacing tool media.
+- Share chat/sidebar portrait lookup; lazy-load remote art over a local subject fallback to prevent blanks and image-request floods.
 - Preserve terminal upstream SSE error events and final unterminated frames in hosted chat transport so failures cannot silently become empty replies.
-- Surface community GPTs in search and directories through `src/utils/communityBots.ts` (live `gpt_apps` rows with community- slugs, linking to `/app/<slug>`), so newly approved bots appear without rebuilding the static search catalog.
+- Read live community GPTs through `communityBots.ts`; use the shared identity map for public names/missing art, preserving slugs, prompts and existing media.
 - Resolve studio starter questions through `getBotStarters`, preserving operational instructions and using subject-based fallbacks for newly created bots so all room placements share relevant starters.
 - Keep reply celebrations in a bounded local canvas/audio helper with explicit mute and reduced-motion support so effects never add AI costs or block replies.
 - Close the mobile bot drawer before opening the builder and show submit validation explicitly; reuse saved drafts on review retries so failed publishing cannot create duplicate device bots.

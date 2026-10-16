@@ -1,3 +1,4 @@
+import { communityBotName, communityBotImage } from "./communityBotIdentity";
 import { supabase } from "@/integrations/supabase/client";
 
 export interface CommunityBotTool {
@@ -13,7 +14,7 @@ export interface CommunityBotTool {
 // Bundled branded images for bots published before automatic image generation.
 const bundled = import.meta.glob("@/assets/community-bots/*.jpg", { eager: true, query: "?url", import: "default" }) as Record<string, string>;
 const BUNDLED: Record<string, string> = {};
-for (const [path, url] of Object.entries(bundled)) BUNDLED[path.split("/").pop()!.replace(/\.jpg$/, "")] = url;
+for (const [path, url] of Object.entries(bundled)) { const filename = path.split("/").pop(); if (filename) BUNDLED[filename.replace(/\.jpg$/, "")] = url; }
 
 let cache: CommunityBotTool[] | null = null;
 let pending: Promise<CommunityBotTool[]> | null = null;
@@ -38,12 +39,12 @@ export function loadCommunityBots(): Promise<CommunityBotTool[]> {
     pending = fetchCommunityRows().then((data) => {
       pending = null;
       cache = data.filter((b) => !/-v\d+$/.test(b.slug)).map((b) => ({
-        title: b.display_name,
+        title: communityBotName(b.slug, b.display_name),
         description: (b.tagline || "Community GPT").replace(/\s*·\s*Community GPT$/, "") + " — a community AI assistant published on AIWebTools.",
         category: "Community GPTs",
-        imageUrl: b.image_url || BUNDLED[b.slug] || undefined,
+        imageUrl: b.image_url || communityBotImage(b.slug) || BUNDLED[b.slug] || undefined,
         categoryPath: `/app/${b.slug}`,
-        tags: ["community gpt", "custom gpt", "ai assistant", "chatbot", ...b.display_name.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 2)],
+        tags: ["community gpt", "custom gpt", "ai assistant", "chatbot", ...communityBotName(b.slug, b.display_name).toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 2)],
         isCommunityGpt: true as const,
       }));
       return cache;
@@ -52,7 +53,7 @@ export function loadCommunityBots(): Promise<CommunityBotTool[]> {
   return pending;
 }
 
-export const getBundledCommunityImage = (slug: string): string | undefined => BUNDLED[slug];
+export const getBundledCommunityImage = (slug: string): string | undefined => communityBotImage(slug) || BUNDLED[slug];
 
 export function getCommunityBotsSync() { return cache; }
 
