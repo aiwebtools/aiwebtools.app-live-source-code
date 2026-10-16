@@ -1,5 +1,12 @@
 # Chatbot completion roadmap
 
+# Community studio finish pass (Oct 16)
+- [ ] Clean public community names without changing slugs, prompts, or original documents.
+- [ ] Repair sidebar portraits and add the missing PikaStory picture without third-party branding.
+- [ ] Verify all versions remain reachable, header menus and builder work on phone/computer.
+- [ ] Audit instruction PDFs and character voice assignments; exercise real chat PDF/Python downloads.
+- [ ] Publish verified changes and check live-domain controls.
+
 # Full original instruction audit (Oct 15)
 - [x] Audit 425 hosted bots: 336 seeded official bots, 83 summary-only official rooms and six community bots. Match exact source filenames and existing text against both original ZIP sets; preserve alternate versions and genuinely short authored instructions.
 - [x] Install full server-only brains for 418 official bots; restore 83 generic room summaries and 13 clipped ordinary seed originals, preserving complete paragraph text. Synchronize 335 seed records; leave community instructions, identities, models and media unchanged.

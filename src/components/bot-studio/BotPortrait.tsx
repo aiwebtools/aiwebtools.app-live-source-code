@@ -18,7 +18,14 @@ const subjectImages: Record<string, string> = { academy: academyImage, blueprint
 
 export default function BotPortrait({ src, name, themeKey, emblem, className = "" }: { src: string; name: string; themeKey: string; emblem: string; className?: string }) {
   const [failedSource, setFailedSource] = useState<string | null>(null);
+  const [loadedSource, setLoadedSource] = useState<string | null>(null);
   const image = themeKey === "time-machine" && name.toLowerCase().includes("time machine") ? timeMachineImage : src;
   const fallback = subjectImages[themeKey] || matrixImage;
-  return <img src={failedSource === image ? fallback : image} alt={`${name} avatar`} title={name} className={className} onError={() => setFailedSource(image)} />;
+  const resolved = failedSource === image ? fallback : image;
+  return <span className={`relative inline-block overflow-hidden ${className}`} title={name}>
+    <img src={fallback} alt="" aria-hidden="true" width={80} height={80} className="absolute inset-0 h-full w-full object-cover" />
+    <img src={resolved} alt={`${name} avatar`} width={80} height={80} loading="lazy" decoding="async"
+      className={`relative h-full w-full object-cover ${loadedSource === resolved ? "opacity-100" : "opacity-0"}`}
+      onLoad={() => setLoadedSource(resolved)} onError={() => setFailedSource(image)} />
+  </span>;
 }

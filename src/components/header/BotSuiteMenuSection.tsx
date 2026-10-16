@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Bot, ChevronDown, Search, Wand2 } from "lucide-react";
 import { loadStudioBots, type StudioBot } from "@/components/bot-studio/botCatalog";
+import { Button } from "@/components/ui/button";
 import { groupBotsByCategory } from "@/components/bot-studio/botCategories";
 
 /** Header fast-track into every in-site bot room plus the community bot builder. */
@@ -28,15 +29,15 @@ export default function BotSuiteMenuSection({ onNavigate }: { onNavigate?: () =>
 
   return (
     <div className="mb-4 grid gap-2" onKeyDown={stop} onPointerDown={stop}>
-      <button type="button" aria-expanded={open} onClick={() => setOpen((v) => !v)}
+      <Button variant="ghost" type="button" aria-expanded={open} onClick={() => setOpen((v) => !v)}
         className="flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border border-primary/60 bg-primary/10 px-3 text-left text-sm font-bold text-primary hover:bg-primary/20">
         <span className="flex items-center gap-2"><Bot className="h-4 w-4" />AWT Custom Creative Bot Suite{bots ? <span className="text-[10px] font-normal opacity-70">{bots.length}</span> : null}</span>
         <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
-      </button>
-      <button type="button" onClick={() => { sessionStorage.setItem("awt-open-builder", "1"); go("/app/custom-gpt-maker"); }}
+      </Button>
+      <Button variant="ghost" type="button" onClick={() => { go("/app/custom-gpt-maker?builder=1"); }}
         className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-accent/60 bg-accent/10 px-3 text-sm font-bold text-accent-foreground hover:bg-accent/20">
         <Wand2 className="h-4 w-4" />CUSTOM GPT MAKER
-      </button>
+      </Button>
       {open && (
         <div className="rounded-lg border border-primary/30 bg-background/95 p-2">
           <label className="flex items-center gap-2 rounded-md border border-primary/30 px-2">
@@ -52,17 +53,16 @@ export default function BotSuiteMenuSection({ onNavigate }: { onNavigate?: () =>
               const expanded = Boolean(query) || openGroup === category;
               return (
                 <div key={category} className="border-b border-primary/10 last:border-0">
-                  <button type="button" onClick={() => setOpenGroup(expanded && !query ? null : category)} aria-expanded={expanded}
+                  <Button variant="ghost" type="button" onClick={() => setOpenGroup(expanded && !query ? null : category)} aria-expanded={expanded}
                     className="flex w-full items-center justify-between py-2 text-left text-xs font-semibold uppercase tracking-wide text-primary">
                     {category}<span className="text-[10px] text-muted-foreground">{families.length}</span>
-                  </button>
-                  {expanded && families.slice(0, query ? 40 : 400).map(({ key, base, versions }) => (
-                    <div key={key} className="flex items-center gap-1 py-0.5 pl-2">
-                      <button type="button" onClick={() => go(`/app/${base.slug}`)} className="min-w-0 flex-1 truncate rounded px-1 py-1 text-left text-sm text-foreground hover:bg-primary/15">{base.display_name}</button>
-                      {versions.length > 1 && versions.map((v, i) => (
-                        <button key={v.slug} type="button" onClick={() => go(`/app/${v.slug}`)} aria-label={`${base.display_name} version ${i + 1}`}
-                          className="shrink-0 rounded border border-primary/40 px-1 text-[10px] text-primary hover:bg-primary/20">V{i + 1}</button>
-                      )).slice(0, 8)}
+                  </Button>
+                  {expanded && families.map(({ key, base, versions }) => (
+                    <div key={key} className="py-0.5 pl-2">
+                      {versions.length === 1 ? <Button variant="ghost" type="button" title={base.display_name} onClick={() => go(`/app/${base.slug}`)} className="h-auto min-h-9 w-full justify-start px-1 py-1 text-left text-sm text-foreground">{base.display_name}</Button> :
+                      <details open={Boolean(query)}><summary className="cursor-pointer py-2 text-sm text-foreground">{base.display_name} <span className="text-xs text-muted-foreground">· {versions.length} versions</span></summary>
+                        <div className="grid grid-cols-4 gap-1">{versions.map((v, i) => <Button variant="outline" key={v.slug} type="button" onClick={() => go(`/app/${v.slug}`)} aria-label={`${base.display_name} version ${i + 1}`} title={v.display_name} className="h-9 px-1 text-xs text-primary">V{i + 1}</Button>)}</div>
+                      </details>}
                     </div>
                   ))}
                 </div>
