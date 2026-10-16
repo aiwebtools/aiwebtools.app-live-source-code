@@ -3,6 +3,7 @@ import { expect, test } from "bun:test";
 import { appendInstructionFidelity, resolveOperationalInstructions } from "./instruction-fidelity.ts";
 import { readFileSync } from "node:fs";
 import { unzipSync } from "fflate";
+import decoded from "./decoded-archive-instructions.json";
 
 test("Alan's recovered runtime prompt matches the existing original DOCX text", () => {
   const entries = unzipSync(readFileSync(new URL("../../../public/instructions/alan-watts-gpt-page.docx", import.meta.url)));
@@ -32,4 +33,12 @@ test("generated reports receive the actual server date after the unchanged origi
   const result = appendInstructionFidelity("Original", "community-analytic-mastermind-gpt", "Analytic Mastermind GPT", "2026-10-16");
   expect(result.startsWith("Original")).toBe(true);
   expect(result).toContain("Current UTC date: 2026-10-16.");
+});
+
+test("binary Gemini archives use their complete decoded instruction field", () => {
+  expect(Object.keys(decoded)).toHaveLength(4);
+  for (const [slug, original] of Object.entries(decoded)) {
+    expect(resolveOperationalInstructions("binary container", slug)).toBe(original);
+    expect(original.length).toBeGreaterThan(6000);
+  }
 });
