@@ -47,7 +47,7 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
   const [threads, setThreads] = useState(readBotConversations);
   const [bots, setBots] = useState<StudioBot[]>([]);
   const [customBots, setCustomBots] = useState(readCustomBots);
-  const [builderOpen, setBuilderOpen] = useState(false);
+  const [builderOpen, setBuilderOpen] = useState(() => typeof window !== "undefined" && new URLSearchParams(window.location.search).get("builder") === "1");
   const [celebrations, setCelebrations] = useState(true);
   const [celebrationSound, setCelebrationSound] = useState(true);
   const studioRef = useRef<HTMLElement | null>(null);
