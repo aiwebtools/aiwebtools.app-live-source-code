@@ -149,8 +149,8 @@
   "community-sellable-budtender-care-gpt": "Budtender Care GPT",
   "community-spelling-and-punctuation-fixer-gem": "Spelling And Punctuation Fixer Gem",
   "community-summari": "Summari",
-  "community-talk-to-history-gpt-great-final": "Talk To History GPT - Great",
-  "community-talk-to-history-gpt-latest": "Talk to history GPT",
+  "community-talk-to-history-gpt-great-final": "Talk to History GPT",
+  "community-talk-to-history-gpt-latest": "Talk to History GPT",
   "community-talk-to-the-stars-gpt-add-on-upload-talk-to-the-stars-gpt": "Talk to the Stars GPT — Supplement",
   "community-the-architectoperational-instructions": "The Architect GPT",
   "community-the-blueberry-method-u2b50-ufe0f-l01fad0-do-not-give-for-dow": "The Blueberry Method",
@@ -179,5 +179,14 @@
   "community-youtube-agent-prompt-copy-paste-ready-for-automous-assistant": "YouTube Agent GPT",
   "community-youtube-channel-manager-content-optimization-master-prompt-o": "YouTube Channel Manager GPT",
   "community-community-gpt": "Image Seed GPT",
-  "community-community-gpt-2": "Image Seed GPT — Alternate Instructions"
+  "community-community-gpt-2": "Image Seed GPT — Alternate Instructions",
+  "community-booksy-ai": "Booksy AI",
+  "community-bookwriter-gpt": "Book Writer GPT",
+  "community-college-teach-gpt": "College Teaching GPT",
+  "community-courses-ai": "Courses AI",
+  "community-data-interpreter-report-ai": "Data Interpreter Report AI",
+  "community-immortalization-memorial-maker-gpt": "Immortalization Memorial Maker GPT",
+  "community-instant-book-writing-ai": "Instant Book Writing AI",
+  "community-talk-to-history-newest": "Talk to History GPT",
+  "community-workplace-job-coach-and-guider": "Workplace Job Coach GPT"
 }
