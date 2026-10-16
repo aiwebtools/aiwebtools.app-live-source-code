@@ -50,8 +50,8 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
   const [builderOpen, setBuilderOpen] = useState(false);
   useEffect(() => {
     if (sessionStorage.getItem("awt-open-builder") === "1" || new URLSearchParams(window.location.search).get("builder") === "1") {
-      const t = setTimeout(() => { sessionStorage.removeItem("awt-open-builder"); setBuilderOpen(true); }, 300);
-      return () => clearTimeout(t);
+      sessionStorage.removeItem("awt-open-builder");
+      setBuilderOpen(true);
     }
   }, []);
   const [celebrations, setCelebrations] = useState(true);
@@ -84,7 +84,7 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
   const botAvatar = (bot: Pick<StudioBot, "slug" | "display_name" | "tagline"> & Partial<StudioBot>): string => {
     const family = botFamilyKey(bot.slug);
     const base = family !== bot.slug ? bots.find((b) => b.slug === family || b.slug === `community-${family}`) : undefined;
-    return getBotPortrait(bot.slug) || bot.image_url || getBundledCommunityImage(bot.slug)
+    return getBotPortrait(bot.slug) || getBotPortrait(family) || bot.image_url || getBundledCommunityImage(bot.slug)
       || (base && base.slug !== bot.slug ? botAvatar(base) : null)
       || (bot.tool_title ? imageMap?.get(bot.tool_title.trim().toLowerCase()) : null)
       || imageMap?.get(bot.display_name.replace(/\s*\(V\d+\)$/, "").trim().toLowerCase())
@@ -103,7 +103,7 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
     void loadToolImageMap().then(setImageMap);
   }, []);
   useEffect(() => {
-    if (!embedded && !threadId) navigate(conversationPath(app.slug, thread.id), { replace: true });
+    if (!embedded && !threadId) navigate(`${conversationPath(app.slug, thread.id)}${window.location.search}`, { replace: true });
   }, [app.slug, embedded, navigate, thread.id, threadId]);
   useEffect(() => () => { abortRef.current?.abort(); attachmentWorker.current?.terminate(); }, []);
   useEffect(() => () => celebrationCleanup.current?.(), []);
@@ -281,6 +281,6 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
     </div>
     <Sheet open={leftOpen} onOpenChange={setLeftOpen}><SheetContent side="left" overlayClassName="studio-drawer-overlay z-[170]" className="studio-drawer z-[180] overflow-y-auto"><SheetTitle>Bots & conversations</SheetTitle><SheetDescription className="sr-only">Your assistants and chats saved on this device</SheetDescription><div className="mt-6">{sidebar}</div></SheetContent></Sheet>
     <Sheet open={rightOpen} onOpenChange={setRightOpen}><SheetContent overlayClassName="studio-drawer-overlay z-[170]" className="studio-drawer z-[180] overflow-y-auto"><SheetTitle>Assistant settings</SheetTitle><SheetDescription className="sr-only">Model, voice and operational instructions</SheetDescription><div className="mt-6">{settings}</div></SheetContent></Sheet>
-    <BotBuilder open={builderOpen} onOpenChange={setBuilderOpen} onSaved={(bot, publishedSlug) => { setCustomBots(readCustomBots()); setBuilderOpen(false); if (publishedSlug) void refreshStudioBots().then(setBots); chooseThread(openBotConversation(publishedSlug || bot.slug, crypto.randomUUID())); }} />
+    <BotBuilder open={builderOpen} onOpenChange={(open) => { setBuilderOpen(open); if (!open && window.location.search.includes("builder=1")) navigate(window.location.pathname, { replace: true }); }} onSaved={(bot, publishedSlug) => { setCustomBots(readCustomBots()); setBuilderOpen(false); if (publishedSlug) void refreshStudioBots().then(setBots); chooseThread(openBotConversation(publishedSlug || bot.slug, crypto.randomUUID())); }} />
   </section>;
 }
