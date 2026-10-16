@@ -16,7 +16,7 @@ export default function GptAppPage() {
   useEffect(() => {
     let alive = true;
     setLoading(true);
-    if (isCustomSlug(slug)) { const found = readCustomBots().find((b) => b.slug === slug); setApp(found ? customToStudioBot(found) : readFeaturedFallbackBot(slug)); setLoading(false); return; }
+    if (isCustomSlug(slug)) { const found = readCustomBots().find((b) => b.slug === slug); const local = found ? customToStudioBot(found) : readFeaturedFallbackBot(slug); if (local) { setApp(local); setLoading(false); return; } }
     void loadStudioBots().then((bots) => { if (alive) setApp(bots.find((bot) => bot.slug === slug) || null); }).catch((e) => { if (alive) setError(e.message); }).finally(() => { if (alive) setLoading(false); });
     return () => { alive = false; };
   }, [slug]);
