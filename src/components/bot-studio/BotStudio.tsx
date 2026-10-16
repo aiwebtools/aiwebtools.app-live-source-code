@@ -47,12 +47,13 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
   const [threads, setThreads] = useState(readBotConversations);
   const [bots, setBots] = useState<StudioBot[]>([]);
   const [customBots, setCustomBots] = useState(readCustomBots);
-  const [builderOpen, setBuilderOpen] = useState(() => {
-    if (typeof window === "undefined") return false;
-    const flagged = sessionStorage.getItem("awt-open-builder") === "1";
-    sessionStorage.removeItem("awt-open-builder");
-    return flagged || new URLSearchParams(window.location.search).get("builder") === "1";
-  });
+  const [builderOpen, setBuilderOpen] = useState(false);
+  useEffect(() => {
+    if (sessionStorage.getItem("awt-open-builder") === "1" || new URLSearchParams(window.location.search).get("builder") === "1") {
+      const t = setTimeout(() => { sessionStorage.removeItem("awt-open-builder"); setBuilderOpen(true); }, 300);
+      return () => clearTimeout(t);
+    }
+  }, []);
   const [celebrations, setCelebrations] = useState(true);
   const [celebrationSound, setCelebrationSound] = useState(true);
   const studioRef = useRef<HTMLElement | null>(null);
