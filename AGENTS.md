@@ -14,6 +14,7 @@
 - Apply offscreen paint containment only to individual tool cards, never all nested grids; homepage sections and studio controls must stay visible across browsers.
 - Store device conversations separately by bot and thread, with dedicated `/app/:slug/chat/:threadId` URLs so reloads restore the exact conversation.
 - Validate models server-side; resolve official prompts from the server-only full-document manifest, append execution/persona guidance separately, and preserve community/device prompts; this prevents summaries or seed truncation replacing authored brains.
+- Decode binary Gemini archive instruction fields server-side; keep original containers intact so serialization bytes cannot pollute bot prompts.
 - Keep studio image download/revision actions in `StudioImageActions` and route revisions through the existing conversation so generated visuals retain story context.
 - Parse text, DOCX and XLSX in a browser worker, extract PDF text with PDF.js, and send resized photo previews as validated image parts through the existing model transport; preserve bounded attachment context in device chats and explicitly reject unsupported binaries to avoid misleading analysis and excessive payloads.
 - Visitor community GPTs publish via publish-community-gpt (ethics review); the archived library imports verbatim via secret-gated upsert-only seed-community-library. Variants are `<base>-vN` rooms grouped by `botFamilyKey`; page catalog reads by 1000.

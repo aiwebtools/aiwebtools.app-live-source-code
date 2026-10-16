@@ -1,12 +1,14 @@
 import officialInstructions from "./official-instructions.json" with { type: "json" };
+import decodedArchives from "./decoded-archive-instructions.json" with { type: "json" };
 
 const originals: Record<string, string> = officialInstructions;
+const decoded: Record<string, string> = decodedArchives;
 // Official document text is the brain; community and device instructions remain their authors' own.
 export function resolveOperationalInstructions(saved: string, slug: string): string {
   if (slug === "gospel-of-deployment-full-book") {
     throw new Error("This bot's original is a 1.96-million-character book, not a short prompt. Full-book retrieval is not configured; its truncated summary cannot be used as the instruction brain.");
   }
-  return originals[slug] ?? saved;
+  return decoded[slug] ?? originals[slug] ?? saved;
 }
 
 // Runtime guidance is separate from the saved verbatim operational instructions.

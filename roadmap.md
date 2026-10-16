@@ -1,11 +1,12 @@
 # Chatbot completion roadmap
 
 # Community studio finish pass (Oct 16)
-- [ ] Clean public community names without changing slugs, prompts, or original documents.
-- [ ] Repair sidebar portraits and add the missing PikaStory picture without third-party branding.
-- [ ] Verify all versions remain reachable, header menus and builder work on phone/computer.
-- [ ] Audit instruction PDFs and character voice assignments; exercise real chat PDF/Python downloads.
-- [ ] Publish verified changes and check live-domain controls.
+- [x] Clean 190 public community names through shared presentation map; preserve slugs, original prompts/documents and all bots.
+- [x] Repair sidebar portraits with local visible fallback/lazy remote art; add PikaStory artwork without third-party branding; live phone screenshots verified.
+- [x] Remove header version limits; menu navigation and builder verified on phone/computer; live Book Writer V18 opens correctly.
+- [x] Create/test 1,044 complete imported instruction PDFs; character tests pass; three random bots replied; live Python total 60/average 20 and both PDF downloads verified.
+- [x] Publish and verify live-domain controls without page errors. Fix invented report date through separate guidance; decode four binary Gemini originals without altering archives.
+- [ ] Exhaustive real conversations for every bot and physical-device voice/camera checks: not covered by representative automated checks.
 
 # Full original instruction audit (Oct 15)
 - [x] Audit 425 hosted bots: 336 seeded official bots, 83 summary-only official rooms and six community bots. Match exact source filenames and existing text against both original ZIP sets; preserve alternate versions and genuinely short authored instructions.
