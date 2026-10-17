@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { DAILY_LIMIT, validateAvatar, VOICES } from "./creator-validation";
 describe("community creator rules", () => {
-  test("Master approved five publications per day", () => expect(DAILY_LIMIT).toBe(5));
+  test("Master approved ten publications per day", () => expect(DAILY_LIMIT).toBe(10));
   test("uploaded image bytes are preserved", () => {
     const bytes = Uint8Array.from([137,80,78,71,13,10,26,10,0]);
     const image = validateAvatar(`data:image/png;base64,${btoa(String.fromCharCode(...bytes))}`);

@@ -1,4 +1,4 @@
-export const DAILY_LIMIT = 5;
+export const DAILY_LIMIT = 10;
 export const VOICES = ["alloy", "ash", "ballad", "coral", "echo", "fable", "nova", "onyx", "sage", "shimmer", "verse"] as const;
 export function validateAvatar(value: unknown): { bytes: Uint8Array; contentType: string } | null {
   if (value == null || value === "") return null;
