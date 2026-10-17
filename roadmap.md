@@ -1,5 +1,10 @@
 # Chatbot completion roadmap
 
+# Off Grid Tribes additions (Oct 17)
+- [ ] Add five complementary community-support bots with complete directives, branded avatars, voices, ethics review and individual PDFs.
+- [ ] Add "off grid tribes app" to existing drop-down menus without changing existing destinations.
+- [ ] Verify new bots, search/suite selection, downloads and menu navigation with real replies and screenshots.
+
 # Community studio finish pass (Oct 16)
 - [x] Clean 190 public community names through shared presentation map; preserve slugs, original prompts/documents and all bots.
 - [x] Repair sidebar portraits with local visible fallback/lazy remote art; add PikaStory artwork without third-party branding; live phone screenshots verified.
