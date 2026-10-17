@@ -191,6 +191,7 @@
 # Five humanitarian bots (Oct 17)
 - [x] Complete creator uploaded avatars, public voice persistence and proportionate ethics review; repair blocked voice selector.
 - [x] Author five detailed A–J humanitarian instruction sets and submit through CUSTOM GPT MAKER.
-- [ ] Verify avatars, header selection, instruction fidelity, real replies and PDFs; publish and check live.
+- [x] Verify all ten avatars, header selection, exact instruction hashes, real replies and individual branded PDFs; ten tests pass, no page errors, build OK.
+- [ ] Confirm latest frontend deployment on aiwebtools.app: publishing requested; live bots are visible, but the new PDF buttons had not reached the live domain during the check.
 - [x] Add five additional detailed humanitarian bots through the maker; all ten ethics-approved with uploaded avatars and selected voices.
-- [ ] Add compact, muted existing-video introductions over bot chats, once per bot per device, with X and shared cooldown; verify phone/desktop.
+- [x] Add compact, muted existing-video introductions over bot chats, once per bot per device, with X and shared cooldown; desktop/phone closing and reload persistence verified.
