@@ -85,7 +85,7 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
         <div className="text-xs font-semibold uppercase tracking-wider text-primary">Voice
           <Select value={voice} onValueChange={(v) => setVoice(v as GptVoiceProfile["voice"])}>
             <SelectTrigger className="mt-1" aria-label="Bot voice"><SelectValue /></SelectTrigger>
-            <SelectContent>{VOICES.map(([id, label]) => <SelectItem key={id} value={id}>{label}</SelectItem>)}</SelectContent>
+            <SelectContent className="z-[190]">{VOICES.map(([id, label]) => <SelectItem key={id} value={id}>{label}</SelectItem>)}</SelectContent>
           </Select>
         </div>
         <label className="flex items-start gap-2 text-sm text-foreground"><input type="checkbox" className="mt-1 accent-primary" checked={share} onChange={(e) => setShare(e.target.checked)} /><span>Share it in the public Community GPT library. An AI ethics review checks it first, then it is published automatically for everyone.</span></label>
