@@ -5,7 +5,7 @@
 
 - Schedule automatic promotional dialogs through the shared session-wide scheduler so navigation and competing pop-ups cannot bypass the cooldown.
 
-- Reuse `DownloadLibraryButton` for site-wide operational-instruction entry points so every placement opens the same maintained download center.
+- Reuse `DownloadLibraryButton` for library entry points and the shared PDF resolver for separate archived/authored community manifests; this prevents divergent downloads.
 - Resolve hosted chatbot speech through `getGptVoiceProfile`; this keeps character-inspired voices consistent without cloning real people.
 - Play hosted-bot speech sequentially through the shared speech reader, preserving complete replies and surfacing failures instead of silently switching to browser voices.
 - Share one-utterance microphone input across bot surfaces and pause speaker audio while listening to prevent feedback into the conversation.
