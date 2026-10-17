@@ -1,3 +1,4 @@
+// @ts-ignore -- Bun test runtime import
 import { expect, test } from "bun:test";
 import { commercialEmbed, commercialKey, hasSeenCommercial, markCommercialSeen } from "./botCommercials";
 test("existing YouTube commercials autoplay muted", () => {
