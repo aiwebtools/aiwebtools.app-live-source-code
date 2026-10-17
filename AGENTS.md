@@ -1,5 +1,6 @@
 # Architecture Rules
-- Keep deferred section mounts in one cancellable priority queue and retain their loading fallback through lazy imports; this prevents simultaneous scroll-time commits and empty loading gaps.
+- Queue deferred mounts cancellably and retain lazy-import fallbacks to avoid concurrent commits and loading gaps.
+- Keep companion links in the shared suite menu so phone, tablet and desktop destinations agree.
 
 - Keep the temporary access gate unlock in React memory only and render its own Matrix backdrop; reloads must ask again and loader cleanup must not remove its background.
 

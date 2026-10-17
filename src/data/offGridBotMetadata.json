@@ -1,0 +1,112 @@
+{
+  "community-community-compatibility-guide-gpt-47b622": {
+    "name": "Community Compatibility Guide GPT",
+    "voice": "sage",
+    "starters": [
+      "Help us compare our community expectations fairly without scoring people.",
+      "Create a consent-based trial-visit and shared-chore discussion plan."
+    ],
+    "tags": [
+      "community",
+      "matching",
+      "shared",
+      "values",
+      "skills",
+      "and",
+      "expectations",
+      "off grid tribes",
+      "off-grid",
+      "tribestead",
+      "community planning"
+    ]
+  },
+  "community-shared-land-due-diligence-gpt-c3ce07": {
+    "name": "Shared Land Due Diligence GPT",
+    "voice": "ash",
+    "starters": [
+      "Build a due-diligence checklist for land our community is considering.",
+      "Compare two land listings, separating seller claims from verified evidence."
+    ],
+    "tags": [
+      "land",
+      "comparison",
+      "access",
+      "zoning",
+      "title",
+      "and",
+      "viewing",
+      "checklists",
+      "off grid tribes",
+      "off-grid",
+      "tribestead",
+      "community planning"
+    ]
+  },
+  "community-community-agreements-facilitator-gpt-05bf34": {
+    "name": "Community Agreements Facilitator GPT",
+    "voice": "fable",
+    "starters": [
+      "Help our group write a fair, plain-language shared-responsibilities agreement.",
+      "Design a meeting that hears concerns and records decisions clearly."
+    ],
+    "tags": [
+      "cooperative",
+      "governance",
+      "meetings",
+      "shared",
+      "responsibilities",
+      "and",
+      "conflict",
+      "resolution",
+      "off grid tribes",
+      "off-grid",
+      "tribestead",
+      "community planning"
+    ]
+  },
+  "community-off-grid-build-planner-gpt-b790a2": {
+    "name": "Off Grid Build Planner GPT",
+    "voice": "onyx",
+    "starters": [
+      "Turn our off-grid community goals into phased planning and approval gates.",
+      "Build a transparent materials budget from our supplied quantities and quotes."
+    ],
+    "tags": [
+      "phased",
+      "build",
+      "plans",
+      "materials",
+      "project",
+      "budgets",
+      "and",
+      "maintenance",
+      "off grid tribes",
+      "off-grid",
+      "tribestead",
+      "community planning"
+    ]
+  },
+  "community-community-livelihood-planner-gpt-14d599": {
+    "name": "Community Livelihood Planner GPT",
+    "voice": "nova",
+    "starters": [
+      "Explore realistic cooperative income ideas using our group\u2019s existing skills.",
+      "Calculate a small pilot\u2019s costs and break-even point without promising profits."
+    ],
+    "tags": [
+      "shared",
+      "skills",
+      "cooperative",
+      "income",
+      "realistic",
+      "budgets",
+      "and",
+      "fair",
+      "work",
+      "off grid tribes",
+      "off-grid",
+      "tribestead",
+      "community planning"
+    ]
+  }
+}

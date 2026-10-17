@@ -1,4 +1,5 @@
 import tailoredStarters from "@/components/bot-studio/botStarters.json";
+import { getOffGridBotMetadata } from "./offGridBots";
 
 type StarterBot = {
   slug: string;
@@ -12,6 +13,8 @@ const catalog: Record<string, string[]> = tailoredStarters;
 const generic = /what can you help|walk me through your first step|what can you do|help me get started/i;
 
 export function getBotStarters(bot: StarterBot): string[] {
+  const offGrid = getOffGridBotMetadata(bot.slug);
+  if (offGrid) return offGrid.starters;
   if (catalog[bot.slug]) return catalog[bot.slug];
   const existing = (bot.starter_prompts || []).filter((text) => text.trim() && !generic.test(text));
   if (existing.length >= 2) return existing.slice(0, 2);

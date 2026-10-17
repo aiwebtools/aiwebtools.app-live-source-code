@@ -1,6 +1,7 @@
 // Original operational instruction documents, exactly as authored by AIWebTools.ai.
 import communityDocs from "./communityInstructionDocs.json";
 import humanitarianDocs from "./humanitarianInstructionDocs.json";
+import offGridDocs from "./offGridInstructionDocs.json";
 // Files are served verbatim from /public/instructions/<slug>.docx — never rewritten.
 export const OP_INSTRUCTION_DOCS: Record<string, string> = {
   "ad-maker-gpt": "Ad Maker GPT operational instructions.docx",
@@ -430,7 +431,7 @@ export const OP_INSTRUCTION_DOCS: Record<string, string> = {
  */
 export const getOpInstructionDoc = (slug?: string | null) => {
   if (!slug) return null;
-  const communityName = (humanitarianDocs as Record<string, string>)[slug] || (communityDocs as Record<string, string>)[slug];
+  const communityName = (offGridDocs as Record<string, string>)[slug] || (humanitarianDocs as Record<string, string>)[slug] || (communityDocs as Record<string, string>)[slug];
   if (communityName) return {
     href: `/instructions/community/${slug}.pdf`,
     download: `${communityName} (AIWEBTOOLS.AI).pdf`,
