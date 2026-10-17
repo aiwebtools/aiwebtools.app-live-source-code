@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Wand2 } from "lucide-react";
+import { useRef, useState } from "react";
+import { ImagePlus, X, Wand2 } from "lucide-react";
+import { prepareBotAvatar } from "@/utils/botAvatarUpload";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -20,25 +21,28 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
   const [tagline, setTagline] = useState("");
   const [instructions, setInstructions] = useState("");
   const [voice, setVoice] = useState<GptVoiceProfile["voice"]>("alloy");
+  const [avatar, setAvatar] = useState("");
+  const [preparingAvatar, setPreparingAvatar] = useState(false);
+  const avatarInput = useRef<HTMLInputElement | null>(null);
   const [share, setShare] = useState(true);
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState("");
   const [savedBot, setSavedBot] = useState<CustomBot | null>(null);
   const save = async () => {
-    if (busy) return;
+    if (busy || preparingAvatar) return;
     if (name.trim().length < 2) { setStatus("Add a title with at least 2 characters."); return; }
     if (instructions.trim().length < (share ? 30 : 10)) { setStatus(share ? "Add at least 30 characters of instructions for the ethics review." : "Add at least 10 characters of instructions."); return; }
     setBusy(true);
     let bot: CustomBot;
     try {
-      bot = saveCustomBot({ ...(savedBot ? { slug: savedBot.slug } : {}), display_name: name.trim(), tagline: tagline.trim(), instructions: instructions.trim(), voice });
+      bot = saveCustomBot({ ...(savedBot ? { slug: savedBot.slug } : {}), display_name: name.trim(), tagline: tagline.trim(), instructions: instructions.trim(), voice, image_url: avatar || undefined });
       setSavedBot(bot);
     } catch { setStatus("Your browser could not save this bot. Check available device storage and try again."); setBusy(false); return; }
     let publishedSlug: string | undefined;
     if (share) {
       setBusy(true); setStatus("AI ethics review in progress…");
       try {
-        const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/publish-community-gpt`, { method: "POST", headers: { "Content-Type": "application/json", apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY }, body: JSON.stringify({ name: bot.display_name, tagline: bot.tagline, instructions: bot.instructions, guestId: getGuestId() }) });
+        const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/publish-community-gpt`, { method: "POST", headers: { "Content-Type": "application/json", apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY }, body: JSON.stringify({ name: bot.display_name, tagline: bot.tagline, instructions: bot.instructions, voice: bot.voice, avatar: bot.image_url, guestId: getGuestId() }) });
         const data = await res.json().catch(() => ({}));
         if (!res.ok) { setStatus(`Saved on this device. Not published: ${data.error || "the review failed."}`); setBusy(false); return; }
         if (!data.approved) { setStatus(`Saved on this device. The ethics review did not approve publishing: ${data.reason}`); setBusy(false); return; }
@@ -46,7 +50,7 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
       } catch { setStatus("Saved on this device. Publishing failed — check your connection."); setBusy(false); return; }
       setBusy(false);
     }
-    setBusy(false); setSavedBot(null); setName(""); setTagline(""); setInstructions(""); setStatus("");
+    setBusy(false); setSavedBot(null); setName(""); setTagline(""); setInstructions(""); setAvatar(""); setStatus("");
     onSaved(bot, publishedSlug);
   };
   const field = "w-full rounded-md border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary";
@@ -57,6 +61,17 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
         <DialogDescription>Saved on this device. Web search, image creation, voice, long memory and every studio ability are switched on automatically.</DialogDescription>
       </DialogHeader>
       <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          {avatar && <img src={avatar} alt="Bot avatar preview" className="h-16 w-16 rounded-md object-cover" />}
+          <input ref={avatarInput} type="file" accept="image/jpeg,image/png,image/webp" aria-label="Bot avatar picture" className="hidden" onChange={async (e) => {
+            const file = e.target.files?.[0]; if (!file) return;
+            setPreparingAvatar(true);
+            try { setAvatar(await prepareBotAvatar(file)); setStatus(""); } catch (error) { setStatus(error instanceof Error ? error.message : "Could not read this picture."); }
+            finally { setPreparingAvatar(false); e.target.value = ""; }
+          }} />
+          <Button type="button" variant="outline" disabled={busy || preparingAvatar} onClick={() => avatarInput.current?.click()} className="gap-2"><ImagePlus className="h-4 w-4" />{preparingAvatar ? "Preparing picture…" : avatar ? "Change avatar" : "Upload avatar"}</Button>
+          {avatar && <Button type="button" variant="ghost" size="icon" aria-label="Remove avatar" disabled={busy} onClick={() => setAvatar("")}><X className="h-4 w-4" /></Button>}
+        </div>
         <label className="block text-xs font-semibold uppercase tracking-wider text-primary">Title for tool name
           <input className={`${field} mt-1`} maxLength={80} value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Pirate Captain GPT" />
         </label>
@@ -75,7 +90,7 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
         </div>
         <label className="flex items-start gap-2 text-sm text-foreground"><input type="checkbox" className="mt-1 accent-primary" checked={share} onChange={(e) => setShare(e.target.checked)} /><span>Share it in the public Community GPT library. An AI ethics review checks it first, then it is published automatically for everyone.</span></label>
         {status && <p role="status" className="rounded-md border border-primary/40 p-3 text-xs text-foreground">{status}</p>}
-        <Button type="button" className="studio-new w-full gap-2" disabled={busy} onClick={() => void save()}><Wand2 className="h-4 w-4" />{busy ? "Reviewing & creating artwork…" : share ? "Save, review & publish" : "Save & launch my bot"}</Button>
+        <Button type="button" className="studio-new w-full gap-2" disabled={busy || preparingAvatar} onClick={() => void save()}><Wand2 className="h-4 w-4" />{busy ? "Reviewing & publishing…" : share ? "Save, review & publish" : "Save & launch my bot"}</Button>
         {savedBot && !busy && status && <Button type="button" variant="outline" className="w-full" onClick={() => onSaved(savedBot)}>Open my saved bot</Button>}
       </div>
     </DialogContent>

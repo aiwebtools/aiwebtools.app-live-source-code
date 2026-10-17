@@ -9,6 +9,7 @@ export interface CustomBot {
   tagline: string;
   instructions: string;
   voice: GptVoiceProfile["voice"];
+  image_url?: string;
   created: number;
 }
 
@@ -44,6 +45,7 @@ export function customToStudioBot(bot: CustomBot): StudioBot {
     greeting: `Hello, I am ${bot.display_name}. ${bot.tagline ? `${bot.tagline}. ` : ""}What shall we create together?`,
     starter_prompts: null,
     supports_images: true,
+    image_url: bot.image_url,
     model: "google/gemini-3-flash-preview",
     custom: { instructions: bot.instructions, voice: bot.voice },
   };
