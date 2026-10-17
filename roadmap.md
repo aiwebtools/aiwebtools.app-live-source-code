@@ -187,3 +187,8 @@
 
 - [x] Import archived instruction library as community rooms with V1..Vn version accordions (1,044 rooms, verbatim-verified)
 - [x] PikaStory Vision GPT picture: brand-free artwork added and verified live
+
+# Five humanitarian bots (Oct 17)
+- [ ] Complete creator uploaded avatars, public voice persistence and proportionate ethics review; approved five-per-day limit.
+- [ ] Author five detailed A–J humanitarian instruction sets and submit through CUSTOM GPT MAKER.
+- [ ] Verify avatars, header selection, instruction fidelity, real replies and PDFs; publish and check live.
