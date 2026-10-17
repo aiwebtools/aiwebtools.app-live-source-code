@@ -75,7 +75,7 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const theme = useMemo(() => getGptRoomTheme(app.slug, app.tagline || "", app.display_name), [app.slug, app.tagline, app.display_name]);
   const defaultProfile = useMemo(() => getGptVoiceProfile(app.slug, app.display_name, app.tagline || ""), [app.slug, app.display_name, app.tagline]);
-  const [voice, setVoice] = useState<GptVoiceProfile["voice"]>(app.custom?.voice || defaultProfile.voice);
+  const [voice, setVoice] = useState<GptVoiceProfile["voice"]>(app.custom?.voice || app.voice || defaultProfile.voice);
   const [speed, setSpeed] = useState(defaultProfile.speed);
   const profile = useMemo(() => ({ ...defaultProfile, voice, speed }), [defaultProfile, voice, speed]);
   const fileRef = useRef<HTMLInputElement | null>(null);
@@ -84,7 +84,7 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
   const botAvatar = (bot: Pick<StudioBot, "slug" | "display_name" | "tagline"> & Partial<StudioBot>): string => {
     const family = botFamilyKey(bot.slug);
     const base = family !== bot.slug ? bots.find((b) => b.slug === family || b.slug === `community-${family}`) : undefined;
-    return getBotPortrait(bot.slug) || getBotPortrait(family) || bot.image_url || getBundledCommunityImage(bot.slug)
+    return bot.image_url || getBotPortrait(bot.slug) || getBotPortrait(family) || getBundledCommunityImage(bot.slug)
       || (base && base.slug !== bot.slug ? botAvatar(base) : null)
       || (bot.tool_title ? imageMap?.get(bot.tool_title.trim().toLowerCase()) : null)
       || imageMap?.get(bot.display_name.replace(/\s*\(V\d+\)$/, "").trim().toLowerCase())

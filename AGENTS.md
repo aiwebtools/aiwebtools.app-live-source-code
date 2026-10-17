@@ -24,7 +24,7 @@
 - Read live community GPTs through `communityBots.ts`; use the shared identity map for public names/missing art, preserving slugs, prompts and existing media.
 - Resolve studio starter questions through `getBotStarters`, preserving operational instructions and using subject-based fallbacks for newly created bots so all room placements share relevant starters.
 - Keep reply celebrations in a bounded local canvas/audio helper with explicit mute and reduced-motion support so effects never add AI costs or block replies.
-- Close the mobile bot drawer before opening the builder and show submit validation explicitly; reuse saved drafts on review retries so failed publishing cannot create duplicate device bots.
+- Close the bot drawer before opening the builder; reuse saved drafts on review retries to prevent duplicates. Persist chosen voice and validated uploaded avatar through publication so public and device identities match.
 
 - Unlock generated-audio contexts from the initiating click and reuse decoded clips for replay; homepage audio controls must never regenerate on replay.
 - Generate sound effects server-side through the linked ElevenLabs account, preserving provider errors and keeping its key out of the browser.
