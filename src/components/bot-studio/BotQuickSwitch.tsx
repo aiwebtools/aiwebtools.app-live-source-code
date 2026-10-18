@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { StudioBot } from "./botCatalog";
 import { getBotCategory, searchStudioBots } from "./botSubjects";
+type SwitchBot = Pick<StudioBot, "slug" | "display_name" | "tagline"> & Partial<StudioBot>;
 
 /** Compact catalog search, using the same navigation as the full sidebar. */
-export default function BotQuickSwitch({ bots, onChoose, portrait }: { bots: StudioBot[]; onChoose: (slug: string) => void; portrait: (bot: StudioBot) => React.ReactNode }) {
+export default function BotQuickSwitch({ bots, onChoose, portrait }: { bots: SwitchBot[]; onChoose: (slug: string) => void; portrait: (bot: SwitchBot) => React.ReactNode }) {
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(false);
   const matches = useMemo(() => searchStudioBots(bots, query).slice(0, 12), [bots, query]);

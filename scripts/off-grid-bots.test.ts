@@ -1,6 +1,7 @@
 import { expect, test } from "bun:test";
 import { readFileSync, existsSync } from "node:fs";
 import bots from "./data/off-grid-bots.json";
+import expansion from "./data/off-grid-expansion.json";
 import docs from "../src/data/offGridInstructionDocs.json";
 import metadata from "../src/data/offGridBotMetadata.json";
 import { OFF_GRID_PROJECT } from "../src/data/offGridProject";
@@ -14,9 +15,9 @@ test("the companion destination retains Master's project and affiliate conventio
 test("five distinct additional contributors retain complete directives and selected identities", () => {
   expect(bots).toHaveLength(5);
   expect(new Set(bots.map((bot) => bot.name)).size).toBe(5);
-  expect(Object.keys(docs)).toHaveLength(5);
+  expect(Object.keys(docs)).toHaveLength(30);
   for (const [slug, info] of Object.entries(metadata)) {
-    const bot = bots.find((b) => b.name === info.name);
+    const bot = [...bots, ...expansion].find((b) => b.name === info.name);
     expect(bot).toBeDefined();
     if (!bot) throw new Error(`Missing authored bot ${slug}`);
     for (const section of "ABCDEFGHIJ") expect(bot.instructions).toContain(`\n${section}. `);
