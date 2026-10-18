@@ -1,3 +1,4 @@
+import { getOffGridBotMetadata } from "./offGridBots";
 export interface GptVoiceProfile {
   voice: "alloy" | "ash" | "ballad" | "coral" | "echo" | "fable" | "nova" | "onyx" | "sage" | "shimmer" | "verse";
   speed: number;
@@ -65,6 +66,12 @@ const SPECIAL: Array<[RegExp, Partial<GptVoiceProfile>]> = [
 ];
 
 export const getGptVoiceProfile = (slug = "", displayName = "", category = ""): GptVoiceProfile => {
+  const offGrid = getOffGridBotMetadata(slug);
+  if (offGrid?.personality) return {
+    voice: offGrid.voice as GptVoiceProfile["voice"], speed: 0.98,
+    label: `${offGrid.name.replace(/ GPT$/, "")} · Off Grid Living`,
+    instructions: `Voice role: ${offGrid.name}. ${offGrid.personality} Speak naturally to one person with warm human expression, connected phrases, varied intonation and subtle emotion. Keep measurements clear. No robotic rhythm, overacting or claims to be a real person.`,
+  };
   const identity = `${displayName} ${slug}`;
   const key = RULES.find(([pattern]) => pattern.test(identity))?.[1]
     ?? RULES.find(([pattern]) => pattern.test(category))?.[1] ?? "concierge";

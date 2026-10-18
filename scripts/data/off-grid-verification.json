@@ -1,0 +1,271 @@
+{
+  "date": "2026-10-18",
+  "scope": "30 Off Grid Living bots; 25 new ethics-reviewed publications",
+  "new_bot_results": [
+    {
+      "slug": "community-rainwater-harvest-budget-gpt-3ecee4",
+      "name": "Rainwater Harvest Budget GPT",
+      "probe": "A 50 m\u00b2 roof gets 20 mm rain with coefficient 0.8. Calculate litres collected.",
+      "expected": "800",
+      "reply": "It is a pleasure to help you make these first vital measurements visible. Based on the figures you've provided, here is the calculation for your potential harvest.\n\n### Rainwater Harvest Calculation\n\n*   **Roof Area ($A$):** $50\\text{ m}^2$\n*   **Rainfall Amount ($R$):** $20\\text{ mm}$\n*   **Runoff Coefficient ($C$):** $0.8$ (Accounting for evaporation and absorption by roofing material)\n\n**Formula:**\n$$\\text{Harvest (Litres)} = A \\times R \\times C$$\n\n**Substitution:**\n$$50 \\times 20 \\times 0.8 = 800$$\n\n**Result:**\nYou would collect **800 Litres** from this single rain event.\n\n***\n\n### Practical Next Step\n**Determine your storage \"buffer\" needs.** \nWhile 800 litres fits into a standard large IBC tote (typically 1,000L), you need to look at your local monthly rainfall averages to see if you will have enough back-to-back rain events to meet your daily needs, or if you need to budget for a much larger seasonal tank to carry you through dry spells.\n\n**What are you trying to plan for rainwater collection and seasonal storage budgeting, and what measurements or constraints do you already have?** (e.g., your daily water usage goals or the length of your local dry season).",
+      "seconds": 4.21,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-household-water-use-ledger-gpt-63875f",
+      "name": "Household Water Use Ledger GPT",
+      "probe": "A tank has 600 litres usable and daily use is 75 litres. Calculate reserve days.",
+      "expected": "8",
+      "reply": "To calculate your water security, we look at the relationship between your stored volume and your current consumption rate.\n\n### Water Reserve Calculation\n\n*   **Usable Tank Capacity:** 600 litres\n*   **Measured Daily Demand:** 75 litres/day\n*   **Formula:** Usable Litres / Daily Demand = Days of Reserve\n*   **Calculation:** $600 / 75 = 8$\n*   **Result:** **8 days** of water reserve.\n\n### Assumptions & Observations\nThis calculation assumes a static rate of use. In an off-grid setting, this \"8-day\" window is your buffer for system maintenance or low-collection periods (like a dry spell for rain catchment or a pump failure).\n\n### Practical Next Step\n**Verify your \"Usable\" Volume:** Often, the outlet pipe on a tank is a few inches above the bottom to avoid sucking in sediment, or the pump loses prime before the tank is bone dry. Check your tank's physical outlet height to ensure that 600 litres is truly accessible, rather than just the total volume of the container.\n\n***\n\n**What are you trying to plan for off-grid household water demand and leak tracking, and what measurements or constraints do you already have?** (e.g., Are you tracking a specific leak, or planning for a larger household?)",
+      "seconds": 3.99,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-greywater-reuse-questions-gpt-199fa9",
+      "name": "Greywater Reuse Questions GPT",
+      "probe": "Laundry yields 40 litres twice weekly. Calculate weekly volume, then list checks before reuse.",
+      "expected": "80",
+      "reply": "What are you trying to plan for greywater feasibility checklists and authority questions, and what measurements or constraints do you already have?\n\nIt is a pleasure to assist you in grounding your laundry reuse plan. Based on the facts you provided, here is the initial volume assessment and the practical verification steps required before you redirect that water to your landscape.\n\n### **Greywater Volume Assessment**\n\n*   **Purpose:** Determine weekly non-potable supply from a single laundry source.\n*   **Supplied Inputs:** \n    *   Volume per load: 40 litres\n    *   Frequency: 2 times per week\n*   **Method:** $Volume \\times Frequency = Weekly Yield$\n*   **Calculation:** $40\\,L \\times 2 = 80\\,L$\n*   **Output:** **80 Litres per week**\n\n---\n\n### **Pre-Reuse Feasibility Checklist**\nBefore you begin diverting these 80 litres, you must verify these safety and system constraints:\n\n1.  **Detergent Check:** Are you using \"biocompatible\" soaps free of boron, salt (sodium), and chlorine bleach? High salt levels can destroy soil structure over time.\n2.  **Pathogen Exclusion:** Do you have a protocol to divert water to the sewer/septic when washing diapers or soiled linens from illness?\n3.  **Surfacing & Stagnation:** Can your soil absorb 40 litres at once without pooling? Greywater must not be allowed to stand for more than 24 hours, as it will turn anaerobic (stinky and hazardous).\n4.  **Setback Requirements:** Are you maintaining the required distance (usually 1.5 to 3 metres) from property lines and building foundations to prevent moisture damage or runoff?\n\n### **Next Practical Step**\n**Perform a \"Bucket Test\":** Before installing any permanent plumbing, catch one full cycle (40L) in buckets or a temporary bin. Pour it slowly onto your intended mulch basin or garden area to observe how quickly the soil infiltrates the water. If it pools for more than a few minutes, you may need to expand your mulch basin or improve soil drainage before proceeding.\n\n***\n\n*Note: If you would like a formal version of this assessment to present to a community group or local authority, you can tap the **PDF** or **Word** buttons below to export this report.*",
+      "seconds": 5.14,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-compost-cycle-coach-gpt-3afb3b",
+      "name": "Compost Cycle Coach GPT",
+      "probe": "Combine 12 kg leaves, 5 kg vegetable scraps and 3 kg wood chips. Total input mass?",
+      "expected": "20",
+      "reply": "It's a pleasure to help you get this batch started. Tracking by weight is the best way to move from guesswork to a reliable rhythm for your soil.\n\n### Input Ledger & Mass Calculation\n\n| Input Material | Mass (kg) |\n| :--- | :--- |\n| Dry Leaves (Carbon/Browns) | 12 kg |\n| Vegetable Scraps (Nitrogen/Greens) | 5 kg |\n| Wood Chips (Bulking Agent/Carbon) | 3 kg |\n| **Total Input Mass** | **20 kg** |\n\n**Calculation:** $12\\text{ kg} + 5\\text{ kg} + 3\\text{ kg} = 20\\text{ kg}$\n\n***\n\n### Observations and Assumptions\n*   **C:N Balance:** You have a high ratio of \"browns\" (leaves and wood chips) to \"greens\" (scraps). This pile will likely be stable and odorless, but it may decompose slowly unless the leaves are shredded or moisture is managed carefully.\n*   **Volume:** Depending on how packed the leaves are, this 20 kg batch likely represents roughly 100\u2013150 liters of volume.\n\n### Practical Next Step: The \"Squeeze Test\"\nBefore you leave the pile to sit, check the moisture. Grab a handful of the mixed material (wear a glove) and squeeze it firmly.\n*   **If it drips like a soaked sponge:** It\u2019s too wet; add more dry leaves.\n*   **If it crumbles and feels bone-dry:** It won\u2019t break down; add a small amount of water or more \"green\" scraps.\n*   **Ideally:** It should feel like a wrung-out sponge\u2014damp to the touch but not dripping.\n\n**What are you trying to plan for compost input logs and decomposition troubleshooting, and what measurements or constraints do you already have?**",
+      "seconds": 4.09,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-community-sanitation-readiness-gpt-9fa788",
+      "name": "Community Sanitation Readiness GPT",
+      "probe": "Six residents stay 7 days. Calculate user-days for sanitation planning.",
+      "expected": "42",
+      "reply": "It is a pleasure to assist with your community stewardship. Ensuring your sanitation capacity matches your actual occupancy is the first step toward a dignified and hygienic off-grid environment.\n\nBased on the information you provided, here is the initial calculation and planning ledger.\n\n### **Sanitation Occupancy Ledger**\n*   **Purpose:** To determine the total biological load for a specific duration.\n*   **Inputs:**\n    *   **Resident Count:** 6 people\n    *   **Duration:** 7 days\n*   **Method:** $Total\\ Residents \\times Total\\ Days = User-Days$\n\n**Calculation:**\n$6\\ residents \\times 7\\ days = 42\\ user-days$\n\n**Output:**\nYour system needs to be prepared to handle **42 user-days** of waste and graywater for this period.\n\n***\n\n### **Planning Context & Assumptions**\n*   **Assumed Use:** Full-time occupancy (24 hours/day).\n*   **Unknowns:** The specific type of system (e.g., composting, septic, or incinerating) and the daily water allowance per person.\n*   **Next Verification Step:** Confirm if you will have additional day-guests during this period, as this will increase the \"user-day\" count and impact liquid waste volume.\n\n### **Practical Next Step**\n**Draft a Maintenance & Supplies Checklist:** Based on 42 user-days, determine if your current consumables (e.g., cover material for composting toilets, specialized toilet paper, or additive treatments) are sufficient for the week, plus a 20% safety margin.\n\n**What are you trying to plan for sanitation planning, permissions and maintenance readiness, and what measurements or constraints do you already have?**",
+      "seconds": 5.01,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-battery-reserve-ledger-gpt-943487",
+      "name": "Battery Reserve Ledger GPT",
+      "probe": "10 kWh battery, 0.8 usable fraction, 2 kWh daily demand: autonomy days?",
+      "expected": "4",
+      "reply": "To determine your battery autonomy based on the figures provided, I have prepared the following ledger entry and calculation.\n\n### **Battery Autonomy Ledger**\n\n**1. Data Inventory (Supplied Inputs)**\n*   **Rated Battery Capacity:** 10 kWh\n*   **Usable Fraction (DoD):** 0.8 (80%)\n*   **Daily Load/Demand:** 2 kWh/day\n\n**2. Calculation**\nTo find the autonomy, we first determine the total usable energy available before the system reaches its safety cutoff.\n\n*   **Formula:** `Usable Energy = Rated Capacity \u00d7 Usable Fraction`\n    *   10 kWh \u00d7 0.8 = **8.0 kWh (Usable)**\n*   **Formula:** `Autonomy Days = Usable Energy / Daily Demand`\n    *   8.0 kWh / 2 kWh/day = **4.0 Days**\n\n**3. Results & Observations**\n*   **Calculated Autonomy:** 4 days.\n*   **Note:** This assumes a static load of 2 kWh per day with no solar or external charging during that period. \n\n**One Practical Next Step:**\nVerify if your \"2 kWh daily demand\" is an average or a \"worst-case\" winter day load. I recommend monitoring your actual inverter data for 48 hours to see if \"phantom loads\" (appliances on standby) are higher than the 2 kWh estimate, as this is the most common cause of premature reserve depletion.\n\nWhat are you trying to plan for battery autonomy worksheets and reserve budgeting, and what measurements or constraints do you already have?",
+      "seconds": 5.4,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-solar-load-shift-coach-gpt-17f79a",
+      "name": "Solar Load Shift Coach GPT",
+      "probe": "Shift a 500 W appliance running 2 hours to daytime. How much energy moves?",
+      "expected": "1",
+      "reply": "To calculate how much energy moves when you shift that appliance to the daytime, we use the standard energy formula.\n\n**Supplied Inputs:**\n*   **Appliance Load:** 500 Watts (W)\n*   **Duration:** 2 Hours (h)\n\n**Calculation:**\nEnergy (kWh) = (Watts \u00d7 Hours) / 1,000\nEnergy (kWh) = (500 W \u00d7 2 h) / 1,000\nEnergy (kWh) = 1,000 Wh / 1,000\n**Result:** **1.0 kWh**\n\nBy moving this task to the daytime, you are shifting **1.0 kWh** of demand to your peak solar production window, reducing the strain on your battery bank or grid imports during the evening.\n\n**Practical Next Step:**\nIdentify your peak solar window (typically between 10:00 AM and 2:00 PM) and verify if this appliance has a \"delay start\" timer or if it needs to be manually triggered during those hours.\n\n***\n\nWhat are you trying to plan for daytime appliance scheduling around solar production, and what measurements or constraints do you already have?",
+      "seconds": 3.38,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-winter-energy-reserve-planner-gpt-b38a86",
+      "name": "Winter Energy Reserve Planner GPT",
+      "probe": "Critical loads are 3 kWh per day; want 5 days reserve. Required usable energy?",
+      "expected": "15",
+      "reply": "It is a pleasure to assist you with your winter watch. Planning for five days of autonomy ensures that when the skies turn gray and heavy, your core systems remain steady and your home stays resilient.\n\nBased on the figures you provided, here is the calculation for your usable energy reserve:\n\n### **Winter Energy Reserve Calculation**\n*   **Daily Critical Load:** 3 kWh\n*   **Days of Reserve:** 5 days\n*   **Formula:** $Daily\\ Critical\\ Load \\times Days\\ of\\ Reserve = Required\\ Usable\\ Energy$\n\n**Calculation:**\n$3\\text{ kWh} \\times 5\\text{ days} = \\mathbf{15\\text{ kWh}}$\n\n**Result:** You require **15 kWh of usable battery capacity** to sustain your critical loads through a five-day sunless period.\n\n***\n\n### **Important Constraints & Assumptions**\n*   **Usable vs. Nameplate Capacity:** This 15 kWh refers to the energy you can actually draw. If you are using Lead-Acid/AGM batteries (typically 50% depth of discharge), you would need a 30 kWh bank. If using Lithium (LiFePO4, typically 80-90% DoD), you would need approximately 17\u201318 kWh of total nameplate capacity.\n*   **Critical Only:** This assumes non-essential loads (like high-draw appliances or heavy power tools) are strictly powered down during this period.\n\n### **One Practical Next Step**\n**Identify your \"Discretionary Shedding\" list.** \nNow that you know your 15 kWh limit, list which specific devices make up that 3 kWh daily budget (e.g., well pump, fridge, LED lights, communications) and physically label the switches for the \"discretionary\" items that must stay off during a reserve-draw event.\n\nWhat are you trying to plan for cold-season off-grid load and reserve scenarios next, and what measurements or constraints do you already have?",
+      "seconds": 4.66,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-root-cellar-inventory-gpt-ea135c",
+      "name": "Root Cellar Inventory GPT",
+      "probe": "Store 30 kg potatoes, use 8 and discard 2. Remaining kg?",
+      "expected": "20",
+      "reply": "It is a pleasure to help you keep these records accurate. In a root cellar, every kilogram accounted for is a step toward food security.\n\nBased on the figures you provided, here is the current status of your potato stock:\n\n### **Potato Inventory Calculation**\n*   **Initial Stock:** 30 kg\n*   **Quantity Used:** 8 kg\n*   **Quantity Discarded (Spoilage):** 2 kg\n\n**Calculation:**\n$30\\text{ kg (Initial)} - 8\\text{ kg (Used)} - 2\\text{ kg (Discarded)} = 20\\text{ kg}$\n\n**Current Remaining Stock:** **20 kg**\n\n***\n\n### **Practical Next Step**\n**Check the remaining 20 kg for \"proximity spoilage.\"** Since 2 kg were discarded, the potatoes physically touching the spoiled ones are at higher risk of rot due to moisture or fungal transfer. Ensure the remaining batch is dry, well-ventilated, and kept in total darkness to prevent sprouting.\n\nWhat are you trying to plan for cool-storage inventory, spoilage observations and rotation, and what measurements or constraints do you already have?",
+      "seconds": 3.07,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-seasonal-meal-stock-planner-gpt-4748b5",
+      "name": "Seasonal Meal Stock Planner GPT",
+      "probe": "4 people need 2 planned meals daily for 3 days. Total servings?",
+      "expected": "24",
+      "reply": "Hello! I\u2019m Seasonal Meal Stock Planner GPT, here to help you get your off-grid pantry and shopping lists sorted. \n\nBased on the details you provided, here is the calculation for your base servings:\n\n### **Pantry Portion Calculation**\n*   **People:** 4\n*   **Planned Meals per Day:** 2\n*   **Duration:** 3 Days\n\n**Formula:**\n`4 (People) \u00d7 2 (Meals) \u00d7 3 (Days) = 24 Total Servings`\n\n**Result:** You need to plan for **24 individual servings** to cover this period.\n\n### **Next Practical Step**\nTo turn this number into a shopping or pantry list, we need to look at your **Dietary Preferences and Stock**. \n\n**What are you trying to plan for pantry portions, shopping quantities, and dietary preferences, and what measurements or constraints do you already have?** (For example, are these 24 servings based on a specific protein like beans or meat, and do you have any allergies or specific storage limits we should account for?)",
+      "seconds": 3.47,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-safe-food-preservation-navigator-gpt-3b7376",
+      "name": "Safe Food Preservation Navigator GPT",
+      "probe": "18 portions require jars holding 3 portions each. How many jars?",
+      "expected": "6",
+      "reply": "I am Safe Food Preservation Navigator GPT. Based on the measurements you provided, here is the calculation for your container inventory:\n\n### **Container Inventory Calculation**\n\n*   **Total Portions Required:** 18\n*   **Capacity per Jar:** 3 portions\n*   **Formula:** (Total Portions) / (Portions per Jar) = Total Jars\n*   **Calculation:** 18 / 3 = 6\n*   **Result:** **6 jars**\n\n### **Assumptions & Unknowns**\n*   **Assumption:** The \"portion\" size remains consistent between the food preparation and the jar capacity.\n*   **Unknown:** The physical volume (e.g., milliliters or ounces) of these portions is not specified.\n\n### **Practical Next Step**\n**Verify your headspace requirements.** Even if the math fits the portions, different foods require specific headspace (typically 1/4 inch to 1 inch) to ensure a safe vacuum seal. Once you confirm the volume of your 3-portion jar, ensure the recipe you are using is tested for that specific jar size.\n\n**What are you trying to plan for evidence-led food preservation planning and source checks, and what measurements or constraints do you already have?**",
+      "seconds": 3.52,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-community-crop-succession-gpt-cee1ea",
+      "name": "Community Crop Succession GPT",
+      "probe": "A 12 m row planted every 0.3 m with one plant per space: planned plants?",
+      "expected": "40",
+      "reply": "To calculate the number of plants needed for your row, we look at the total length divided by the spacing between each plant.\n\n### **Bed Register & Calculation**\n*   **Total Row Length:** 12 meters\n*   **Intended Spacing:** 0.3 meters\n*   **Plants per Space:** 1\n\n**Calculation:**\n$12\\text{ m} / 0.3\\text{ m} = 40\\text{ planting spots}$\n\nSince rows typically include a plant at the very start (the \"0\" mark), you may need **41 plants** to fully occupy the row from end to end. \n\n### **Next Practical Step**\nCheck your seed packet or nursery starts for the **expected germination or survival rate**. If you are direct-sowing and expect a 90% germination rate, you should plan to sow ~45 seeds to ensure all 41 spots are filled without gaps in your succession.\n\n***\n\n**What are you trying to plan for garden succession, planting records and harvest windows, and what measurements or constraints do you already have?**",
+      "seconds": 3.13,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-pollinator-habitat-steward-gpt-f5b2d5",
+      "name": "Pollinator Habitat Steward GPT",
+      "probe": "A 100 m\u00b2 area devotes 25 m\u00b2 to native flowers. Percentage?",
+      "expected": "25",
+      "reply": "It\u2019s a pleasure to help you look at the numbers for your habitat. Getting the proportions right is a wonderful way to ensure you're providing enough resources for our local pollinators.\n\nBased on the measurements you provided, here is the breakdown:\n\n### **Habitat Area Calculation**\n*   **Total Managed Area:** 100 m\u00b2\n*   **Native Flower Zone:** 25 m\u00b2\n*   **Formula:** (Native Area / Total Area) \u00d7 100 = Percentage\n*   **Calculation:** (25 / 100) \u00d7 100 = **25%**\n\n**Observation Record:** You have successfully dedicated one-quarter of this specific area to native floral resources.\n\n### **Practical Next Step**\n**Map your bloom sequence:** To support pollinators throughout their entire lifecycle, check if these 25 m\u00b2 provide forage from early spring through late autumn. List the species you have planted and note which months they are in bloom; if you find a \"gap\" (e.g., no flowers in July), that is the perfect spot for your next planting.\n\n***\n\n**What are you trying to plan for native habitat planning and observation records, and what measurements or constraints do you already have?** (Since we have your area measurements, feel free to share your region or any specific pollinator species you are hoping to attract!)",
+      "seconds": 3.56,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-small-livestock-care-ledger-gpt-13edcd",
+      "name": "Small Livestock Care Ledger GPT",
+      "probe": "5 animals each use 2 kg feed daily for 7 days. Total kg?",
+      "expected": "70",
+      "reply": "It is a pleasure to help you get these numbers settled. Keeping a precise feed ledger is the backbone of a healthy barn and a stable budget.\n\nBased on the figures you provided, here is the calculation for your feed requirements:\n\n### **Feed Calculation Report**\n*   **Purpose:** Weekly feed requirement calculation.\n*   **Supplied Inputs:**\n    *   Animal Count: 5\n    *   Daily Feed per Animal: 2 kg\n    *   Duration: 7 days\n*   **Method:** (Number of Animals) \u00d7 (Daily Feed Amount) \u00d7 (Number of Days)\n*   **Calculation:** 5 animals \u00d7 2 kg/day \u00d7 7 days = **70 kg**\n*   **Total Result:** **70 kg of feed required.**\n\n**Unknowns/Verification:** \n*   Does this calculation include a \"buffer\" for waste or spoilage? \n*   Is the feed measured by weight (scale) or volume (scoop)? If using a scoop, I recommend weighing one full scoop once to ensure the \"2 kg\" estimate is accurate.\n\n### **Next Practical Step**\nCheck your current storage. If you have less than 70 kg on hand, mark your calendar to restock at least 48 hours before the bags run empty to account for potential delivery delays or supplier shortages.\n\n**What are you trying to plan for livestock chores, feed records and veterinary question lists, and what measurements or constraints do you already have?**",
+      "seconds": 3.82,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-orchard-establishment-notebook-gpt-b67107",
+      "name": "Orchard Establishment Notebook GPT",
+      "probe": "Four rows with six trees per row. Total trees?",
+      "expected": "24",
+      "reply": "To calculate your initial planting requirements based on the layout you've described:\n\n### **Tree Count Calculation**\n*   **Rows:** 4\n*   **Trees per Row:** 6\n*   **Formula:** $Rows \\times Trees\\ Per\\ Row = Total\\ Trees$\n*   **Substitution:** $4 \\times 6 = 24$\n*   **Result:** **24 trees**\n\n### **Planning Ledger & Assumptions**\n| Input Item | Value | Status |\n| :--- | :--- | :--- |\n| Total Tree Count | 24 | Confirmed |\n| Row Spacing | *Unknown* | Pending |\n| In-Row Spacing | *Unknown* | Pending |\n| Species/Rootstock | *Unknown* | Pending |\n\n### **Practical Next Step**\nDetermine your **spacing requirements** based on the specific rootstock of your trees (e.g., dwarf, semi-dwarf, or standard). Knowing the distance needed between trees and between rows will allow us to calculate the total square footage or acreage required for this 24-tree block.\n\n**What species or rootstock are you planning for these 24 trees, and do you have a specific plot dimension you are trying to fit them into?**",
+      "seconds": 3.37,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-soil-observation-journal-gpt-731d4e",
+      "name": "Soil Observation Journal GPT",
+      "probe": "Three zones need four samples each. Total samples?",
+      "expected": "12",
+      "reply": "To calculate the total samples required for your planning, I have used the following ledger based on your supplied inputs:\n\n### **Soil Sample Log: Initial Requirement**\n*   **Date:** 2026-10-18\n*   **Zones Identified:** 3\n*   **Samples per Zone:** 4\n*   **Status:** Calculation Pending Verification\n\n---\n\n### **Calculation**\n$\\text{Total Samples} = \\text{Zones} \\times \\text{Samples per Zone}$\n$\\text{Total Samples} = 3 \\times 4$\n**Result:** **12 total samples**\n\n---\n\n### **Practical Next Step**\n**Label and Map:** Before you head out to the field, create 12 distinct labels (e.g., Zone A-1, A-2... Zone C-4) and mark these specific locations on a basic plot map or aerial photo. This ensures that when your results come back from the lab, you know exactly which patch of earth each data point represents.\n\n**What are you trying to plan for these soil sample logs and evidence-based garden decisions, and what measurements or constraints (like soil type or specific crop goals) do you already have?**",
+      "seconds": 3.55,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-erosion-watch-walkthrough-gpt-3deb96",
+      "name": "Erosion Watch Walkthrough GPT",
+      "probe": "A measured rill deepens from 4 cm to 7 cm. Change in cm?",
+      "expected": "3",
+      "reply": "The observation of a deepening rill is a clear signal from the land. Seeing these changes early allows for small, manual adjustments before they become larger management challenges.\n\n### Rill Depth Observation\n\n**Supplied Inputs:**\n*   **Initial Measurement:** 4 cm\n*   **Current Measurement:** 7 cm\n*   **Observation Date:** 2026-10-18 (Current UTC)\n\n**Calculation:**\n*   **Formula:** $Current Measurement - Initial Measurement = Change$\n*   **Substitution:** $7\\text{ cm} - 4\\text{ cm} = 3\\text{ cm}$\n*   **Result:** The rill has deepened by **3 cm**.\n\n**Practical Next Step:**\nPlace a **photo point marker** (like a sturdy stake or a specific stone) exactly 1 meter away from this rill. Take a photo looking directly down the rill toward the drainage point, including the marker in the frame for scale. This creates a visual baseline so you can track if the soil loss accelerates after the next heavy rain event.\n\n***\n\n**What are you trying to plan for runoff observations and erosion-monitoring checklists, and what measurements or constraints do you already have?**",
+      "seconds": 3.29,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-woodland-care-calendar-gpt-f42581",
+      "name": "Woodland Care Calendar GPT",
+      "probe": "Three stewardship visits take 2 hours each. Total hours?",
+      "expected": "6",
+      "reply": "It is a pleasure to help you organize these efforts. Keeping an accurate record of time spent ensures that the care given to the land is visible and sustainable for everyone involved.\n\n### Stewardship Time Calculation\n\n*   **Supplied Input:** 3 stewardship visits.\n*   **Duration per Visit:** 2 hours.\n*   **Calculation:** 3 visits \u00d7 2 hours/visit = 6 hours.\n*   **Total Planned Time:** **6 hours**.\n\n### Practical Next Step\n**Create a simple \"Observations Log\" for these visits.**\nSince you have 6 hours of presence on the land scheduled, I recommend designating the last 15 minutes of each visit to record one specific observation (e.g., a blocked drainage point, a new bird sighting, or the health of a specific tree). This transforms \"maintenance time\" into \"stewardship intelligence.\"\n\nWhat are you trying to plan for woodland stewardship, access permissions and task logs, and what measurements or constraints do you already have?",
+      "seconds": 2.95,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-rural-access-maintenance-ledger-gpt-fe7435",
+      "name": "Rural Access Maintenance Ledger GPT",
+      "probe": "A path is 60 m long and 2 m wide. Surface area m\u00b2?",
+      "expected": "120",
+      "reply": "Hello! I am your Rural Access Maintenance Ledger GPT. I focus on keeping your off-grid tracks and paths accessible, safe, and within budget.\n\n**Measurements & Calculation**\n*   **Length:** 60 m\n*   **Width:** 2 m\n*   **Formula:** Length \u00d7 Width = Area\n*   **Calculation:** 60 m \u00d7 2 m = 120 m\u00b2\n*   **Result:** The total surface area of your path is **120 m\u00b2**.\n\n**Practical Next Step**\nDetermine the depth of material needed based on the path's usage (e.g., 50mm for foot traffic or 100mm+ for light vehicles). This allows you to calculate the volume of gravel or substrate required (Area \u00d7 Depth) to get an accurate quote from a supplier.\n\n**What are you trying to plan for track and path inspection budgets and professional work lists, and what measurements or constraints do you already have?** (I have logged the 120 m\u00b2 area; please let me know if there are specific defects, steep gradients, or drainage issues you are currently facing.)",
+      "seconds": 2.9,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-shared-tool-care-librarian-gpt-cd7e2e",
+      "name": "Shared Tool Care Librarian GPT",
+      "probe": "12 tools, 3 checked out and 2 quarantined. Available count?",
+      "expected": "7",
+      "reply": "Based on the inventory numbers you\u2019ve provided, here is the current status of your tool library.\n\n### Tool Availability Calculation\n\n*   **Total Inventory:** 12 units\n*   **Checked-out:** 3 units (Currently in use by community members)\n*   **Quarantined:** 2 units (Pending inspection or repair)\n\n**Formula:**\n`Availability = Total Inventory - Checked-out - Quarantined`\n\n**Substitution:**\n`12 - 3 - 2 = 7`\n\n**Result:** \nYou have **7 tools available** for checkout.\n\n***\n\n### Practical Next Step\n**Review the Quarantined Units:** Schedule a voluntary inspection for the 2 quarantined tools this week. Identifying whether they require a simple cleaning, a manufacturer-specified part, or a professional repair will help move them back into the \"Available\" column or justify a repair budget. \n\nWhat are you trying to plan for tool checkout, care records and repair scheduling, and what measurements or constraints do you already have?",
+      "seconds": 3.21,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-remote-connectivity-planner-gpt-9f0536",
+      "name": "Remote Connectivity Planner GPT",
+      "probe": "Service is 30 per month for 12 months plus setup 50. Total cost?",
+      "expected": "410",
+      "reply": "It is a pleasure to help you get these numbers grounded. For an off-grid or rural setup, knowing the \"all-in\" cost of the first year is the best way to avoid surprises.\n\nHere is the breakdown based on the figures you provided:\n\n### **Rural Connectivity Cost Calculation**\n\n*   **Monthly Service:** $30.00\n*   **Duration:** 12 Months\n*   **One-time Setup Fee:** $50.00\n\n**The Formula:**\n(Monthly Charge \u00d7 Number of Months) + Setup Fee = Total First-Year Cost\n\n**The Substitution:**\n($30 \u00d7 12) + $50 = **$410.00**\n\n**Total Cost:** $410.00 (Assumed USD or local currency equivalent)\n\n***\n\n### **Practical Next Step**\n**Verification of \"Measured\" vs. \"Advertised\" Speed:** \nBefore committing to the contract, ask the supplier for a **\"Typical Busy Period\"** speed measurement for your specific coordinates, rather than the \"Up To\" speed advertised. In rural areas, congestion at peak times (usually 6 PM \u2013 10 PM) can significantly drop performance, and knowing the measured floor will tell you if the service can actually handle your specific needs, like video calls or large file transfers.\n\nWhat are you trying to plan for rural communications budgets and supplier comparison, and what measurements or constraints do you already have?",
+      "seconds": 3.74,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-cooperative-purchasing-coordinator-gpt-19ac70",
+      "name": "Cooperative Purchasing Coordinator GPT",
+      "probe": "20 items at 4 each plus delivery 10. Order total?",
+      "expected": "90",
+      "reply": "Based on the details you provided, here is the calculation for your group order:\n\n### **Group Order Calculation**\n*   **Purpose:** Aggregate order total for transparent cost sharing.\n*   **Supplied Inputs:** \n    *   Quantity: 20 items\n    *   Unit Price: 4 each\n    *   Shared Delivery: 10\n*   **Method:** (Quantity \u00d7 Unit Price) + Delivery Fee\n*   **Calculation:** (20 \u00d7 4) + 10 = 80 + 10\n*   **Total Order Cost:** **90**\n\n### **Next Action Checklist**\n1.  **Verify Unit Costs:** Confirm with the supplier if the unit price of 4 remains fixed for a quantity of 20, or if a bulk discount applies.\n2.  **Draft Participant Ledger:** I can create a table showing how the 90 total is split among your participants (e.g., if the 10 delivery fee is split equally or proportionally).\n\n**What are you trying to plan for group order quantities, quotes and transparent cost sharing, and what measurements or constraints do you already have?**",
+      "seconds": 3.54,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-volunteer-rotation-scheduler-gpt-bc5e58",
+      "name": "Volunteer Rotation Scheduler GPT",
+      "probe": "Tasks need 18 hours, volunteers offer 5, 4 and 6. Uncovered hours?",
+      "expected": "3",
+      "reply": "It is a pleasure to help you balance the load. Acknowledging the gap is the first step toward a sustainable rotation that doesn't lead to burnout.\n\nBased on the figures you provided, here is the workload check:\n\n### **Workload Ledger**\n\n| Item | Value |\n| :--- | :--- |\n| **Total Required Task Hours** | 18 hours |\n| **Volunteer A Capacity** | 5 hours |\n| **Volunteer B Capacity** | 4 hours |\n| **Volunteer C Capacity** | 6 hours |\n| **Total Volunteered Capacity** | **15 hours** |\n\n**Calculation:**\n$18 \\text{ (Required)} - (5 + 4 + 6) \\text{ (Volunteered)} = 3 \\text{ hours}$\n\n**Current Status:** \nThere are **3 uncovered hours** remaining in this period.\n\n***\n\n### **Practical Next Step**\nSince we have a 3-hour gap, I recommend a **\"Task Triage\"** session. Instead of asking people to work more than they offered, review the 18 hours of tasks and identify which 3 hours of work are \"Low Priority\" or can be deferred to a later date. \n\n**What are you trying to plan for fair opt-in chore rotations and workload checks, and what measurements or constraints do you already have (e.g., specific task list or volunteer names)?**",
+      "seconds": 3.24,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-community-waste-audit-gpt-dad000",
+      "name": "Community Waste Audit GPT",
+      "probe": "100 kg waste, 30 kg legally reused and 20 kg composted. Diversion percent?",
+      "expected": "50",
+      "reply": "Based on the measurements provided, here is the audit of your current waste stream and the calculated diversion rate.\n\n### **Waste Stream Ledger**\n*   **Total Measured Mass:** 100 kg\n*   **Legally Reused:** 30 kg\n*   **Composted:** 20 kg\n*   **Landfill/Residual (Calculated):** 50 kg\n\n### **Diversion Calculation**\nTo find your diversion fraction, we look at the total mass that was successfully moved away from the landfill stream through reuse and composting.\n\n**Formula:**\n`Diversion % = (Documented Diverted Mass / Total Measured Mass) * 100`\n\n**Substitution:**\n*   Diverted Mass = 30 kg (Reuse) + 20 kg (Compost) = **50 kg**\n*   Total Mass = **100 kg**\n\n**Calculation:**\n`(50 kg / 100 kg) * 100 = 50%`\n\n**Result:** Your current Diversion Rate is **50%**.\n\n### **Practical Next Step**\nSince exactly half of your waste is still heading to residual disposal, your next action should be a **Residual Category Audit**. \n\n**Action:** Over the next seven days, break down the remaining 50 kg of \"trash\" into sub-categories (e.g., soft plastics, contaminated paper, or non-recyclable packaging). By identifying the largest single component of that remaining 50 kg, we can look for a specific source-reduction experiment\u2014such as switching a specific bulk supplier\u2014to push your diversion rate above the 50% mark.\n\n***\n\n**What are you trying to plan for measured waste streams and reuse opportunity logs, and what measurements or constraints do you already have?** (I have your initial weights, but let me know if you are tracking this for a single household or a larger cooperative effort.)",
+      "seconds": 3.82,
+      "arithmetic_present": true
+    },
+    {
+      "slug": "community-seasonal-readiness-checklist-gpt-abbb28",
+      "name": "Seasonal Readiness Checklist GPT",
+      "probe": "Need 40 litres reserve, have 27. Additional litres needed?",
+      "expected": "13",
+      "reply": "I am Seasonal Readiness Checklist GPT. I provide season-transition inventories and shared preparation plans for off-grid households and cooperative communities.\n\nWhat are you trying to plan for season-transition inventories and shared preparation plans, and what measurements or constraints do you already have?\n\nBased on the information you provided, here is the readiness calculation:\n\n### **Inventory Gap Analysis**\n\n| Item | Requirement | Current Stock | Gap (Needed) |\n| :--- | :--- | :--- | :--- |\n| **Water/Fuel Reserve** | 40 litres | 27 litres | **13 litres** |\n\n**Calculation:**\n*   **Formula:** Required Stock - Available Stock = Inventory Gap\n*   **Substitution:** 40L - 27L = 13L\n*   **Result:** 13 litres additional reserve needed.\n\n**Assumptions:**\n*   The reserve containers are clean and suitable for the specific liquid (potable water vs. fuel).\n*   The \"40 litres\" is the absolute minimum safety floor for your specific transition period.\n\n**One Practical Next Step:**\nIdentify your specific storage container (e.g., a standard 20L jerry can or three 5L bottles) and label it with the **date of fill** and **contents** to ensure the reserve is integrated into your rotation plan rather than sitting stagnant.\n\n***\n\n*If you are coordinating this with a larger group or looking for compatible neighbors to share bulk replenishment costs, you can explore cooperative tools at the [off grid tribes app](https://off-grid-tribes.lovable.app/?via=aiwebtools).*",
+      "seconds": 4.27,
+      "arithmetic_present": true
+    }
+  ],
+  "original_bot_results": [
+    {
+      "name": "Community Compatibility Guide GPT",
+      "slug": "community-community-compatibility-guide-gpt-47b622",
+      "reply": "To help your group look at the practical side of sharing life together, I have prepared a Chore Balance Worksheet based on the hours you provided. This tool focuses on clarity and shared responsibility rather than judging anyone\u2019s individual contribution.\n\n### **Shared Chore Balance Worksheet**\n\n**1. Capacity vs. Requirement**\n| Participant | Volunteered Weekly Hours |\n| :--- | :--- |\n| Volunteer A | 4 hours |\n| Volunteer B | 6 hours |\n| Volunteer C | 2 hours |\n| **Total Available** | **12 hours** |\n| **Total Needed** | **15 hours** |\n\n**2. The Practical Gap**\n*   **Current Deficit:** -3 hours per week.\n*   **Current Coverage:** 80% of needs met.\n\n***\n\n### **Proposed Discussion Points**\nSince there is a 3-hour gap, the goal is to find a sustainable solution that respects everyone's different capacities. Here are three paths to discuss:\n\n1.  **Scope Adjustment:** Are there chores totaling 3 hours that can be done less frequently (e.g., bi-weekly instead of weekly)?\n2.  **Efficiency/Outsourcing:** Is there a way to complete a 5-hour task in 2 hours through better tools, or is the group willing to chip in for external help for specific tasks?\n3.  **Flexibility:** Can the gap be rotated? (e.g., each person takes a \"sprint\" week once a month to cover the extra hours).\n\n***\n\n### **Next Action Step**\n**Verify the \"15 Hours\":** Before asking anyone to increase their time, review the chore list together. Often, \"needed\" hours include tasks that aren't actually essential for a happy home. \n\n**Would you like me to draft a specific \"Chore Audit\" agenda for your first meeting to help identify which tasks are essential versus optional?**\n\n***\n*Note: This calculation is based on the specific hours you supplied. If the \"Hours Needed\" change as you refine your plan, we can update the deficit immediately.*"
+    },
+    {
+      "name": "Shared Land Due Diligence GPT",
+      "slug": "community-shared-land-due-diligence-gpt-c3ce07",
+      "reply": "To help your group evaluate these two options, I have consolidated the costs you provided into a comparative worksheet. This breakdown focuses on the immediate financial commitments and highlights where further verification is needed before a decision gate.\n\n### **Land Comparison Worksheet**\n\n| Cost Item | Parcel A | Parcel B | Notes / Basis |\n| :--- | :--- | :--- | :--- |\n| **Purchase Price** | 80,000 | 75,000 | Stated asking price |\n| **Transaction Estimates** | 5,000 | 4,500 | Taxes, legal, and transfer fees |\n| **Known Prep/Survey** | 2,000 | 12,000 | A: Survey; B: Access work |\n| **Total Known Cost** | **87,000** | **91,500** | **Sum of supplied facts** |\n\n---\n\n### **Cost Analysis**\n*   **Direct Comparison:** While Parcel B has a lower sticker price (75,000 vs 80,000), the known physical requirements (access work) currently make it **4,500 more expensive** in total known costs than Parcel A.\n*   **Contingency:** Neither total includes a contingency buffer, which is critical for rural land where \"access work\" or \"transaction fees\" can often exceed initial estimates.\n\n### **Critical Unknowns (Evidence Needed)**\nTo move from an estimate to a go/no-go decision, the following gaps need to be addressed for both parcels:\n1.  **Parcel A Access:** You listed access work for B, but not A. Does Parcel A have guaranteed, year-round legal and physical access, or is that cost simply not yet estimated?\n2.  **Parcel B Survey:** Parcel B does not have a survey cost listed. A professional boundary survey is essential to ensure you are buying what you think you are buying.\n3.  **Water & Utilities:** Neither parcel currently lists costs for well drilling, water rights, or power/off-grid systems.\n4.  **Zoning Confirmation:** Are both parcels legally permitted for your group's intended number of dwellings or specific land use?\n5.  **Recurring Costs:** Annual property taxes and any communal maintenance fees are not yet factored in.\n\n---\n\n### **Your Next Step**\n**Verify the Access Quote for Parcel B:** Since the 12,000 for access work is a significant driver of the cost difference, I recommend obtaining a firm quote from a local contractor. If that number fluctuates, it could change which parcel is the more \"affordable\" entry point.\n\n**Where is the land located, and what does your group hope to do there?** Knowing the jurisdiction and your intended use (e.g., permanent residence vs. seasonal camp) will allow us to refine the list of required permits and professional checks."
+    },
+    {
+      "name": "Community Agreements Facilitator GPT",
+      "slug": "community-community-agreements-facilitator-gpt-05bf34",
+      "reply": "To help your group move forward with clarity, I have calculated the time allocation based on your requirements and drafted a functional agenda.\n\n### **Meeting Time Calculation**\nI have used the fixed durations provided to determine the available discussion window.\n\n| Item | Duration (Minutes) |\n| :--- | :--- |\n| **Total Meeting Length** | **60** |\n| Check-in | - 10 |\n| Break | - 5 |\n| Recap/Closing | - 5 |\n| **Total Discussion Pool** | **40** |\n| **Minutes Per Participant (6 people)** | **6.67 (6m 40s)** |\n\n***\n\n### **Draft Meeting Agenda**\n**Goal:** Equal participation on [Insert Specific Agreement/Decision Name]\n**Date:** [Insert Date]\n**Facilitator:** [Name/Role] | **Timekeeper:** [Name/Role]\n\n| Time | Activity | Description/Process |\n| :--- | :--- | :--- |\n| **00:00** | **Check-in** | Brief personal update or \"one word\" on how you are arriving. |\n| **00:10** | **Discussion Round** | **6m 40s per person.** Uninterrupted space to share views on the proposal. |\n| **00:50** | **Break** | Step away, stretch, or quiet reflection. |\n| **00:55** | **Recap & Next Steps** | Summarize points of agreement, unresolved questions, and action items. |\n| **01:00** | **Adjourn** | Meeting ends on time. |\n\n***\n\n### **Participation Worksheet**\n*Use this section during the meeting to track the conversation and ensure follow-through.*\n\n**1. The Proposal:** (State the specific agreement being discussed)\n__________________________________________________________________\n\n**2. Discussion Record:**\n*   **Participant 1:** ________________________________________________\n*   **Participant 2:** ________________________________________________\n*   **Participant 3:** ________________________________________________\n*   **Participant 4:** ________________________________________________\n*   **Participant 5:** ________________________________________________\n*   **Participant 6:** ________________________________________________\n\n**3. Decision Status:**\n[ ] **Consent reached** (No significant objections)\n[ ] **Needs Revision** (List primary concerns below)\n[ ] **Blocked** (Fundamental disagreement to be addressed in a separate session)\n\n**4. Action Items:**\n*   **Task:** ___________________ **Owner:** __________ **Due:** ________\n*   **Task:** ___________________ **Owner:** __________ **Due:** ________\n\n***\n\n**My Opening Question:**\nWhat decision or shared agreement is your community trying to reach, and who needs a voice in it?\n\n**Next Step:**\nTo make this draft more effective, please tell me the **specific topic** you are discussing. I can then add tailored prompts for the \"Discussion Round\" to help uncover concerns or areas of shared interest.\n\n*Note: You can tap the **PDF** or **Word** buttons below to export this agenda and worksheet for your group.*"
+    },
+    {
+      "name": "Off Grid Build Planner GPT",
+      "slug": "community-off-grid-build-planner-gpt-b790a2",
+      "reply": "To provide a clear starting point for your planning, I have calculated these illustrative costs based on the figures you provided.\n\n### **Illustrative Materials Worksheet**\n*Note: This is a non-structural budget for planning purposes only. All figures are based on user-supplied assumptions.*\n\n| Item Description | Quantity | Unit Price | Line Subtotal |\n| :--- | :--- | :--- | :--- |\n| Category A Items | 20 | 15 | 300 |\n| Category B Items | 8 | 25 | 200 |\n| **Subtotal** | | | **500** |\n| **Contingency (Assumed 10%)** | | | **50** |\n| **Grand Total (Excluding Delivery)** | | | **550** |\n\n**Unknowns:**\n*   **Delivery Costs:** To be determined based on site location and supplier distance.\n*   **Waste Allowance:** Not yet factored into quantities.\n*   **Taxes:** Local sales tax/VAT not included.\n\n**Calculation Logic:**\n*   Line 1: $20 \\times 15 = 300$\n*   Line 2: $8 \\times 25 = 200$\n*   Subtotal: $300 + 200 = 500$\n*   Contingency: $500 \\times 0.10 = 50$\n*   Total: $500 + 50 = 550$\n\n***\n\n**What are you planning to build, where, and what is your approved scope, budget and available help?** \n\nOnce I have those details, we can refine this worksheet into a phased build plan and map out the necessary professional review gates."
+    },
+    {
+      "name": "Community Livelihood Planner GPT",
+      "slug": "community-community-livelihood-planner-gpt-14d599",
+      "reply": "To help you assess the viability of this workshop, I have calculated the figures using the specific facts you provided. This worksheet helps clarify the actual margin and the minimum participation needed to cover costs.\n\n### **Workshop Livelihood Worksheet**\n\n| Item | Value | Notes |\n| :--- | :--- | :--- |\n| **Price per Participant** | 30 | User-supplied |\n| **Variable Cost per Participant** | 12 | Materials, etc. |\n| **Unit Contribution** | **18** | (Price - Variable Cost) |\n| **Fixed Costs** | 90 | Venue, insurance, etc. |\n| **Actual Participants** | 5 | Current attendance |\n\n---\n\n### **Financial Results**\n\n*   **Total Contribution:** **90**\n    *   *Calculation: 5 participants \u00d7 18 contribution per unit*\n*   **Operating Surplus:** **0**\n    *   *Calculation: 90 total contribution - 90 fixed costs*\n*   **Break-even Participant Count:** **5**\n    *   *Calculation: ceil(90 fixed cost / 18 unit contribution)*\n\n### **Analysis and Next Step**\nAt five participants, this activity is at a **perfect break-even point**. The costs are covered, but there is no surplus for the community fund or additional labor valuation beyond what might be included in the variable costs. These results are based strictly on the current workshop data and do not guarantee that five participants will attend future sessions.\n\n**Next Action:** \nWould you like to explore how a small change in the price or a reduction in fixed costs (such as a shared community space) would affect the surplus, or should we draft a simple **pilot plan** to see if there is voluntary interest for a second session?\n\n***\n\n*To save this worksheet, you can tap the **PDF** or **Word** buttons below.*"
+    }
+  ],
+  "ui_verification": {
+    "new_room_selections": 25,
+    "new_avatars_loaded": 25,
+    "individual_pdf_downloads": 25,
+    "python_result": "800.00 Litres",
+    "reply_pdf_and_word": true,
+    "phone_switch": "Greywater Reuse Questions GPT",
+    "runtime_errors": []
+  },
+  "limitations": [
+    "Physical-device microphones and cameras are not verified by headless browser checks.",
+    "Focused use cases do not establish universal correctness across every possible prompt."
+  ]
+}

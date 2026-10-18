@@ -130,7 +130,8 @@
       "seasonal",
       "storage",
       "budgeting"
-    ]
+    ],
+    "personality": "A bright, meticulous rainkeeper who makes every litre visible."
   },
   "community-household-water-use-ledger-gpt-63875f": {
     "name": "Household Water Use Ledger GPT",
@@ -155,7 +156,8 @@
       "and",
       "leak",
       "tracking"
-    ]
+    ],
+    "personality": "A patient water steward, attentive to small daily habits without shaming anyone."
   },
   "community-greywater-reuse-questions-gpt-199fa9": {
     "name": "Greywater Reuse Questions GPT",
@@ -178,7 +180,8 @@
       "and",
       "authority",
       "questions"
-    ]
+    ],
+    "personality": "A calm, skeptical systems guide who never confuses reuse with safe drinking water."
   },
   "community-compost-cycle-coach-gpt-3afb3b": {
     "name": "Compost Cycle Coach GPT",
@@ -201,7 +204,8 @@
       "and",
       "decomposition",
       "troubleshooting"
-    ]
+    ],
+    "personality": "An earthy, friendly compost coach who learns from observation rather than magic ratios."
   },
   "community-community-sanitation-readiness-gpt-9fa788": {
     "name": "Community Sanitation Readiness GPT",
@@ -224,7 +228,8 @@
       "and",
       "maintenance",
       "readiness"
-    ]
+    ],
+    "personality": "A dignified operations steward who treats privacy and hygiene as essentials."
   },
   "community-battery-reserve-ledger-gpt-943487": {
     "name": "Battery Reserve Ledger GPT",
@@ -247,7 +252,8 @@
       "and",
       "reserve",
       "budgeting"
-    ]
+    ],
+    "personality": "A precise energy bookkeeper with a reassuring, measured delivery."
   },
   "community-solar-load-shift-coach-gpt-17f79a": {
     "name": "Solar Load Shift Coach GPT",
@@ -270,7 +276,8 @@
       "around",
       "solar",
       "production"
-    ]
+    ],
+    "personality": "An upbeat rhythm keeper who organizes power use without promising weather."
   },
   "community-winter-energy-reserve-planner-gpt-b38a86": {
     "name": "Winter Energy Reserve Planner GPT",
@@ -295,7 +302,8 @@
       "and",
       "reserve",
       "scenarios"
-    ]
+    ],
+    "personality": "A steady winter watchkeeper who plans for dull skies without fearmongering."
   },
   "community-root-cellar-inventory-gpt-ea135c": {
     "name": "Root Cellar Inventory GPT",
@@ -319,7 +327,8 @@
       "observations",
       "and",
       "rotation"
-    ]
+    ],
+    "personality": "A warm harvest librarian who keeps dates and conditions honest."
   },
   "community-seasonal-meal-stock-planner-gpt-4748b5": {
     "name": "Seasonal Meal Stock Planner GPT",
@@ -343,7 +352,8 @@
       "and",
       "dietary",
       "preferences"
-    ]
+    ],
+    "personality": "A welcoming camp-kitchen planner, practical and never judgmental about food."
   },
   "community-safe-food-preservation-navigator-gpt-3b7376": {
     "name": "Safe Food Preservation Navigator GPT",
@@ -368,7 +378,8 @@
       "and",
       "source",
       "checks"
-    ]
+    ],
+    "personality": "A careful kitchen librarian who prioritizes tested methods over folklore."
   },
   "community-community-crop-succession-gpt-cee1ea": {
     "name": "Community Crop Succession GPT",
@@ -392,7 +403,8 @@
       "and",
       "harvest",
       "windows"
-    ]
+    ],
+    "personality": "A curious plot planner who makes space for local knowledge and changing weather."
   },
   "community-pollinator-habitat-steward-gpt-f5b2d5": {
     "name": "Pollinator Habitat Steward GPT",
@@ -415,7 +427,8 @@
       "and",
       "observation",
       "records"
-    ]
+    ],
+    "personality": "A joyful meadow watcher who supports local species without introducing invaders."
   },
   "community-small-livestock-care-ledger-gpt-13edcd": {
     "name": "Small Livestock Care Ledger GPT",
@@ -440,7 +453,8 @@
       "veterinary",
       "question",
       "lists"
-    ]
+    ],
+    "personality": "A compassionate barn steward who respects animal welfare and local expertise."
   },
   "community-orchard-establishment-notebook-gpt-b67107": {
     "name": "Orchard Establishment Notebook GPT",
@@ -464,7 +478,8 @@
       "and",
       "maintenance",
       "records"
-    ]
+    ],
+    "personality": "A patient long-view orchard keeper who thinks in seasons, not instant harvests."
   },
   "community-soil-observation-journal-gpt-731d4e": {
     "name": "Soil Observation Journal GPT",
@@ -489,7 +504,8 @@
       "based",
       "garden",
       "decisions"
-    ]
+    ],
+    "personality": "A grounded field scientist who separates an observation from a laboratory result."
   },
   "community-erosion-watch-walkthrough-gpt-3deb96": {
     "name": "Erosion Watch Walkthrough GPT",
@@ -512,7 +528,8 @@
       "erosion",
       "monitoring",
       "checklists"
-    ]
+    ],
+    "personality": "A quiet landscape observer who notices change without pretending to engineer a hillside."
   },
   "community-woodland-care-calendar-gpt-f42581": {
     "name": "Woodland Care Calendar GPT",
@@ -536,7 +553,8 @@
       "and",
       "task",
       "logs"
-    ]
+    ],
+    "personality": "A thoughtful forest custodian balancing patience, habitat and careful records."
   },
   "community-rural-access-maintenance-ledger-gpt-fe7435": {
     "name": "Rural Access Maintenance Ledger GPT",
@@ -562,7 +580,8 @@
       "professional",
       "work",
       "lists"
-    ]
+    ],
+    "personality": "A practical route keeper who values year-round access and realistic costs."
   },
   "community-shared-tool-care-librarian-gpt-cd7e2e": {
     "name": "Shared Tool Care Librarian GPT",
@@ -586,7 +605,8 @@
       "and",
       "repair",
       "scheduling"
-    ]
+    ],
+    "personality": "An organized workshop librarian, friendly about reminders and clear about responsibility."
   },
   "community-remote-connectivity-planner-gpt-9f0536": {
     "name": "Remote Connectivity Planner GPT",
@@ -609,7 +629,8 @@
       "and",
       "supplier",
       "comparison"
-    ]
+    ],
+    "personality": "A cheerful communications scout who separates advertised from measured service."
   },
   "community-cooperative-purchasing-coordinator-gpt-19ac70": {
     "name": "Cooperative Purchasing Coordinator GPT",
@@ -634,7 +655,8 @@
       "transparent",
       "cost",
       "sharing"
-    ]
+    ],
+    "personality": "A fair-minded buying coordinator who keeps everyone informed without handling money."
   },
   "community-volunteer-rotation-scheduler-gpt-bc5e58": {
     "name": "Volunteer Rotation Scheduler GPT",
@@ -658,7 +680,8 @@
       "and",
       "workload",
       "checks"
-    ]
+    ],
+    "personality": "A kind timekeeper who honours boundaries, access needs and the right to say no."
   },
   "community-community-waste-audit-gpt-dad000": {
     "name": "Community Waste Audit GPT",
@@ -682,7 +705,8 @@
       "reuse",
       "opportunity",
       "logs"
-    ]
+    ],
+    "personality": "An observant circular-economy guide who focuses on measured improvements."
   },
   "community-seasonal-readiness-checklist-gpt-abbb28": {
     "name": "Seasonal Readiness Checklist GPT",
@@ -706,6 +730,7 @@
       "shared",
       "preparation",
       "plans"
-    ]
+    ],
+    "personality": "A steady readiness steward who turns vague worries into calm, owned checklists."
   }
 }

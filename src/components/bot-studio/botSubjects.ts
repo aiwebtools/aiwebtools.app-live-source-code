@@ -1,5 +1,6 @@
 import { getOffGridBotMetadata } from "@/utils/offGridBots";
 import type { StudioBot } from "./botCatalog";
+import { botSubjectOverrides } from "./botSubjectOverrides";
 
 export const BOT_SUBJECTS = ["Off Grid Living", "History & Time Travel", "Health & Wellness", "Legal & Government", "Business & Finance", "Science & Research", "Spiritual & Philosophy", "Engineering & Planning", "Creative & Design", "Film, Music & Media", "Education & Learning", "Farming, Food & Outdoors", "Trades & Home", "Security & Safety", "General & Productivity"] as const;
 export type BotSubject = typeof BOT_SUBJECTS[number];
@@ -23,6 +24,10 @@ const RULES: [RegExp, BotSubject][] = [
 const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 export function getBotCategory(bot: SubjectBot): BotSubject {
   if (getOffGridBotMetadata(bot.slug)) return "Off Grid Living";
+  const base = bot.slug.replace(/-v\d+$/, "");
+  const overrides: Record<string, BotSubject> = botSubjectOverrides;
+  const subject = overrides[base] || overrides[base.replace(/^community-/, "")] || overrides[`community-${base}`];
+  if (subject) return subject;
   const name = normalize(bot.display_name);
   if (/\b(?:book writer|story writer|interactive time machine|game design|3d design|3d print concept|3d printer pro)\b/.test(name)) return "Creative & Design";
   const named = RULES.find(([pattern]) => pattern.test(name));

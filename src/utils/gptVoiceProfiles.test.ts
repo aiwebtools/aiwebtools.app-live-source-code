@@ -3,6 +3,12 @@ import { describe, expect, it } from "bun:test";
 import { getGptVoiceProfile } from "./gptVoiceProfiles";
 
 describe("bot voice casting", () => {
+  it("new off-grid assistants retain their authored voice personality", () => {
+    const profile = getGptVoiceProfile("community-rainwater-harvest-budget-gpt-3ecee4", "Rainwater Harvest Budget GPT");
+    expect(profile.voice).toBe("coral");
+    expect(profile.instructions).toContain("meticulous rainkeeper");
+    expect(profile.label).toContain("Off Grid Living");
+  });
   it("Time Machine speaks as Father Time", () => {
     expect(getGptVoiceProfile("time-machine-gpt", "Time Machine GPT").label).toBe("Father Time");
   });

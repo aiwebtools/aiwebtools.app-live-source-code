@@ -6,9 +6,9 @@ test("Master's one batch contains exactly 25 approved names and ordinary allowan
   expect(new Set(OWNER_BATCH_NAMES).size).toBe(25);
   expect(DAILY_LIMIT).toBe(10);
 });
-test("batch requires server authorization, approved name and unexpired date", () => {
+test("historical batch cannot bypass Master's ten-per-day limit", () => {
   const now = Date.parse("2026-10-18T22:00:00Z");
-  expect(approvedOwnerBatch(OWNER_BATCH_NAMES[0], "test-only", "test-only", now)).toBe(true);
+  expect(approvedOwnerBatch(OWNER_BATCH_NAMES[0], "test-only", "test-only", now)).toBe(false);
   expect(approvedOwnerBatch(OWNER_BATCH_NAMES[0], null, "test-only", now)).toBe(false);
   expect(approvedOwnerBatch(OWNER_BATCH_NAMES[0], "wrong", "test-only", now)).toBe(false);
   expect(approvedOwnerBatch("Unapproved bot", "test-only", "test-only", now)).toBe(false);
