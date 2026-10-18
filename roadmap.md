@@ -1,7 +1,7 @@
 # Chatbot completion roadmap
 
 # Apocalypse Survival & Nature expansion (Oct 18)
-- [ ] Make sidebar tool names smaller and fully readable; verify phone and desktop.
+- [x] Make sidebar tool names smaller and fully readable; verify phone and desktop.
 - [ ] Audit existing survival/nature bots and move relevant families without modifying instructions.
 - [ ] Author 25 genuinely distinct practical bots with complete directives, art, voices, PDFs and search metadata.
 - [ ] Publish through ordinary ethics review within ten-per-day allowance; never bypass the limit.
