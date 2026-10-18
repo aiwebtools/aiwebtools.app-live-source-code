@@ -16,6 +16,9 @@ test("domain classification ignores incidental substring collisions", () => {
   expect(getBotCategory(bot("Training Manual Generator GPT"))).toBe("Education & Learning");
   expect(getBotCategory(bot("Pharma Research Pro"))).toBe("Science & Research");
   expect(getBotCategory(bot("Book Writer Of Time Travel - The Time Machine"))).toBe("Creative & Design");
+  expect(getBotCategory(bot("AI UFO Investigator", "community-ai-ufo-investigator"))).toBe("Science & Research");
+  expect(getBotCategory(bot("3D Print GPT (V2)", "community-3d-print-gpt-v2"))).toBe("Creative & Design");
+  expect(getBotCategory(bot("Bible Studies GPT", "bible-studies-gpt"))).toBe("History & Time Travel");
 });
 test("all thirty published community-support bots belong to Off Grid Living and are searchable by category", () => {
   const bots = Object.entries(metadata).map(([slug, data]) => bot(data.name, slug));
