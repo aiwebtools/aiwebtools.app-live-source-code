@@ -1,6 +1,7 @@
 import { getOffGridBotMetadata } from "@/utils/offGridBots";
 import type { StudioBot } from "./botCatalog";
 import { botSubjectOverrides } from "./botSubjectOverrides";
+import { getSurvivalDraft } from "@/utils/survivalDrafts";
 
 export const BOT_SUBJECTS = ["Off Grid Living", "Apocalypse Survival & Nature", "History & Time Travel", "Health & Wellness", "Legal & Government", "Business & Finance", "Science & Research", "Spiritual & Philosophy", "Engineering & Planning", "Creative & Design", "Film, Music & Media", "Education & Learning", "Farming, Food & Outdoors", "Trades & Home", "Security & Safety", "General & Productivity"] as const;
 export type BotSubject = typeof BOT_SUBJECTS[number];
@@ -23,6 +24,7 @@ const RULES: [RegExp, BotSubject][] = [
 ];
 const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 export function getBotCategory(bot: SubjectBot): BotSubject {
+  if (getSurvivalDraft(bot.slug)) return "Apocalypse Survival & Nature";
   if (getOffGridBotMetadata(bot.slug)) return "Off Grid Living";
   const name = normalize(bot.display_name);
   if (/\b(?:survivalist|survival|emergency preparedness|nuclear event preparedness|fallout shelter|geiger counter|disable that robot|rouge robot disabler|robot identifier.*disabler|foraging|naturalist|birdwatching|fungus|mushroom specialist)\b/.test(name)) return "Apocalypse Survival & Nature";

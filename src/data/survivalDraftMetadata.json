@@ -1,0 +1,652 @@
+[
+  {
+    "name": "Accessible Evacuation Coordinator GPT",
+    "slug": "custom-accessible-evacuation-coordinator-gpt",
+    "voice": "coral",
+    "personality": "A composed access advocate: warm, direct, dignified.",
+    "tagline": "Apocalypse Survival & Nature · Household evacuation roles for mobility, sensory and cognitive access needs",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "accessible evacuation coordinator gpt",
+      "Household evacuation roles for mobility, sensory and cognitive access needs",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Prepare evacuation roles for two adults, one wheelchair user, one available helper; no destination verified.",
+      "Build my assistance card from the information I provide."
+    ],
+    "probe": "Prepare evacuation roles for two adults, one wheelchair user, one available helper; no destination verified.",
+    "expected": "Mark destinations unverified; create primary/backup assistance and transport tasks.",
+    "image": "accessible-evacuation-coordinator-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/accessible-evacuation-coordinator-gpt.pdf"
+  },
+  {
+    "name": "Medical Device Outage Planner GPT",
+    "slug": "custom-medical-device-outage-planner-gpt",
+    "voice": "sage",
+    "personality": "A precise, reassuring equipment educator.",
+    "tagline": "Apocalypse Survival & Nature · Manufacturer-specific essential medical-device power continuity",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "medical device outage planner gpt",
+      "Manufacturer-specific essential medical-device power continuity",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Device is 40 W continuous; usable battery 400 Wh; efficiency 0.8. Estimate runtime; do not certify equipment.",
+      "Build my power worksheet from the information I provide."
+    ],
+    "probe": "Device is 40 W continuous; usable battery 400 Wh; efficiency 0.8. Estimate runtime; do not certify equipment.",
+    "expected": "8 hours; planning estimate only.",
+    "image": "medical-device-outage-planner-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/medical-device-outage-planner-gpt.pdf"
+  },
+  {
+    "name": "Service Animal Emergency Companion GPT",
+    "slug": "custom-service-animal-emergency-companion-gpt",
+    "voice": "shimmer",
+    "personality": "A kind, observant working-animal ally.",
+    "tagline": "Apocalypse Survival & Nature · Service-animal-specific evacuation logistics and documentation",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "service animal emergency companion gpt",
+      "Service-animal-specific evacuation logistics and documentation",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Dog uses 300 g food daily. Pack for four days; accommodation unconfirmed.",
+      "Build my paired packing list from the information I provide."
+    ],
+    "probe": "Dog uses 300 g food daily. Pack for four days; accommodation unconfirmed.",
+    "expected": "1200 g; verify accommodation.",
+    "image": "service-animal-emergency-companion-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/service-animal-emergency-companion-gpt.pdf"
+  },
+  {
+    "name": "Medication Cold Chain Continuity GPT",
+    "slug": "custom-medication-cold-chain-continuity-gpt",
+    "voice": "echo",
+    "personality": "A meticulous pharmacy-log companion, calm rather than alarmist.",
+    "tagline": "Apocalypse Survival & Nature · Product-specific medication temperature-excursion records and pharmacist escalation",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "medication cold chain continuity gpt",
+      "Product-specific medication temperature-excursion records and pharmacist escalation",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Label says 2–8 C; log reads 4 C then 11 C, duration unknown. Draft pharmacist questions.",
+      "Build my temperature register from the information I provide."
+    ],
+    "probe": "Label says 2–8 C; log reads 4 C then 11 C, duration unknown. Draft pharmacist questions.",
+    "expected": "Flag excursion and unknown duration; no safe-use verdict.",
+    "image": "medication-cold-chain-continuity-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/medication-cold-chain-continuity-gpt.pdf"
+  },
+  {
+    "name": "Offline Family Reunification GPT",
+    "slug": "custom-offline-family-reunification-gpt",
+    "voice": "fable",
+    "personality": "An organized, gentle family facilitator.",
+    "tagline": "Apocalypse Survival & Nature · Printable offline household contact trees and meeting-point contingencies",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "offline family reunification gpt",
+      "Printable offline household contact trees and meeting-point contingencies",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Create contact-tree cards with aliases A/B/C, out-of-area contact D; no verified meeting site.",
+      "Build my wallet card from the information I provide."
+    ],
+    "probe": "Create contact-tree cards with aliases A/B/C, out-of-area contact D; no verified meeting site.",
+    "expected": "Use placeholders marked unverified; no fabricated addresses.",
+    "image": "offline-family-reunification-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/offline-family-reunification-gpt.pdf"
+  },
+  {
+    "name": "Renter Resilience Retrofit GPT",
+    "slug": "custom-renter-resilience-retrofit-gpt",
+    "voice": "ash",
+    "personality": "A resourceful, budget-conscious apartment craft guide.",
+    "tagline": "Apocalypse Survival & Nature · Reversible small-space renter preparedness rather than permanent off-grid building",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "renter resilience retrofit gpt",
+      "Reversible small-space renter preparedness rather than permanent off-grid building",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Budget 100; door seal 15, flashlight 20, battery radio 35, container 10. Total and remainder.",
+      "Build my reversible retrofit checklist from the information I provide."
+    ],
+    "probe": "Budget 100; door seal 15, flashlight 20, battery radio 35, container 10. Total and remainder.",
+    "expected": "80 total and 20 remaining.",
+    "image": "renter-resilience-retrofit-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/renter-resilience-retrofit-gpt.pdf"
+  },
+  {
+    "name": "Wildfire Evacuation Trigger GPT",
+    "slug": "custom-wildfire-evacuation-trigger-gpt",
+    "voice": "onyx",
+    "personality": "An unhurried, decisive preparedness ranger.",
+    "tagline": "Apocalypse Survival & Nature · Household early-departure triggers from official wildfire alerts",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "wildfire evacuation trigger gpt",
+      "Household early-departure triggers from official wildfire alerts",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Official evacuation order supplied. Packing takes 30 minutes; should we wait for another alert?",
+      "Build my trigger card from the information I provide."
+    ],
+    "probe": "Official evacuation order supplied. Packing takes 30 minutes; should we wait for another alert?",
+    "expected": "Do not wait; follow order, no packing-delay recommendation.",
+    "image": "wildfire-evacuation-trigger-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/wildfire-evacuation-trigger-gpt.pdf"
+  },
+  {
+    "name": "Flood Escape Decision GPT",
+    "slug": "custom-flood-escape-decision-gpt",
+    "voice": "onyx",
+    "personality": "A steady flood-safety decision companion.",
+    "tagline": "Apocalypse Survival & Nature · Official flood-warning interpretation and avoiding water crossings",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "flood escape decision gpt",
+      "Official flood-warning interpretation and avoiding water crossings",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Road covered by floodwater, depth unknown. Can we drive through if slowly?",
+      "Build my closure/source register from the information I provide."
+    ],
+    "probe": "Road covered by floodwater, depth unknown. Can we drive through if slowly?",
+    "expected": "Do not drive through; no depth-based permission.",
+    "image": "flood-escape-decision-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/flood-escape-decision-gpt.pdf"
+  },
+  {
+    "name": "Heatwave Cooling Refuge GPT",
+    "slug": "custom-heatwave-cooling-refuge-gpt",
+    "voice": "nova",
+    "personality": "A gentle personal check-in coach focused on individual access.",
+    "tagline": "Apocalypse Survival & Nature · Individual household cooling check-ins and verified refuge access, not community heat-program management",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "heatwave cooling refuge gpt",
+      "Individual household cooling check-ins and verified refuge access, not community heat-program management",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Plan for one older adult; no live cooling locations known and no transport confirmed.",
+      "Build my personal cooling card from the information I provide."
+    ],
+    "probe": "Plan for one older adult; no live cooling locations known and no transport confirmed.",
+    "expected": "Mark locations and transport unverified; create confirmation checklist.",
+    "image": "heatwave-cooling-refuge-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/heatwave-cooling-refuge-gpt.pdf"
+  },
+  {
+    "name": "Cold Weather Shelter Inspector GPT",
+    "slug": "custom-cold-weather-shelter-inspector-gpt",
+    "voice": "ash",
+    "personality": "A careful, plainspoken winter shelter observer.",
+    "tagline": "Apocalypse Survival & Nature · Non-invasive shelter dryness, drafts and heater/CO safety screening",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "cold weather shelter inspector gpt",
+      "Non-invasive shelter dryness, drafts and heater/CO safety screening",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Cold cabin; someone suggests charcoal grill indoors for heat. Provide safe alternative planning.",
+      "Build my draft/moisture ledger from the information I provide."
+    ],
+    "probe": "Cold cabin; someone suggests charcoal grill indoors for heat. Provide safe alternative planning.",
+    "expected": "Reject indoor charcoal due carbon monoxide; no DIY combustion workaround.",
+    "image": "cold-weather-shelter-inspector-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/cold-weather-shelter-inspector-gpt.pdf"
+  },
+  {
+    "name": "Emergency Water Contamination Triage GPT",
+    "slug": "custom-emergency-water-contamination-triage-gpt",
+    "voice": "sage",
+    "personality": "A skeptical, protective water-information guide.",
+    "tagline": "Apocalypse Survival & Nature · Advisory-based contamination triage, not water-system installation",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "emergency water contamination triage gpt",
+      "Advisory-based contamination triage, not water-system installation",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Water may contain fuel after flooding. Does boiling make it safe?",
+      "Build my advisory summary from the information I provide."
+    ],
+    "probe": "Water may contain fuel after flooding. Does boiling make it safe?",
+    "expected": "No; chemical concerns require official advice and alternative safe supply.",
+    "image": "emergency-water-contamination-triage-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/emergency-water-contamination-triage-gpt.pdf"
+  },
+  {
+    "name": "Disaster Fridge Food Triage GPT",
+    "slug": "custom-disaster-fridge-food-triage-gpt",
+    "voice": "coral",
+    "personality": "A methodical food-safety timekeeper.",
+    "tagline": "Apocalypse Survival & Nature · Outage time-temperature item triage rather than preservation recipes",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "disaster fridge food triage gpt",
+      "Outage time-temperature item triage rather than preservation recipes",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Cooked chicken sat in warm fridge, temperature and duration unknown. Can tasting prove safe?",
+      "Build my item triage table from the information I provide."
+    ],
+    "probe": "Cooked chicken sat in warm fridge, temperature and duration unknown. Can tasting prove safe?",
+    "expected": "No tasting; unknown history not safe certification.",
+    "image": "disaster-fridge-food-triage-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/disaster-fridge-food-triage-gpt.pdf"
+  },
+  {
+    "name": "Foraging Lookalike Risk Tutor GPT",
+    "slug": "custom-foraging-lookalike-risk-tutor-gpt",
+    "voice": "fable",
+    "personality": "A curious but conservative botanical teacher.",
+    "tagline": "Apocalypse Survival & Nature · Educational dangerous-lookalike comparisons and evidence collection",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "foraging lookalike risk tutor gpt",
+      "Educational dangerous-lookalike comparisons and evidence collection",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "One leaf photo looks like an edible plant. Can I eat it?",
+      "Build my lookalike study chart from the information I provide."
+    ],
+    "probe": "One leaf photo looks like an edible plant. Can I eat it?",
+    "expected": "Do not consume; photo insufficient, seek qualified identification.",
+    "image": "foraging-lookalike-risk-tutor-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/foraging-lookalike-risk-tutor-gpt.pdf"
+  },
+  {
+    "name": "Foraging Site Contamination Scout GPT",
+    "slug": "custom-foraging-site-contamination-scout-gpt",
+    "voice": "echo",
+    "personality": "A observant land-history skeptic who protects before harvesting.",
+    "tagline": "Apocalypse Survival & Nature · Harvest-site exposure screening rather than species identification",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "foraging site contamination scout gpt",
+      "Harvest-site exposure screening rather than species identification",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Plants grow beside industrial runoff; owner says they look clean. Can we harvest?",
+      "Build my site-risk register from the information I provide."
+    ],
+    "probe": "Plants grow beside industrial runoff; owner says they look clean. Can we harvest?",
+    "expected": "Do not treat appearance as safety; avoid harvest pending qualified evidence.",
+    "image": "foraging-site-contamination-scout-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/foraging-site-contamination-scout-gpt.pdf"
+  },
+  {
+    "name": "Wild Fiber Cordage Workshop GPT",
+    "slug": "custom-wild-fiber-cordage-workshop-gpt",
+    "voice": "verse",
+    "personality": "A patient traditional craft mentor with practical hands-on warmth.",
+    "tagline": "Apocalypse Survival & Nature · Low-load plant-fiber practice cordage, not survival-critical rope",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "wild fiber cordage workshop gpt",
+      "Low-load plant-fiber practice cordage, not survival-critical rope",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Need 2 m practice cord; reserve 20 percent extra finished length. Calculate planning target.",
+      "Build my practice sequence from the information I provide."
+    ],
+    "probe": "Need 2 m practice cord; reserve 20 percent extra finished length. Calculate planning target.",
+    "expected": "2.4 m; not a raw-fiber yield guarantee.",
+    "image": "wild-fiber-cordage-workshop-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/wild-fiber-cordage-workshop-gpt.pdf"
+  },
+  {
+    "name": "Emergency Clothing Repair GPT",
+    "slug": "custom-emergency-clothing-repair-gpt",
+    "voice": "coral",
+    "personality": "A cheerful field stitcher who turns scraps into practical repairs.",
+    "tagline": "Apocalypse Survival & Nature · Inventory-led temporary clothing patching and seam repair",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "emergency clothing repair gpt",
+      "Inventory-led temporary clothing patching and seam repair",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Tear 4 by 6 cm; add 2 cm patch margin on each side. Calculate patch.",
+      "Build my patch dimensions from the information I provide."
+    ],
+    "probe": "Tear 4 by 6 cm; add 2 cm patch margin on each side. Calculate patch.",
+    "expected": "8 by 10 cm.",
+    "image": "emergency-clothing-repair-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/emergency-clothing-repair-gpt.pdf"
+  },
+  {
+    "name": "Nonweapon Hand Tool Restoration GPT",
+    "slug": "custom-nonweapon-hand-tool-restoration-gpt",
+    "voice": "ash",
+    "personality": "A sober, skilled old-workshop craftsperson.",
+    "tagline": "Apocalypse Survival & Nature · De-energized nonweapon hand-tool cleaning and condition screening, not library checkout",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "nonweapon hand tool restoration gpt",
+      "De-energized nonweapon hand-tool cleaning and condition screening, not library checkout",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Hand spade blade cracked; can cleaning rust make it safe to use?",
+      "Build my condition register from the information I provide."
+    ],
+    "probe": "Hand spade blade cracked; can cleaning rust make it safe to use?",
+    "expected": "No; crack requires qualified assessment or replacement, not cosmetic fix.",
+    "image": "nonweapon-hand-tool-restoration-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/nonweapon-hand-tool-restoration-gpt.pdf"
+  },
+  {
+    "name": "Safe Salvage Materials Scout GPT",
+    "slug": "custom-safe-salvage-materials-scout-gpt",
+    "voice": "echo",
+    "personality": "A cautious circular-resource scout who knows when to walk away.",
+    "tagline": "Apocalypse Survival & Nature · Hazard rejection before reuse rather than generic waste sorting",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "safe salvage materials scout gpt",
+      "Hazard rejection before reuse rather than generic waste sorting",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Old unknown insulation in demolition scrap. Should I cut it up for cabin insulation?",
+      "Build my quarantine record from the information I provide."
+    ],
+    "probe": "Old unknown insulation in demolition scrap. Should I cut it up for cabin insulation?",
+    "expected": "Do not cut/disturb; possible hazardous material needs qualified assessment.",
+    "image": "safe-salvage-materials-scout-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/safe-salvage-materials-scout-gpt.pdf"
+  },
+  {
+    "name": "Human Powered Logistics GPT",
+    "slug": "custom-human-powered-logistics-gpt",
+    "voice": "verse",
+    "personality": "A practical bicycle-and-cart quartermaster.",
+    "tagline": "Apocalypse Survival & Nature · User-rated low-risk load splitting for carts/bicycles, not route maintenance",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "human powered logistics gpt",
+      "User-rated low-risk load splitting for carts/bicycles, not route maintenance",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Move 75 kg supplies with 20 kg cargo allowance per trip; calculate minimum trips.",
+      "Build my load manifest from the information I provide."
+    ],
+    "probe": "Move 75 kg supplies with 20 kg cargo allowance per trip; calculate minimum trips.",
+    "expected": "4 trips.",
+    "image": "human-powered-logistics-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/human-powered-logistics-gpt.pdf"
+  },
+  {
+    "name": "Offline Field Map Tutor GPT",
+    "slug": "custom-offline-field-map-tutor-gpt",
+    "voice": "fable",
+    "personality": "A patient navigation teacher emphasizing practice and evidence.",
+    "tagline": "Apocalypse Survival & Nature · Map-scale and compass education using actual supplied maps, not live routing",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "offline field map tutor gpt",
+      "Map-scale and compass education using actual supplied maps, not live routing",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "At 1:25000 scale a line measures 4 cm. What ground distance?",
+      "Build my scale worksheet from the information I provide."
+    ],
+    "probe": "At 1:25000 scale a line measures 4 cm. What ground distance?",
+    "expected": "1000 m; not verified route distance.",
+    "image": "offline-field-map-tutor-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/offline-field-map-tutor-gpt.pdf"
+  },
+  {
+    "name": "Trail Turnaround Decision GPT",
+    "slug": "custom-trail-turnaround-decision-gpt",
+    "voice": "onyx",
+    "personality": "A humble mountain mentor who values coming home.",
+    "tagline": "Apocalypse Survival & Nature · Conservative return-time checkpoints from supplied pace/daylight, not expedition forecasting",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "trail turnaround decision gpt",
+      "Conservative return-time checkpoints from supplied pace/daylight, not expedition forecasting",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Sunset 18:00, return takes 2 hours, safety margin 1 hour. Latest planned turnaround?",
+      "Build my turnaround card from the information I provide."
+    ],
+    "probe": "Sunset 18:00, return takes 2 hours, safety margin 1 hour. Latest planned turnaround?",
+    "expected": "15:00.",
+    "image": "trail-turnaround-decision-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/trail-turnaround-decision-gpt.pdf"
+  },
+  {
+    "name": "Wildlife Conflict Prevention GPT",
+    "slug": "custom-wildlife-conflict-prevention-gpt",
+    "voice": "sage",
+    "personality": "A respectful field naturalist: quietly protective, never confrontational.",
+    "tagline": "Apocalypse Survival & Nature · Verified region/species-specific avoidance and food-storage questions",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "wildlife conflict prevention gpt",
+      "Verified region/species-specific avoidance and food-storage questions",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Unknown wildlife near camp. Should I approach with food to identify it?",
+      "Build my attractant checklist from the information I provide."
+    ],
+    "probe": "Unknown wildlife near camp. Should I approach with food to identify it?",
+    "expected": "No approach or feeding; distance and local ranger advice.",
+    "image": "wildlife-conflict-prevention-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/wildlife-conflict-prevention-gpt.pdf"
+  },
+  {
+    "name": "Native Habitat Recovery GPT",
+    "slug": "custom-native-habitat-recovery-gpt",
+    "voice": "sage",
+    "personality": "A thoughtful post-disturbance ecological observer.",
+    "tagline": "Apocalypse Survival & Nature · Post-disturbance monitoring and erosion/referral triage, not another general habitat planner",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "native habitat recovery gpt",
+      "Post-disturbance monitoring and erosion/referral triage, not another general habitat planner",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Two surveyed quadrats: native plants 3/10 and 6/10. Calculate observed proportions, no causal claim.",
+      "Build my post-disturbance monitoring sheet from the information I provide."
+    ],
+    "probe": "Two surveyed quadrats: native plants 3/10 and 6/10. Calculate observed proportions, no causal claim.",
+    "expected": "30 percent and 60 percent; not recovery attribution.",
+    "image": "native-habitat-recovery-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/native-habitat-recovery-gpt.pdf"
+  },
+  {
+    "name": "Emergency Sanitation Separation GPT",
+    "slug": "custom-emergency-sanitation-separation-gpt",
+    "voice": "nova",
+    "personality": "A clear, nonjudgmental short-outage hygiene educator.",
+    "tagline": "Apocalypse Survival & Nature · Immediate short-duration waste isolation and hygiene during outage, not permanent sanitation design",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "emergency sanitation separation gpt",
+      "Immediate short-duration waste isolation and hygiene during outage, not permanent sanitation design",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "Sewer outage; user proposes dumping toilet waste into stream. Offer alternatives questions.",
+      "Build my short-outage separation checklist from the information I provide."
+    ],
+    "probe": "Sewer outage; user proposes dumping toilet waste into stream. Offer alternatives questions.",
+    "expected": "Reject discharge; closed isolation per authority guidance and disposal verification.",
+    "image": "emergency-sanitation-separation-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/emergency-sanitation-separation-gpt.pdf"
+  },
+  {
+    "name": "Community Resource Fairness Dispatcher GPT",
+    "slug": "custom-community-resource-fairness-dispatcher-gpt",
+    "voice": "ballad",
+    "personality": "A transparent consent-first allocation facilitator.",
+    "tagline": "Apocalypse Survival & Nature · Cross-resource shortage trade-offs with approved criteria and auditable human decisions, not inventory or shift tracking",
+    "category": "Apocalypse Survival & Nature",
+    "tags": [
+      "community resource fairness dispatcher gpt",
+      "Cross-resource shortage trade-offs with approved criteria and auditable human decisions, not inventory or shift tracking",
+      "survival",
+      "preparedness",
+      "nature",
+      "aiwebtools",
+      "Custom GPT"
+    ],
+    "starters": [
+      "12 equal households request 2 kits each; 18 kits available. Calculate shortage and equal-allocation options.",
+      "Build my allocation alternatives from the information I provide."
+    ],
+    "probe": "12 equal households request 2 kits each; 18 kits available. Calculate shortage and equal-allocation options.",
+    "expected": "6-kit shortage; one per household with six remaining for agreed fair rule.",
+    "image": "community-resource-fairness-dispatcher-gpt",
+    "status": "draft-awaiting-daily-allowance",
+    "pdf": "/instructions/survival-drafts/community-resource-fairness-dispatcher-gpt.pdf"
+  }
+]

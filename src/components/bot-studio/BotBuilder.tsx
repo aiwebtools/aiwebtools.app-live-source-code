@@ -2,12 +2,15 @@ import { useRef, useState } from "react";
 import { ImagePlus, X, Wand2 } from "lucide-react";
 import { prepareBotAvatar } from "@/utils/botAvatarUpload";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { saveCustomBot, type CustomBot } from "@/utils/customBots";
 import { getGuestId } from "@/utils/guestId";
 import { refreshStudioBots } from "./botCatalog";
 import type { GptVoiceProfile } from "@/utils/gptVoiceProfiles";
+import SurvivalDraftPicker from "./SurvivalDraftPicker";
+import { loadSurvivalBuilderDraft } from "@/utils/survivalDrafts";
 
 const VOICES: Array<[GptVoiceProfile["voice"], string]> = [
   ["alloy", "Alloy · balanced guide"], ["ash", "Ash · confident analyst"], ["ballad", "Ballad · mystic narrator"],
@@ -61,6 +64,10 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
         <DialogDescription>Saved on this device. Web search, image creation, voice, long memory and every studio ability are switched on automatically.</DialogDescription>
       </DialogHeader>
       <div className="space-y-4">
+        <SurvivalDraftPicker onChoose={(slug) => { void loadSurvivalBuilderDraft(slug).then((draft) => {
+          if (!draft) return;
+          setSavedBot(null); setName(draft.display_name); setTagline(draft.tagline); setInstructions(draft.instructions); setVoice(draft.voice); setAvatar(draft.image_url || ""); setShare(true); setStatus("Draft loaded. Public publication requires ethics review and available daily allowance.");
+        }).catch(() => setStatus("This draft could not load. Please try again.")); }} />
         <div className="flex items-center gap-3">
           {avatar && <img src={avatar} alt="Bot avatar preview" className="h-16 w-16 rounded-md object-cover" />}
           <input ref={avatarInput} type="file" accept="image/jpeg,image/png,image/webp" aria-label="Bot avatar picture" className="hidden" onChange={async (e) => {
@@ -88,7 +95,7 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
             <SelectContent className="z-[190]">{VOICES.map(([id, label]) => <SelectItem key={id} value={id}>{label}</SelectItem>)}</SelectContent>
           </Select>
         </div>
-        <label className="flex items-start gap-2 text-sm text-foreground"><input type="checkbox" className="mt-1 accent-primary" checked={share} onChange={(e) => setShare(e.target.checked)} /><span>Share it in the public Community GPT library. An AI ethics review checks it first, then it is published automatically for everyone.</span></label>
+        <div className="flex items-start gap-2 text-sm text-foreground"><Checkbox id="builder-public-share" aria-label="Share in public Community GPT library" className="mt-1 shrink-0" checked={share} onCheckedChange={(checked) => setShare(checked === true)} /><label htmlFor="builder-public-share">Share it in the public Community GPT library. An AI ethics review checks it first, then it is published automatically for everyone.</label></div>
         {status && <p role="status" className="rounded-md border border-primary/40 p-3 text-xs text-foreground">{status}</p>}
         <Button type="button" className="studio-new w-full gap-2" disabled={busy || preparingAvatar} onClick={() => void save()}><Wand2 className="h-4 w-4" />{busy ? "Reviewing & publishing…" : share ? "Save, review & publish" : "Save & launch my bot"}</Button>
         {savedBot && !busy && status && <Button type="button" variant="outline" className="w-full" onClick={() => onSaved(savedBot)}>Open my saved bot</Button>}
