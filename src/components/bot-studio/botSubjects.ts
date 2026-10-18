@@ -24,12 +24,12 @@ const RULES: [RegExp, BotSubject][] = [
 const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 export function getBotCategory(bot: SubjectBot): BotSubject {
   if (getOffGridBotMetadata(bot.slug)) return "Off Grid Living";
+  const name = normalize(bot.display_name);
+  if (/\b(?:survivalist|survival|emergency preparedness|nuclear event preparedness|fallout shelter|geiger counter|disable that robot|rouge robot disabler|robot identifier.*disabler|foraging|naturalist|birdwatching|fungus|mushroom specialist)\b/.test(name)) return "Apocalypse Survival & Nature";
   const base = bot.slug.replace(/-v\d+$/, "");
   const overrides: Record<string, BotSubject> = botSubjectOverrides;
   const subject = overrides[base] || overrides[base.replace(/^community-/, "")] || overrides[`community-${base}`];
   if (subject) return subject;
-  const name = normalize(bot.display_name);
-  if (/\b(?:survivalist|survival|emergency preparedness|nuclear event preparedness|fallout shelter|geiger counter|disable that robot|rouge robot disabler|robot identifier.*disabler|foraging|naturalist|birdwatching|fungus|mushroom specialist)\b/.test(name)) return "Apocalypse Survival & Nature";
   if (/\b(?:book writer|story writer|interactive time machine|game design|3d design|3d print concept|3d printer pro)\b/.test(name)) return "Creative & Design";
   const named = RULES.find(([pattern]) => pattern.test(name));
   if (named) return named[1];
