@@ -1,9 +1,10 @@
+// @ts-ignore -- Bun test runtime import
 import { expect, test } from "bun:test";
 import { getBotCategory, searchStudioBots } from "./botSubjects";
 import { groupBotsByCategory } from "./botCategories";
 import metadata from "@/data/offGridBotMetadata.json";
 import type { StudioBot } from "./botCatalog";
-const bot = (name: string, slug = name.toLowerCase().replaceAll(" ", "-")): StudioBot => ({ slug, display_name: name, tool_title: null, tagline: null, greeting: null, starter_prompts: [], supports_images: true, model: "default" });
+const bot = (name: string, slug = name.toLowerCase().replace(/ /g, "-")): StudioBot => ({ slug, display_name: name, tool_title: null, tagline: null, greeting: null, starter_prompts: [], supports_images: true, model: "default" });
 test("Time Machine is historical exploration, not science", () => {
   expect(getBotCategory(bot("Time Machine GPT"))).toBe("History & Time Travel");
   expect(getBotCategory(bot("Native American History Time Machine GPT"))).toBe("History & Time Travel");
