@@ -1,5 +1,12 @@
 # Chatbot completion roadmap
 
+# Apocalypse Survival & Nature expansion (Oct 18)
+- [ ] Make sidebar tool names smaller and fully readable; verify phone and desktop.
+- [ ] Audit existing survival/nature bots and move relevant families without modifying instructions.
+- [ ] Author 25 genuinely distinct practical bots with complete directives, art, voices, PDFs and search metadata.
+- [ ] Publish through ordinary ethics review within ten-per-day allowance; never bypass the limit.
+- [ ] Verify each published bot with real inputs, safety checks, downloads and cross-screen screenshots.
+
 # Off Grid Living expansion (Oct 18)
 - [x] Verify existing five bots with real replies now credits are restored.
 - [x] Author 25 distinct off-grid bots with practical A–J directives, personalities, individual art, voices and PDFs; publish through ethical review.
