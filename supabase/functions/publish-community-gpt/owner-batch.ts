@@ -1,6 +1,6 @@
-/** Owner-approved October 18 expansion; only these names, once, before expiry. */
+/** Historical batch identity; no further publication-limit exceptions are permitted. */
 export const OWNER_BATCH_SOURCE = "community:off-grid-owner-batch-2026-10-18";
 export const OWNER_BATCH_NAMES = ["Rainwater Harvest Budget GPT", "Household Water Use Ledger GPT", "Greywater Reuse Questions GPT", "Compost Cycle Coach GPT", "Community Sanitation Readiness GPT", "Battery Reserve Ledger GPT", "Solar Load Shift Coach GPT", "Winter Energy Reserve Planner GPT", "Root Cellar Inventory GPT", "Seasonal Meal Stock Planner GPT", "Safe Food Preservation Navigator GPT", "Community Crop Succession GPT", "Pollinator Habitat Steward GPT", "Small Livestock Care Ledger GPT", "Orchard Establishment Notebook GPT", "Soil Observation Journal GPT", "Erosion Watch Walkthrough GPT", "Woodland Care Calendar GPT", "Rural Access Maintenance Ledger GPT", "Shared Tool Care Librarian GPT", "Remote Connectivity Planner GPT", "Cooperative Purchasing Coordinator GPT", "Volunteer Rotation Scheduler GPT", "Community Waste Audit GPT", "Seasonal Readiness Checklist GPT"];
 export function approvedOwnerBatch(name: string, supplied: string | null, secret: string | undefined, now: number): boolean {
-  return Boolean(secret && supplied === secret && now < Date.parse("2026-10-20T00:00:00Z") && OWNER_BATCH_NAMES.includes(name));
+  return false;
 }
