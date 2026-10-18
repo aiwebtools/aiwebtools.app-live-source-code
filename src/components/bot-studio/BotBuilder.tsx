@@ -8,6 +8,8 @@ import { saveCustomBot, type CustomBot } from "@/utils/customBots";
 import { getGuestId } from "@/utils/guestId";
 import { refreshStudioBots } from "./botCatalog";
 import type { GptVoiceProfile } from "@/utils/gptVoiceProfiles";
+import SurvivalDraftPicker from "./SurvivalDraftPicker";
+import { loadSurvivalBuilderDraft } from "@/utils/survivalDrafts";
 
 const VOICES: Array<[GptVoiceProfile["voice"], string]> = [
   ["alloy", "Alloy · balanced guide"], ["ash", "Ash · confident analyst"], ["ballad", "Ballad · mystic narrator"],
@@ -61,6 +63,10 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
         <DialogDescription>Saved on this device. Web search, image creation, voice, long memory and every studio ability are switched on automatically.</DialogDescription>
       </DialogHeader>
       <div className="space-y-4">
+        <SurvivalDraftPicker onChoose={(slug) => { void loadSurvivalBuilderDraft(slug).then((draft) => {
+          if (!draft) return;
+          setSavedBot(null); setName(draft.display_name); setTagline(draft.tagline); setInstructions(draft.instructions); setVoice(draft.voice); setAvatar(draft.image_url || ""); setShare(true); setStatus("Draft loaded. Public publication requires ethics review and available daily allowance.");
+        }).catch(() => setStatus("This draft could not load. Please try again.")); }} />
         <div className="flex items-center gap-3">
           {avatar && <img src={avatar} alt="Bot avatar preview" className="h-16 w-16 rounded-md object-cover" />}
           <input ref={avatarInput} type="file" accept="image/jpeg,image/png,image/webp" aria-label="Bot avatar picture" className="hidden" onChange={async (e) => {

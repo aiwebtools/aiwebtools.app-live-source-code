@@ -1,5 +1,6 @@
 import tailoredStarters from "@/components/bot-studio/botStarters.json";
 import { getOffGridBotMetadata } from "./offGridBots";
+import { getSurvivalDraft } from "./survivalDrafts";
 
 type StarterBot = {
   slug: string;
@@ -13,6 +14,8 @@ const catalog: Record<string, string[]> = tailoredStarters;
 const generic = /what can you help|walk me through your first step|what can you do|help me get started/i;
 
 export function getBotStarters(bot: StarterBot): string[] {
+  const survival = getSurvivalDraft(bot.slug);
+  if (survival) return survival.starters;
   const offGrid = getOffGridBotMetadata(bot.slug);
   if (offGrid) return offGrid.starters;
   if (catalog[bot.slug]) return catalog[bot.slug];
