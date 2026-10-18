@@ -3,6 +3,7 @@
  * The archetype supplies the fitting environment; the slug supplies a unique
  * pair of colours, panel pattern, call sign, and console number.
  */
+import { getOffGridBotMetadata } from "@/utils/offGridBots";
 export interface GptRoomTheme {
   key: string;
   accent: string;
@@ -23,6 +24,7 @@ type RoomBlueprint = Omit<GptRoomTheme, "accent" | "accent2" | "soft" | "deep" |
 };
 
 const ROOMS: Record<string, RoomBlueprint> = {
+  "off-grid": { key: "off-grid", hue: 142, emblem: "⌁", roomLabel: "OFF GRID LIVING", placeholder: "Share your goal, measurements and local constraints…", mottoText: "LOVE · TRUTH · LIFE · WORK WITH THE EARTH", pattern: "grid" },
   matrix: { key: "matrix", hue: 142, emblem: "⟨⟩", roomLabel: "LIVE CONSOLE", placeholder: "Type your request here…", mottoText: "ENTER THE MATRIX", pattern: "circuit" },
   "time-machine": { key: "time-machine", hue: 38, emblem: "🕰️", roomLabel: "TIME MACHINE · PAST · PRESENT · FUTURE", placeholder: "WHERE WOULD YOU LIKE TO GO?", mottoText: "THE TIMELINE AWAITS", pattern: "rings" },
   clinic: { key: "clinic", hue: 173, emblem: "⚕", roomLabel: "CONSULTATION ROOM", placeholder: "Describe the symptoms, history and what worries you…", mottoText: "INFORMATION ONLY — NOT A REPLACEMENT FOR YOUR DOCTOR", pattern: "wave" },
@@ -89,7 +91,7 @@ export const getGptRoomTheme = (
 ): GptRoomTheme => {
   const normalizedSlug = slug.toLowerCase();
   const normalizedCategory = category.toLowerCase();
-  const key = SLUG_RULES.find(([pattern]) => pattern.test(normalizedSlug))?.[1]
+  const key = (getOffGridBotMetadata(slug) ? "off-grid" : undefined) ?? SLUG_RULES.find(([pattern]) => pattern.test(normalizedSlug))?.[1]
     ?? CATEGORY_RULES.find(([pattern]) => pattern.test(normalizedCategory))?.[1]
     ?? "matrix";
   const blueprint = ROOMS[key] ?? ROOMS.matrix;
