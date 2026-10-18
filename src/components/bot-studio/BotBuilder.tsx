@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { ImagePlus, X, Wand2 } from "lucide-react";
 import { prepareBotAvatar } from "@/utils/botAvatarUpload";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { saveCustomBot, type CustomBot } from "@/utils/customBots";
@@ -94,7 +95,7 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
             <SelectContent className="z-[190]">{VOICES.map(([id, label]) => <SelectItem key={id} value={id}>{label}</SelectItem>)}</SelectContent>
           </Select>
         </div>
-        <label className="flex items-start gap-2 text-sm text-foreground"><input type="checkbox" className="mt-1 accent-primary" checked={share} onChange={(e) => setShare(e.target.checked)} /><span>Share it in the public Community GPT library. An AI ethics review checks it first, then it is published automatically for everyone.</span></label>
+        <div className="flex items-start gap-2 text-sm text-foreground"><Checkbox id="builder-public-share" aria-label="Share in public Community GPT library" className="mt-1 shrink-0" checked={share} onCheckedChange={(checked) => setShare(checked === true)} /><label htmlFor="builder-public-share">Share it in the public Community GPT library. An AI ethics review checks it first, then it is published automatically for everyone.</label></div>
         {status && <p role="status" className="rounded-md border border-primary/40 p-3 text-xs text-foreground">{status}</p>}
         <Button type="button" className="studio-new w-full gap-2" disabled={busy || preparingAvatar} onClick={() => void save()}><Wand2 className="h-4 w-4" />{busy ? "Reviewing & publishing…" : share ? "Save, review & publish" : "Save & launch my bot"}</Button>
         {savedBot && !busy && status && <Button type="button" variant="outline" className="w-full" onClick={() => onSaved(savedBot)}>Open my saved bot</Button>}
