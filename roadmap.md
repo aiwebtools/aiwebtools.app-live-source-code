@@ -1,16 +1,16 @@
 # Chatbot completion roadmap
 
 # Off Grid Living expansion (Oct 18)
-- [ ] Verify existing five bots with real replies now credits are restored.
-- [ ] Author 25 distinct off-grid bots with practical A–J directives, personalities, individual art, voices and PDFs; publish through ethical review.
-- [ ] Audit studio subject classification, correct mismatches, and group all 30 under Off Grid Living.
-- [ ] Add top-of-chat quick switch search using existing room navigation.
-- [ ] Test each new bot's real use case and verify downloads, art, switching and phone/desktop layouts.
+- [x] Verify existing five bots with real replies now credits are restored.
+- [x] Author 25 distinct off-grid bots with practical A–J directives, personalities, individual art, voices and PDFs; publish through ethical review.
+- [x] Audit studio subject classification, correct mismatches, and group all 30 under Off Grid Living.
+- [x] Add top-of-chat quick switch search using existing room navigation.
+- [x] Test each new bot's real use case and verify downloads, art, switching and phone/desktop layouts.
 
 # Off Grid Tribes additions (Oct 17)
-- [ ] Add five complementary community-support bots with complete directives, branded avatars, voices, ethics review and individual PDFs.
-- [ ] Add "off grid tribes app" to existing drop-down menus without changing existing destinations.
-- [ ] Verify new bots, search/suite selection, downloads and menu navigation with real replies and screenshots.
+- [x] Add five complementary community-support bots with complete directives, branded avatars, voices, ethics review and individual PDFs.
+- [x] Add "off grid tribes app" to existing drop-down menus without changing existing destinations.
+- [x] Verify new bots, search/suite selection, downloads and menu navigation with real replies and screenshots.
 
 # Community studio finish pass (Oct 16)
 - [x] Clean 190 public community names through shared presentation map; preserve slugs, original prompts/documents and all bots.
