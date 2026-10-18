@@ -1,7 +1,7 @@
 # Architecture Rules
 - Queue deferred mounts cancellably with lazy fallbacks to prevent loading gaps.
 - Share companion links across device menus to keep destinations consistent.
-- Classify/search studio bots through shared subject metadata, not visual themes, to prevent category drift.
+- Use subject metadata, not themes; lazy-load unpublished survival brains only in the existing builder.
 
 - Keep the temporary access gate unlock in React memory only and render its own Matrix backdrop; reloads must ask again and loader cleanup must not remove its background.
 
