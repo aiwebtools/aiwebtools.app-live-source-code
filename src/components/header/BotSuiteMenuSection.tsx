@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { groupBotsByCategory } from "@/components/bot-studio/botCategories";
 import { OFF_GRID_PROJECT } from "@/data/offGridProject";
 import { createTimePortalEffect } from "@/utils/timeEffects";
+import { searchStudioBots } from "@/components/bot-studio/botSubjects";
 
 /** Header fast-track into every in-site bot room plus the community bot builder. */
 export default function BotSuiteMenuSection({ onNavigate }: { onNavigate?: () => void }) {
@@ -23,7 +24,7 @@ export default function BotSuiteMenuSection({ onNavigate }: { onNavigate?: () =>
 
   const groups = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return groupBotsByCategory((bots || []).filter((b) => !q || `${b.display_name} ${b.tagline || ""}`.toLowerCase().includes(q)));
+    return groupBotsByCategory(searchStudioBots(bots || [], q));
   }, [bots, query]);
 
   const go = (path: string) => {

@@ -1,4 +1,5 @@
 import names from "@/data/communityBotNames.json";
+import { offGridExpansionImages } from "./offGridExpansionImages";
 import storyVision from "@/assets/community-bots/pikastory-vision-fallback.jpg";
 import compatibility from "@/assets/off-grid-bots/community-compatibility-guide-gpt.jpg";
 import land from "@/assets/off-grid-bots/shared-land-due-diligence-gpt.jpg";
@@ -15,4 +16,4 @@ const offGridImages: Record<string, string> = {
 };
 /** Presentation only; original operational instructions and stable slugs are preserved. */
 export const communityBotName = (slug: string, original: string): string => publicNames[slug] || original;
-export const communityBotImage = (slug: string): string | undefined => offGridImages[slug] || (/^community-pikastory-vision-gpt(?:-v\d+)?$/.test(slug) ? storyVision : undefined);
+export const communityBotImage = (slug: string): string | undefined => offGridExpansionImages[slug] || offGridImages[slug] || (/^community-pikastory-vision-gpt(?:-v\d+)?$/.test(slug) ? storyVision : undefined);

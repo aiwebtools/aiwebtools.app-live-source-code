@@ -108,5 +108,604 @@
       "tribestead",
       "community planning"
     ]
+  },
+  "community-rainwater-harvest-budget-gpt-3ecee4": {
+    "name": "Rainwater Harvest Budget GPT",
+    "voice": "coral",
+    "starters": [
+      "Help me build a practical rainwater collection and seasonal storage budgeting worksheet.",
+      "A 50 m\u00b2 roof gets 20 mm rain with coefficient 0.8. Calculate litres collected."
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "rainwater",
+      "collection",
+      "and",
+      "seasonal",
+      "storage",
+      "budgeting"
+    ]
+  },
+  "community-household-water-use-ledger-gpt-63875f": {
+    "name": "Household Water Use Ledger GPT",
+    "voice": "sage",
+    "starters": [
+      "Help me build a practical off-grid household water demand and leak tracking worksheet.",
+      "A tank has 600 litres usable and daily use is 75 litres. Calculate reserve days."
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "off",
+      "grid",
+      "household",
+      "water",
+      "demand",
+      "and",
+      "leak",
+      "tracking"
+    ]
+  },
+  "community-greywater-reuse-questions-gpt-199fa9": {
+    "name": "Greywater Reuse Questions GPT",
+    "voice": "ash",
+    "starters": [
+      "Help me build a practical greywater feasibility checklists and authority questions worksheet.",
+      "Laundry yields 40 litres twice weekly. Calculate weekly volume, then list checks before reuse."
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "greywater",
+      "feasibility",
+      "checklists",
+      "and",
+      "authority",
+      "questions"
+    ]
+  },
+  "community-compost-cycle-coach-gpt-3afb3b": {
+    "name": "Compost Cycle Coach GPT",
+    "voice": "fable",
+    "starters": [
+      "Help me build a practical compost input logs and decomposition troubleshooting worksheet.",
+      "Combine 12 kg leaves, 5 kg vegetable scraps and 3 kg wood chips. Total input mass?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "compost",
+      "input",
+      "logs",
+      "and",
+      "decomposition",
+      "troubleshooting"
+    ]
+  },
+  "community-community-sanitation-readiness-gpt-9fa788": {
+    "name": "Community Sanitation Readiness GPT",
+    "voice": "onyx",
+    "starters": [
+      "Help me build a practical sanitation planning, permissions and maintenance readiness worksheet.",
+      "Six residents stay 7 days. Calculate user-days for sanitation planning."
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "sanitation",
+      "planning",
+      "permissions",
+      "and",
+      "maintenance",
+      "readiness"
+    ]
+  },
+  "community-battery-reserve-ledger-gpt-943487": {
+    "name": "Battery Reserve Ledger GPT",
+    "voice": "nova",
+    "starters": [
+      "Help me build a practical battery autonomy worksheets and reserve budgeting worksheet.",
+      "10 kWh battery, 0.8 usable fraction, 2 kWh daily demand: autonomy days?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "battery",
+      "autonomy",
+      "worksheets",
+      "and",
+      "reserve",
+      "budgeting"
+    ]
+  },
+  "community-solar-load-shift-coach-gpt-17f79a": {
+    "name": "Solar Load Shift Coach GPT",
+    "voice": "verse",
+    "starters": [
+      "Help me build a practical daytime appliance scheduling around solar production worksheet.",
+      "Shift a 500 W appliance running 2 hours to daytime. How much energy moves?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "daytime",
+      "appliance",
+      "scheduling",
+      "around",
+      "solar",
+      "production"
+    ]
+  },
+  "community-winter-energy-reserve-planner-gpt-b38a86": {
+    "name": "Winter Energy Reserve Planner GPT",
+    "voice": "echo",
+    "starters": [
+      "Help me build a practical cold-season off-grid load and reserve scenarios worksheet.",
+      "Critical loads are 3 kWh per day; want 5 days reserve. Required usable energy?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "cold",
+      "season",
+      "off",
+      "grid",
+      "load",
+      "and",
+      "reserve",
+      "scenarios"
+    ]
+  },
+  "community-root-cellar-inventory-gpt-ea135c": {
+    "name": "Root Cellar Inventory GPT",
+    "voice": "shimmer",
+    "starters": [
+      "Help me build a practical cool-storage inventory, spoilage observations and rotation worksheet.",
+      "Store 30 kg potatoes, use 8 and discard 2. Remaining kg?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "cool",
+      "storage",
+      "inventory",
+      "spoilage",
+      "observations",
+      "and",
+      "rotation"
+    ]
+  },
+  "community-seasonal-meal-stock-planner-gpt-4748b5": {
+    "name": "Seasonal Meal Stock Planner GPT",
+    "voice": "alloy",
+    "starters": [
+      "Help me build a practical pantry portions, shopping quantities and dietary preferences worksheet.",
+      "4 people need 2 planned meals daily for 3 days. Total servings?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "pantry",
+      "portions",
+      "shopping",
+      "quantities",
+      "and",
+      "dietary",
+      "preferences"
+    ]
+  },
+  "community-safe-food-preservation-navigator-gpt-3b7376": {
+    "name": "Safe Food Preservation Navigator GPT",
+    "voice": "coral",
+    "starters": [
+      "Help me build a practical evidence-led food preservation planning and source checks worksheet.",
+      "18 portions require jars holding 3 portions each. How many jars?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "evidence",
+      "led",
+      "food",
+      "preservation",
+      "planning",
+      "and",
+      "source",
+      "checks"
+    ]
+  },
+  "community-community-crop-succession-gpt-cee1ea": {
+    "name": "Community Crop Succession GPT",
+    "voice": "sage",
+    "starters": [
+      "Help me build a practical garden succession, planting records and harvest windows worksheet.",
+      "A 12 m row planted every 0.3 m with one plant per space: planned plants?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "garden",
+      "succession",
+      "planting",
+      "records",
+      "and",
+      "harvest",
+      "windows"
+    ]
+  },
+  "community-pollinator-habitat-steward-gpt-f5b2d5": {
+    "name": "Pollinator Habitat Steward GPT",
+    "voice": "fable",
+    "starters": [
+      "Help me build a practical native habitat planning and observation records worksheet.",
+      "A 100 m\u00b2 area devotes 25 m\u00b2 to native flowers. Percentage?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "native",
+      "habitat",
+      "planning",
+      "and",
+      "observation",
+      "records"
+    ]
+  },
+  "community-small-livestock-care-ledger-gpt-13edcd": {
+    "name": "Small Livestock Care Ledger GPT",
+    "voice": "ash",
+    "starters": [
+      "Help me build a practical livestock chores, feed records and veterinary question lists worksheet.",
+      "5 animals each use 2 kg feed daily for 7 days. Total kg?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "livestock",
+      "chores",
+      "feed",
+      "records",
+      "and",
+      "veterinary",
+      "question",
+      "lists"
+    ]
+  },
+  "community-orchard-establishment-notebook-gpt-b67107": {
+    "name": "Orchard Establishment Notebook GPT",
+    "voice": "verse",
+    "starters": [
+      "Help me build a practical young orchard planning, spacing and maintenance records worksheet.",
+      "Four rows with six trees per row. Total trees?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "young",
+      "orchard",
+      "planning",
+      "spacing",
+      "and",
+      "maintenance",
+      "records"
+    ]
+  },
+  "community-soil-observation-journal-gpt-731d4e": {
+    "name": "Soil Observation Journal GPT",
+    "voice": "onyx",
+    "starters": [
+      "Help me build a practical soil sample logs and evidence-based garden decisions worksheet.",
+      "Three zones need four samples each. Total samples?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "soil",
+      "sample",
+      "logs",
+      "and",
+      "evidence",
+      "based",
+      "garden",
+      "decisions"
+    ]
+  },
+  "community-erosion-watch-walkthrough-gpt-3deb96": {
+    "name": "Erosion Watch Walkthrough GPT",
+    "voice": "echo",
+    "starters": [
+      "Help me build a practical runoff observations and erosion-monitoring checklists worksheet.",
+      "A measured rill deepens from 4 cm to 7 cm. Change in cm?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "runoff",
+      "observations",
+      "and",
+      "erosion",
+      "monitoring",
+      "checklists"
+    ]
+  },
+  "community-woodland-care-calendar-gpt-f42581": {
+    "name": "Woodland Care Calendar GPT",
+    "voice": "ballad",
+    "starters": [
+      "Help me build a practical woodland stewardship, access permissions and task logs worksheet.",
+      "Three stewardship visits take 2 hours each. Total hours?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "woodland",
+      "stewardship",
+      "access",
+      "permissions",
+      "and",
+      "task",
+      "logs"
+    ]
+  },
+  "community-rural-access-maintenance-ledger-gpt-fe7435": {
+    "name": "Rural Access Maintenance Ledger GPT",
+    "voice": "alloy",
+    "starters": [
+      "Help me build a practical track and path inspection budgets and professional work lists worksheet.",
+      "A path is 60 m long and 2 m wide. Surface area m\u00b2?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "track",
+      "and",
+      "path",
+      "inspection",
+      "budgets",
+      "and",
+      "professional",
+      "work",
+      "lists"
+    ]
+  },
+  "community-shared-tool-care-librarian-gpt-cd7e2e": {
+    "name": "Shared Tool Care Librarian GPT",
+    "voice": "sage",
+    "starters": [
+      "Help me build a practical tool checkout, care records and repair scheduling worksheet.",
+      "12 tools, 3 checked out and 2 quarantined. Available count?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "tool",
+      "checkout",
+      "care",
+      "records",
+      "and",
+      "repair",
+      "scheduling"
+    ]
+  },
+  "community-remote-connectivity-planner-gpt-9f0536": {
+    "name": "Remote Connectivity Planner GPT",
+    "voice": "nova",
+    "starters": [
+      "Help me build a practical rural communications budgets and supplier comparison worksheet.",
+      "Service is 30 per month for 12 months plus setup 50. Total cost?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "rural",
+      "communications",
+      "budgets",
+      "and",
+      "supplier",
+      "comparison"
+    ]
+  },
+  "community-cooperative-purchasing-coordinator-gpt-19ac70": {
+    "name": "Cooperative Purchasing Coordinator GPT",
+    "voice": "coral",
+    "starters": [
+      "Help me build a practical group order quantities, quotes and transparent cost sharing worksheet.",
+      "20 items at 4 each plus delivery 10. Order total?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "group",
+      "order",
+      "quantities",
+      "quotes",
+      "and",
+      "transparent",
+      "cost",
+      "sharing"
+    ]
+  },
+  "community-volunteer-rotation-scheduler-gpt-bc5e58": {
+    "name": "Volunteer Rotation Scheduler GPT",
+    "voice": "fable",
+    "starters": [
+      "Help me build a practical fair opt-in chore rotations and workload checks worksheet.",
+      "Tasks need 18 hours, volunteers offer 5, 4 and 6. Uncovered hours?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "fair",
+      "opt",
+      "chore",
+      "rotations",
+      "and",
+      "workload",
+      "checks"
+    ]
+  },
+  "community-community-waste-audit-gpt-dad000": {
+    "name": "Community Waste Audit GPT",
+    "voice": "ash",
+    "starters": [
+      "Help me build a practical measured waste streams and reuse opportunity logs worksheet.",
+      "100 kg waste, 30 kg legally reused and 20 kg composted. Diversion percent?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "measured",
+      "waste",
+      "streams",
+      "and",
+      "reuse",
+      "opportunity",
+      "logs"
+    ]
+  },
+  "community-seasonal-readiness-checklist-gpt-abbb28": {
+    "name": "Seasonal Readiness Checklist GPT",
+    "voice": "onyx",
+    "starters": [
+      "Help me build a practical season-transition inventories and shared preparation plans worksheet.",
+      "Need 40 litres reserve, have 27. Additional litres needed?"
+    ],
+    "tags": [
+      "off grid living",
+      "off grid tribes",
+      "off-grid",
+      "community planning",
+      "off",
+      "grid",
+      "living",
+      "season",
+      "transition",
+      "inventories",
+      "and",
+      "shared",
+      "preparation",
+      "plans"
+    ]
   }
 }

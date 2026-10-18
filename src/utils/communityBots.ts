@@ -42,7 +42,7 @@ export function loadCommunityBots(): Promise<CommunityBotTool[]> {
       cache = data.filter((b) => !/-v\d+$/.test(b.slug)).map((b) => ({
         title: communityBotName(b.slug, b.display_name),
         description: (b.tagline || "Community GPT").replace(/\s*·\s*Community GPT$/, "") + " — a community AI assistant published on AIWebTools.",
-        category: "Community GPTs",
+        category: getOffGridBotMetadata(b.slug) ? "Off Grid Living" : "Community GPTs",
         imageUrl: b.image_url || communityBotImage(b.slug) || BUNDLED[b.slug] || undefined,
         categoryPath: `/app/${b.slug}`,
         tags: ["community gpt", "custom gpt", "ai assistant", "chatbot", ...(getOffGridBotMetadata(b.slug)?.tags || []), ...communityBotName(b.slug, b.display_name).toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 2)],
