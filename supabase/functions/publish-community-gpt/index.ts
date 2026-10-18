@@ -3,6 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 import { DAILY_LIMIT, VOICES, validateAvatar, ETHICS_POLICY } from "./creator-validation.ts";
+import { approvedOwnerBatch, OWNER_BATCH_SOURCE } from "./owner-batch.ts";
 const json = (b: unknown, status = 200) => new Response(JSON.stringify(b), { status, headers: { ...corsHeaders, "Content-Type": "application/json" } });
 
 
@@ -24,12 +25,16 @@ Deno.serve(async (req) => {
   const url = Deno.env.get("SUPABASE_URL"); const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   if (!url || !serviceKey) return json({ error: "The publishing service is not configured." }, 500);
   const admin = createClient(url, serviceKey);
+  const ownerBatch = approvedOwnerBatch(name, req.headers.get("x-cron-secret"), Deno.env.get("GPT_SEED_SECRET"), Date.now());
   const ip = (req.headers.get("x-forwarded-for") || "").split(",")[0].trim() || "unknown";
   const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`${guestId}|${ip}`));
   const owner = Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("").slice(0, 24);
   const since = new Date(Date.now() - 86400000).toISOString();
   const { count } = await admin.from("gpt_apps").select("id", { count: "exact", head: true }).eq("source_file", `community:${owner}`).gte("created_at", since);
-  if ((count ?? 0) >= DAILY_LIMIT) return json({ error: `You can publish ${DAILY_LIMIT} bots per day. Please come back tomorrow.` }, 429);
+  if (ownerBatch) {
+    const { count: batchCount, error } = await admin.from("gpt_apps").select("id", { count: "exact", head: true }).eq("source_file", OWNER_BATCH_SOURCE);
+    if (error || (batchCount ?? 0) >= 25) return json({ error: "The approved owner batch is complete or unavailable." }, 429);
+  } else if ((count ?? 0) >= DAILY_LIMIT) return json({ error: `You can publish ${DAILY_LIMIT} bots per day. Please come back tomorrow.` }, 429);
 
   const { count: dupe } = await admin.from("gpt_apps").select("id", { count: "exact", head: true }).ilike("display_name", name);
   if ((dupe ?? 0) > 0) return json({ error: "A bot with that name already exists in the library. Please choose a different name." }, 409);
@@ -70,7 +75,7 @@ Deno.serve(async (req) => {
   const { error: appErr } = await admin.from("gpt_apps").insert({
     slug, display_name: name, tagline: tagline ? `${tagline} · Community GPT` : "Community GPT", greeting,
     starter_prompts: [`What can you help me with, ${name}?`, "Walk me through your first step."],
-    model: "google/gemini-3-flash-preview", is_active: true, supports_images: true, source_file: `community:${owner}`, voice, image_url: imageUrl,
+    model: "google/gemini-3-flash-preview", is_active: true, supports_images: true, source_file: ownerBatch ? OWNER_BATCH_SOURCE : `community:${owner}`, voice, image_url: imageUrl,
   });
   if (appErr) return json({ error: "Publishing failed. Please try again." }, 500);
   const prompt = `You are "${name}"${tagline ? ` — ${tagline}` : ""}, a community-made assistant published on AIWebTools.app.\n\nOPERATIONAL INSTRUCTIONS:\n${instructions}`;
