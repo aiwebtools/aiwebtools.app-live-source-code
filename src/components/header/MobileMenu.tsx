@@ -14,7 +14,7 @@ import {
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
 import { useFavorites } from "@/hooks/useFavorites";
 import { createTimePortalEffect } from "@/utils/timeEffects";
-import { triggerPublicDownload, downloadAllOperationalInstructions } from "@/utils/downloads";
+import { triggerPublicDownload } from "@/utils/downloads";
 import { playMtvFlash } from "@/utils/mtvFlash";
 import { createConfettiCelebration } from "@/utils/effects/audioEffects";
 import Logo from "./Logo";
