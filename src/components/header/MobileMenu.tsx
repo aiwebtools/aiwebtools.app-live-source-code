@@ -56,13 +56,32 @@ const MobileMenu = () => {
   }
   
   const openedAtRef = useRef(0);
+  // Set when a REAL pointerdown lands on the hamburger while the menu is open.
+  // Delayed synthetic tap-clicks never fire pointerdown, so this cleanly
+  // separates "user tapped the hamburger again → close" from the phantom
+  // close that the opening tap emits a moment later.
+  const manualCloseRequestedRef = useRef(false);
+  const manualClosedAtRef = useRef(0);
 
   const handleMenuToggle = useCallback((open: boolean) => {
     if (open) {
+      // Ignore a reopen that arrives right after the user just closed the menu
+      // by tapping the hamburger again (dismissal + toggle race).
+      if (Date.now() - manualClosedAtRef.current < 400) return;
+      manualCloseRequestedRef.current = false;
       openedAtRef.current = Date.now();
       // Chunk is already warming from the trigger's pointerdown; ensure it either way.
       prefetchGlobalSearchBar();
       setIsMenuOpen(true);
+      return;
+    }
+    // A genuine second tap on the hamburger closes the menu immediately,
+    // bypassing the phantom-close window below.
+    if (manualCloseRequestedRef.current) {
+      manualCloseRequestedRef.current = false;
+      manualClosedAtRef.current = Date.now();
+      openedAtRef.current = 0;
+      setIsMenuOpen(false);
       return;
     }
     // Ignore the phantom close that fires from the same tap that opened the menu
