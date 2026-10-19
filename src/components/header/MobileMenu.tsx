@@ -64,7 +64,6 @@ const MobileMenu = () => {
   const manualClosedAtRef = useRef(0);
 
   const handleMenuToggle = useCallback((open: boolean) => {
-    console.log('TOGGLE handleMenuToggle open=', open);
     if (open) {
       // Ignore a reopen that arrives right after the user just closed the menu
       // by tapping the hamburger again (dismissal + toggle race).
@@ -262,7 +261,7 @@ const MobileMenu = () => {
                 if (isMenuOpen) {
                   // Second tap on the hamburger while open: request a real close
                   // before the dismissal/toggle events settle.
-                  manualCloseRequestedRef.current = true; console.log('TOGGLE pointerdown sets manual close');
+                  manualCloseRequestedRef.current = true;
                   e.preventDefault();
                   e.stopPropagation();
                 }
