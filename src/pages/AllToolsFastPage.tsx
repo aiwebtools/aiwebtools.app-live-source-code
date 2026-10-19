@@ -61,8 +61,8 @@ const AllToolsFastPage = () => {
     <div className="min-h-screen bg-black relative overflow-x-hidden">
       <SEOHead
         title="ALL AI TOOLS - Complete AI Tools Directory"
-        description="Browse the complete AIWebTools.ai directory of 5,500+ AI Tools, searchable and categorized for fast discovery."
-        keywords={["all ai tools", "5,500+ AI Tools", "ai tools directory", "AIWebTools.ai"]}
+        description="Browse the complete AIWebTools.ai directory of 4,000+ AI Tools, searchable and categorized for fast discovery."
+        keywords={["all ai tools", "4,000+ AI Tools", "ai tools directory", "AIWebTools.ai"]}
       />
 
       <div className="relative z-10 cyber-grid">

@@ -289,7 +289,7 @@ const TabletMenu = () => {
                 </div>
                 <DropdownMenuItem onClick={handleDownloadAllToolsCSV} className="text-cyan-100 hover:bg-cyan-500/20 rounded">
                   <Download className="w-4 h-4 mr-2" />
-                  📊 Download ALL 5,500+ AI Tools (CSV)
+                  📊 Download ALL 4,000+ AI Tools (CSV)
                 </DropdownMenuItem>
 
                 {/* Recently Visited Tools */}

@@ -6,7 +6,7 @@ import GlobalSearchBar from "./GlobalSearchBar";
 import { useDeferredAnimation } from "@/hooks/useReducedMotion";
 import DeferredMount from "./DeferredMount";
 
-const HERO_TOOL_STATS = { total: 4571, marketing: "5,500+", categories: 21 };
+const HERO_TOOL_STATS = { total: 4571, marketing: "4,000+", categories: 21 };
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ const HeroSection = () => {
         {/* SEO + accessibility — visible H1 (small, unobtrusive) so screen readers
             and crawlers see a real visual heading, not display:none text. */}
         <h1 className="text-center text-[11px] md:text-xs font-mono uppercase tracking-[0.25em] text-cyan-300/80 mb-2">
-          AI WEB TOOLS — 5,500+ AI WEB TOOLS DIRECTORY FOR 2026 AND BEYOND
+          AI WEB TOOLS — 4,000+ AI WEB TOOLS DIRECTORY FOR 2026 AND BEYOND
         </h1>
         
         {/* Main heading with stabilized layout */}
