@@ -20,10 +20,10 @@ export default function BotQuickSwitch({ bots, onChoose, portrait }: { bots: Swi
         if (event.key === "Escape") { setFocused(false); setQuery(""); }
         if (event.key === "Enter" && matches[0]) { event.preventDefault(); choose(matches[0].slug); }
       }} className="h-10 border-primary/30 bg-background pl-9 pr-10 text-sm" aria-expanded={open} aria-controls={open ? "studio-quick-results" : undefined} />
-      {query && <Button variant="ghost" size="icon" className="absolute right-0 h-10 w-10" aria-label="Clear quick switch search" onClick={() => setQuery("")}><X className="h-4 w-4" /></Button>}
+      {query && <Button variant="ghost" size="icon" className="absolute right-0 h-10 w-10" aria-label="Clear quick switch search" onMouseDown={(event) => event.preventDefault()} onClick={() => setQuery("")}><X className="h-4 w-4" /></Button>}
     </div>
     {open && <div id="studio-quick-results" aria-label="Matching bots" className="absolute inset-x-0 top-full z-50 mt-1 max-h-72 overflow-y-auto overscroll-contain rounded-md border border-primary/30 bg-background shadow-lg">
-      {!bots.length ? <p role="status" className="p-3 text-sm text-muted-foreground">Loading bots…</p> : !matches.length ? <p role="status" className="p-3 text-sm text-muted-foreground">No matching bots.</p> : matches.map((bot) => <Button key={bot.slug} variant="ghost" className="h-auto min-h-12 w-full justify-start gap-2 whitespace-normal rounded-none px-3 py-2 text-left" onClick={() => choose(bot.slug)}>
+      {!bots.length ? <p role="status" className="p-3 text-sm text-muted-foreground">Loading bots…</p> : !matches.length ? <p role="status" className="p-3 text-sm text-muted-foreground">No matching bots.</p> : matches.map((bot) => <Button key={bot.slug} variant="ghost" className="h-auto min-h-12 w-full justify-start gap-2 whitespace-normal rounded-none px-3 py-2 text-left" onMouseDown={(event) => event.preventDefault()} onClick={() => choose(bot.slug)}>
         {portrait(bot)}<span className="min-w-0"><span className="block break-words text-sm">{bot.display_name}</span><span className="block text-xs text-muted-foreground">{getBotCategory(bot)}</span></span>
       </Button>)}
     </div>}
