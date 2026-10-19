@@ -564,6 +564,7 @@ iframe {
 .studio-embedded { height: min(820px, 86dvh); min-height: 480px; margin-bottom: 24px; scroll-margin-top: 80px; }
 .studio-rain { z-index: 0; opacity: .9; }
 .studio-topbar, .studio-grid { position: relative; z-index: 1; }
+.studio-topbar { z-index: 60; }
 .studio-portrait-fallback { display: inline-grid; place-items: center; font-size: 24px; }
 .studio button { color: hsl(var(--foreground)); background-image: none; }
 .studio button:hover { background: hsl(var(--primary) / .12); }
