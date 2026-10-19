@@ -56,30 +56,28 @@ const MobileMenu = () => {
   }
   
   const openedAtRef = useRef(0);
-  // Set when a REAL pointerdown lands on the hamburger while the menu is open.
-  // Delayed synthetic tap-clicks never fire pointerdown, so this cleanly
-  // separates "user tapped the hamburger again → close" from the phantom
-  // close that the opening tap emits a moment later.
-  const manualCloseRequestedRef = useRef(false);
+  // Time of the last REAL pointerdown on the hamburger. Delayed synthetic
+  // tap-clicks never fire pointerdown, so a close arriving right after a
+  // pointerdown is a genuine "tap the hamburger again to close" request,
+  // while a close arriving later (with no fresh pointerdown) is the phantom
+  // close the opening tap emits ~300-500ms after touchend.
+  const triggerPointerDownAtRef = useRef(0);
   const manualClosedAtRef = useRef(0);
 
   const handleMenuToggle = useCallback((open: boolean) => {
-    console.log('TOGGLE handleMenuToggle open=', open);
     if (open) {
-      // Ignore a reopen that arrives right after the user just closed the menu
-      // by tapping the hamburger again (dismissal + toggle race).
-      if (Date.now() - manualClosedAtRef.current < 400) return;
-      manualCloseRequestedRef.current = false;
+      // Block the synthetic tap-click that fires shortly after the user just
+      // closed the menu by tapping the hamburger again.
+      if (Date.now() - manualClosedAtRef.current < 600) return;
       openedAtRef.current = Date.now();
       // Chunk is already warming from the trigger's pointerdown; ensure it either way.
       prefetchGlobalSearchBar();
       setIsMenuOpen(true);
       return;
     }
-    // A genuine second tap on the hamburger closes the menu immediately,
-    // bypassing the phantom-close window below.
-    if (manualCloseRequestedRef.current) {
-      manualCloseRequestedRef.current = false;
+    // A close arriving within 100ms of a real pointerdown on the hamburger is
+    // the user tapping the button again to fold the menu back up.
+    if (Date.now() - triggerPointerDownAtRef.current < 100) {
       manualClosedAtRef.current = Date.now();
       openedAtRef.current = 0;
       setIsMenuOpen(false);
