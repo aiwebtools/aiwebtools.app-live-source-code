@@ -558,6 +558,54 @@ export type Database = {
         }
         Relationships: []
       }
+      site_events: {
+        Row: {
+          bot_slug: string | null
+          created_at: string
+          device: string | null
+          event_type: string
+          id: string
+          label: string | null
+          path: string
+          referrer: string | null
+          session_id: string
+          target: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          bot_slug?: string | null
+          created_at?: string
+          device?: string | null
+          event_type: string
+          id?: string
+          label?: string | null
+          path: string
+          referrer?: string | null
+          session_id: string
+          target?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          bot_slug?: string | null
+          created_at?: string
+          device?: string | null
+          event_type?: string
+          id?: string
+          label?: string | null
+          path?: string
+          referrer?: string | null
+          session_id?: string
+          target?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: []
+      }
       tool_analytics: {
         Row: {
           created_at: string
