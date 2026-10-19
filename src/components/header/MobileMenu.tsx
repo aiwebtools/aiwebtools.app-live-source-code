@@ -259,13 +259,9 @@ const MobileMenu = () => {
               aria-label="Open menu"
               onPointerDown={(e) => {
                 prefetchGlobalSearchBar();
-                if (isMenuOpen) {
-                  // Second tap on the hamburger while open: request a real close
-                  // before the dismissal/toggle events settle.
-                  manualCloseRequestedRef.current = true;
-                  e.preventDefault();
-                  e.stopPropagation();
-                }
+                // Stamp the real tap so a close arriving with it is treated as
+                // "tap the hamburger again to close" instead of a phantom close.
+                triggerPointerDownAtRef.current = Date.now();
               }}
               style={{ touchAction: 'manipulation', transform: 'translateZ(0)' }}
             >
