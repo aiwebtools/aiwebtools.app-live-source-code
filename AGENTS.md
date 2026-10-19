@@ -32,3 +32,4 @@
 - Log every bot failure (gateway, search, image, attachment, analysis, dropped stream) to gpt_chat_logs with a distinct status, including browser-side reports, so chat-watchdog alerts on all of them; show search failure once per reply and keep notices out of speech.
 - Record visits, clicks and bot opens only through `siteTracker` (batched rows with identical keys into `site_events`); one tracker keeps data consistent and off the click path.
 - Pre-mount large header menus during idle (forceMount + hidden when closed) so the first tap only reveals them.
+- Community apps are listed from `community_apps` and only inserted by the AI-reviewing `submit-community-app` function; keeps unverified links out of the menu.

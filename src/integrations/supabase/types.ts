@@ -95,6 +95,42 @@ export type Database = {
         }
         Relationships: []
       }
+      community_apps: {
+        Row: {
+          ai_reason: string | null
+          ai_score: number | null
+          created_at: string
+          description: string
+          id: string
+          status: string
+          submitter_hash: string | null
+          title: string
+          url: string
+        }
+        Insert: {
+          ai_reason?: string | null
+          ai_score?: number | null
+          created_at?: string
+          description: string
+          id?: string
+          status?: string
+          submitter_hash?: string | null
+          title: string
+          url: string
+        }
+        Update: {
+          ai_reason?: string | null
+          ai_score?: number | null
+          created_at?: string
+          description?: string
+          id?: string
+          status?: string
+          submitter_hash?: string | null
+          title?: string
+          url?: string
+        }
+        Relationships: []
+      }
       email_subscribers: {
         Row: {
           confirmed: boolean

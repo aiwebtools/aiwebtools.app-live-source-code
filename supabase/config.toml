@@ -26,3 +26,6 @@ verify_jwt = false
 
 [functions.seed-community-library]
 verify_jwt = false
+
+[functions.submit-community-app]
+verify_jwt = false

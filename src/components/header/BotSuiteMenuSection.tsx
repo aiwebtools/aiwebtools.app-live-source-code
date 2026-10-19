@@ -1,11 +1,10 @@
 import { startTransition, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Bot, ChevronDown, Search, Wand2, Trees, ArrowUpRight } from "lucide-react";
+import { Bot, ChevronDown, Search, Wand2 } from "lucide-react";
 import { loadStudioBots, type StudioBot } from "@/components/bot-studio/botCatalog";
 import { Button } from "@/components/ui/button";
 import { groupBotsByCategory } from "@/components/bot-studio/botCategories";
-import { OFF_GRID_PROJECT } from "@/data/offGridProject";
-import { createTimePortalEffect } from "@/utils/timeEffects";
+import CommunityAppsMenuSection from "./CommunityAppsMenuSection";
 import { searchStudioBots } from "@/components/bot-studio/botSubjects";
 
 /** Header fast-track into every in-site bot room plus the community bot builder. */
@@ -35,17 +34,6 @@ export default function BotSuiteMenuSection({ onNavigate }: { onNavigate?: () =>
 
   return (
     <div className="mb-4 grid gap-2" onKeyDown={stop} onPointerDown={stop}>
-      <Button asChild variant="outline" className="min-h-11 w-full justify-start gap-2 border-primary/50 bg-primary/10 text-primary hover:bg-primary/20">
-        <a href={OFF_GRID_PROJECT.url} target="_blank" rel="noopener noreferrer" onClick={(e) => {
-          e.preventDefault();
-          onNavigate?.();
-          createTimePortalEffect(OFF_GRID_PROJECT.url);
-        }}>
-          <Trees className="h-4 w-4 shrink-0" aria-hidden="true" />
-          <span className="min-w-0 whitespace-normal text-left">{OFF_GRID_PROJECT.label}</span>
-          <ArrowUpRight className="ml-auto h-4 w-4 shrink-0" aria-hidden="true" />
-        </a>
-      </Button>
       <Button variant="ghost" type="button" aria-expanded={open} onClick={() => setOpen((v) => !v)}
         className="flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border border-primary/60 bg-primary/10 px-3 text-left text-sm font-bold text-primary hover:bg-primary/20">
         <span className="flex items-center gap-2"><Bot className="h-4 w-4" />AWT Custom Creative Bot Suite{bots ? <span className="text-[10px] font-normal opacity-70">{bots.length}</span> : null}</span>
@@ -88,6 +76,7 @@ export default function BotSuiteMenuSection({ onNavigate }: { onNavigate?: () =>
           </div>
         </div>
       )}
+      <CommunityAppsMenuSection onNavigate={onNavigate} />
     </div>
   );
 }
