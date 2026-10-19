@@ -33,3 +33,5 @@
 - Select first-turn web research when the request or operational instructions require it and expose failed retrieval as a failed activity; never substitute encyclopedia results or model knowledge as successful live web research.
 - Build web workers as ES modules (`worker.format: "es"`); the attachment worker code-splits and IIFE workers fail the build.
 - Log every bot failure (gateway, search, image, attachment, analysis, dropped stream) to gpt_chat_logs with a distinct status, including browser-side reports, so chat-watchdog alerts on all of them; show search failure once per reply and keep notices out of speech.
+- Record visits, clicks and bot opens only through `siteTracker` (batched rows with identical keys into `site_events`); one tracker keeps data consistent and off the click path.
+- Pre-mount large header menus during idle (forceMount + hidden when closed) so the first tap only reveals them.
