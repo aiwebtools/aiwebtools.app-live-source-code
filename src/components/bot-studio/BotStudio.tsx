@@ -225,10 +225,10 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
   };
   const chooseBot = (slug: string) => chooseThread(openBotConversation(slug));
   const exportChat = () => {
-    const blob = new Blob([`# ${app.display_name}\n\n${thread.messages.map((message) => `## ${message.role === "user" ? "You" : app.display_name}\n\n${message.content}${message.attachments?.map((file) => `\n\n### ${file.name}\n${file.context}`).join("") || ""}`).join("\n\n")}`], { type: "text/markdown;charset=utf-8" });
-    const href = URL.createObjectURL(blob);
-    const link = document.createElement("a"); link.href = href; link.download = `${app.slug}-conversation.md`; link.click();
-    setTimeout(() => URL.revokeObjectURL(href), 10000);
+    setNotice("Preparing your PDF with images…");
+    void import("@/utils/chatPdfExport").then(({ exportChatPdf }) => exportChatPdf(app.display_name, app.slug, thread.messages))
+      .then(() => setNotice(""))
+      .catch(() => setNotice("The PDF could not be created. Please try again."));
   };
   const sidebar = <>
     <Button className="studio-new w-full gap-2" onClick={newChat}><Plus className="h-4 w-4" />New chat</Button>
