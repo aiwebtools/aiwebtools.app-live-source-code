@@ -99,10 +99,9 @@ const MobileMenu = () => {
   }, [go]);
 
   const openDownloads = useCallback(() => {
-    openedAtRef.current = Date.now();
-    prefetchGlobalSearchBar();
-    setIsToolsOpen(true);
-    setIsMenuOpen(true);
+    // Open the A–Z operational instructions download center directly, not the menu.
+    setIsMenuOpen(false);
+    downloadAllOperationalInstructions();
   }, []);
 
   const closeMenu = useCallback(() => {
