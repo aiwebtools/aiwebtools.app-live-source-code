@@ -52,7 +52,7 @@ const flush = (keepalive = false) => { window.clearTimeout(timer); timer = undef
 
 export const track = (e: Omit<Ev, "session_id" | "device" | "utm_source" | "utm_medium" | "utm_campaign" | "path"> & { path?: string }) => {
   const path = clip(e.path ?? location.pathname, 500) || "/";
-  queue.push({ ...e, path, session_id: sessionId, device: device(), utm_source: clip(utm.s, 100), utm_medium: clip(utm.m, 100), utm_campaign: clip(utm.c, 100) });
+  queue.push({ label: null, target: null, bot_slug: null, referrer: null, ...e, path, session_id: sessionId, device: device(), utm_source: clip(utm.s, 100), utm_medium: clip(utm.m, 100), utm_campaign: clip(utm.c, 100) });
   if (queue.length >= 20) flush();
   else if (!timer) timer = window.setTimeout(() => flush(), 4000);
 };
