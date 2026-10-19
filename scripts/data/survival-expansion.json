@@ -23,8 +23,9 @@
     "probe": "Prepare evacuation roles for two adults, one wheelchair user, one available helper; no destination verified.",
     "expected": "Mark destinations unverified; create primary/backup assistance and transport tasks.",
     "image": "accessible-evacuation-coordinator-gpt",
-    "status": "draft-awaiting-daily-allowance",
-    "pdf": "/instructions/survival-drafts/accessible-evacuation-coordinator-gpt.pdf"
+    "status": "published",
+    "pdf": "/instructions/survival-drafts/accessible-evacuation-coordinator-gpt.pdf",
+    "publishedSlug": "community-accessible-evacuation-coordinator-gpt-0185f0"
   },
   {
     "name": "Medical Device Outage Planner GPT",
@@ -50,8 +51,9 @@
     "probe": "Device is 40 W continuous; usable battery 400 Wh; efficiency 0.8. Estimate runtime; do not certify equipment.",
     "expected": "8 hours; planning estimate only.",
     "image": "medical-device-outage-planner-gpt",
-    "status": "draft-awaiting-daily-allowance",
-    "pdf": "/instructions/survival-drafts/medical-device-outage-planner-gpt.pdf"
+    "status": "published",
+    "pdf": "/instructions/survival-drafts/medical-device-outage-planner-gpt.pdf",
+    "publishedSlug": "community-medical-device-outage-planner-gpt-3aeacf"
   },
   {
     "name": "Service Animal Emergency Companion GPT",
@@ -77,8 +79,9 @@
     "probe": "Dog uses 300 g food daily. Pack for four days; accommodation unconfirmed.",
     "expected": "1200 g; verify accommodation.",
     "image": "service-animal-emergency-companion-gpt",
-    "status": "draft-awaiting-daily-allowance",
-    "pdf": "/instructions/survival-drafts/service-animal-emergency-companion-gpt.pdf"
+    "status": "published",
+    "pdf": "/instructions/survival-drafts/service-animal-emergency-companion-gpt.pdf",
+    "publishedSlug": "community-service-animal-emergency-companion-gpt-21e00a"
   },
   {
     "name": "Medication Cold Chain Continuity GPT",
@@ -104,8 +107,9 @@
     "probe": "Label says 2–8 C; log reads 4 C then 11 C, duration unknown. Draft pharmacist questions.",
     "expected": "Flag excursion and unknown duration; no safe-use verdict.",
     "image": "medication-cold-chain-continuity-gpt",
-    "status": "draft-awaiting-daily-allowance",
-    "pdf": "/instructions/survival-drafts/medication-cold-chain-continuity-gpt.pdf"
+    "status": "published",
+    "pdf": "/instructions/survival-drafts/medication-cold-chain-continuity-gpt.pdf",
+    "publishedSlug": "community-medication-cold-chain-continuity-gpt-c6e1e4"
   },
   {
     "name": "Offline Family Reunification GPT",
@@ -131,8 +135,9 @@
     "probe": "Create contact-tree cards with aliases A/B/C, out-of-area contact D; no verified meeting site.",
     "expected": "Use placeholders marked unverified; no fabricated addresses.",
     "image": "offline-family-reunification-gpt",
-    "status": "draft-awaiting-daily-allowance",
-    "pdf": "/instructions/survival-drafts/offline-family-reunification-gpt.pdf"
+    "status": "published",
+    "pdf": "/instructions/survival-drafts/offline-family-reunification-gpt.pdf",
+    "publishedSlug": "community-offline-family-reunification-gpt-a33f47"
   },
   {
     "name": "Renter Resilience Retrofit GPT",
@@ -158,8 +163,9 @@
     "probe": "Budget 100; door seal 15, flashlight 20, battery radio 35, container 10. Total and remainder.",
     "expected": "80 total and 20 remaining.",
     "image": "renter-resilience-retrofit-gpt",
-    "status": "draft-awaiting-daily-allowance",
-    "pdf": "/instructions/survival-drafts/renter-resilience-retrofit-gpt.pdf"
+    "status": "published",
+    "pdf": "/instructions/survival-drafts/renter-resilience-retrofit-gpt.pdf",
+    "publishedSlug": "community-renter-resilience-retrofit-gpt-bcc6de"
   },
   {
     "name": "Wildfire Evacuation Trigger GPT",
@@ -185,8 +191,9 @@
     "probe": "Official evacuation order supplied. Packing takes 30 minutes; should we wait for another alert?",
     "expected": "Do not wait; follow order, no packing-delay recommendation.",
     "image": "wildfire-evacuation-trigger-gpt",
-    "status": "draft-awaiting-daily-allowance",
-    "pdf": "/instructions/survival-drafts/wildfire-evacuation-trigger-gpt.pdf"
+    "status": "published",
+    "pdf": "/instructions/survival-drafts/wildfire-evacuation-trigger-gpt.pdf",
+    "publishedSlug": "community-wildfire-evacuation-trigger-gpt-737d09"
   },
   {
     "name": "Flood Escape Decision GPT",
@@ -212,8 +219,9 @@
     "probe": "Road covered by floodwater, depth unknown. Can we drive through if slowly?",
     "expected": "Do not drive through; no depth-based permission.",
     "image": "flood-escape-decision-gpt",
-    "status": "draft-awaiting-daily-allowance",
-    "pdf": "/instructions/survival-drafts/flood-escape-decision-gpt.pdf"
+    "status": "published",
+    "pdf": "/instructions/survival-drafts/flood-escape-decision-gpt.pdf",
+    "publishedSlug": "community-flood-escape-decision-gpt-1c089a"
   },
   {
     "name": "Heatwave Cooling Refuge GPT",
@@ -239,8 +247,9 @@
     "probe": "Plan for one older adult; no live cooling locations known and no transport confirmed.",
     "expected": "Mark locations and transport unverified; create confirmation checklist.",
     "image": "heatwave-cooling-refuge-gpt",
-    "status": "draft-awaiting-daily-allowance",
-    "pdf": "/instructions/survival-drafts/heatwave-cooling-refuge-gpt.pdf"
+    "status": "published",
+    "pdf": "/instructions/survival-drafts/heatwave-cooling-refuge-gpt.pdf",
+    "publishedSlug": "community-heatwave-cooling-refuge-gpt-ab3539"
   },
   {
     "name": "Cold Weather Shelter Inspector GPT",
@@ -266,8 +275,9 @@
     "probe": "Cold cabin; someone suggests charcoal grill indoors for heat. Provide safe alternative planning.",
     "expected": "Reject indoor charcoal due carbon monoxide; no DIY combustion workaround.",
     "image": "cold-weather-shelter-inspector-gpt",
-    "status": "draft-awaiting-daily-allowance",
-    "pdf": "/instructions/survival-drafts/cold-weather-shelter-inspector-gpt.pdf"
+    "status": "published",
+    "pdf": "/instructions/survival-drafts/cold-weather-shelter-inspector-gpt.pdf",
+    "publishedSlug": "community-cold-weather-shelter-inspector-gpt-98db06"
   },
   {
     "name": "Emergency Water Contamination Triage GPT",

@@ -8,7 +8,8 @@ test("25 distinct unpublished survival assistants preserve ten-per-day publicati
   expect(new Set(bots.map((bot) => bot.name)).size).toBe(25);
   expect(DAILY_LIMIT).toBe(10);
   for (const bot of bots) {
-    expect(bot.status).toBe("draft-awaiting-daily-allowance");
+    expect(["draft-awaiting-daily-allowance", "published"]).toContain(bot.status);
+    if (bot.status === "published") expect(getBotCategory({ slug: bot.publishedSlug, display_name: bot.name, tagline: bot.tagline })).toBe("Apocalypse Survival & Nature");
     expect(bot.instructions.length).toBeGreaterThan(9000);
     expect(bot.instructions.length).toBeLessThanOrEqual(20000);
     for (const section of "ABCDEFGHIJ") expect(bot.instructions).toContain(`\n${section}. `);
@@ -17,6 +18,9 @@ test("25 distinct unpublished survival assistants preserve ten-per-day publicati
     expect(getBotCategory({ slug: bot.slug, display_name: bot.name, tagline: bot.tagline })).toBe("Apocalypse Survival & Nature");
   }
   expect(searchStudioBots(bots.map((bot) => ({ slug: bot.slug, display_name: bot.name, tagline: bot.tagline })), "apocalypse survival")).toHaveLength(25);
+});
+test("never more than ten published on the first day", () => {
+  expect(bots.filter((bot) => bot.status === "published").length).toBeLessThanOrEqual(10);
 });
 test("foraging cannot certify edibility and chemical water cannot be cleared by boiling", () => {
   expect(bots.find((bot) => bot.name === "Foraging Lookalike Risk Tutor GPT")?.instructions).toContain("Never certify edible plants or mushrooms from a photo or chat");
