@@ -404,7 +404,7 @@ const AIWebToolsPage = () => {
                 <p className="text-muted-foreground leading-relaxed">
                   <strong>AIWEBTOOLS.AI</strong> is the world's largest <strong>AI web tools</strong> directory, featuring {toolCount}+ verified AI tools across all categories. 
                   We help users discover, compare, and access the best <strong>AI web tools</strong> for any purpose, from productivity to creativity to business automation. 
-                  Our platform is trusted by over 100,000 professionals worldwide.
+                 
                 </p>
               </div>
               
