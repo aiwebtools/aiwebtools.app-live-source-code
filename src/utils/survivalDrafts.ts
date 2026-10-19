@@ -1,7 +1,9 @@
 import metadata from "@/data/survivalDraftMetadata.json";
 import type { GptVoiceProfile } from "./gptVoiceProfiles";
 export const survivalDrafts = metadata;
-export const getSurvivalDraft = (slug: string) => metadata.find((bot) => bot.slug === slug);
+/** Matches a draft slug or its published community room (community-<name>-<hash>). */
+const toDraftSlug = (slug: string) => slug.startsWith("community-") ? slug.replace(/^community-/, "custom-").replace(/-[0-9a-f]{6}(?:-v\d+)?$/, "") : slug;
+export const getSurvivalDraft = (slug: string) => { const key = toDraftSlug(slug); return metadata.find((bot) => bot.slug === key); };
 export async function loadSurvivalBuilderDraft(slug: string) {
   const bot = getSurvivalDraft(slug);
   if (!bot) return null;
