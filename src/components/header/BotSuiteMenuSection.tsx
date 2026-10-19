@@ -1,11 +1,10 @@
 import { startTransition, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Bot, ChevronDown, Search, Wand2, Trees, ArrowUpRight } from "lucide-react";
+import { Bot, ChevronDown, Search, Wand2 } from "lucide-react";
 import { loadStudioBots, type StudioBot } from "@/components/bot-studio/botCatalog";
 import { Button } from "@/components/ui/button";
 import { groupBotsByCategory } from "@/components/bot-studio/botCategories";
 import CommunityAppsMenuSection from "./CommunityAppsMenuSection";
-import { createTimePortalEffect } from "@/utils/timeEffects";
 import { searchStudioBots } from "@/components/bot-studio/botSubjects";
 
 /** Header fast-track into every in-site bot room plus the community bot builder. */
