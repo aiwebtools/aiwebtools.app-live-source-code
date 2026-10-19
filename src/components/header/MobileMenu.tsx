@@ -56,13 +56,34 @@ const MobileMenu = () => {
   }
   
   const openedAtRef = useRef(0);
+  // Time of the last REAL pointerdown on the hamburger and whether the menu was
+  // already open at that moment. Delayed synthetic tap-clicks never fire
+  // pointerdown, so a close arriving right after a pointerdown that found the
+  // menu OPEN is a genuine "tap the hamburger again to close" request, while a
+  // close arriving later (or while the menu was closed) is the phantom close
+  // the opening tap emits ~300-500ms after touchend.
+  const triggerPointerDownAtRef = useRef(0);
+  const menuWasOpenAtPointerDownRef = useRef(false);
+  const manualClosedAtRef = useRef(0);
 
   const handleMenuToggle = useCallback((open: boolean) => {
     if (open) {
+      // Block the synthetic tap-click that fires shortly after the user just
+      // closed the menu by tapping the hamburger again.
+      if (Date.now() - manualClosedAtRef.current < 600) return;
       openedAtRef.current = Date.now();
       // Chunk is already warming from the trigger's pointerdown; ensure it either way.
       prefetchGlobalSearchBar();
       setIsMenuOpen(true);
+      return;
+    }
+    // A close arriving within 100ms of a real pointerdown that found the menu
+    // open is the user tapping the button again to fold the menu back up.
+    if (menuWasOpenAtPointerDownRef.current && Date.now() - triggerPointerDownAtRef.current < 100) {
+      menuWasOpenAtPointerDownRef.current = false;
+      manualClosedAtRef.current = Date.now();
+      openedAtRef.current = 0;
+      setIsMenuOpen(false);
       return;
     }
     // Ignore the phantom close that fires from the same tap that opened the menu
@@ -237,7 +258,13 @@ const MobileMenu = () => {
               size="lg" 
               className="border-2 border-cyan-400 bg-cyan-500/20 text-cyan-100 px-4 py-3 min-w-[56px] min-h-[56px] rounded-xl active:bg-cyan-500/40"
               aria-label="Open menu"
-              onPointerDown={prefetchGlobalSearchBar}
+              onPointerDown={() => {
+                prefetchGlobalSearchBar();
+                // Stamp the real tap so a close arriving with it is treated as
+                // "tap the hamburger again to close" instead of a phantom close.
+                triggerPointerDownAtRef.current = Date.now();
+                menuWasOpenAtPointerDownRef.current = isMenuOpen;
+              }}
               style={{ touchAction: 'manipulation', transform: 'translateZ(0)' }}
             >
               <Menu className="w-7 h-7" />
