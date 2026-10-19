@@ -16,6 +16,8 @@ installBootVitals();
 installScrollJankObserver();
 installFirstInteractionObserver();
 addBreadcrumb('boot', 'main.tsx-eval');
+// First-party visit/click/bot tracking (batched, off the click path).
+import('./utils/siteTracker').then((m) => m.installSiteTracker()).catch(() => {});
 
 const rootElement = document.getElementById("root");
 if (!rootElement) {
