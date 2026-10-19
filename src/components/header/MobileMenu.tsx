@@ -33,6 +33,15 @@ const MobileMenu = () => {
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isToolsOpen, setIsToolsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  // Pre-build the (large) menu while the phone is idle so the first tap only
+  // has to reveal it instead of constructing hundreds of elements.
+  const [menuWarm, setMenuWarm] = useState(false);
+  useEffect(() => {
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
+    const warm = () => setMenuWarm(true);
+    const id = w.requestIdleCallback ? w.requestIdleCallback(warm, { timeout: 4000 }) : window.setTimeout(warm, 2500);
+    return () => { if (!w.requestIdleCallback) window.clearTimeout(id); };
+  }, []);
   
   // Only load heavy data when menu is open
   const { recentTools } = useRecentlyVisitedTools();
@@ -237,7 +246,8 @@ const MobileMenu = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent 
             ref={dropdownRef}
-            className="w-[95vw] max-w-[400px] bg-black border-2 border-cyan-500/50 max-h-[68vh] overflow-visible z-[110]"
+            forceMount={menuWarm || isMenuOpen ? true : undefined}
+            className="data-[state=closed]:hidden w-[95vw] max-w-[400px] bg-black border-2 border-cyan-500/50 max-h-[68vh] overflow-visible z-[110]"
             align="end"
             side="bottom"
             alignOffset={0}
