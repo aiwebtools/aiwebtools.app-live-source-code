@@ -14,7 +14,7 @@ import {
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
 import { useFavorites } from "@/hooks/useFavorites";
 import { createTimePortalEffect } from "@/utils/timeEffects";
-import { triggerPublicDownload } from "@/utils/downloads";
+import { triggerPublicDownload, downloadAllOperationalInstructions } from "@/utils/downloads";
 import { playMtvFlash } from "@/utils/mtvFlash";
 import { createConfettiCelebration } from "@/utils/effects/audioEffects";
 import Logo from "./Logo";
@@ -99,10 +99,9 @@ const MobileMenu = () => {
   }, [go]);
 
   const openDownloads = useCallback(() => {
-    openedAtRef.current = Date.now();
-    prefetchGlobalSearchBar();
-    setIsToolsOpen(true);
-    setIsMenuOpen(true);
+    // Open the A–Z operational instructions download center directly, not the menu.
+    setIsMenuOpen(false);
+    downloadAllOperationalInstructions();
   }, []);
 
   const closeMenu = useCallback(() => {
