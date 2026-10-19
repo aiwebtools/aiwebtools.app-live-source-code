@@ -64,6 +64,7 @@ const MobileMenu = () => {
   const manualClosedAtRef = useRef(0);
 
   const handleMenuToggle = useCallback((open: boolean) => {
+    console.log('TOGGLE handleMenuToggle open=', open);
     if (open) {
       // Ignore a reopen that arrives right after the user just closed the menu
       // by tapping the hamburger again (dismissal + toggle race).
