@@ -91,22 +91,34 @@ Deno.serve(async (req) => {
 
   const key = Deno.env.get("LOVABLE_API_KEY");
   if (!key) return json({ status: "error", message: "Review is unavailable right now. Please try again later." }, 500);
-  const ai = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+  const sys = "You review community-submitted web apps for a family-friendly AI directory. Approve only if: the page is a real, working web app or site (not parked, empty, error, login-only spam or a scam); the submitted title and description honestly match what the page shows; and content is safe (no adult, gambling, malware, phishing, hate, or illegal content). Single-page apps may show little text; judge mainly from the page title and meta description then. Be strict about mismatches. Reply in JSON.";
+  const usr = `SUBMITTED\nTitle: ${title}\nURL: ${url}\nDescription: ${description}\n\nLIVE PAGE (final URL ${page.finalUrl})\n<title>: ${page.title}\nog:title: ${page.ogTitle}\nmeta description: ${page.description}\nVisible text: ${page.text}`;
+  const ai = await fetch("https://ai.gateway.lovable.dev/v1/responses", {
     method: "POST",
-    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+    headers: { "Lovable-API-Key": key, Authorization: `Bearer ${key}`, "Content-Type": "application/json", "X-Lovable-AIG-SDK": "fetch" },
     body: JSON.stringify({
-      model: "google/gemini-2.5-flash",
-      messages: [
-        { role: "system", content: "You review community-submitted web apps for a family-friendly AI directory. Approve only if: the page is a real, working web app or site (not parked, empty, error, login-only spam or a scam); the submitted title and description honestly match what the page shows; and content is safe (no adult, gambling, malware, phishing, hate, or illegal content). Single-page apps may show little text; judge mainly from the page title and meta description in that case. Be strict about mismatches." },
-        { role: "user", content: `SUBMITTED\nTitle: ${title}\nURL: ${url}\nDescription: ${description}\n\nLIVE PAGE (final URL ${page.finalUrl})\n<title>: ${page.title}\nog:title: ${page.ogTitle}\nmeta description: ${page.description}\nVisible text: ${page.text}` },
-      ],
-      tools: [{ type: "function", function: { name: "verdict", description: "Return the review verdict", parameters: { type: "object", properties: { approve: { type: "boolean" }, score: { type: "integer", description: "0-100 confidence that it matches and is legit" }, reason: { type: "string", description: "One short sentence for the submitter" } }, required: ["approve", "score", "reason"], additionalProperties: false } } }],
-      tool_choice: { type: "function", function: { name: "verdict" } },
+      model: "openai/gpt-6-astra", stream: true, store: false,
+      reasoning: { effort: "low" },
+      instructions: sys,
+      input: [{ role: "user", content: usr }],
+      text: { format: { type: "json_schema", name: "verdict", strict: true, schema: { type: "object", properties: { approve: { type: "boolean" }, score: { type: "integer" }, reason: { type: "string" } }, required: ["approve", "score", "reason"], additionalProperties: false } } },
     }),
   });
   if (ai.status === 429 || ai.status === 402) return json({ status: "error", message: "Review is busy right now. Please try again in a few minutes." }, 503);
   let v: { approve: boolean; score: number; reason: string } | null = null;
-  try { const d = await ai.json(); v = JSON.parse(d.choices[0].message.tool_calls[0].function.arguments); } catch { v = null; }
+  if (ai.ok && ai.body) {
+    let out = "", buf = "";
+    const reader = ai.body.pipeThrough(new TextDecoderStream()).getReader();
+    for (;;) {
+      const { done, value } = await reader.read(); if (done) break;
+      buf += value; const lines = buf.split("\n"); buf = lines.pop() ?? "";
+      for (const l of lines) {
+        if (!l.startsWith("data:")) continue;
+        try { const e = JSON.parse(l.slice(5).trim()); if (e.type === "response.output_text.delta") out += e.delta; } catch { /* ignore keepalives */ }
+      }
+    }
+    try { v = JSON.parse(out); } catch { v = null; }
+  } else console.error("review gateway error", ai.status, await ai.text().catch(() => ""));
   if (!v) return json({ status: "error", message: "Review failed. Please try again." }, 502);
 
   const approved = v.approve && v.score >= 70;
