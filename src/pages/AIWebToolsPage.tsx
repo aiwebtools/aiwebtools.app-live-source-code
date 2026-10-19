@@ -145,7 +145,7 @@ const AIWebToolsPage = () => {
         "name": "What makes AI Web Tools different from other AI tool directories?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": `AI Web Tools (AIWEBTOOLS.AI) stands out with ${toolCount}+ verified tools, 100+ original custom GPTs, detailed video demonstrations, and intelligent search that understands natural language. We're updated daily and trusted by 100,000+ professionals worldwide.`
+          "text": `AI Web Tools (AIWEBTOOLS.AI) stands out with ${toolCount}+ verified tools, 100+ original custom GPTs, detailed video demonstrations, and intelligent search that understands natural language. We're updated daily. `
         }
       }
     ]
@@ -404,7 +404,7 @@ const AIWebToolsPage = () => {
                 <p className="text-muted-foreground leading-relaxed">
                   <strong>AIWEBTOOLS.AI</strong> is the world's largest <strong>AI web tools</strong> directory, featuring {toolCount}+ verified AI tools across all categories. 
                   We help users discover, compare, and access the best <strong>AI web tools</strong> for any purpose, from productivity to creativity to business automation. 
-                  Our platform is trusted by over 100,000 professionals worldwide.
+                 
                 </p>
               </div>
               
@@ -444,7 +444,7 @@ const AIWebToolsPage = () => {
               Start Exploring AI Web Tools Today
             </h2>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Join 100,000+ professionals who use <strong>AIWEBTOOLS.AI</strong> to discover the perfect <strong>AI web tools</strong> for their needs.
+              Use <strong>AIWEBTOOLS.AI</strong> to discover the perfect <strong>AI web tools</strong> for their needs.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link 

@@ -15,7 +15,7 @@ const AIWebToolsSEOSection = () => {
           </h2>
           <p className="text-xs text-gray-500 leading-relaxed max-w-2xl mx-auto">
             <strong className="text-gray-400">AI WEB TOOLS</strong> is the world's most comprehensive directory of AI web tools. 
-            Access <strong>2,195+ verified AI web tools</strong> for productivity, creativity, and business. 
+            Access <strong>4,000+ verified AI web tools</strong> for productivity, creativity, and business. 
             <Link to="/main-category/ALL%20AI%20TOOLS" className="text-cyan-500 hover:text-cyan-400 ml-1">
               Browse all AI web tools →
             </Link>

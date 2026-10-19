@@ -150,7 +150,7 @@ const Navigation = () => {
       <button 
         onClick={handleDownloadAllToolsCSV}
         className="text-cyan-100 hover:text-cyan-400 transition-colors whitespace-nowrap cursor-pointer flex items-center space-x-1 px-2 py-1 rounded text-xs font-medium"
-        title="Download all 5,500+ AI tools as CSV"
+        title="Download all 4,000+ AI tools as CSV"
       >
         <Download className="w-3 h-3" />
         <span className="hidden xl:inline">CSV</span>

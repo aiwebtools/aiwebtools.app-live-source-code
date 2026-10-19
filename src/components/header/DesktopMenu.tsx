@@ -383,7 +383,7 @@ const DesktopMenu = () => {
                   <div className="bg-gray-900/50 rounded border border-white/5 p-2 space-y-1">
                     <DropdownMenuItem onClick={handleDownloadAllToolsCSV} className="text-cyan-100 hover:bg-cyan-500/20 rounded text-sm px-2 py-1.5">
                       <Download className="w-3 h-3 mr-2" />
-                      📊 Download 5,500+ Tools (CSV)
+                      📊 Download 4,000+ Tools (CSV)
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       onClick={(e) => {
