@@ -11,6 +11,7 @@
 - Reuse `DownloadLibraryButton` for library entry points and the shared PDF resolver for separate archived/authored community manifests; this prevents divergent downloads.
 - Resolve hosted chatbot speech through `getGptVoiceProfile`; this keeps character-inspired voices consistent without cloning real people.
 - Play hosted-bot speech sequentially through the shared speech reader, preserving complete replies and surfacing failures instead of silently switching to browser voices.
+- Unlock hosted speech during message submission and explicit voice enabling, before network waits, so gesture-restricted browsers can auto-read replies.
 - Share one-utterance microphone input across bot surfaces and pause speaker audio while listening to prevent feedback into the conversation.
 - Render hosted bot rooms through `BotStudio` in both embedded and full-page placements so voice, streaming, downloads, branding and guest history cannot diverge.
 - Keep studio drawers above embedded dialogs and close their parent dialog before route changes; phone bot switching must never remain hidden behind the previous room.

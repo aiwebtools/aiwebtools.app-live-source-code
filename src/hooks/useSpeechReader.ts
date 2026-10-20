@@ -207,13 +207,25 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     bufferRef.current = "";
     if (supported) window.speechSynthesis?.cancel();
     setSpeaking(false);
-  }, [supported]);
+    // Reset is called from submit, before fetching the reply. Unlock while the
+    // browser still has the visitor's click/keypress gesture (especially iOS).
+    if (profile && enabledRef.current) {
+      void unlockSpeechPlayback().catch((error) => {
+        toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Tap Play to enable audio.", variant: "destructive" });
+      });
+    }
+  }, [profile, supported, toast]);
 
   const toggle = useCallback(() => {
-    setEnabled((was) => {
-      const next = !was;
+      const next = !enabledRef.current;
       enabledRef.current = next;
+      setEnabled(next);
       localStorage.setItem(STORAGE_KEY, next ? "on" : "off");
+      if (next && profile) {
+        void unlockSpeechPlayback().catch((error) => {
+          toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Tap Play to enable audio.", variant: "destructive" });
+        });
+      }
       if (!next) {
         generationRef.current += 1;
         pendingRef.current = [];
@@ -223,9 +235,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
         setSpeaking(false);
         if (supported) window.speechSynthesis?.cancel();
       }
-      return next;
-    });
-  }, [supported]);
+  }, [profile, supported, toast]);
 
   /**
    * Read one specific message out loud on demand (a play button), regardless of
