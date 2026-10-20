@@ -1,5 +1,10 @@
 # Chatbot completion roadmap
 
+# Header GPTs shortcut + speed (Oct 20)
+- [x] Add GPTs waving-robot icon left of GitHub (labeled GIT) opening CUSTOM GPT BUILDER + bot category accordion; verify phone and desktop.
+- [x] Fix slow/black home screen before tool and GPT cards appear.
+- [x] Fix bot replies occasionally being read aloud twice.
+
 # Apocalypse Survival & Nature expansion (Oct 18)
 - [x] Make sidebar tool names smaller and fully readable; verify phone and desktop.
 - [ ] Audit existing survival/nature bots and move relevant families without modifying instructions.

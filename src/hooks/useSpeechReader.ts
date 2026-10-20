@@ -76,6 +76,8 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
           body: JSON.stringify({ text, voice: profile?.voice, engine: "gemini", style: profile?.label, instructions: profile?.instructions, stream: true }),
         },
         signal,
+        // ~1.6× a normal reading pace: a full second pass by the voice model gets cut off.
+        text.length / 9 + 2,
       ),
     [profile],
   );

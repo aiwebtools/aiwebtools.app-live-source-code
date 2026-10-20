@@ -8,9 +8,9 @@ import CommunityAppsMenuSection from "./CommunityAppsMenuSection";
 import { searchStudioBots } from "@/components/bot-studio/botSubjects";
 
 /** Header fast-track into every in-site bot room plus the community bot builder. */
-export default function BotSuiteMenuSection({ onNavigate }: { onNavigate?: () => void }) {
+export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false }: { onNavigate?: () => void; gptsOnly?: boolean }) {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(gptsOnly);
   const [bots, setBots] = useState<StudioBot[] | null>(null);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
@@ -33,7 +33,13 @@ export default function BotSuiteMenuSection({ onNavigate }: { onNavigate?: () =>
   const stop = (e: React.SyntheticEvent) => e.stopPropagation();
 
   return (
-    <div className="mb-4 grid gap-2" onKeyDown={stop} onPointerDown={stop}>
+    <div className={gptsOnly ? "grid gap-2" : "mb-4 grid gap-2"} onKeyDown={stop} onPointerDown={stop}>
+      {gptsOnly ? (
+        <Button variant="ghost" type="button" onClick={() => { go("/app/custom-gpt-maker?builder=1"); }}
+          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-accent/60 bg-accent/10 px-3 text-sm font-bold text-accent-foreground hover:bg-accent/20">
+          <Wand2 className="h-4 w-4" />CUSTOM GPT BUILDER
+        </Button>
+      ) : (<>
       <Button variant="ghost" type="button" aria-expanded={open} onClick={() => setOpen((v) => !v)}
         className="flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border border-primary/60 bg-primary/10 px-3 text-left text-sm font-bold text-primary hover:bg-primary/20">
         <span className="flex items-center gap-2"><Bot className="h-4 w-4" />AWT Custom Creative Bot Suite{bots ? <span className="text-[10px] font-normal opacity-70">{bots.length}</span> : null}</span>
@@ -43,6 +49,7 @@ export default function BotSuiteMenuSection({ onNavigate }: { onNavigate?: () =>
         className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-accent/60 bg-accent/10 px-3 text-sm font-bold text-accent-foreground hover:bg-accent/20">
         <Wand2 className="h-4 w-4" />CUSTOM GPT MAKER
       </Button>
+      </>)}
       {open && (
         <div className="rounded-lg border border-primary/30 bg-background/95 p-2">
           <label className="flex items-center gap-2 rounded-md border border-primary/30 px-2">
@@ -76,7 +83,7 @@ export default function BotSuiteMenuSection({ onNavigate }: { onNavigate?: () =>
           </div>
         </div>
       )}
-      <CommunityAppsMenuSection onNavigate={onNavigate} />
+      {!gptsOnly && <CommunityAppsMenuSection onNavigate={onNavigate} />}
     </div>
   );
 }

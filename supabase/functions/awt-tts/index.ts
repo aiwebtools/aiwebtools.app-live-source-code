@@ -45,7 +45,7 @@ Deno.serve(async (req) => {
 
     if (body?.engine === 'gemini') {
       const style = typeof body?.style === 'string' ? body.style.replace(/[\n:]/g, ' ').slice(0, 120).trim() : '';
-      const prompt = `Read only the text below. Use a natural human conversational voice with connected phrases, subtle emotion, varied intonation and realistic emphasis. Avoid mechanical rhythm, exaggerated breathiness or an announcer voice. ${style ? `Voice character: ${style}.` : ''} ${instructions}\nText to read:\n${text}`;
+      const prompt = `Read only the text below, exactly once from start to finish, then stop. Never repeat, restart or re-read any part of it. Use a natural human conversational voice with connected phrases, subtle emotion, varied intonation and realistic emphasis. Avoid mechanical rhythm, exaggerated breathiness or an announcer voice. ${style ? `Voice character: ${style}.` : ''} ${instructions}\nText to read:\n${text}`;
       const wantsStream = body.stream === true;
       const gem = await requestSpeech({ baseURL: 'https://ai.gateway.lovable.dev', apiKey: key, model: 'google/gemini-3.1-flash-tts-preview', format: 'gemini', voice: GEMINI_VOICES[voice] }, prompt, !wantsStream, req.signal);
       if (!gem.ok) {
