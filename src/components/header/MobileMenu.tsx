@@ -240,16 +240,20 @@ const MobileMenu = () => {
         {/* No custom backdrop: Radix handles outside dismissal. A manual overlay
             caught the delayed synthetic tap-click and closed the menu instantly. */}
 
+        {/* Labeled "INSTRUCTIONS" to match the GPTs and GIT header icons. */}
         <Button
           type="button"
           variant="outline"
           size="icon"
           onClick={openDownloads}
-          className="h-11 w-11 shrink-0 border-primary/60 bg-background/90 text-primary shadow-lg"
-          aria-label="Open CSV and operational instructions downloads"
-          title="Downloads"
+          className="h-14 w-[72px] shrink-0 flex-col gap-1 rounded-xl border-primary/60 bg-background/90 text-primary shadow-lg"
+          aria-label="Instructions — open the A–Z operational instructions downloads"
+          title="Operational Instructions"
         >
           <Download className="h-5 w-5" aria-hidden="true" />
+          <span className="text-[8px] font-bold leading-none tracking-tight whitespace-nowrap">
+            INSTRUCTIONS
+          </span>
         </Button>
 
         <DropdownMenu open={isMenuOpen} onOpenChange={handleMenuToggle} modal={false}>
