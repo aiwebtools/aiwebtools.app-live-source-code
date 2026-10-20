@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Plus, Search, Download, Github } from "lucide-react";
+import { ExternalLink, Plus, Search, Download, Github, Cpu } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { downloadToolsCSV } from "@/utils/csvExport";
 import { createConfettiCelebration } from "@/utils/effects/audioEffects";
