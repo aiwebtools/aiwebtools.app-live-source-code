@@ -356,6 +356,19 @@ const MobileMenu = () => {
                   <Download className="h-4 w-4" aria-hidden="true" />
                   Download All 4,000+ AI Tools (CSV)
                 </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleExternalLink('https://lmstudio.ai/download/bionic/latest/win32/x64', e);
+                  }}
+                  className="min-h-11 w-full justify-center gap-2 border-emerald-500/60 bg-background text-xs font-bold text-emerald-300"
+                >
+                  <Cpu className="h-4 w-4" aria-hidden="true" />
+                  DOWNLOAD LOCAL MODELS TO RUN ON YOUR PC
+                </Button>
               </div>
 
               <>
