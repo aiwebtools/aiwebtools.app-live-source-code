@@ -67,3 +67,13 @@ test("Stellaris frontier guidance applies only to Stellaris and keeps the author
   expect(result).toContain("STELLARIS FRONTIER OPERATIONS:");
   expect(appendInstructionFidelity("Original", "medicus", "Medicus")).not.toContain("STELLARIS FRONTIER OPERATIONS:");
 });
+
+Deno.test("review enhancements apply only to their bots", async () => {
+  const { appendInstructionFidelity } = await import("./instruction-fidelity.ts");
+  const robot = appendInstructionFidelity("ORIG", "disable-that-robot-gpt", "Disable That Robot GPT");
+  if (!robot.startsWith("ORIG") || !robot.includes("ROBOT DISABLEMENT MISSION MODE")) throw new Error("robot");
+  if (!appendInstructionFidelity("O", "indiana-archeologist-gpt", "Indiana Archeologist GPT").includes("FIELD EXPEDITION DELIVERY")) throw new Error("indy");
+  if (!appendInstructionFidelity("O", "marriage-mender-gpt", "Marriage Mender GPT").includes("MEDIATION FLOW")) throw new Error("mm");
+  const other = appendInstructionFidelity("O", "fact-checker-gpt", "Fact Checker GPT");
+  if (/MISSION MODE|EXPEDITION DELIVERY|MEDIATION FLOW/.test(other)) throw new Error("leak");
+});
