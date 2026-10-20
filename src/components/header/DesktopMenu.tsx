@@ -25,6 +25,7 @@ import { useRecentlyVisitedTools } from "@/hooks/useRecentlyVisitedTools";
 import { playMtvFlash } from "@/utils/mtvFlash";
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import DownloadLibraryButton from "@/components/DownloadLibraryButton";
+import LocalModelsAccordion from "@/components/LocalModelsAccordion";
 import BotSuiteMenuSection from "./BotSuiteMenuSection";
 
 
@@ -218,6 +219,9 @@ const DesktopMenu = () => {
                 className="mb-4"
                 onBeforeOpen={closeMenu}
               />
+              <div className="mb-4">
+                <LocalModelsAccordion onNavigate={closeMenu} />
+              </div>
               
               <DropdownMenuSeparator className="border-gray-700 mb-4" />
                 
