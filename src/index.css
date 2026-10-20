@@ -91,7 +91,6 @@
 /* Raised 3D buttons site-wide: lit top edge, solid base edge, soft drop shadow, press-down on tap. */
 @layer components {
   .btn-3d.btn-3d {
-    position: relative;
     border-top-color: hsl(0 0% 100% / 0.28);
     box-shadow:
       inset 0 1px 0 hsl(0 0% 100% / 0.28),
@@ -99,12 +98,14 @@
       0 4px 0 hsl(0 0% 0% / 0.6),
       0 10px 22px -8px hsl(0 0% 0% / 0.8);
     text-shadow: 0 1px 2px hsl(0 0% 0% / 0.7);
-    transform: translateY(0);
     transition: transform 90ms ease-out, box-shadow 90ms ease-out, filter 150ms ease-out;
     -webkit-font-smoothing: antialiased;
   }
-  .btn-3d.btn-3d:hover { filter: brightness(1.15) saturate(1.1); transform: translateY(-2px); }
-  .btn-3d.btn-3d:active {
+  /* Lift/press motion only for in-flow buttons; floating buttons (absolute/fixed/sticky) keep their placement transforms. */
+  .btn-3d.btn-3d:not(.absolute):not(.fixed):not(.sticky) { position: relative; transform: translateY(0); }
+  .btn-3d.btn-3d:not(.absolute):not(.fixed):not(.sticky):hover { transform: translateY(-2px); }
+  .btn-3d.btn-3d:hover { filter: brightness(1.15) saturate(1.1); }
+  .btn-3d.btn-3d:not(.absolute):not(.fixed):not(.sticky):active {
     transform: translateY(3px);
     box-shadow:
       inset 0 1px 0 hsl(0 0% 100% / 0.2),
