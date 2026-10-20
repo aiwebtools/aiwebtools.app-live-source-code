@@ -89,7 +89,7 @@ const Logo = ({ compact = false }: { compact?: boolean }) => {
             <span className="relative z-10 bg-gradient-to-r from-cyan-400 via-cyan-300 to-cyan-500 bg-clip-text text-transparent logo-text-crisp hidden md:inline"> - AIWEBTOOLS.APP</span>
           </div>
           {!compact && (
-            <span className="text-xs text-cyan-200/80 font-medium hidden lg:block tracking-wide">
+            <span className="text-xs text-cyan-200/80 font-medium hidden 2xl:block tracking-wide">
               AN AI TOOLS DIRECTORY
             </span>
           )}

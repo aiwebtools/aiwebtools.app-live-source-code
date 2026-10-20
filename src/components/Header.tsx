@@ -50,12 +50,12 @@ const Header = () => {
       <div className="container mx-auto px-3 md:px-4 py-3 md:py-4">
         <div className="flex items-center justify-between min-h-[50px] md:min-h-[60px] gap-2">
           {/* Logo - smaller on mobile */}
-          <div className="flex-shrink min-w-0">
+          <div className="flex-shrink min-w-0 overflow-hidden">
             <Logo />
           </div>
           
           {/* Menu buttons - always visible */}
-          <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
+          <div className="relative z-10 flex items-center gap-2 md:gap-3 flex-shrink-0">
             <HeaderGptsButton />
             <a
               href="https://github.com/aiwebtools/"
