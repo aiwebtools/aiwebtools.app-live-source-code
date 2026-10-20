@@ -100,7 +100,7 @@ const webSearch = async (query: string): Promise<string> => {
       if (u) url = decodeURIComponent(u[1]);
       out.push(`- ${strip(m[2])} (${url}): ${strip(m[3])}`);
     }
-  } catch (e) { console.error("ddg failed", e); }
+  } catch (e) { console.error("ddg failed", e); attempts.push(`ddg: ${e instanceof Error ? e.message.slice(0, 120) : "unknown"}`); }
   if (!out.length) {
     // Backup source: Bing's results feed (approved by the owner as the free fallback).
     try {
