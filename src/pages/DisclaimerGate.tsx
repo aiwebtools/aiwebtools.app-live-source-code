@@ -285,7 +285,17 @@ const DisclaimerGate: React.FC = () => {
   const returnTo = typeof requestedPath === "string" && requestedPath.startsWith("/") && requestedPath !== "/welcome"
     ? requestedPath
     : "/";
-  
+
+  // Warm the home page (and its featured GPT/tool cards) while the visitor reads
+  // this screen, so entering the portal never shows black loading boxes.
+  useEffect(() => {
+    if (returnTo !== "/") return;
+    const warm = () => { void import("./Index").catch(() => {}); };
+    const ric = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback;
+    const id = ric ? ric(warm, { timeout: 800 }) : window.setTimeout(warm, 300);
+    return () => { if (!ric) window.clearTimeout(id); };
+  }, [returnTo]);
+
   // Random starting message, rotates every 2s
   const [messageIndex, setMessageIndex] = useState(() => 
     Math.floor(Math.random() * welcomeMessages.length)
