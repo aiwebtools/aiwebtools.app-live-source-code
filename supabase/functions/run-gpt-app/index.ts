@@ -559,7 +559,7 @@ Deno.serve(async (req) => {
                 searchFailed = true;
                 if (finalStatus === "ok") { finalStatus = "search_error"; finalError = `${reason} | query: ${q}`; }
                 toolResults.push({ role: "tool", tool_call_id: id, content: SEARCH_FALLBACK });
-                controller.enqueue(activityFrame(id, call.name, q, "output-error", reason));
+                controller.enqueue(activityFrame(id, call.name, q, "output-error", "Live web search is unavailable right now."));
                 controller.enqueue(frame(`\n\n_⚠ Live web sources were unavailable — continuing with background knowledge, clearly labeled._\n\n`));
               }
               continue;
