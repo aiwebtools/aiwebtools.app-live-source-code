@@ -4,7 +4,7 @@ import { Copy } from "lucide-react";
 import { createTimePortalEffect } from "@/utils/timeEffects";
 
 const CLONE_URL =
-  "https://lovable.dev/projects/bad09a84-f9cd-4cda-9d42-9c4cfafc2867?utm_source=lovable-badge";
+  "https://lovable.dev/projects/cf896208-dec6-4299-b946-c3c870c85ab3?utm_source=lovable-badge";
 
 const FloatingCloneButton = () => {
   const [mountNode, setMountNode] = useState<HTMLElement | null>(null);

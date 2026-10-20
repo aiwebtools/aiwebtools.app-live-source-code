@@ -175,7 +175,7 @@ const MobileMenu = () => {
       const meta = [
         ["# AIWebTools.ai — Complete AI Tools Directory Export"],
         ["# Website", "https://aiwebtools.app"],
-        ["# Clone This AI Tool Empire (FREE)", "https://lovable.dev/projects/bad09a84-f9cd-4cda-9d42-9c4cfafc2867?utm_source=lovable-badge"],
+        ["# Clone This AI Tool Empire (FREE)", "https://lovable.dev/projects/cf896208-dec6-4299-b946-c3c870c85ab3?utm_source=lovable-badge"],
         ["# Total Tools", String(allTools.length)],
         ["# Exported", new Date().toISOString()],
         [""],
@@ -405,7 +405,7 @@ const MobileMenu = () => {
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    handleExternalLink('https://lovable.dev/projects/bad09a84-f9cd-4cda-9d42-9c4cfafc2867?utm_source=lovable-badge', e);
+                    handleExternalLink('https://lovable.dev/projects/cf896208-dec6-4299-b946-c3c870c85ab3?utm_source=lovable-badge', e);
                   }}
                   className="relative overflow-hidden rounded-lg p-2.5 text-black font-black text-[11px] leading-tight active:scale-[0.97] transition-transform flex flex-col items-center justify-center gap-0.5 min-h-[64px] border border-yellow-200/60"
                   style={{
@@ -585,7 +585,7 @@ const MobileMenu = () => {
                   <DropdownMenuItem 
                      onClick={(e) => { 
                        e.preventDefault();
-                       handleExternalLink("https://lovable.dev/projects/bad09a84-f9cd-4cda-9d42-9c4cfafc2867?utm_source=lovable-badge", e);
+                       handleExternalLink("https://lovable.dev/projects/cf896208-dec6-4299-b946-c3c870c85ab3?utm_source=lovable-badge", e);
                      }}
                     className="text-yellow-100 hover:bg-gradient-to-r hover:from-yellow-500/20 hover:to-amber-500/20 mb-2 rounded flex items-center space-x-2 bg-gradient-to-r from-yellow-600/10 to-amber-600/10 border border-yellow-500/30 p-2"
                   >
