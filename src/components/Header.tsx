@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Github } from "lucide-react";
 import Logo from "./header/Logo";
+import HeaderGptsButton from "./header/HeaderGptsButton";
 import Navigation from "./header/Navigation";
 import MobileMenu from "./header/MobileMenu";
 import DesktopMenu from "./header/DesktopMenu";
@@ -55,15 +56,19 @@ const Header = () => {
           
           {/* Menu buttons - always visible */}
           <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
+            <HeaderGptsButton />
             <a
               href="https://github.com/aiwebtools/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="AIWebTools GitHub — open source code (opens in a new window)"
               title="AIWebTools GitHub — Open Source"
-              className="inline-flex items-center justify-center h-8 w-8 rounded-full border border-green-500/50 text-green-300 hover:text-white hover:bg-green-500/20 hover:border-green-400 transition-all duration-300"
+              className="inline-flex flex-col items-center justify-center gap-0.5 text-green-300 hover:text-white transition-colors"
             >
-              <Github className="h-4 w-4" />
+              <span className="inline-flex items-center justify-center h-8 w-8 rounded-full border border-green-500/50 hover:bg-green-500/20 hover:border-green-400 transition-all duration-300">
+                <Github className="h-4 w-4" />
+              </span>
+              <span className="text-[9px] font-bold leading-none tracking-wide">GIT</span>
             </a>
             {viewportMenu === "desktop" && (
               <JoinEmailListButton source="header" variant="compact" className="hidden md:inline-flex" />

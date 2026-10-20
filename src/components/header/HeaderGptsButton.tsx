@@ -1,6 +1,5 @@
 import { lazy, Suspense, useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { trackClick } from "@/utils/siteTracker";
 
 const BotSuiteMenuSection = lazy(() => import("./BotSuiteMenuSection"));
 
@@ -29,7 +28,6 @@ export default function HeaderGptsButton() {
           type="button"
           aria-label="GPTs — open our in-site custom bots and the Custom GPT Builder"
           title="GPTs — In-site custom bots"
-          onClick={() => { try { trackClick?.("header_gpts_icon"); } catch { /* noop */ } }}
           className="inline-flex flex-col items-center justify-center gap-0.5 text-green-300 hover:text-white transition-colors"
         >
           <span className="inline-flex items-center justify-center h-8 w-8 rounded-full border border-green-500/50 hover:bg-green-500/20 hover:border-green-400 transition-all duration-300">
