@@ -1,5 +1,8 @@
 # Chatbot completion roadmap
 
+# Silent bot voice repair (Oct 20)
+- [ ] Unlock automatic read-aloud from message submission and voice-enable gestures; verify real reply audio starts and mute still stops it.
+
 # Header GPTs shortcut + speed (Oct 20)
 - [x] Add GPTs waving-robot icon left of GitHub (labeled GIT) opening CUSTOM GPT BUILDER + bot category accordion; verify phone and desktop.
 - [x] Fix slow/black home screen before tool and GPT cards appear.
