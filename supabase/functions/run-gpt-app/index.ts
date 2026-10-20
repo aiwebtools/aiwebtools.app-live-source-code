@@ -58,21 +58,32 @@ const SEARCH_TOOL = {
 
 const webSearch = async (query: string): Promise<string> => {
   const out: string[] = [];
+  const attempts: string[] = [];
   // Primary: Perplexity Search (managed connection, 4 short results to keep cost/tokens minimal).
+  // Retry once: the Oct 13-15 outage showed transient gateway failures cost whole chats their research.
   const lovKey = Deno.env.get("LOVABLE_API_KEY"), pplxKey = Deno.env.get("PERPLEXITY_API_KEY");
   if (lovKey && pplxKey) {
-    try {
-      const r = await fetch("https://connector-gateway.lovable.dev/perplexity/search", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${lovKey}`, "X-Connection-Api-Key": pplxKey, "Content-Type": "application/json" },
-        body: JSON.stringify({ query: query.slice(0, 300), max_results: 4 }),
-      });
-      if (!r.ok) throw new Error(`Perplexity search [${r.status}]: ${(await r.text()).slice(0, 300)}`);
-      const data = await r.json();
-      for (const x of (data.results || []).slice(0, 4)) {
-        if (x?.url) out.push(`- ${x.title || x.url} (${x.url})${x.date ? ` [${x.date}]` : ""}: ${String(x.snippet || "").replace(/\s+/g, " ").slice(0, 400)}`);
+    for (let attempt = 1; attempt <= 2 && !out.length; attempt++) {
+      try {
+        const r = await fetch("https://connector-gateway.lovable.dev/perplexity/search", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${lovKey}`, "X-Connection-Api-Key": pplxKey, "Content-Type": "application/json" },
+          body: JSON.stringify({ query: query.slice(0, 300), max_results: 4 }),
+        });
+        if (!r.ok) throw new Error(`Perplexity search [${r.status}]: ${(await r.text()).slice(0, 300)}`);
+        const data = await r.json();
+        for (const x of (data.results || []).slice(0, 4)) {
+          if (x?.url) out.push(`- ${x.title || x.url} (${x.url})${x.date ? ` [${x.date}]` : ""}: ${String(x.snippet || "").replace(/\s+/g, " ").slice(0, 400)}`);
+        }
+        if (!out.length) throw new Error("Perplexity returned no results");
+      } catch (e) {
+        console.error(`perplexity failed (attempt ${attempt})`, e);
+        attempts.push(`perplexity#${attempt}: ${e instanceof Error ? e.message.slice(0, 120) : "unknown"}`);
+        if (attempt === 1) await new Promise((resolve) => setTimeout(resolve, 700));
       }
-    } catch (e) { console.error("perplexity failed", e); }
+    }
+  } else {
+    attempts.push("perplexity: missing LOVABLE_API_KEY or PERPLEXITY_API_KEY");
   }
   if (!out.length) try {
     const r = await fetch(`https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`, {
