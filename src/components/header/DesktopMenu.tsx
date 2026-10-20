@@ -402,7 +402,7 @@ const DesktopMenu = () => {
                       💾 Source Code
                     </DropdownMenuItem>
                     <DropdownMenuItem 
-                      onClick={(e) => { e.preventDefault(); handleExternalLink("https://lovable.dev/projects/bad09a84-f9cd-4cda-9d42-9c4cfafc2867?utm_source=lovable-badge", e); }}
+                      onClick={(e) => { e.preventDefault(); handleExternalLink("https://lovable.dev/projects/cf896208-dec6-4299-b946-c3c870c85ab3?utm_source=lovable-badge", e); }}
                       className="text-yellow-100 hover:bg-yellow-500/20 rounded text-sm px-2 py-1.5 bg-yellow-600/10 border border-yellow-500/30"
                     >
                       <Copy className="w-3 h-3 mr-2" />
