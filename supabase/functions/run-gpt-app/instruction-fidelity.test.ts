@@ -1,6 +1,6 @@
 // @ts-ignore -- Bun test runtime
 import { expect, test } from "bun:test";
-import { appendInstructionFidelity, isTimeMachineStoryBot, resolveOperationalInstructions } from "./instruction-fidelity.ts";
+import { appendInstructionFidelity, isStellarisSpaceBot, isTimeMachineStoryBot, resolveOperationalInstructions } from "./instruction-fidelity.ts";
 import { readFileSync } from "node:fs";
 import { unzipSync } from "fflate";
 import decoded from "./decoded-archive-instructions.json";
@@ -58,4 +58,12 @@ test("Time Machine execution guidance preserves the complete authored brain", ()
   expect(result.slice(0, original.length)).toBe(original);
   expect(result).toContain("TIME MACHINE STORYTELLING:");
   expect(appendInstructionFidelity("Original", "medicus", "Medicus")).not.toContain("TIME MACHINE STORYTELLING:");
+});
+test("Stellaris frontier guidance applies only to Stellaris and keeps the authored brain first", () => {
+  for (const slug of ["stellaris", "community-stellaris", "community-stellaris-space-explorer-v2"]) expect(isStellarisSpaceBot(slug, "Stellaris")).toBe(true);
+  expect(isStellarisSpaceBot("time-machine-gpt", "TIME MACHINE GPT")).toBe(false);
+  const result = appendInstructionFidelity("Original Stellaris directions", "stellaris", "Stellaris: AI Space Explorer");
+  expect(result.startsWith("Original Stellaris directions")).toBe(true);
+  expect(result).toContain("STELLARIS FRONTIER OPERATIONS:");
+  expect(appendInstructionFidelity("Original", "medicus", "Medicus")).not.toContain("STELLARIS FRONTIER OPERATIONS:");
 });
