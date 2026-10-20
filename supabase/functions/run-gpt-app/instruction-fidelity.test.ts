@@ -1,6 +1,6 @@
 // @ts-ignore -- Bun test runtime
 import { expect, test } from "bun:test";
-import { appendInstructionFidelity, resolveOperationalInstructions } from "./instruction-fidelity.ts";
+import { appendInstructionFidelity, isTimeMachineStoryBot, resolveOperationalInstructions } from "./instruction-fidelity.ts";
 import { readFileSync } from "node:fs";
 import { unzipSync } from "fflate";
 import decoded from "./decoded-archive-instructions.json";
@@ -41,4 +41,21 @@ test("binary Gemini archives use their complete decoded instruction field", () =
     expect(resolveOperationalInstructions("binary container", slug)).toBe(original);
     expect(original.length).toBeGreaterThan(6000);
   }
+});
+
+test("imaginative delivery applies to Time Machine and its existing variants only", () => {
+  for (const slug of ["time-machine-gpt", "time-machine-gpt-v2", "time-machine-of-unwritten-history-gpt", "nativeamerican-timemachine"]) {
+    expect(isTimeMachineStoryBot(slug, "TIME MACHINE GPT")).toBe(true);
+  }
+  for (const name of ["Medicus", "Trader GPT", "Historical Headlines GPT", "Automobile GPT"]) {
+    expect(isTimeMachineStoryBot("other-bot", name)).toBe(false);
+  }
+});
+
+test("Time Machine execution guidance preserves the complete authored brain", () => {
+  const original = resolveOperationalInstructions("Original time travel instructions\n  Keep these.", "time-machine-gpt");
+  const result = appendInstructionFidelity(original, "time-machine-gpt", "TIME MACHINE GPT");
+  expect(result.slice(0, original.length)).toBe(original);
+  expect(result).toContain("TIME MACHINE STORYTELLING:");
+  expect(appendInstructionFidelity("Original", "medicus", "Medicus")).not.toContain("TIME MACHINE STORYTELLING:");
 });
