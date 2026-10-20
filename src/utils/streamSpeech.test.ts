@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { expect, test } from "bun:test";
-import { beginSpeechClip, decodePCM } from "./streamSpeech";
+import { beginSpeechClip, decodePCM, unlockSpeechPlayback } from "./streamSpeech";
 
 const bytes = (...values: number[]) => Uint8Array.from(values);
 
@@ -33,4 +33,20 @@ test("streamed preview rejects missing completion rather than silently succeedin
     expect(clip.started).toBe(true);
     expect(clip.error?.message).toBe("The voice clip ended before it was complete.");
   } finally { globalThis.fetch = original; }
+});
+
+test("gesture unlock resumes a suspended audio context before playback", async () => {
+  const original = globalThis.window;
+  let resumes = 0;
+  class RestrictedAudioContext {
+    state = "suspended";
+    async resume() { resumes++; this.state = "running"; }
+  }
+  globalThis.window = { AudioContext: RestrictedAudioContext };
+  try {
+    await unlockSpeechPlayback();
+    expect(resumes).toBe(1);
+    await unlockSpeechPlayback();
+    expect(resumes).toBe(1);
+  } finally { globalThis.window = original; }
 });
