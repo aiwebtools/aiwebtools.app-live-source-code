@@ -37,7 +37,7 @@ export default function HeaderGptsButton() {
         </button>
       </PopoverTrigger>
       <PopoverContent align="end" sideOffset={8}
-        className="z-[200] w-[min(92vw,22rem)] max-h-[75vh] overflow-y-auto border-primary/50 bg-background/98 p-3">
+        className="z-[200] w-[min(92vw,22rem)] max-h-[75vh] overflow-y-auto border-primary/50 bg-background p-3">
         <Suspense fallback={<p className="p-2 text-xs text-muted-foreground">Loading bots…</p>}>
           <BotSuiteMenuSection gptsOnly onNavigate={() => setOpen(false)} />
         </Suspense>
