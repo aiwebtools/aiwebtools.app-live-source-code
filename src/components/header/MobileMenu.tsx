@@ -21,6 +21,7 @@ import Logo from "./Logo";
 import GlobalSearchBar, { prefetchGlobalSearchBar } from "@/components/LazyGlobalSearchBar";
 import JoinEmailListButton from "@/components/JoinEmailListButton";
 import DownloadLibraryButton from "@/components/DownloadLibraryButton";
+import LocalModelsAccordion from "@/components/LocalModelsAccordion";
 import BotSuiteMenuSection from "./BotSuiteMenuSection";
 
 

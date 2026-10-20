@@ -3,6 +3,7 @@ import { ExternalLink, Plus, Search, Download, Github, Cpu } from "lucide-react"
 import { useNavigate } from "react-router-dom";
 import { downloadToolsCSV } from "@/utils/csvExport";
 import { createConfettiCelebration } from "@/utils/effects/audioEffects";
+import LocalModelsAccordion from "@/components/LocalModelsAccordion";
 
 const TOOL_COUNT = 5000;
 
