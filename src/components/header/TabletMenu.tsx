@@ -21,6 +21,7 @@ import GlobalSearchBar from "@/components/LazyGlobalSearchBar";
 import Logo from "./Logo";
 import { useRecentlyVisitedTools } from "@/hooks/useRecentlyVisitedTools";
 import DownloadLibraryButton from "@/components/DownloadLibraryButton";
+import LocalModelsAccordion from "@/components/LocalModelsAccordion";
 import BotSuiteMenuSection from "./BotSuiteMenuSection";
 
 
@@ -286,6 +287,9 @@ const TabletMenu = () => {
                     label="Free 3,200+ GPT Instructions"
                     onBeforeOpen={() => setIsMenuOpen(false)}
                   />
+                </div>
+                <div className="py-1">
+                  <LocalModelsAccordion onNavigate={() => setIsMenuOpen(false)} />
                 </div>
                 <DropdownMenuItem onClick={handleDownloadAllToolsCSV} className="text-cyan-100 hover:bg-cyan-500/20 rounded">
                   <Download className="w-4 h-4 mr-2" />

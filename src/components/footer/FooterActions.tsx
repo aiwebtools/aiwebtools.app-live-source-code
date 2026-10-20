@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Plus, Search, Download, Github, Cpu } from "lucide-react";
+import { ExternalLink, Plus, Search, Download, Github } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { downloadToolsCSV } from "@/utils/csvExport";
 import { createConfettiCelebration } from "@/utils/effects/audioEffects";
+import LocalModelsAccordion from "@/components/LocalModelsAccordion";
 
 const TOOL_COUNT = 5000;
 
@@ -108,15 +109,9 @@ const FooterActions = ({ handleExternalLink, handleSubmitTool, handleRequestTool
            AWT GITHUB — OPEN SOURCE
         </Button>
 
-        <Button
-          onClick={(e) => handleExternalLink('https://lmstudio.ai/download/bionic/latest/win32/x64', e)}
-          variant="outline"
-          size="lg"
-          className="w-full sm:w-auto border-emerald-500 text-emerald-300 hover:bg-emerald-500/20 hover:text-white transition-all duration-300 px-6 py-3 h-auto min-h-[3rem] whitespace-nowrap text-sm md:text-base font-bold tracking-wide"
-        >
-          <Cpu className="mr-2 h-5 w-5 flex-shrink-0" />
-           DOWNLOAD LOCAL MODELS TO RUN ON YOUR PC
-        </Button>
+        <div className="w-full sm:w-auto sm:min-w-[22rem]">
+          <LocalModelsAccordion />
+        </div>
       </div>
     </div>
   );

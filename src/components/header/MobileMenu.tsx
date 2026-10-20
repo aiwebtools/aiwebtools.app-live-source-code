@@ -1,5 +1,5 @@
 import { downloadAllOperationalInstructions } from "@/utils/downloads";
-import { Menu, Phone, X, Globe, ChevronDown, Download, Trees, Clapperboard, Heart, Copy, Clock, Github, Cpu } from "lucide-react";
+import { Menu, Phone, X, Globe, ChevronDown, Download, Trees, Clapperboard, Heart, Copy, Clock, Github } from "lucide-react";
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import { useState, useRef, useCallback, useEffect, startTransition } from "react";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +21,7 @@ import Logo from "./Logo";
 import GlobalSearchBar, { prefetchGlobalSearchBar } from "@/components/LazyGlobalSearchBar";
 import JoinEmailListButton from "@/components/JoinEmailListButton";
 import DownloadLibraryButton from "@/components/DownloadLibraryButton";
+import LocalModelsAccordion from "@/components/LocalModelsAccordion";
 import BotSuiteMenuSection from "./BotSuiteMenuSection";
 
 
@@ -356,19 +357,7 @@ const MobileMenu = () => {
                   <Download className="h-4 w-4" aria-hidden="true" />
                   Download All 4,000+ AI Tools (CSV)
                 </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleExternalLink('https://lmstudio.ai/download/bionic/latest/win32/x64', e);
-                  }}
-                  className="min-h-11 w-full justify-center gap-2 border-emerald-500/60 bg-background text-xs font-bold text-emerald-300"
-                >
-                  <Cpu className="h-4 w-4" aria-hidden="true" />
-                  DOWNLOAD LOCAL MODELS TO RUN ON YOUR PC
-                </Button>
+                <LocalModelsAccordion onNavigate={closeMenu} />
               </div>
 
               <>
