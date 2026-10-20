@@ -1,5 +1,5 @@
 import { downloadAllOperationalInstructions } from "@/utils/downloads";
-import { Menu, Phone, X, Globe, ChevronDown, Download, Trees, Clapperboard, Heart, Copy, Clock, Github, Cpu } from "lucide-react";
+import { Menu, Phone, X, Globe, ChevronDown, Download, Trees, Clapperboard, Heart, Copy, Clock, Github } from "lucide-react";
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import { useState, useRef, useCallback, useEffect, startTransition } from "react";
 import { useNavigate } from "react-router-dom";
