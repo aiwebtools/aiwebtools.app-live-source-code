@@ -34,13 +34,15 @@ export type SpeechClip = {
   /** True once the first audio samples have been received. */
   readonly started: boolean;
   abort: () => void;
+  /** Longest believable duration (seconds); audio beyond it is a model re-read and is dropped. */
+  maxSeconds?: number;
 };
 
 /**
  * Start fetching and reading one spoken clip. Audio is drained into memory right
  * away so the next sentence is ready before the current one finishes playing.
  */
-export const beginSpeechClip = (url: string, init: RequestInit, outer: AbortSignal): SpeechClip => {
+export const beginSpeechClip = (url: string, init: RequestInit, outer: AbortSignal, maxSeconds?: number): SpeechClip => {
   const samples: Float32Array<ArrayBuffer>[] = [];
   let finished = false;
   let error: Error | null = null;
@@ -120,6 +122,7 @@ export const beginSpeechClip = (url: string, init: RequestInit, outer: AbortSign
     get error() { return error; },
     get started() { return started; },
     abort: () => controller.abort(),
+    maxSeconds,
   };
 };
 
@@ -161,8 +164,10 @@ export const playSpeechClip = async (clip: SpeechClip, speed = 1): Promise<void>
   const rate = Math.min(1.6, Math.max(0.5, speed));
   let playhead = ctx.currentTime + 0.05;
   let tail: Promise<void> = Promise.resolve();
+  let heardSeconds = 0;
 
   for (;;) {
+    if (clip.maxSeconds && heardSeconds > clip.maxSeconds) { clip.abort(); break; }
     const chunk = clip.next();
     if (!chunk) {
       if (clip.error) throw clip.error;
@@ -183,8 +188,9 @@ export const playSpeechClip = async (clip: SpeechClip, speed = 1): Promise<void>
     playhead = Math.max(playhead, ctx.currentTime + 0.02);
     source.start(playhead);
     playhead += buffer.duration / rate;
+    heardSeconds += buffer.duration;
   }
 
   await tail;
-  if (clip.error) throw clip.error;
+  if (clip.error && !(clip.maxSeconds && heardSeconds > clip.maxSeconds)) throw clip.error;
 };
