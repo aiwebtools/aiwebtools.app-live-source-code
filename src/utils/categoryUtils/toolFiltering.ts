@@ -153,17 +153,68 @@ export const getToolsByCategory = (tools: Tool[], categoryName: string): Tool[] 
 let cachedMainCategoryCounts: MainCategoryCounts | null = null;
 let cachedMainCategoryCountsToolsLength: number = 0;
 
-export const getMainCategoriesWithCounts = (tools: Tool[]): MainCategoryCounts => {
-  // Return cached if tools haven't changed
+const COUNTS_STORAGE_KEY = "awt:main-category-counts:v1";
+
+/** Instant counts from memory or a previous visit (same tool total), else null. */
+export const peekMainCategoryCounts = (tools: Tool[]): MainCategoryCounts | null => {
   if (cachedMainCategoryCounts && cachedMainCategoryCountsToolsLength === tools.length) {
     return cachedMainCategoryCounts;
   }
-  
+  try {
+    const raw = typeof localStorage !== "undefined" ? localStorage.getItem(COUNTS_STORAGE_KEY) : null;
+    if (raw) {
+      const parsed = JSON.parse(raw) as { n: number; counts: MainCategoryCounts };
+      if (parsed?.n === tools.length && parsed.counts) {
+        cachedMainCategoryCounts = parsed.counts;
+        cachedMainCategoryCountsToolsLength = tools.length;
+        return parsed.counts;
+      }
+    }
+  } catch { /* storage unavailable */ }
+  return null;
+};
+
+const storeCounts = (tools: Tool[], counts: MainCategoryCounts) => {
+  cachedMainCategoryCounts = counts;
+  cachedMainCategoryCountsToolsLength = tools.length;
+  try { localStorage.setItem(COUNTS_STORAGE_KEY, JSON.stringify({ n: tools.length, counts })); } catch { /* ignore */ }
+};
+
+/**
+ * Same counts as getMainCategoriesWithCounts, but yields to the browser
+ * between categories so scrolling and taps never freeze while counting.
+ */
+export const getMainCategoriesWithCountsAsync = async (tools: Tool[]): Promise<MainCategoryCounts> => {
+  const ready = peekMainCategoryCounts(tools);
+  if (ready) return ready;
+  const counts: MainCategoryCounts = {};
+  for (const mainCat of mainCategories) {
+    await new Promise<void>((resolve) => {
+      const ric = (window as any).requestIdleCallback as ((cb: () => void, o?: { timeout: number }) => void) | undefined;
+      if (ric) ric(() => resolve(), { timeout: 300 }); else setTimeout(resolve, 16);
+    });
+    counts[mainCat.name] = countToolsForMainCategory(mainCat.name, tools);
+  }
+  storeCounts(tools, counts);
+  return counts;
+};
+
+export const getMainCategoriesWithCounts = (tools: Tool[]): MainCategoryCounts => {
+  const ready = peekMainCategoryCounts(tools);
+  if (ready) return ready;
   const mainCategoryCounts: MainCategoryCounts = {};
-  
-  // Calculate counts for each main category using CORRECTED detection
   mainCategories.forEach(mainCat => {
+    mainCategoryCounts[mainCat.name] = countToolsForMainCategory(mainCat.name, tools);
+  });
+  storeCounts(tools, mainCategoryCounts);
+  return mainCategoryCounts;
+};
+
+const countToolsForMainCategory = (mainCatName: string, tools: Tool[]): number => {
+  const mainCat = { name: mainCatName };
+  {
     let toolCount = 0;
+    
     
     switch (mainCat.name) {
       case "ALL AI TOOLS": {
