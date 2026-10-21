@@ -5,7 +5,7 @@ Deno.test("personal provider verification is read-only and reveals no key", asyn
   const original = globalThis.fetch;
   globalThis.fetch = async (input, init) => {
     assertEquals(String(input), "https://api.deepseek.com/models");
-    assertEquals(init?.method || "GET", "GET");
+    assertEquals((init as { method?: string } | undefined)?.method || "GET", "GET");
     return Response.json({ data: [{ id: "deepseek-flash" }, { id: "unknown" }] });
   };
   try {
@@ -31,7 +31,7 @@ Deno.test("all four direct adapters send instructions and preserve tool follow-u
         sawRequest = true;
         const url = String(input);
         assert(!url.includes("lovable"));
-        const payload = JSON.parse(String(init?.body));
+        const payload = JSON.parse(String((init as { body?: unknown } | undefined)?.body));
         assert(JSON.stringify(payload).includes("Authored bot instructions unchanged"));
         assert(JSON.stringify(payload).includes("Moon source result"));
         assert(!JSON.stringify(payload).includes("test-placeholder-not-a-credential"));
