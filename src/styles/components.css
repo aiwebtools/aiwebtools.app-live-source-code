@@ -643,9 +643,11 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
 .studio-capability { font-size: 13px; }
 .studio-settings [role="combobox"] { border-radius: 10px; }
 .studio-settings [role="combobox"] > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
-.studio-starter { white-space: normal; height: auto; min-height: 56px; padding: 14px 16px; line-height: 1.55; text-align: left; justify-content: flex-start; font-size: 14px; overflow-wrap: anywhere; min-width: 0; }
-.studio .gpt-msg-bot { font-size: 15px; line-height: 1.7; overflow-wrap: anywhere; }
-.studio .gpt-msg-user { font-size: 15px; line-height: 1.55; border-radius: 14px; overflow-wrap: anywhere; }
+.studio-starter { white-space: normal; height: auto; min-height: 44px; padding: 8px 10px; line-height: 1.45; text-align: left; justify-content: flex-start; font-size: 13px; overflow-wrap: anywhere; min-width: 0; width: 100%; }
+.studio-starter-label { font-size: 10px; font-weight: 700; letter-spacing: 0; color: hsl(var(--primary)); }
+.studio .gpt-msg-bot { font-size: 14px; line-height: 1.55; overflow-wrap: anywhere; }
+.studio .gpt-msg-user { font-size: 14px; line-height: 1.55; border-radius: 14px; overflow-wrap: anywhere; }
+.studio .gpt-generated-content { font-size: inherit; line-height: inherit; }
 .studio-main { border-radius: 14px; overflow: hidden; }
 .studio .gpt-room-input { border-radius: 14px; overflow: hidden; border-width: 1px; }
 .studio .gpt-room-input textarea { border: 0 !important; box-shadow: none !important; background: transparent; font-size: 15px; line-height: 1.5; }
@@ -653,7 +655,7 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
 .studio .gpt-room-send { border-radius: 10px; }
 .studio-status { font-size: 10px; }
 @media (min-width: 1280px) { .studio-grid { grid-template-columns: 250px minmax(0, 1fr) 280px; } }
-@media (max-width: 639px) { .studio-status { font-size: 9px; } .studio .gpt-msg-bot, .studio .gpt-msg-user { font-size: 15px; } .studio-main { border-radius: 12px; } }
+@media (max-width: 639px) { .studio-status { font-size: 9px; } .studio .gpt-msg-bot, .studio .gpt-msg-user { font-size: 14px; } .studio-main { border-radius: 12px; } }
 
 /* Phone reference: luminous glass, comfortable reading, no squared neon edges. */
 .studio {
@@ -680,7 +682,7 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
 }
 .studio .studio-nav-control { border-radius: 50%; }
 .studio .studio-bot-menu { width: auto; min-width: 68px; border-radius: 12px; padding: 0 10px; }
-.studio .studio-starter { border-radius: 12px; border-color: hsl(var(--studio-glow) / .4); box-shadow: none; }
+.studio .studio-starter { border-radius: 8px; border-color: hsl(var(--studio-glow) / .4); box-shadow: none; }
 .studio .studio-messages .gpt-msg-user { border-radius: 18px; }
 .studio .gpt-msg-bot button.interactive-button { border-radius: 10px; border-image: none !important; box-shadow: none; }
 .studio .studio-brand, .studio .studio-bot-header, .studio .studio-status { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
@@ -730,8 +732,8 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
   .studio-header-pdf .op-gold-btn { min-height: 36px; padding: 6px 10px; font-size: 12px; }
   .studio-messages { padding: 14px 12px; gap: 22px; }
   .studio-messages > .group { max-width: 100%; width: 100%; }
-  .studio .gpt-msg-user { border-radius: 18px; padding: 14px 16px; font-size: 16px; line-height: 1.6; }
-  .studio .gpt-msg-bot { font-size: 16px; line-height: 1.65; }
+  .studio .gpt-msg-user { border-radius: 18px; padding: 10px 12px; font-size: 14px; line-height: 1.55; }
+  .studio .gpt-msg-bot { font-size: 14px; line-height: 1.55; }
   .studio .gpt-msg-meta { font-size: 12px; margin-bottom: 8px; }
   .studio .gpt-msg-avatar { width: 28px; height: 28px; }
   .studio-composer { border-top: 0; padding: 10px 10px max(10px, env(safe-area-inset-bottom)); }
