@@ -15,10 +15,18 @@ export const VOICE_MAP: Record<string, string> = {
   verse: "TX3LPaxmHKxFdv7VOQHJ", // Liam – energetic
 };
 
+// Community titles carry dates/version notes ("FINAL 9-14-2024 works excellent"); speak a clean name.
+export function speakableName(name: string): string {
+  const n = clean(name).replace(/[_|]/g, " ").replace(/\b\d{1,4}([-/.]\d{1,4})*\b/g, " ")
+    .replace(/\b(final|amazing|perfect|works?|excellent|new|latest|version|historically accurate|v\d*|copy|updated?)\b/gi, " ")
+    .replace(/[-–(),]+\s*$/g, "").replace(/\s+/g, " ").trim();
+  return n.length >= 3 ? n.replace(/\b(\w)(\w*)\b/g, (_, a, b) => a.toUpperCase() + (b === b.toUpperCase() && b.length <= 3 ? b : b.toLowerCase())).replace(/\bGpt\b/g, "GPT") : clean(name);
+}
+
 export function buildBotIntro(name: string, tagline: string | null): string {
-  const n = clean(name);
-  if (/time.?machine|father.?time/i.test(n)) {
-    return `Great Scott! Greetings, time traveler. I am Father Time, and this is ${n}, an immersive and fun way to learn history, and perhaps discover something new. Now, dear traveler, enter your coordinates in the text field below: the exact date, time, year and location you wish to travel to. Give me your destination, and at your command, we will begin our digital time-traveling adventure.`;
+  const n = speakableName(name);
+  if (/time.?machine|father.?time/i.test(n) && !/black|native|unwritten/i.test(n)) {
+    return `Great Scott! Greetings, time traveler. I am Father Time, and this is Time Machine GPT, an immersive and fun way to learn history, and perhaps discover something new. Now, dear traveler, enter your coordinates in the text field below: the exact date, time, year and location you wish to travel to. Give me your destination, and at your command, we will begin our digital time-traveling adventure.`;
   }
   let purpose = clean(tagline || "").replace(/^(i am|i'm)\s+/i, "");
   const sentences = purpose.match(/[^.!?]+[.!?]+/g) || (purpose ? [purpose + "."] : []);
