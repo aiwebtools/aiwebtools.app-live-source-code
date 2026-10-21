@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import type { Session } from "@supabase/supabase-js";
 import { KeyRound, ExternalLink, Check, Loader2 } from "lucide-react";
@@ -11,6 +11,7 @@ import { clearPersonalAi, setPersonalAi, usePersonalAi } from "@/utils/personalA
 
 function ProviderKey({ provider, session, busy }: { provider: PersonalProvider; session: Session | null; busy: boolean }) {
   const config = PERSONAL_PROVIDERS[provider];
+  const keyId = useId();
   const [key, setKey] = useState("");
   const [models, setModels] = useState<string[]>([]);
   const [model, setModel] = useState("");
@@ -44,8 +45,8 @@ function ProviderKey({ provider, session, busy }: { provider: PersonalProvider; 
   return <details className="mt-3 border-b border-border pb-3">
     <summary className="cursor-pointer py-2 text-sm font-semibold text-foreground">{config.name}</summary>
     <div className="space-y-2 pt-2" data-private-ai-key>
-      <Label htmlFor={`personal-key-${provider}`}>{config.name} API key</Label>
-      <Input id={`personal-key-${provider}`} type="password" autoComplete="off" spellCheck={false} value={key} disabled={!session || busy} placeholder="Paste your API key" onChange={(event) => { revision.current++; request.current?.abort(); setKey(event.target.value); setModels([]); setModel(""); setNotice(""); }} />
+      <Label htmlFor={keyId}>{config.name} API key</Label>
+      <Input id={keyId} type="password" autoComplete="off" spellCheck={false} value={key} disabled={!session || busy} placeholder="Paste your API key" onChange={(event) => { revision.current++; request.current?.abort(); setKey(event.target.value); setModels([]); setModel(""); setNotice(""); }} />
       <a href={config.keyUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-primary underline underline-offset-4">Get a {config.name} API key<ExternalLink className="h-3 w-3" /></a>
       <Button variant="outline" className="w-full gap-2" disabled={!session || !key.trim() || checking || busy} onClick={() => void check()}>{checking ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <KeyRound className="h-3.5 w-3.5" />}Check key</Button>
       {models.length > 0 && <><Select value={model} disabled={busy} onValueChange={setModel}><SelectTrigger aria-label={`${config.name} personal model`}><SelectValue /></SelectTrigger><SelectContent className="z-[190]">{models.map((id) => <SelectItem key={id} value={id}>{id}</SelectItem>)}</SelectContent></Select>

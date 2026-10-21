@@ -4,7 +4,8 @@
 - [x] Replace operational-text starters with one short purpose-trigger prompt per bot; label STARTER PROMPT and reduce chat text to 14px. All 422 catalog families/variants pass coverage; screenshot bots and Book Writer verified on phone, real reply and desktop checked with no page errors. Frontend remains preview-only.
 - [x] Deploy supplemental immersive delivery guidance without changing originals. Eighteen tests pass; real Aether two-turn check produces an imaginative scene, though still adds a framing paragraph on the follow-up. Prompt guidance cannot guarantee every future reply.
 - [x] Approve secure personal-provider key support for OpenAI, Gemini, Claude and DeepSeek with key-acquisition links, explicit activation and unchanged Lovable default.
-- [ ] Add and verify personal-key controls, authenticated direct provider routing, tool/history continuation and key privacy. Real paid-provider end-to-end checks need authorized provider credentials and an authenticated session; external unmanaged auth cannot be minted here.
+- [x] Add personal-key controls, authenticated direct provider routing, tool/history continuation and key privacy. Phone/desktop controls and sign-in links verified without page errors; 449 regression tests and four mocked direct-provider tests pass, including native Gemini tool-signature continuity; build OK.
+- [ ] Verify real paid-provider activation and replies: blocked by unavailable authorized provider credentials and external unmanaged authentication; no authenticated end-to-end claim. Frontend remains preview-only until publication.
 - [x] Explain local-model hosting and remaining voice/image/search costs in the approval plan; no silent credit-exhaustion fallback or free-hosting promise.
 
 # Recent conversation response review (Oct 21)

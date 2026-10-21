@@ -1,11 +1,11 @@
 import { assertEquals, assert } from "https://deno.land/std@0.224.0/assert/mod.ts";
-import { callPersonalProvider, checkPersonalProvider } from "./personal-provider.ts";
+import { callPersonalProvider, checkPersonalProvider, type PersonalProviderRun } from "./personal-provider.ts";
 
 Deno.test("personal provider verification is read-only and reveals no key", async () => {
   const original = globalThis.fetch;
   globalThis.fetch = async (input, init) => {
     assertEquals(String(input), "https://api.deepseek.com/models");
-    assertEquals(init?.method || "GET", "GET");
+    assertEquals((init as { method?: string } | undefined)?.method || "GET", "GET");
     return Response.json({ data: [{ id: "deepseek-flash" }, { id: "unknown" }] });
   };
   try {
@@ -31,7 +31,7 @@ Deno.test("all four direct adapters send instructions and preserve tool follow-u
         sawRequest = true;
         const url = String(input);
         assert(!url.includes("lovable"));
-        const payload = JSON.parse(String(init?.body));
+        const payload = JSON.parse(String((init as { body?: unknown } | undefined)?.body));
         assert(JSON.stringify(payload).includes("Authored bot instructions unchanged"));
         assert(JSON.stringify(payload).includes("Moon source result"));
         assert(!JSON.stringify(payload).includes("test-placeholder-not-a-credential"));
@@ -90,5 +90,33 @@ Deno.test("provider access failure remains terminal and sanitized", async () => 
     assertEquals(response.status, 401);
     assertEquals(requests, 1);
     assert(!(await response.text()).includes("sensitive"));
+  } finally { globalThis.fetch = original; }
+});
+
+Deno.test("Gemini native thought signature survives the real two-step tool stream", async () => {
+  const original = globalThis.fetch;
+  const run: PersonalProviderRun = {};
+  let calls = 0;
+  const tools = [{ function: { name: "web_search", description: "Search", parameters: { type: "object", properties: { query: { type: "string" } }, required: ["query"], additionalProperties: false } } }];
+  const config = { provider: "gemini" as const, apiKey: "test-placeholder-not-a-credential", model: "gemini-flash-latest" };
+  const messages: { role: string; content: unknown; tool_calls?: unknown; tool_call_id?: string }[] = [{ role: "system", content: "Keep original instructions" }, { role: "user", content: "Search moon facts" }];
+  globalThis.fetch = async (_input, init) => {
+    calls++;
+    if (calls === 1) return new Response(`data: ${JSON.stringify({ candidates: [{ content: { role: "model", parts: [{ functionCall: { name: "web_search", args: { query: "moon" } }, thoughtSignature: "test-native-signature" }] }, finishReason: "STOP", index: 0 }] })}\n\n`, { headers: { "Content-Type": "text/event-stream" } });
+    const payload = JSON.parse(String((init as { body?: unknown } | undefined)?.body));
+    assert(JSON.stringify(payload).includes("test-native-signature"));
+    assert(!JSON.stringify(payload).includes("skip_thought_signature_validator"));
+    assert(JSON.stringify(payload).includes("Moon source"));
+    return new Response(`data: ${JSON.stringify({ candidates: [{ content: { role: "model", parts: [{ text: "Moon answer" }] }, finishReason: "STOP", index: 0 }] })}\n\n`, { headers: { "Content-Type": "text/event-stream" } });
+  };
+  try {
+    const first = await callPersonalProvider(config, { messages, tools }, new AbortController().signal, run);
+    const chunks = (await first.text()).split("\n").filter((line) => line.startsWith("data: {")).map((line) => JSON.parse(line.slice(6)));
+    const call = chunks.flatMap((chunk) => chunk.choices?.[0]?.delta?.tool_calls || [])[0];
+    assert(call?.id);
+    messages.push({ role: "assistant", content: null, tool_calls: [{ id: call.id, type: "function", function: call.function }] }, { role: "tool", tool_call_id: call.id, content: "Moon source" });
+    const follow = await callPersonalProvider(config, { messages, tools }, new AbortController().signal, run);
+    assert((await follow.text()).includes("Moon answer"));
+    assertEquals(calls, 2);
   } finally { globalThis.fetch = original; }
 });

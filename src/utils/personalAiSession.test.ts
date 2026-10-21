@@ -11,4 +11,5 @@ test("personal key activation stays owner-bound and clears explicitly", () => {
   setPersonalAi("owner-a", value);
   clearPersonalAi();
   expect(getPersonalAi("owner-a")).toBeNull();
+  expect(getPersonalAi()).toBeNull();
 });
