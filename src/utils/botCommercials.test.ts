@@ -1,8 +1,8 @@
 // @ts-ignore -- Bun test runtime import
 import { expect, test } from "bun:test";
 import { commercialEmbed, commercialKey, hasSeenCommercial, markCommercialSeen } from "./botCommercials";
-test("existing YouTube commercials autoplay muted", () => {
-  expect(commercialEmbed("https://youtu.be/J31nNY5_PB4")).toBe("https://www.youtube-nocookie.com/embed/J31nNY5_PB4?autoplay=1&mute=1&playsinline=1&rel=0");
+test("existing YouTube commercials autoplay with sound and report when they end", () => {
+  expect(commercialEmbed("https://youtu.be/J31nNY5_PB4")).toBe("https://www.youtube-nocookie.com/embed/J31nNY5_PB4?autoplay=1&mute=0&playsinline=1&rel=0&enablejsapi=1");
   expect(commercialEmbed("https://example.com/fake")).toBeNull();
 });
 test("commercials are once per bot per user", () => {
