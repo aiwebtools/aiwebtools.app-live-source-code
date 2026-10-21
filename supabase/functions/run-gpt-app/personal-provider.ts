@@ -5,6 +5,9 @@ import { createAnthropic } from "npm:@ai-sdk/anthropic@4.0.85";
 import { createDeepSeek } from "npm:@ai-sdk/deepseek@3.0.70";
 import { PERSONAL_PROVIDERS, personalProviderError, type PersonalAi } from "../_shared/personal-provider-policy.ts";
 
+// SDK warning payloads can carry native tool metadata; never emit them to logs.
+(globalThis as typeof globalThis & { AI_SDK_LOG_WARNINGS?: boolean }).AI_SDK_LOG_WARNINGS = false;
+
 type WireMessage = { role: string; content: unknown; tool_call_id?: string; tool_calls?: unknown };
 type WireTool = { function: { name: string; description: string; parameters: Record<string, unknown> } };
 export type PersonalProviderRun = { history?: ModelMessage[] };
@@ -95,7 +98,6 @@ export async function callPersonalProvider(config: PersonalAi, payload: Record<s
       abortSignal: signal, maxRetries: 0,
       providerOptions: config.provider === "openai" ? { openai: { store: false, ...(reasoning ? { forceReasoning: true, reasoningEffort: "low", reasoningSummary: "auto", include: ["reasoning.encrypted_content"] } : config.model === "gpt-6-luna" ? { reasoningEffort: "none" } : {}) } } : undefined,
       onError: () => { /* Never log SDK error objects: they can contain request headers. */ },
-      onWarnings: () => { /* Warnings may contain replayed tool metadata; omit them. */ },
     });
     const iterator = result.fullStream[Symbol.asyncIterator]();
     const first = await iterator.next();
