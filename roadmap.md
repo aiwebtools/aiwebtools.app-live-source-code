@@ -1,8 +1,8 @@
 # Chatbot completion roadmap
 
 # Recent conversation response review (Oct 21)
-- [ ] Review recent real conversations and identify specific response defects.
-- [ ] Add scoped execution supplements only, preserving original directions; test and verify real replies.
+- [x] Review recent real conversations: duplicate intake, image re-prompts, exposed tool/scratchpad text, game-menu loops and invented diagnostic evidence identified.
+- [x] Deploy supplemental continuity and scoped 3D Concept, Survivalist, card-game and Stellaris improvements without editing originals; 437 preservation/context tests pass. Real Stellaris retest stopped invented numeric charts and generated diagnostic images; its authored mission questionnaire still appears. This representative check does not verify every affected bot's future output.
 
 # Silent bot voice repair (Oct 20)
 - [x] Unlock automatic read-aloud from message submission and voice-enable gestures; real reply playback and mute verified, six speech tests pass. Physical iPhone audio remains unverified; frontend update is preview-only until published.
