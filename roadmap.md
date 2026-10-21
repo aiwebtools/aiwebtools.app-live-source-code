@@ -1,5 +1,9 @@
 # Chatbot completion roadmap
 
+# Recent conversation response review (Oct 21)
+- [ ] Review recent real conversations and identify specific response defects.
+- [ ] Add scoped execution supplements only, preserving original directions; test and verify real replies.
+
 # Silent bot voice repair (Oct 20)
 - [x] Unlock automatic read-aloud from message submission and voice-enable gestures; real reply playback and mute verified, six speech tests pass. Physical iPhone audio remains unverified; frontend update is preview-only until published.
 
