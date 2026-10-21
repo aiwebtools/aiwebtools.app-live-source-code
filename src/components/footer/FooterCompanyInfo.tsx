@@ -13,12 +13,12 @@ const FooterCompanyInfo = () => {
     <div className="space-y-4">
       {/* Logo section matching header */}
       <div className="text-center">
-        <div className="text-xl md:text-2xl font-bold bg-gradient-to-r from-green-400 via-emerald-500 to-green-600 bg-clip-text text-transparent animate-pulse" style={{ textShadow: '0 0 20px rgba(0, 255, 0, 0.3)' }}>
-          AITOOLS.STUDIO
+        <div className="awt-brand-mark text-2xl md:text-3xl">
+          <span>AI</span>WEBTOOLS<span>.APP</span>
         </div>
-        <div className="text-xs text-gray-300 -mt-1">
-          AI TOOL DIRECTORY
-        </div>
+        <p className="awt-brand-tagline text-[9px] md:text-[11px] mb-1">
+          AN AI TOOLS DIRECTORY DRIVEN BY IMAGINATION
+        </p>
         <div className="text-xs md:text-sm text-gray-400">
           Presented by{" "}
           <button 

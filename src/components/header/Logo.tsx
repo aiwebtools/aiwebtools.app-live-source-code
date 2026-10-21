@@ -82,39 +82,23 @@ const Logo = ({ compact = false }: { compact?: boolean }) => {
       </button>
 
       <div className="text-left flex-1 min-w-0">
-        {/* Main title row */}
-        <div className={`flex items-center gap-1 md:gap-2 ${compact ? 'mb-0' : 'mb-0.5 md:mb-1'}`}>
-          <div className={`font-bold ${compact ? 'text-[11px]' : 'text-[13px] sm:text-base md:text-lg'} tracking-wider letter-spacing-wide relative leading-tight`}>
-            <span className="relative z-10 bg-gradient-to-r from-cyan-400 via-cyan-300 to-cyan-500 bg-clip-text text-transparent logo-text-crisp">AI WEB TOOLS DIRECTORY</span>
-            <span className="relative z-10 bg-gradient-to-r from-cyan-400 via-cyan-300 to-cyan-500 bg-clip-text text-transparent logo-text-crisp hidden md:inline"> - AIWEBTOOLS.APP</span>
-          </div>
-          {!compact && (
-            <span className="text-xs text-cyan-200/80 font-medium hidden 2xl:block tracking-wide">
-              AN AI TOOLS DIRECTORY
-            </span>
-          )}
-        </div>
-
-        {/* Mobile-visible branding info - now clickable link to new domain */}
-        <div className={`${compact ? 'text-[8px]' : 'text-[9px] sm:text-[10px] md:text-xs'} -mt-0.5 truncate`}>
-          <a
-            href="https://aiwebtools.app"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => handleExternalLink("https://aiwebtools.app", e)}
-            className="font-light tracking-wide text-cyan-300 hover:text-cyan-200 transition-colors underline-offset-2 hover:underline"
-            title="Visit AIWEBTOOLS.APP"
-          >
-            aiwebtools.app
-          </a>
-        </div>
-
-        {/* AIWebTools.ai link - always visible */}
-        <div className={`${compact ? 'text-[8px]' : 'text-[9px] sm:text-[10px] md:text-xs'} text-gray-400 mt-0 truncate`}>
+        <a
+          href="https://aiwebtools.app"
+          onClick={(e) => handleExternalLink("https://aiwebtools.app", e)}
+          className={`awt-brand-mark block ${compact ? 'text-[15px]' : 'text-[17px] sm:text-xl md:text-2xl'}`}
+          title="AIWEBTOOLS.APP — An AI tools directory driven by imagination"
+          aria-label="AIWEBTOOLS.APP home"
+        >
+          <span>AI</span>WEBTOOLS<span>.APP</span>
+        </a>
+        <p className={`awt-brand-tagline ${compact ? 'text-[7px]' : 'text-[7.5px] sm:text-[9px] md:text-[11px]'}`}>
+          AN AI TOOLS DIRECTORY DRIVEN BY IMAGINATION
+        </p>
+        <div className={`${compact ? 'text-[8px]' : 'text-[8px] sm:text-[10px] md:text-xs'} text-muted-foreground mt-0.5 truncate`}>
           MADE BY AWT-{" "}
           <button
             onClick={(e) => handleExternalLink("https://aiwebtools.lovable.app/?via=aiwebtools", e)}
-            className="text-cyan-400 hover:text-cyan-300 transition-all duration-200 hover:text-shadow-glow font-medium tracking-wide"
+            className="text-primary hover:opacity-80 font-medium tracking-wide"
           >
             AIWEBTOOLS.AI
           </button>
