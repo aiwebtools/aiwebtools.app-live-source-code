@@ -15,6 +15,8 @@ const unsuitable = /what can you help|walk me through your first step|what can y
 
 // Match a task, not a description of the assistant or its private instructions.
 const purposeStarters: [RegExp, string][] = [
+  [/\bcoloring book\b/, "Let's create a complete themed coloring book."],
+  [/\bcomic book\b/, "Let's create an original comic book, from the opening panel to the final page."],
   [/\b(?:children.?s|picture)\b.*\bbook\b/, "Let's create a complete children's picture book, from the first page to the last."],
   [/\bbook\b.*\b(?:writ|maker|generat|creat)/, "Let's write a full chapter book from beginning to end."],
   [/\baether\b/, "Guide me on an exploration of aether energy and its possibilities."],
@@ -65,8 +67,6 @@ export function getBotStarters(bot: StarterBot): string[] {
   const family = bot.slug.replace(/^community-/, "").replace(/-v\d+$/, "");
   const curated = usablePrompt(survival?.starters || offGrid?.starters || catalog[bot.slug] || catalog[family]);
   if (curated) return [curated];
-  const existing = usablePrompt(bot.starter_prompts);
-  if (existing) return [existing];
   const name = bot.display_name.replace(/\s*\(V\d+\)$/, "").trim();
   const subject = `${name} ${family}`.toLowerCase().replace(/[^a-z0-9]+/g, " ");
   const fallback = subjectStarters.find(([pattern]) => pattern.test(subject));
