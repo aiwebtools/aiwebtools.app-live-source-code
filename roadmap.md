@@ -1,5 +1,11 @@
 # Chatbot completion roadmap
 
+# Starter prompts, compact reading and personal AI providers (Oct 21)
+- [ ] Replace operational-text starters with one short purpose-trigger prompt per bot; label STARTER PROMPT and reduce chat text size.
+- [ ] Add supplemental immersive delivery guidance: explain speculative context once rather than repeating cautionary wording; preserve originals and practical safety.
+- [ ] Design secure personal-provider key support for OpenAI, Gemini, Claude and DeepSeek with key-acquisition links, explicit activation and unchanged Lovable default; confirm major provider changes before implementation.
+- [ ] Explain local-model hosting and remaining voice/image/search costs honestly; no silent credit-exhaustion fallback or free-hosting promise.
+
 # Recent conversation response review (Oct 21)
 - [x] Review recent real conversations: duplicate intake, image re-prompts, exposed tool/scratchpad text, game-menu loops and invented diagnostic evidence identified.
 - [x] Deploy supplemental continuity and scoped 3D Concept, Survivalist, card-game and Stellaris improvements without editing originals; 437 preservation/context tests pass. Real Stellaris retest stopped invented numeric charts and generated diagnostic images; its authored mission questionnaire still appears. This representative check does not verify every affected bot's future output.
