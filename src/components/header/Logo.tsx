@@ -32,7 +32,7 @@ const Logo = ({ compact = false }: { compact?: boolean }) => {
       <button
         onClick={scrollToHome}
         className={`
-          group relative flex-shrink-0 
+          group relative flex-shrink-0 ${compact ? '' : 'hidden sm:flex'}
           ${compact ? 'w-9 h-9' : 'w-10 h-10 md:w-12 md:h-12'} 
           rounded-full 
           bg-gradient-to-br from-cyan-500/20 via-blue-600/30 to-purple-600/20
@@ -83,8 +83,8 @@ const Logo = ({ compact = false }: { compact?: boolean }) => {
 
       <div className="text-left flex-1 min-w-0">
         <a
-          href="https://aiwebtools.app"
-          onClick={(e) => handleExternalLink("https://aiwebtools.app", e)}
+          href="/"
+          onClick={(e) => { e.preventDefault(); scrollToHome(); }}
           className={`awt-brand-mark block ${compact ? 'text-[15px]' : 'text-[17px] sm:text-xl md:text-2xl'}`}
           title="AIWEBTOOLS.APP — An AI tools directory driven by imagination"
           aria-label="AIWEBTOOLS.APP home"
@@ -94,7 +94,7 @@ const Logo = ({ compact = false }: { compact?: boolean }) => {
         <p className={`awt-brand-tagline ${compact ? 'text-[7px]' : 'text-[7.5px] sm:text-[9px] md:text-[11px]'}`}>
           AN AI TOOLS DIRECTORY DRIVEN BY IMAGINATION
         </p>
-        <div className={`${compact ? 'text-[8px]' : 'text-[8px] sm:text-[10px] md:text-xs'} text-muted-foreground mt-0.5 truncate`}>
+        <div className={`${compact ? 'text-[8px]' : 'text-[8px] sm:text-[10px] md:text-xs'} text-muted-foreground mt-0.5 truncate hidden sm:block`}>
           MADE BY AWT-{" "}
           <button
             onClick={(e) => handleExternalLink("https://aiwebtools.lovable.app/?via=aiwebtools", e)}
