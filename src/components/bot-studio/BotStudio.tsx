@@ -291,7 +291,7 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
     </div>
     <Sheet open={leftOpen} onOpenChange={setLeftOpen}><SheetContent side="left" overlayClassName="studio-drawer-overlay z-[170]" className="studio-drawer z-[180] overflow-y-auto"><SheetTitle>Bots & conversations</SheetTitle><SheetDescription className="sr-only">Your assistants and chats saved on this device</SheetDescription><div className="mt-6">{sidebar}</div></SheetContent></Sheet>
     <Sheet open={rightOpen} onOpenChange={setRightOpen}><SheetContent overlayClassName="studio-drawer-overlay z-[170]" className="studio-drawer z-[180] overflow-y-auto"><SheetTitle>Assistant settings</SheetTitle><SheetDescription className="sr-only">Model, voice and operational instructions</SheetDescription><div className="mt-6">{settings}</div></SheetContent></Sheet>
-    {!app.custom && <BotCommercial slug={app.slug} name={app.display_name} toolTitle={app.tool_title} userId={session?.user.id} />}
+    <BotCommercial slug={app.slug} name={app.display_name} toolTitle={app.tool_title} userId={session?.user.id} voice={defaultProfile.voice} custom={!!app.custom} />
     <BotBuilder open={builderOpen} onOpenChange={(open) => { setBuilderOpen(open); if (!open && window.location.search.includes("builder=1")) navigate(window.location.pathname, { replace: true }); }} onSaved={(bot, publishedSlug) => { setCustomBots(readCustomBots()); setBuilderOpen(false); if (publishedSlug) void refreshStudioBots().then(setBots); chooseThread(openBotConversation(publishedSlug || bot.slug, crypto.randomUUID())); }} />
   </section>;
 }
