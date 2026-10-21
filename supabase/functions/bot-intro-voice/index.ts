@@ -5,7 +5,7 @@ import { buildBotIntro, VOICE_MAP } from "./intro.ts";
 
 // Speaks each bot's welcome with the linked ElevenLabs account, recorded ONCE and cached in storage,
 // so replays cost nothing and never touch Lovable AI credits.
-const BUCKET = "bot-intros";
+const BUCKET = "bot-intros"; // private; read only through signed links
 const schema = z.object({ slug: z.string().regex(/^[a-z0-9-]{1,120}$/), voice: z.string().max(20).optional() });
 
 Deno.serve(async (req) => {
@@ -19,9 +19,9 @@ Deno.serve(async (req) => {
   const text = buildBotIntro(bot.display_name, bot.tagline);
   const voice = VOICE_MAP[input.data.voice || ""] ? input.data.voice! : "alloy";
   const path = `${bot.slug}-${voice}-v1.mp3`;
-  const url = db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
-  const cached = await fetch(url, { method: "HEAD" }).catch(() => null);
-  if (cached?.ok) return json({ url, text });
+  const signed = async () => (await db.storage.from(BUCKET).createSignedUrl(path, 60 * 60 * 24 * 7)).data?.signedUrl;
+  const { data: existing } = await db.storage.from(BUCKET).list("", { search: path, limit: 1 });
+  if (existing?.some((f) => f.name === path)) { const url = await signed(); if (url) return json({ url, text }); }
   const key = Deno.env.get("ELEVENLABS_API_KEY");
   if (!key) return json({ text, error: "Voice service not connected" });
   const tts = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${VOICE_MAP[voice]}?output_format=mp3_44100_128`, {
@@ -35,5 +35,5 @@ Deno.serve(async (req) => {
   const audio = new Uint8Array(await tts.arrayBuffer());
   const { error } = await db.storage.from(BUCKET).upload(path, audio, { contentType: "audio/mpeg", upsert: true, cacheControl: "31536000" });
   if (error) { console.error("Intro upload failed", error.message); return json({ text, error: "Voice unavailable" }); }
-  return json({ url, text });
+  return json({ url: await signed(), text });
 });
