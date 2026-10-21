@@ -7,6 +7,7 @@ import { PERSONAL_PROVIDERS, personalProviderError, type PersonalAi } from "../_
 
 type WireMessage = { role: string; content: unknown; tool_call_id?: string; tool_calls?: unknown };
 type WireTool = { function: { name: string; description: string; parameters: Record<string, unknown> } };
+export type PersonalProviderRun = { history?: ModelMessage[] };
 const statusError = (statusCode: number) => Object.assign(new Error(personalProviderError({ statusCode })), { statusCode });
 
 export async function checkPersonalProvider(config: PersonalAi, signal: AbortSignal) {
@@ -67,13 +68,20 @@ function sdkMessages(messages: WireMessage[], vision: boolean): { instructions: 
 
 // One provider step, normalized to the existing chat transport. The existing
 // tool loop executes search/images and sends complete tool-call/result pairs.
-export async function callPersonalProvider(config: PersonalAi, payload: Record<string, unknown>, signal: AbortSignal): Promise<Response> {
+export async function callPersonalProvider(config: PersonalAi, payload: Record<string, unknown>, signal: AbortSignal, run: PersonalProviderRun = {}): Promise<Response> {
   try {
     const model = config.provider === "openai" ? createOpenAI({ apiKey: config.apiKey }).responses(config.model)
       : config.provider === "gemini" ? createGoogle({ apiKey: config.apiKey })(config.model)
       : config.provider === "claude" ? createAnthropic({ apiKey: config.apiKey })(config.model)
       : createDeepSeek({ apiKey: config.apiKey })(config.model);
     const history = sdkMessages(payload.messages as WireMessage[], PERSONAL_PROVIDERS[config.provider].vision);
+    if (run.history) {
+      // Keep native reasoning/thought signatures and complete tool calls inline.
+      // Only the latest tool outputs are new; prior assistant items came from SDK.
+      const trailing: ModelMessage[] = [];
+      for (let i = history.messages.length - 1; i >= 0 && history.messages[i].role === "tool"; i--) trailing.unshift(history.messages[i]);
+      history.messages = [...run.history, ...trailing];
+    }
     const wireTools = (payload.tools || []) as WireTool[];
     const tools = Object.fromEntries(wireTools.map((tool) => [tool.function.name, {
       description: tool.function.description,
@@ -87,6 +95,7 @@ export async function callPersonalProvider(config: PersonalAi, payload: Record<s
       abortSignal: signal, maxRetries: 0,
       providerOptions: config.provider === "openai" ? { openai: { store: false, ...(reasoning ? { forceReasoning: true, reasoningEffort: "low", reasoningSummary: "auto", include: ["reasoning.encrypted_content"] } : config.model === "gpt-6-luna" ? { reasoningEffort: "none" } : {}) } } : undefined,
       onError: () => { /* Never log SDK error objects: they can contain request headers. */ },
+      onWarnings: () => { /* Warnings may contain replayed tool metadata; omit them. */ },
     });
     const iterator = result.fullStream[Symbol.asyncIterator]();
     const first = await iterator.next();
@@ -113,6 +122,8 @@ export async function callPersonalProvider(config: PersonalAi, payload: Record<s
             if (part.type === "error" || part.type === "abort") break;
             next = pending.shift() || await iterator.next();
           }
+          const response = await result.response;
+          run.history = [...history.messages, ...response.messages];
           controller.enqueue(encoder.encode("data: [DONE]\n\n"));
           controller.close();
         } catch (error) {

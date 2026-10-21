@@ -372,8 +372,9 @@ Deno.serve(async (req) => {
 
   const gateway = createLovableAiGatewayRunIdFetch();
   const personalAdapter = personalAi ? (await import("./personal-provider.ts")).callPersonalProvider : null;
+  const personalRun = {};
   const callGateway = (payload: Record<string, unknown>) => {
-    if (personalAi && personalAdapter) return personalAdapter(personalAi, payload, req.signal);
+    if (personalAi && personalAdapter) return personalAdapter(personalAi, payload, req.signal, personalRun);
     return gateway.fetch(CHAT_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json", "Lovable-API-Key": LOVABLE_API_KEY || "", "X-Lovable-AIG-SDK": "fetch" },
