@@ -53,8 +53,10 @@ export default defineConfig(({ mode }) => ({
           if (id.includes('cmdk') || id.includes('sonner') || id.includes('vaul')) return 'vendor-overlay';
           if (id.includes('framer-motion') || id.includes('motion-')) return 'vendor-motion';
           if (id.includes('@supabase')) return 'vendor-supabase';
-          // Everything else from node_modules
-          return 'vendor-misc';
+          // Everything else: let Rollup split naturally so heavy libraries
+          // (PDF, docs, canvas exporters) only load on the pages that use them
+          // instead of one huge chunk on first visit.
+          return undefined;
         },
       },
     },

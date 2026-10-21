@@ -1,5 +1,5 @@
 
-import React, { useState, memo } from "react";
+import React, { useState, memo, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ChevronDown, ChevronUp } from "lucide-react";
@@ -13,7 +13,7 @@ import {
 } from "@/utils/categoryUtils/precomputedCache";
 import { allTools } from "@/data/toolsData";
 import { mainCategories } from "@/utils/mainCategoryMapping";
-import { getMainCategoriesWithCounts } from "@/utils/categoryUtils/toolFiltering";
+import { getMainCategoriesWithCountsAsync, peekMainCategoryCounts } from "@/utils/categoryUtils/toolFiltering";
 
 interface CategoryFiltersProps {
   categoriesWithCounts: Record<string, number>;
@@ -25,23 +25,12 @@ interface CategoryFiltersProps {
   onFreeOnlyChange?: (freeOnly: boolean) => void;
 }
 
-// Pre-compute accurate counts ONCE at module level using detection functions
-let accurateMainCategoryCounts: Record<string, number> | null = null;
-let countsInitialized = false;
-
-const getStaticMainCategoryCounts = () => {
-  // Try pre-computed cache first (instant)
+// Counts come from the instant cache when available; otherwise they are
+// computed in small idle slices so the page never freezes while scrolling.
+const getInstantMainCategoryCounts = (): Record<string, number> | null => {
   const cached = getCachedCategoryCounts();
-  if (cached && Object.keys(cached).length > 0) {
-    return cached;
-  }
-  
-  // Use accurate detection-based counting (same as getToolsByMainCategory)
-  if (!countsInitialized || !accurateMainCategoryCounts) {
-    accurateMainCategoryCounts = getMainCategoriesWithCounts(allTools);
-    countsInitialized = true;
-  }
-  return accurateMainCategoryCounts;
+  if (cached && Object.keys(cached).length > 0) return cached;
+  return peekMainCategoryCounts(allTools);
 };
 
 const CategoryFilters = memo(({
@@ -58,7 +47,15 @@ const CategoryFilters = memo(({
   const [selectedMainCategory, setSelectedMainCategory] = useState<string | null>(null);
 
   // Use pre-computed counts - INSTANT, no heavy computation
-  const staticMainCategoriesWithCounts = React.useMemo(() => getStaticMainCategoryCounts(), []);
+  const [staticMainCategoriesWithCounts, setStaticCounts] = useState<Record<string, number>>(
+    () => getInstantMainCategoryCounts() ?? {}
+  );
+  useEffect(() => {
+    if (Object.keys(staticMainCategoriesWithCounts).length > 0) return;
+    let alive = true;
+    void getMainCategoriesWithCountsAsync(allTools).then((counts) => { if (alive) setStaticCounts(counts); });
+    return () => { alive = false; };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const totalTools = Object.values(categoriesWithCounts).reduce((sum, count) => sum + count, 0);
 
