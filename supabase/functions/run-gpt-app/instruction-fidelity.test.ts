@@ -43,6 +43,15 @@ test("verbatim instructions remain the exact prefix including whitespace", () =>
   expect(result.slice(0, original.length)).toBe(original);
   expect(result.length).toBeGreaterThan(original.length);
 });
+test("theory delivery supplement applies across bots without rewriting any original", () => {
+  const original = "  Original instructions\r\nRequired opening and workflow.  ";
+  for (const slug of ["aether-guide", "community-mind-exploration", "custom-theory-guide", "time-machine-gpt"]) {
+    const result = appendInstructionFidelity(original, slug, "Guide");
+    expect(result.slice(0, original.length)).toBe(original);
+    expect(result).toContain("IMMERSIVE THEORY AND STORY DELIVERY:");
+    expect(result).toContain("Keep factual claims accurate");
+  }
+});
 test("historical persona guidance is scoped to character bots", () => {
   expect(appendInstructionFidelity("Original", "alan-watts-gpt-page", "Alan Watts GPT")).toContain("CHARACTER PERFORMANCE:");
   expect(appendInstructionFidelity("Original", "cannabis-gpt-not-gpt4o1-compliant", "Cannabis GPT")).not.toContain("CHARACTER PERFORMANCE:");
