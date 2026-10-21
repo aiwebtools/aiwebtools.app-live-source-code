@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import { clearOtherPersonalAi } from "@/utils/personalAiSession";
 
 /**
  * Minimal auth session hook. Subscribes first, then reads the existing
@@ -12,11 +13,13 @@ export const useAuthSession = () => {
 
   useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange((_event, next) => {
+      clearOtherPersonalAi(next?.user.id);
       setSession(next);
       setLoading(false);
     });
 
     supabase.auth.getSession().then(({ data }) => {
+      clearOtherPersonalAi(data.session?.user.id);
       setSession(data.session ?? null);
       setLoading(false);
     });

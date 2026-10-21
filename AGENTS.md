@@ -18,7 +18,7 @@
 - Apply offscreen paint containment only to individual tool cards, never all nested grids; homepage sections and studio controls must stay visible across browsers.
 - Store device conversations separately by bot and thread, with dedicated `/app/:slug/chat/:threadId` URLs so reloads restore the exact conversation.
 - Keep studio image download/revision actions in `StudioImageActions` and route revisions through the existing conversation so generated visuals retain story context.
-- Parse text, DOCX and XLSX in a browser worker, extract PDF text with PDF.js, and send resized photo previews as validated image parts through the existing model transport; preserve bounded attachment context in device chats and explicitly reject unsupported binaries to avoid misleading analysis and excessive payloads.
+- Parse documents in the ES worker/PDF.js and send validated resized photos through existing transport; retain bounded context and reject unsupported binaries.
 - Visitor community GPTs publish via publish-community-gpt (ethics review); the archived library imports verbatim via secret-gated upsert-only seed-community-library. Variants are `<base>-vN` rooms grouped by `botFamilyKey`; page catalog reads by 1000.
 - Device-only custom bots use custom- slugs and send their own instructions to run-gpt-app; they are never stored server-side or in conversation history.
 - Share chat/sidebar portrait lookup; lazy-load remote art over a local subject fallback to prevent blanks and image-request floods.
@@ -34,3 +34,4 @@
 - Record visits, clicks and bot opens only through `siteTracker` (batched rows with identical keys into `site_events`); one tracker keeps data consistent and off the click path.
 - Pre-mount large header menus during idle (forceMount + hidden when closed) so the first tap only reveals them.
 - Community apps are listed from `community_apps` and only inserted by the AI-reviewing `submit-community-app` function; keeps unverified links out of the menu.
+- Keep personal keys in owner-bound page memory and authenticated chat requests, never storage/tracking/logs; explicit activation cannot silently fall back to paid default AI.

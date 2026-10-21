@@ -5,3 +5,4 @@
 - Preserve terminal upstream SSE error events and final unterminated frames in hosted chat transport so failures cannot silently become empty replies.
 - Select first-turn web research when the request or operational instructions require it and expose failed retrieval as a failed activity; never substitute encyclopedia results or model knowledge as successful live web research.
 - Retry the primary Perplexity search once before falling back to scrapers, and log each source's failure reason to gpt_chat_logs only; the Oct 13–15 2026 outage showed transient gateway failures otherwise cost chats their research.
+- Isolate personal-provider SDK translation behind the shared tool/stream loop; allowlist direct IDs/endpoints, require verified sign-in, omit raw SDK errors from logs, and preserve the existing default gateway path.

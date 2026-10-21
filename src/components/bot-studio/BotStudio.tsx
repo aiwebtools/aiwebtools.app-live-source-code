@@ -43,10 +43,14 @@ import BotQuickSwitch from "./BotQuickSwitch";
 import { searchStudioBots } from "./botSubjects";
 
 import { prepareVisualAttachment } from "@/utils/prepareBotAttachment";
+import PersonalAiSettings from "./PersonalAiSettings";
+import { usePersonalAi } from "@/utils/personalAiSession";
+import { PERSONAL_PROVIDERS } from "../../../supabase/functions/_shared/personal-provider-policy";
 
 export default function BotStudio({ app, threadId, embedded = false, onExit }: { app: StudioBot; threadId?: string; embedded?: boolean; onExit?: () => void }) {
   const navigate = useNavigate();
   const { session } = useAuthSession();
+  const personalAi = usePersonalAi(session?.user.id);
   const [thread, setThread] = useState(() => openBotConversation(app.slug, threadId));
   const [threads, setThreads] = useState(readBotConversations);
   const [bots, setBots] = useState<StudioBot[]>([]);
@@ -138,7 +142,7 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/run-gpt-app`, {
         method: "POST", signal: controller.signal,
         headers: { "Content-Type": "application/json", ...(session ? { Authorization: `Bearer ${session.access_token}` } : {}) },
-        body: JSON.stringify({ slug: app.slug, conversationId: current.serverId, messages, ...(current.model !== "default" ? { model: current.model } : {}), ...(app.custom ? { custom: { name: app.display_name, tagline: app.tagline || "", instructions: app.custom.instructions } } : {}), ...(session ? {} : { guestId: getGuestId() }) }),
+        body: JSON.stringify({ slug: app.slug, conversationId: current.serverId, messages, ...(personalAi ? { personalAi } : current.model !== "default" ? { model: current.model } : {}), ...(app.custom ? { custom: { name: app.display_name, tagline: app.tagline || "", instructions: app.custom.instructions } } : {}), ...(session ? {} : { guestId: getGuestId() }) }),
       });
       if (!response.ok || !response.body) {
         const detail = await response.json().catch(() => ({}));
@@ -183,7 +187,7 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
       commit({ ...base, serverId, messages: assistant || activities.length ? [...messages, { role: "assistant", content: assistant, activities: activities.map((activity) => activity.state === "input-available" ? { ...activity, state: "output-error", error: "This action was interrupted." } : activity) }] : messages, updatedAt: Date.now() });
       setStreaming(false); abortRef.current = null;
     }
-  }, [app.slug, app.custom, app.display_name, app.tagline, celebrations, celebrationSound, commit, session, speech, streaming, attachment, readingFile]);
+  }, [app.slug, app.custom, app.display_name, app.tagline, celebrations, celebrationSound, commit, session, speech, streaming, attachment, readingFile, personalAi]);
   /** Fire-and-forget failure report so the chat watchdog sees browser-side problems too. */
   const reportFailure = (kind: string, message: string, detail = "") => {
     void fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/run-gpt-app`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ slug: app.slug, report: { kind, message, detail } }) }).catch(() => undefined);
@@ -250,8 +254,9 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
   const settings = <>
     <div className="mb-5 flex gap-2"><Button variant="outline" aria-pressed={celebrations} onClick={() => { setCelebrations(!celebrations); celebrationCleanup.current?.(); }}>Reply effects {celebrations ? "on" : "off"}</Button><Button variant="ghost" size="icon" aria-label={celebrationSound ? "Mute celebration sounds" : "Enable celebration sounds"} title="Celebration sounds" onClick={() => setCelebrationSound(!celebrationSound)}>{celebrationSound ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}</Button></div>
     <h2 className="studio-label"><Settings2 className="h-4 w-4" />Model selection</h2>
-    <Select value={thread.model} disabled={streaming} onValueChange={(model) => commit({ ...threadRef.current, model })}><SelectTrigger className="mt-3" aria-label="Choose AI model"><SelectValue /></SelectTrigger><SelectContent className="z-[190]">{STUDIO_MODELS.map((model) => <SelectItem key={model.id} value={model.id}>{model.label}</SelectItem>)}</SelectContent></Select>
-    <p className="mt-2 break-words text-xs text-muted-foreground">{thread.model === "default" ? app.model : thread.model}</p>
+    <Select value={thread.model} disabled={streaming || Boolean(personalAi)} onValueChange={(model) => commit({ ...threadRef.current, model })}><SelectTrigger className="mt-3" aria-label="Choose AI model"><SelectValue /></SelectTrigger><SelectContent className="z-[190]">{STUDIO_MODELS.map((model) => <SelectItem key={model.id} value={model.id}>{model.label}</SelectItem>)}</SelectContent></Select>
+    <p className="mt-2 break-words text-xs text-muted-foreground">{personalAi ? `${PERSONAL_PROVIDERS[personalAi.provider].name} · ${personalAi.model}` : thread.model === "default" ? app.model : thread.model}</p>
+    <PersonalAiSettings session={session} busy={streaming} />
     <div className="studio-setting-section"><h2 className="studio-label"><Volume2 className="h-4 w-4" />Voice settings</h2><p className="mt-3 text-sm gpt-room-accent">{profile.label}</p><Select value={voice} onValueChange={(value) => { speech.stop(); setVoice(value as GptVoiceProfile["voice"]); }}><SelectTrigger className="mt-3" aria-label="Choose speaking voice"><SelectValue /></SelectTrigger><SelectContent className="z-[190]">{(["alloy", "ash", "ballad", "coral", "echo", "fable", "nova", "onyx", "sage", "shimmer", "verse"] as const).map((item) => <SelectItem key={item} value={item}>{item.charAt(0).toUpperCase() + item.slice(1)}{item === defaultProfile.voice ? " · Character default" : ""}</SelectItem>)}</SelectContent></Select><label className="studio-voice-control">Speed · {speed.toFixed(2)}×<input aria-label="Voice speed" type="range" min="0.75" max="1.25" step="0.05" value={speed} onChange={(event) => { speech.stop(); setSpeed(Number(event.target.value)); }} /></label><Button variant="outline" className="mt-3 w-full gap-2" onClick={speech.toggle} aria-pressed={speech.enabled}>{speech.enabled ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}{speech.enabled ? "Mute voice" : "Enable voice"}</Button><Button variant="ghost" className="mt-2 w-full gap-2" onClick={() => speech.speakNow(welcome)}><Play className="h-4 w-4" />Preview voice</Button></div>
     <div className="studio-setting-section"><h2 className="studio-label">Tools & capabilities</h2>{[[Paperclip, "Photos & documents"], [Globe, "Live web search"], [ImageIcon, "Image generation"], [Mic, mic.supported ? "Voice conversation" : "Microphone unavailable"], [History, "Device memory"]].map(([Icon, label]) => { const Component = Icon as typeof Globe; return <div className="studio-capability" key={String(label)}><Component className="h-4 w-4" /><span>{String(label)}</span>{label === "Microphone unavailable" ? <span className="ml-auto text-muted-foreground">—</span> : <Check className="ml-auto h-4 w-4 text-primary" />}</div>; })}</div>
     <div className="studio-setting-section">{app.custom ? <Button variant="ghost" className="w-full gap-2" onClick={() => { const href = URL.createObjectURL(new Blob([`${app.display_name}\n${app.tagline || ""}\n\n${app.custom?.instructions || ""}`], { type: "text/plain;charset=utf-8" })); const a = document.createElement("a"); a.href = href; a.download = `${app.slug}-instructions.txt`; a.click(); setTimeout(() => URL.revokeObjectURL(href), 10000); }}><Download className="h-4 w-4" />Instructions (TXT)</Button> : <OpInstructionsButton slug={app.slug} name={app.display_name} singleOnly compact label="Instructions (PDF)" />}<Button variant="ghost" className="mt-3 w-full gap-2" onClick={exportChat}><Download className="h-4 w-4" />Export conversation</Button></div>
