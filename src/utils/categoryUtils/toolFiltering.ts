@@ -307,15 +307,9 @@ const countToolsForMainCategory = (mainCatName: string, tools: Tool[]): number =
         break;
       }
     }
-    
-    mainCategoryCounts[mainCat.name] = toolCount;
-  });
-  
-  // Cache the result
-  cachedMainCategoryCounts = mainCategoryCounts;
-  cachedMainCategoryCountsToolsLength = tools.length;
-  
-  return mainCategoryCounts;
+
+    return toolCount;
+  }
 };
 
 // Cache for getToolsByMainCategory results
