@@ -56,7 +56,7 @@ function sdkMessages(messages: WireMessage[], vision: boolean): { instructions: 
       else {
         const parts = message.content as { type: string; text?: string; image_url?: { url: string } }[];
         if (!vision && parts.some((part) => part.type === "image_url")) throw Object.assign(new Error("This personal model does not support photo input. Your attachment has not been analyzed."), { statusCode: 400 });
-        converted.push({ role: "user", content: parts.flatMap((part) => part.type === "text"
+        converted.push({ role: "user", content: parts.flatMap<{ type: "text"; text: string } | { type: "image"; image: string }>((part) => part.type === "text"
           ? [{ type: "text" as const, text: part.text || "" }]
           : part.image_url?.url ? [{ type: "image" as const, image: part.image_url.url }] : []) });
       }
