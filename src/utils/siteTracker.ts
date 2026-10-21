@@ -82,6 +82,8 @@ export const installSiteTracker = () => {
   addEventListener("click", (ev) => {
     const el = (ev.target as Element | null)?.closest?.("button, a, [role=button], [role=menuitem], [role=tab]") as HTMLElement | null;
     if (!el) return;
+    // Private credential forms are excluded; never derive labels from their text.
+    if (el.closest("[data-private-ai-key]")) return;
     const label = clip(el.getAttribute("aria-label") || el.innerText || el.getAttribute("title"), 200) || el.tagName.toLowerCase();
     const href = el instanceof HTMLAnchorElement ? el.href : null;
     track({ event_type: "click", label, target: clip(href, 500), bot_slug: botSlugFromPath(location.pathname) });

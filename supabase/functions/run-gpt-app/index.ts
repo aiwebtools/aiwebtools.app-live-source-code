@@ -6,12 +6,8 @@ import { appendInstructionFidelity, resolveOperationalInstructions } from "./ins
 import { readChatStreamEvent } from "./stream-events.ts";
 import { normalizeMessage, toModelMessage, requiresFirstSearch, requiresDeepThinking, type IncomingMessage } from "./input-context.ts";
 import { createLovableAiGatewayRunIdFetch, getLovableAiGatewayResponseHeaders } from "../_shared/run-id.ts";
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-};
+import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
+import { parsePersonalAi, personalProviderError, type PersonalAi } from "../_shared/personal-provider-policy.ts";
 
 const MAX_HISTORY = 120;
 const MAX_CLIENT_HISTORY = 500;
@@ -144,7 +140,6 @@ Deno.serve(async (req) => {
     });
 
   const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-  if (!LOVABLE_API_KEY) return json({ error: "AI is not configured" }, 500);
 
   const authHeader = req.headers.get("Authorization") || "";
 
@@ -178,11 +173,28 @@ Deno.serve(async (req) => {
     model?: string;
     custom?: { name?: string; tagline?: string; instructions?: string };
     report?: { kind?: string; message?: string; detail?: string };
+    personalAi?: unknown;
+    checkPersonalAi?: boolean;
   } = {};
   try {
     body = await req.json();
   } catch {
     return json({ error: "Invalid request" }, 400);
+  }
+
+  let personalAi: PersonalAi | null = null;
+  if (body.personalAi !== undefined || body.checkPersonalAi) {
+    try { personalAi = parsePersonalAi(body.personalAi, Boolean(userId), body.checkPersonalAi === true); }
+    catch (error) { return json({ error: error instanceof Error ? error.message : "Invalid personal AI settings." }, userId ? 400 : 401); }
+  }
+  if (body.checkPersonalAi === true && personalAi) {
+    try {
+      const { checkPersonalProvider } = await import("./personal-provider.ts");
+      return json(await checkPersonalProvider(personalAi, req.signal));
+    } catch (error) {
+      const status = error && typeof error === "object" && "statusCode" in error ? Number(error.statusCode) || 502 : 502;
+      return json({ error: personalProviderError(error) }, req.signal.aborted ? 499 : status);
+    }
   }
 
   // Browser-side failures (file reading, photo prep, dropped streams) are logged for the watchdog without any AI call.
@@ -198,6 +210,8 @@ Deno.serve(async (req) => {
     if (logErr) console.error("client report log failed", logErr.message);
     return json({ ok: true });
   }
+
+  if (!personalAi && !LOVABLE_API_KEY) return json({ error: "AI is not configured" }, 500);
 
   // Guests and members can chat without an application-level daily cap.
   const isGuest = !userId;
@@ -289,7 +303,7 @@ Deno.serve(async (req) => {
       return json({ error: message }, 503);
     }
   }
-  const selectedModel = selectBotModel(app.model || "openai/gpt-6-astra", body.model);
+  const selectedModel = personalAi?.model || selectBotModel(app.model || "openai/gpt-6-astra", body.model);
   if (!selectedModel) return json({ error: "That model is not supported by this assistant." }, 400);
 
   const { data: profile } = userId
@@ -357,16 +371,19 @@ Deno.serve(async (req) => {
   }
 
   const gateway = createLovableAiGatewayRunIdFetch();
-  const callGateway = (payload: Record<string, unknown>) =>
-    gateway.fetch(CHAT_URL, {
+  const personalAdapter = personalAi ? (await import("./personal-provider.ts")).callPersonalProvider : null;
+  const callGateway = (payload: Record<string, unknown>) => {
+    if (personalAi && personalAdapter) return personalAdapter(personalAi, payload, req.signal);
+    return gateway.fetch(CHAT_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Lovable-API-Key": LOVABLE_API_KEY, "X-Lovable-AIG-SDK": "fetch" },
+      headers: { "Content-Type": "application/json", "Lovable-API-Key": LOVABLE_API_KEY || "", "X-Lovable-AIG-SDK": "fetch" },
       signal: req.signal,
       body: JSON.stringify(payload),
     });
+  };
 
   // Maths/statistics turns on the default engine move to the reasoning model; an explicit user pick is always kept.
-  const thinkingTurn = (body.model === undefined || body.model === "default") && requiresDeepThinking(lastUser?.content?.split("USER DATA ATTACHMENT")[0] || "", basePrompt);
+  const thinkingTurn = !personalAi && (body.model === undefined || body.model === "default") && requiresDeepThinking(lastUser?.content?.split("USER DATA ATTACHMENT")[0] || "", basePrompt);
   const turnModel = thinkingTurn ? "google/gemini-3-flash-preview" : selectedModel;
   const basePayload = {
     model: turnModel,
@@ -384,15 +401,16 @@ Deno.serve(async (req) => {
 
   if (!upstream.ok || !upstream.body) {
     const detail = await upstream.text().catch(() => "");
-    console.error("gateway error", upstream.status, detail.slice(0, 400));
+    if (!personalAi) console.error("gateway error", upstream.status, detail.slice(0, 400));
     let safeMessage = "The AI could not respond right now.";
     try { const parsed = JSON.parse(detail); safeMessage = parsed.message || parsed.error?.message || (typeof parsed.error === "string" ? parsed.error : safeMessage); } catch { /* non-JSON gateway failure */ }
-    if (upstream.status === 402) safeMessage = "Our bots are resting — the site's AI credits have run out. Please check back soon.";
+    if (personalAi) safeMessage = personalProviderError({ statusCode: upstream.status });
+    else if (upstream.status === 402) safeMessage = "Our bots are resting — the site's AI credits have run out. Please check back soon.";
     const { error: logErr } = await admin.from("gpt_chat_logs").insert({
-      app_slug: slug, is_guest: isGuest, user_id: userId ?? null, model: basePayload.model,
+      app_slug: slug, is_guest: isGuest, user_id: userId ?? null, model: personalAi ? `${personalAi.provider}/${basePayload.model}` : basePayload.model,
       turn_count: recentMessages.length, prompt_chars: lastUser?.content?.length ?? 0, reply_chars: 0,
-      image_requested: false, image_succeeded: false, latency_ms: 0, status: "gateway_error",
-      error: `HTTP ${upstream.status}: ${(detail || safeMessage).slice(0, 500)}`, user_message: lastUser?.content?.slice(0, 8000) ?? null, assistant_reply: null,
+      image_requested: false, image_succeeded: false, latency_ms: 0, status: personalAi ? "provider_error" : "gateway_error",
+      error: `HTTP ${upstream.status}: ${(personalAi ? safeMessage : detail || safeMessage).slice(0, 500)}`, user_message: lastUser?.content?.slice(0, 8000) ?? null, assistant_reply: null,
     });
     if (logErr) console.error("chat log failed", logErr.message);
     return json({ error: safeMessage }, upstream.status);
@@ -418,7 +436,7 @@ Deno.serve(async (req) => {
       app_slug: slug,
       is_guest: isGuest,
       user_id: userId ?? null,
-      model: basePayload.model,
+      model: personalAi ? `${personalAi.provider}/${basePayload.model}` : basePayload.model,
       turn_count: recentMessages.length,
       prompt_chars: lastUser?.content?.length ?? 0,
       reply_chars: assistant.length,
@@ -448,6 +466,7 @@ Deno.serve(async (req) => {
   };
 
   const makeImage = async (prompt: string): Promise<string> => {
+    if (!LOVABLE_API_KEY) throw new Error("The site's image service is not configured. Personal text keys do not cover image generation.");
     // Non-streaming keeps peak memory low: streamed partials previously blew
     // past the edge function memory limit and the picture never arrived.
     const requestImage = () => fetch(IMAGE_URL, {
@@ -596,7 +615,7 @@ Deno.serve(async (req) => {
           const follow = await callGateway({ ...basePayload, ...(searchFailed ? { tools: [IMAGE_TOOL] } : {}), messages: convo });
           if (!follow.ok || !follow.body) {
             const detail = await follow.json().catch(() => ({}));
-            finalStatus = "stream_error";
+            finalStatus = personalAi ? "provider_error" : "stream_error";
             finalError = detail.message || detail.error?.message || "The assistant could not finish this reply.";
             controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: finalError })}\n\n`));
             break;
@@ -604,9 +623,9 @@ Deno.serve(async (req) => {
           calls = await pump(follow, controller);
         }
       } catch (err) {
-        finalStatus = "stream_error";
+        finalStatus = req.signal.aborted ? "cancelled" : personalAi ? "provider_error" : "stream_error";
         finalError = err instanceof Error ? err.message : "Unknown stream error";
-        console.error("stream error", err);
+        if (!personalAi) console.error("stream error", err);
         controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: finalError })}\n\n`));
       } finally {
         if (conversationId && assistant.trim()) {
