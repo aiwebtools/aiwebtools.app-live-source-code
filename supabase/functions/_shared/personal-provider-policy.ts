@@ -12,7 +12,7 @@ export function parsePersonalAi(value: unknown, signedIn: boolean, checking = fa
   if (!signedIn) throw new Error("Sign in to use a personal AI key.");
   if (!value || typeof value !== "object") throw new Error("Choose a personal AI provider.");
   const input = value as Record<string, unknown>;
-  if (typeof input.provider !== "string" || !Object.hasOwn(PERSONAL_PROVIDERS, input.provider)) throw new Error("That AI provider is not supported.");
+  if (typeof input.provider !== "string" || !Object.prototype.hasOwnProperty.call(PERSONAL_PROVIDERS, input.provider)) throw new Error("That AI provider is not supported.");
   const provider = input.provider as PersonalProvider;
   if (typeof input.apiKey !== "string" || input.apiKey.trim().length < 10 || input.apiKey.length > 512 || /\s/.test(input.apiKey.trim())) throw new Error("Enter a valid API key.");
   const model = typeof input.model === "string" ? input.model : PERSONAL_PROVIDERS[provider].models[0];

@@ -1,3 +1,4 @@
+// @ts-ignore -- Bun test-only import; browser project does not include Bun types.
 import { expect, test } from "bun:test";
 import { clearOtherPersonalAi, clearPersonalAi, getPersonalAi, setPersonalAi } from "./personalAiSession";
 test("personal key activation stays owner-bound and clears explicitly", () => {

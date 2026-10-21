@@ -6,6 +6,7 @@
 // POST { windowMinutes?: number, force?: boolean }
 // Auth: x-cron-secret (DIGEST_CRON_SECRET) or an admin Bearer token.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+import { isReplyFailure } from "./failure-status.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -118,7 +119,7 @@ Deno.serve(async (req) => {
     }
     r.total += 1;
     const status = (row as { status?: string }).status || "";
-    if (status === "stream_error" || status === "gateway_error" || status === "instruction_error") r.replyFailures += 1;
+    if (isReplyFailure(status)) r.replyFailures += 1;
     if (status === "search_error" || status === "attachment_error" || status === "analysis_error") r.toolFailures += 1;
     if (status === "empty_reply") r.emptyReplies += 1;
     if (status === "image_error") r.imageFailures += 1;
