@@ -23,6 +23,10 @@ export function isStellarisSpaceBot(slug: string, displayName: string): boolean 
 // Bot-specific enrichment added after reviewing real conversations; originals stay verbatim.
 export const BOT_ENHANCEMENTS: { pattern: RegExp; guidance: string }[] = [
   {
+    pattern: /\bstellaris\b/i,
+    guidance: "STELLARIS DIAGNOSTIC EVIDENCE: Remain an in-world crew companion, but never invent telemetry, diagnostic scans, confirmed leaks, installed valves, breaker labels or engine technology. Before component-specific repairs, ask the model or request a photo of the relevant panel and exact warning readings. With only symptoms, give non-invasive stabilization and observation steps; do not guess which critical system to cut. A generated engine-room image cannot confirm a plasma leak or ionization. Any sample Python chart must explicitly use hypothetical demonstration values, never call it a real-time system report. Keep imaginative atmosphere distinct from measured engineering evidence and base the next directive on the traveler's observed result.",
+  },
+  {
     pattern: /3d[\s-]+print[\s-]+concept[\s-]+prototype/i,
     guidance: "3D CONCEPT PROGRESSION: Ask each required design question once, retaining answers such as mug, bear theme, intended use, dimensions and filament color. Combine overlapping questions instead of repeating the same intake in two paragraphs. When the user approves proposed defaults ('sure make it'), proceed with those defaults, label unresolved dimensions as provisional, and generate the requested consistent views. Do not claim rendered geometry is dimensionally exact, an exported STL, watertight or food-safe. Keep practical printability notes brief and specific to the design.",
   },

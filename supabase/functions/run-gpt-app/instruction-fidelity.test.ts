@@ -4,6 +4,25 @@ import { appendInstructionFidelity, isStellarisSpaceBot, isTimeMachineStoryBot, 
 import { readFileSync } from "node:fs";
 import { unzipSync } from "fflate";
 import decoded from "./decoded-archive-instructions.json";
+import { BOT_ENHANCEMENTS } from "./instruction-fidelity.ts";
+
+test("reviewed bot enhancements match real slugs without changing authored prefixes", () => {
+  const cases = [
+    ["community-3d-print-concept-prototype-designer", "3D CONCEPT PROGRESSION"],
+    ["survivalist-gpt-public-open-source-for-local-deployment-by-aiwebtools", "SURVIVAL PHOTO TRIAGE"],
+    ["1995-illuminati-card-game-gpt", "CARD GAME TURN CONTINUITY"],
+    ["stellaris-space-explorer", "STELLARIS DIAGNOSTIC EVIDENCE"],
+    ["community-stellaris", "STELLARIS DIAGNOSTIC EVIDENCE"],
+  ];
+  const original = "  Authored opening\r\nKeep all required steps.  ";
+  for (const [slug, marker] of cases) {
+    const result = appendInstructionFidelity(original, slug, "Assistant");
+    expect(result.slice(0, original.length)).toBe(original);
+    expect(BOT_ENHANCEMENTS.filter((e) => e.pattern.test(slug) && e.guidance.startsWith(marker))).toHaveLength(1);
+    expect(result).toContain(marker);
+    expect(appendInstructionFidelity(original, "medicus", "Medicus")).not.toContain(marker);
+  }
+});
 
 test("Alan's recovered runtime prompt matches the existing original DOCX text", () => {
   const entries = unzipSync(readFileSync(new URL("../../../public/instructions/alan-watts-gpt-page.docx", import.meta.url)));
