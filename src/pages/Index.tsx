@@ -13,9 +13,22 @@ import CategoryPageSelection from "@/components/CategoryPageSelection";
 
 const loadSpecialServices = () => import("@/components/SpecialServices");
 const loadFeaturedTools = () => import("@/components/LazyFeaturedTools");
-// Warm the featured GPT cards immediately (even behind the access/disclaimer
-// screens) so they are ready the moment the visitor reaches them.
-if (typeof window !== "undefined") { void loadSpecialServices().catch(() => {}); window.setTimeout(() => { void loadFeaturedTools().catch(() => {}); }, 400); }
+// Warm the featured GPT cards immediately. The full tool directory is a large
+// one-time parse, so only warm it once the visitor pauses (no scroll/tap for
+// 1.2s) — never in the middle of their first scroll or click.
+if (typeof window !== "undefined") {
+  void loadSpecialServices().catch(() => {});
+  let lastInput = performance.now();
+  const mark = () => { lastInput = performance.now(); };
+  const opts = { passive: true, capture: true } as const;
+  ["scroll", "wheel", "touchstart", "touchmove", "pointerdown", "keydown"].forEach((e) => window.addEventListener(e, mark, opts));
+  const tryWarm = () => {
+    if (performance.now() - lastInput < 1200) { window.setTimeout(tryWarm, 400); return; }
+    ["scroll", "wheel", "touchstart", "touchmove", "pointerdown", "keydown"].forEach((e) => window.removeEventListener(e, mark, opts));
+    void loadFeaturedTools().catch(() => {});
+  };
+  window.setTimeout(tryWarm, 2500);
+}
 const SpecialServices = lazy(loadSpecialServices);
 const Footer = lazy(() => import("@/components/Footer"));
 const ScrollToTop = lazy(() => import("@/components/ui/scroll-to-top"));
