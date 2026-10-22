@@ -1,8 +1,16 @@
 import { expect, test } from "bun:test";
-import { selectBotModel } from "./model-selection";
-test("every bot defaults to the cheapest model", () => {
-  expect(selectBotModel("openai/gpt-6-astra", undefined)).toBe("openai/gpt-6-luna");
-  expect(selectBotModel("google/gemini-3.7-flash", "default")).toBe("openai/gpt-6-luna");
+import { selectBotModel, selectTurnModel } from "./model-selection";
+test("ordinary in-house chats default to Master's GLM Bionic model", () => {
+  expect(selectBotModel("openai/gpt-6-astra", undefined)).toBe("bionic/glm-5.3-flash");
+  expect(selectTurnModel("google/gemini-3.7-flash", "default", "Take me to Rome in 100 CE", "Time traveler")).toBe("bionic/glm-5.3-flash");
+});
+test("advanced reasoning and coding use Master's DeepSeek Bionic model", () => {
+  expect(selectTurnModel("x", "default", "Debug this TypeScript function", "Assistant")).toBe("bionic/deepseek-v4.1-flash");
+  expect(selectTurnModel("x", undefined, "Prove the theorem step by step", "Assistant")).toBe("bionic/deepseek-v4.1-flash");
+});
+test("personal providers and manual picks cannot be overridden by auto routing", () => {
+  expect(selectTurnModel("x", "default", "Debug my code", "Assistant", "gemini-2.5-flash")).toBe("gemini-2.5-flash");
+  expect(selectTurnModel("x", "bionic/glm-5.3-flash", "Debug my code", "Assistant")).toBe("bionic/glm-5.3-flash");
 });
 test("only budget models are selectable, never premium ones", () => {
   expect(selectBotModel("x", "openai/gpt-6-luna")).toBe("openai/gpt-6-luna");
