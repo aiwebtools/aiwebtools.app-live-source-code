@@ -22,6 +22,10 @@ export const useAuthSession = () => {
       clearOtherPersonalAi(data.session?.user.id);
       setSession(data.session ?? null);
       setLoading(false);
+    }).catch(() => {
+      clearOtherPersonalAi();
+      setSession(null);
+      setLoading(false);
     });
 
     return () => sub.subscription.unsubscribe();

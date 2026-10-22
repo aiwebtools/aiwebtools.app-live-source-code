@@ -4,6 +4,7 @@ import { createGoogle } from "npm:@ai-sdk/google@4.0.102";
 import { createAnthropic } from "npm:@ai-sdk/anthropic@4.0.85";
 import { createDeepSeek } from "npm:@ai-sdk/deepseek@3.0.70";
 import { PERSONAL_PROVIDERS, personalProviderError, type PersonalAi } from "../_shared/personal-provider-policy.ts";
+import { callPersonalBionic, checkPersonalBionic } from "./personal-bionic.ts";
 
 // SDK warning payloads can carry native tool metadata; never emit them to logs.
 (globalThis as typeof globalThis & { AI_SDK_LOG_WARNINGS?: boolean }).AI_SDK_LOG_WARNINGS = false;
@@ -14,6 +15,7 @@ export type PersonalProviderRun = { history?: ModelMessage[] };
 const statusError = (statusCode: number) => Object.assign(new Error(personalProviderError({ statusCode })), { statusCode });
 
 export async function checkPersonalProvider(config: PersonalAi, signal: AbortSignal) {
+  if (config.provider === "bionic") return checkPersonalBionic(config, signal);
   const endpoints = {
     openai: "https://api.openai.com/v1/models",
     gemini: "https://generativelanguage.googleapis.com/v1beta/models?pageSize=1000",
@@ -72,6 +74,7 @@ function sdkMessages(messages: WireMessage[], vision: boolean): { instructions: 
 // One provider step, normalized to the existing chat transport. The existing
 // tool loop executes search/images and sends complete tool-call/result pairs.
 export async function callPersonalProvider(config: PersonalAi, payload: Record<string, unknown>, signal: AbortSignal, run: PersonalProviderRun = {}): Promise<Response> {
+  if (config.provider === "bionic") return callPersonalBionic(config, payload, signal);
   try {
     const model = config.provider === "openai" ? createOpenAI({ apiKey: config.apiKey }).responses(config.model)
       : config.provider === "gemini" ? createGoogle({ apiKey: config.apiKey })(config.model)

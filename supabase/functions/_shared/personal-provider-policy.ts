@@ -1,5 +1,6 @@
 // Public configuration only. Credentials never belong in this module.
 export const PERSONAL_PROVIDERS = {
+  bionic: { name: "Bionic", keyUrl: "https://lmstudio.ai?via=aiwebtools", models: ["bionic/glm-5.3-flash", "bionic/deepseek-v4.1-flash"], vision: true },
   openai: { name: "OpenAI", keyUrl: "https://platform.openai.com/api-keys?via=aiwebtools", models: ["gpt-6-astra", "gpt-6-luna", "gpt-4o-mini"], vision: true },
   gemini: { name: "Gemini", keyUrl: "https://aistudio.google.com/api-keys", models: ["gemini-flash-latest", "gemini-3.1-flash-lite", "gemini-2.5-flash"], vision: true },
   claude: { name: "Claude", keyUrl: "https://console.anthropic.com/settings/keys?via=aiwebtools", models: ["claude-haiku-5-5", "claude-haiku-4-5", "claude-haiku-4-5-20251001"], vision: true },
