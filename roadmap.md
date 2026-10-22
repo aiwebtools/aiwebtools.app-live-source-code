@@ -1,9 +1,9 @@
 # Chatbot completion roadmap
 
 # Current Bionic model connection
-- [ ] Securely collect builder Bionic key; verify both exact model IDs and capabilities.
-- [ ] Route ordinary default bot chats to GLM and advanced reasoning/coding to DeepSeek, preserving instructions, tools and personal-provider priority; hold Gemini fallback.
-- [ ] Test routing/error/privacy rules and several real bot conversations, search/image/attachment behavior; record unsupported abilities honestly.
+- [x] Securely collect builder Bionic key; verify both exact model IDs, streaming, vision input and tool calls. GLM recognized the photo test; DeepSeek misidentified its color.
+- [x] Route ordinary default bot chats to GLM and advanced reasoning/coding to DeepSeek, preserving instructions, tools and personal-provider priority; hold Gemini fallback. Deployed run-gpt-app; verified logged model selection.
+- [x] Pass 453 routing/instruction/privacy regression tests; live Time Machine, Stellaris, coding and web search pass. Actual visitor Stellaris reply verified without page errors. Image executor succeeded but test client disconnected before final reply; full image delivery remains to verify. No Python executor exists; model changes do not add it.
 
 # Current menu, categories and sign-in repair
 - [ ] Make desktop Web3 Domains panel opaque and verify expanded content.
