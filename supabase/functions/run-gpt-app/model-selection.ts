@@ -7,12 +7,11 @@ export function selectBotModel(_original: string, requested: unknown): string | 
   return typeof requested === "string" && SELECTABLE_MODELS.includes(requested) ? requested : null;
 }
 
-export function selectTurnModel(original: string, requested: unknown, message: string, instructions: string, personalModel?: string): string | null {
+export function selectTurnModel(original: string, requested: unknown, message: string, _instructions: string, personalModel?: string): string | null {
   if (personalModel) return personalModel;
   const selected = selectBotModel(original, requested);
   if (!selected || (requested !== undefined && requested !== "default")) return selected;
-  const demandingRequest = /\b(debug|refactor|implement|write (?:the |a |an )?(?:code|function|script|program)|coding|programming|algorithm|prove|proof|derive|regression|statistical analysis|multi[- ]step|advanced reasoning|complex (?:math|analysis|reasoning)|optimi[sz]e (?:code|query|algorithm))\b/i;
-  const specialist = /\b(?:software engineer|coding assistant|programming assistant|mathematician|advanced mathematics)\b/i;
-  return demandingRequest.test(message) || (specialist.test(instructions) && message.trim().length > 25)
-    ? BIONIC_DEEPSEEK_MODEL : BIONIC_GLM_MODEL;
+  const codeTask = /\b(?:debug|refactor)\b|\b(?:write|implement|optimi[sz]e|fix|review)\b[^\n.!?]{0,65}\b(?:code|function|script|program|algorithm|sql|typescript|javascript|python|query)\b|\b(?:coding|programming)\b|```(?:python|py|js|javascript|ts|typescript|sql|cpp|rust)\b/i;
+  const advancedTask = /\b(?:advanced reasoning|complex (?:math|analysis|reasoning)|statistical analysis|regression analysis|prove (?:the |a |this )?(?:theorem|lemma|identity)|(?:mathematical|formal) proof|derive (?:the |a |this )?(?:equation|formula|expression))\b/i;
+  return codeTask.test(message) || advancedTask.test(message) ? BIONIC_DEEPSEEK_MODEL : BIONIC_GLM_MODEL;
 }

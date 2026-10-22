@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { createFallbackChat, LOVABLE_FALLBACK_MODEL } from "./chat-fallback";
+import { createFallbackChat, LOVABLE_FALLBACK_MODEL, RESTING_MESSAGE } from "./chat-fallback";
 import { isPaused, type ProviderState, type ProviderStore } from "../_shared/chat-provider-state";
 
 function setup(status: number, marker?: string) {
@@ -58,4 +58,17 @@ test("Bionic failures after text or tools start never switch models mid-reply", 
   s.route.markStarted();
   expect((await s.route.call(payload)).status).toBe(402);
   expect(s.calls).toHaveLength(0);
+});
+test("resting requires both credit balances exhausted and preserves Lovable remedy", async () => {
+  const states = new Map<string, ProviderState>();
+  const store: ProviderStore = { get: async p => states.get(p) || null, set: async s => { states.set(s.provider, s); } };
+  const route = createFallbackChat(store, async () => new Response("{}", { status: 402 }), async () => new Response('{"message":"Top up site credits"}', { status: 402 }), new AbortController().signal);
+  expect(await (await route.call(payload)).text()).toContain(RESTING_MESSAGE);
+  expect(await (await route.call(payload)).text()).toContain(RESTING_MESSAGE);
+});
+test("Lovable exhausted while Bionic has an outage never says resting", async () => {
+  const states = new Map<string, ProviderState>([["bionic", { provider: "bionic", status: "outage", retry_at: new Date(Date.now()+60_000).toISOString() }], ["lovable_chat", { provider: "lovable_chat", status: "credits", http_status: 402 }]]);
+  const store: ProviderStore = { get: async p => states.get(p) || null, set: async s => { states.set(s.provider, s); } };
+  const route = createFallbackChat(store, async () => new Response(), async () => new Response(), new AbortController().signal);
+  expect(await (await route.call(payload)).text()).not.toContain("resting");
 });

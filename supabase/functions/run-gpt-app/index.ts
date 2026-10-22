@@ -4,6 +4,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import { selectBotModel, selectTurnModel } from "./model-selection.ts";
 import { callBionic, isBionicModel } from "./bionic-provider.ts";
 import { createFallbackChat } from "./chat-fallback.ts";
+import { readTokenUsage } from "../_shared/chat-usage.ts";
 import type { ProviderState, ProviderStore } from "../_shared/chat-provider-state.ts";
 import { appendInstructionFidelity, resolveOperationalInstructions } from "./instruction-fidelity.ts";
 import { readChatStreamEvent, ChatStreamFailure } from "./stream-events.ts";
@@ -410,6 +411,7 @@ Deno.serve(async (req) => {
     model: turnModel,
     ...(turnModel === "openai/gpt-6-luna" ? { reasoning_effort: "none" } : {}),
     stream: true,
+    stream_options: { include_usage: true },
     tools: [IMAGE_TOOL, SEARCH_TOOL],
   };
 
@@ -442,6 +444,13 @@ Deno.serve(async (req) => {
   const activityFrame = (id: string, name: string, input: string, state: string, error?: string) => encoder.encode(`data: ${JSON.stringify({ activity: { id, name, input, state, error } })}\n\n`);
 
   let assistant = "";
+  let inputTokens = 0;
+  let outputTokens = 0;
+  let totalTokens = 0;
+  let usageSteps = 0;
+  let modelSteps = 0;
+  const actualModel = () => personalAi ? `${personalAi.provider}/${personalAi.model}` : routedChat.getModel();
+  const usageFrame = () => encoder.encode(`data: ${JSON.stringify({ usage: { model: actualModel(), inputTokens, outputTokens, totalTokens, complete: usageSteps === modelSteps && modelSteps > 0 } })}\n\n`);
   const requestStartedAt = Date.now();
   let imageRequested = false;
   let imageSucceeded = false;
@@ -530,6 +539,8 @@ Deno.serve(async (req) => {
   ): Promise<{ name: string; args: string; id: string }[]> => {
     if (!res.body) return [];
     routedChat.markStarted();
+    modelSteps++;
+    let stepUsage: ReturnType<typeof readTokenUsage> = null;
     const reader = res.body.getReader();
     const calls: { name: string; args: string; id: string }[] = [];
     let buffer = "";
@@ -545,6 +556,9 @@ Deno.serve(async (req) => {
         // Complete lines are complete SSE payloads; provider error events must
         // terminate the reply instead of being swallowed as partial JSON.
         {
+          const event = JSON.parse(payload);
+          const reported = readTokenUsage(event.usage);
+          if (reported) stepUsage = reported;
           const delta = readChatStreamEvent(payload);
           if (typeof delta?.content === "string" && delta.content) {
             assistant += delta.content;
@@ -563,11 +577,19 @@ Deno.serve(async (req) => {
       }
       if (done) break;
     }
+    if (stepUsage) {
+      inputTokens += stepUsage.inputTokens;
+      outputTokens += stepUsage.outputTokens;
+      totalTokens += stepUsage.totalTokens;
+      usageSteps++;
+    }
+    controller.enqueue(usageFrame());
     return calls.filter(Boolean);
   };
 
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
+      controller.enqueue(usageFrame());
       try {
         let calls = await pump(upstream, controller);
         const convo: ChatMsg[] = [{ role: "system", content: systemPrompt }, ...messages.map((message) => toModelMessage({ ...message, images: "images" in message ? message.images : [] }))];
@@ -668,6 +690,7 @@ Deno.serve(async (req) => {
           finalError = "The model returned no visible reply.";
         }
         await writeChatLog();
+        controller.enqueue(usageFrame());
         controller.enqueue(encoder.encode("data: [DONE]\n\n"));
         controller.close();
       }

@@ -46,6 +46,7 @@ import { prepareVisualAttachment } from "@/utils/prepareBotAttachment";
 import PersonalAiSettings from "./PersonalAiSettings";
 import { usePersonalAi } from "@/utils/personalAiSession";
 import { PERSONAL_PROVIDERS } from "../../../supabase/functions/_shared/personal-provider-policy";
+import type { ChatUsage } from "../../../supabase/functions/_shared/chat-usage";
 
 export default function BotStudio({ app, threadId, embedded = false, onExit }: { app: StudioBot; threadId?: string; embedded?: boolean; onExit?: () => void }) {
   const navigate = useNavigate();
@@ -136,6 +137,7 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
     setInput(""); setAttachment(null); setNotice(""); setStreaming(true); speech.reset();
     const controller = new AbortController(); abortRef.current = controller;
     let assistant = "";
+    let usage: ChatUsage | undefined;
     const activities: BotActivity[] = [];
     let serverId = current.serverId;
     try {
@@ -159,17 +161,21 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
           const payload = line.slice(6).trim(); if (!payload || payload === "[DONE]") continue;
           let parsed; try { parsed = JSON.parse(payload); } catch { continue; }
           if (parsed.error) throw new Error(typeof parsed.error === "string" ? parsed.error : parsed.error.message || "The assistant could not finish this reply.");
+          if (parsed.usage && typeof parsed.usage.model === "string") {
+            usage = parsed.usage as ChatUsage;
+            setThread({ ...base, serverId, messages: [...messages, { role: "assistant", content: assistant, activities: [...activities], usage }] });
+          }
           if (parsed.activity) {
             const activity = parsed.activity as BotActivity;
             const found = activities.findIndex((item) => item.id === activity.id);
             if (found >= 0) activities[found] = activity; else activities.push(activity);
-            setThread({ ...base, serverId, messages: [...messages, { role: "assistant", content: assistant, activities: [...activities] }] });
+            setThread({ ...base, serverId, messages: [...messages, { role: "assistant", content: assistant, activities: [...activities], usage }] });
           }
           const delta = parsed?.choices?.[0]?.delta?.content;
           if (typeof delta === "string") {
             assistant += delta;
             // Keep streamed state responsive; save the complete turn at the end.
-            setThread({ ...base, serverId, messages: [...messages, { role: "assistant", content: assistant, activities: [...activities] }] });
+            setThread({ ...base, serverId, messages: [...messages, { role: "assistant", content: assistant, activities: [...activities], usage }] });
             speech.feed(assistant);
           }
         }
@@ -184,7 +190,7 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
     } catch (error) {
       if (!controller.signal.aborted) { const msg = error instanceof Error ? error.message : "The reply could not load."; setNotice(msg); reportFailure("stream_error", msg); }
     } finally {
-      commit({ ...base, serverId, messages: assistant || activities.length ? [...messages, { role: "assistant", content: assistant, activities: activities.map((activity) => activity.state === "input-available" ? { ...activity, state: "output-error", error: "This action was interrupted." } : activity) }] : messages, updatedAt: Date.now() });
+      commit({ ...base, serverId, messages: assistant || activities.length ? [...messages, { role: "assistant", content: assistant, usage, activities: activities.map((activity) => activity.state === "input-available" ? { ...activity, state: "output-error", error: "This action was interrupted." } : activity) }] : messages, updatedAt: Date.now() });
       setStreaming(false); abortRef.current = null;
     }
   }, [app.slug, app.custom, app.display_name, app.tagline, celebrations, celebrationSound, commit, session, speech, streaming, attachment, readingFile, personalAi]);
@@ -269,6 +275,10 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
       <main className="studio-main">
         <header className="studio-bot-header"><BotPortrait src={avatar} name={app.display_name} themeKey={theme.key} emblem={theme.emblem} className="gpt-room-avatar h-11 w-11 shrink-0 rounded-md" /><div className="studio-bot-identity min-w-0 flex-1"><h1 className="break-words text-base font-bold sm:text-xl gpt-room-accent"><span className="gpt-glitch-title" data-text={app.display_name}>{app.display_name}</span></h1><p className="studio-bot-description mt-1 text-xs text-muted-foreground">{app.tagline || theme.roomLabel}</p></div><Button variant="ghost" size="icon" className="studio-voice-toggle shrink-0" onClick={speech.toggle} aria-label={speech.enabled ? "Mute the voice" : "Enable the voice"} title={speech.enabled ? "Mute the voice" : "Enable the voice"}>{speech.enabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}</Button>{!app.custom && <div className="studio-header-pdf"><OpInstructionsButton slug={app.slug} name={app.display_name} singleOnly compact label="GPT Instructions PDF" /></div>}</header>
         <BotQuickSwitch bots={[...customBots, ...bots]} onChoose={chooseBot} portrait={sidebarPortrait} />
+        {thread.messages.some((message) => message.usage) && (() => {
+          const usage = thread.messages.filter((message) => message.usage).at(-1)?.usage;
+          return usage ? <p data-testid="chat-usage" className="shrink-0 break-words px-4 py-1 text-[10px] leading-4 text-muted-foreground" title={usage.complete ? `Latest reply including tool rounds: ${usage.inputTokens} input + ${usage.outputTokens} output tokens` : "Provider token totals are pending or incomplete; no estimated count is shown."}>{usage.model} · {usage.complete ? `${usage.totalTokens.toLocaleString()} tokens · ${usage.inputTokens.toLocaleString()} in / ${usage.outputTokens.toLocaleString()} out` : "Tokens unavailable / pending"} · latest reply</p> : null;
+        })()}
         <Conversation className="studio-transcript"><ConversationContent className="studio-messages gap-5 p-4 sm:p-6">
           {!thread.messages.length && <div className="studio-welcome"><BotPortrait src={avatar} name={app.display_name} themeKey={theme.key} emblem={theme.emblem} className="gpt-room-avatar mb-3 h-14 w-14 rounded-md" /><p className="text-sm leading-6 text-foreground">{welcome}</p><div className="mt-3"><p className="studio-starter-label mb-1.5">STARTER PROMPT</p>{getBotStarters(app).map((prompt) => <Button variant="ghost" className="studio-starter h-auto whitespace-normal text-left" key={prompt} disabled={streaming} onClick={() => send(prompt)}>{prompt}</Button>)}</div></div>}
           {thread.messages.map((message, index) => { const { text, working } = splitImageProgress(message.content); return <Message key={index} from={message.role}><MessageContent className={message.role === "user" ? "gpt-msg-user" : "gpt-msg-bot"}><div className="gpt-msg-meta">{message.role === "assistant" && <BotPortrait src={avatar} name={app.display_name} themeKey={theme.key} emblem={theme.emblem} className="gpt-msg-avatar" />}<span>{message.role === "user" ? "You" : app.display_name}</span></div>{message.role === "user" ? <><p className="whitespace-pre-wrap">{message.content}</p>{message.attachments?.map((file) => <p key={file.name} className="mt-2 break-words text-xs text-muted-foreground"><Paperclip className="mr-1 inline h-3 w-3" />{file.name} · {(file.size / (1024 * 1024)).toFixed(2)} MB</p>)}</> : <>{(message.activities || []).map((activity) => <Tool key={activity.id} className="studio-tool" defaultOpen={false}><ToolHeader type="dynamic-tool" toolName={activity.name} title={activity.name === "generate_image" ? "Image generation" : "Web search"} state={activity.state} /><ToolContent><p className="text-xs break-words">{activity.input}</p>{activity.error && <p className="text-xs text-destructive">{activity.error}</p>}</ToolContent></Tool>)}{text && <MessageResponse className="gpt-generated-content">{text}</MessageResponse>}{working && streaming && index === thread.messages.length - 1 && <ImageProgress />}<StudioImageActions content={message.content} name={app.display_name} busy={streaming} onError={setNotice} onPrompt={(text) => { setInput(text); inputRef.current?.focus(); }} /><ReplyTools text={text} name={app.display_name} busy={streaming && index === thread.messages.length - 1} onError={setNotice} />{text && <div className="mt-2 flex gap-1"><Button variant="ghost" size="icon" onClick={() => speech.speakNow(text)} aria-label={speech.speaking ? "Stop reading" : "Play reply"} title="Play or stop reply">{speech.speaking ? <Square className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}</Button><Button variant="ghost" size="icon" aria-label="Copy reply" title="Copy reply" onClick={() => { void navigator.clipboard.writeText(text).then(() => setCopied(index)).catch(() => setNotice("Copy is unavailable in this browser.")); }}>{copied === index ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}</Button></div>}</>}</MessageContent></Message>; })}
