@@ -12,6 +12,7 @@ export default function BotCommercial({ slug, name, toolTitle, userId, voice, cu
   const [needsTap, setNeedsTap] = useState(false);
   const frame = useRef<HTMLIFrameElement>(null);
   const done = useRef(false);
+  const started = useRef<string | null>(null);
 
   const finish = useCallback(() => {
     if (done.current) return; done.current = true;
@@ -20,20 +21,21 @@ export default function BotCommercial({ slug, name, toolTitle, userId, voice, cu
   }, [slug, name, voice, userId, custom]);
 
   useEffect(() => {
-    console.log("[commercial] effect", { slug, toolTitle, seen: hasSeenCommercial(slug, userId) });
+    // StrictMode remounts and async session changes re-run this effect for the same bot;
+    // never reset or re-trigger a commercial already started for this slug.
+    if (started.current === slug) return;
+    started.current = slug;
     done.current = false; setOpen(false); setSrc(null); setNeedsTap(false);
-    if (hasSeenCommercial(slug, userId)) { console.log("[commercial] already seen, intro only"); void playBotIntro({ slug, name, voice, userId, custom }); return; }
+    if (hasSeenCommercial(slug, userId)) { void playBotIntro({ slug, name, voice, userId, custom }); return; }
     let alive = true;
     const run = custom ? Promise.resolve(null) : getBotCommercial(toolTitle, name);
     void run.then((url) => {
-      console.log("[commercial] resolved url:", url);
       if (!alive) return;
       const embed = url ? commercialEmbed(url) : null;
-      console.log("[commercial] embed:", embed);
       markCommercialSeen(slug, userId);
       if (!embed) { finish(); return; }
       setSrc(embed); setOpen(true);
-    }).catch((err) => { console.log("[commercial] lookup error:", err); if (alive) finish(); });
+    }).catch(() => { if (alive) finish(); });
     return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug, userId]);
