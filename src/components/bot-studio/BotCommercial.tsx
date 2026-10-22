@@ -22,6 +22,7 @@ export default function BotCommercial({ slug, name, toolTitle, userId, voice, cu
 
   const finish = useCallback(() => {
     if (done.current) return; done.current = true;
+    liveShow.slug = null; liveShow.embed = null;
     setOpen(false);
     void playBotIntro({ slug, name, voice, userId, custom });
   }, [slug, name, voice, userId, custom]);
@@ -32,8 +33,9 @@ export default function BotCommercial({ slug, name, toolTitle, userId, voice, cu
     if (started.current === slug && shown.current) return;
     const firstForSlug = started.current !== slug;
     started.current = slug;
-    console.log("[commercial] effect run", { slug, firstForSlug, shown: shown.current, seen: hasSeenCommercial(slug, userId) });
     if (firstForSlug) { done.current = false; shown.current = false; setOpen(false); setSrc(null); setNeedsTap(false); }
+    // A remounted instance for the same bot resumes the commercial that was already playing.
+    if (liveShow.slug === slug && liveShow.embed) { shown.current = true; setSrc(liveShow.embed); setOpen(true); return; }
     if (hasSeenCommercial(slug, userId)) { void playBotIntro({ slug, name, voice, userId, custom }); return; }
     let alive = true;
     const run = custom ? Promise.resolve(null) : getBotCommercial(toolTitle, name);
@@ -43,6 +45,7 @@ export default function BotCommercial({ slug, name, toolTitle, userId, voice, cu
       markCommercialSeen(slug, userId);
       if (!embed) { finish(); return; }
       shown.current = true;
+      liveShow.slug = slug; liveShow.embed = embed;
       setSrc(embed); setOpen(true);
     }).catch(() => { if (alive) finish(); });
     return () => { alive = false; };
