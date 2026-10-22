@@ -11,3 +11,8 @@ test("text and tool deltas are preserved while metadata is ignored", () => {
   expect(readChatStreamEvent('{"choices":[{"delta":{"tool_calls":[{"index":0,"function":{"name":"web_search"}}]}}]}').tool_calls[0].function.name).toBe("web_search");
   expect(readChatStreamEvent('{"usage":{"total_tokens":120}}')).toBeUndefined();
 });
+
+test("provider refusals end the stream instead of becoming empty retryable replies", () => {
+  expect(() => readChatStreamEvent('{"choices":[{"delta":{"refusal":"Request declined"}}]}')).toThrow("declined");
+  expect(() => readChatStreamEvent('{"choices":[{"delta":{},"finish_reason":"content_filter"}]}')).toThrow("declined");
+});

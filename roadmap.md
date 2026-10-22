@@ -5,7 +5,7 @@
 - [ ] Audit all in-house bot defaults; verify real Python execution, images, search and representative bot replies; disclose extent of live tests.
 - [x] Securely collect builder Bionic key; verify both exact model IDs, streaming, vision input and tool calls. GLM recognized the photo test; DeepSeek misidentified its color.
 - [x] Route ordinary default bot chats to GLM and advanced reasoning/coding to DeepSeek, preserving instructions, tools and personal-provider priority; hold Gemini fallback. Deployed run-gpt-app; verified logged model selection.
-- [x] Pass 453 routing/instruction/privacy regression tests; live Time Machine, Stellaris, coding and web search pass. Actual visitor Stellaris reply and generated spacecraft image with Download/View/Revise verified without page errors. No Python executor exists; model changes do not add it.
+- [x] Pass 453 routing/instruction/privacy regression tests; live Time Machine, Stellaris, coding and web search pass. Actual visitor Stellaris reply and generated spacecraft image with Download/View/Revise verified without page errors. Correction: existing Run Python executes code on the visitor's device via Pyodide; there is no server-side autonomous Python tool.
 
 # Current menu, categories and sign-in repair
 - [x] Make desktop Web3 Domains panel opaque and verify expanded content: screenshot and computed RGB(13,13,13), no page errors.
