@@ -1,4 +1,4 @@
-import { startTransition, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Bot, ChevronDown, Search, Wand2 } from "lucide-react";
 import { loadStudioBots, type StudioBot } from "@/components/bot-studio/botCatalog";
@@ -28,7 +28,8 @@ export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false }: { 
 
   const go = (path: string) => {
     onNavigate?.();
-    requestAnimationFrame(() => startTransition(() => navigate(path)));
+    // A transition here can keep the old page on screen indefinitely while the bot room loads.
+    requestAnimationFrame(() => navigate(path));
   };
   const stop = (e: React.SyntheticEvent) => e.stopPropagation();
 
