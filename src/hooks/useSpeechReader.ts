@@ -110,7 +110,9 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
           onStudioDown: noteStudioDown,
           playFallback: speakChunk,
         });
-        return !controller.signal.aborted && !studioDownRef.current;
+        // The device-voice fallback already read the reply when the studio
+        // engine failed, so that case is a success, not a surfaced failure.
+        return !controller.signal.aborted;
       } catch (error) {
         if (!controller.signal.aborted) {
           toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Please try voice playback again.", variant: "destructive" });
