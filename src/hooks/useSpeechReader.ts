@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { splitSpeechText } from "@/utils/speechText";
 import { useToast } from "@/hooks/use-toast";
-import { beginSpeechClip, playSpeechClip, stopSpeechPlayback, unlockSpeechPlayback, type SpeechClip } from "@/utils/streamSpeech";
+import { beginSpeechClip, drainStudioQueue, playSpeechClip, stopSpeechPlayback, unlockSpeechPlayback, type SpeechClip } from "@/utils/streamSpeech";
 import type { GptVoiceProfile } from "@/utils/gptVoiceProfiles";
 
 const STORAGE_KEY = "awt-voice-enabled";
@@ -104,19 +104,14 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       setSpeaking(true);
       try {
         const clips = splitSpeechText(clean, 600).filter(speakable).map((chunk) => ({ text: chunk, clip: startClip(chunk, controller.signal) }));
-        for (let i = 0; i < clips.length; i++) {
-          if (controller.signal.aborted) return false;
-          try {
-            await playSpeechClip(clips[i].clip, clipSpeed(profile.speed));
-          } catch (clipError) {
-            if (controller.signal.aborted) return false;
-            // Lifelike engine failed (commonly AI credits recharging): read the
-            // rest of this reply with the free on-device voice so nothing is lost.
-            noteStudioDown();
-            for (const rest of clips.slice(i)) speakChunk(rest.text);
-            return false;
-          }
-        }
+        await drainStudioQueue(clips, {
+          play: (clip) => playSpeechClip(clip, clipSpeed(profile.speed)),
+          isAborted: () => controller.signal.aborted,
+          onStudioDown: noteStudioDown,
+          playFallback: speakChunk,
+        });
+        // The device-voice fallback already read the reply when the studio
+        // engine failed, so that case is a success, not a surfaced failure.
         return !controller.signal.aborted;
       } catch (error) {
         if (!controller.signal.aborted) {
@@ -146,22 +141,12 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       setSpeaking(true);
       void (async () => {
         try {
-          while (generation === generationRef.current && pendingRef.current.length) {
-            const next = pendingRef.current.shift();
-            if (!next) break;
-            if (generation !== generationRef.current || controller.signal.aborted) return;
-            try {
-              await playSpeechClip(next.clip, clipSpeed(profile.speed));
-            } catch (clipError) {
-              if (generation !== generationRef.current || controller.signal.aborted) return;
-              // Lifelike engine failed (commonly AI credits recharging): the free
-              // on-device voice reads this sentence and everything still queued.
-              noteStudioDown();
-              speakChunk(next.text);
-              for (const rest of pendingRef.current.splice(0)) speakChunk(rest.text);
-              return;
-            }
-          }
+          await drainStudioQueue(pendingRef.current, {
+            play: (clip) => playSpeechClip(clip, clipSpeed(profile.speed)),
+            isAborted: () => generation !== generationRef.current || controller.signal.aborted,
+            onStudioDown: noteStudioDown,
+            playFallback: speakChunk,
+          });
         } catch (error) {
           if (generation === generationRef.current && !controller.signal.aborted) {
             pendingRef.current = [];

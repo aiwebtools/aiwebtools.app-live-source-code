@@ -2,9 +2,9 @@ import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { unzipSync } from "fflate";
-import originals from "./official-instructions.json";
-import provenance from "./instruction-provenance.json";
-import seeds from "../seed-gpt-apps/apps.json";
+import originals from "./official-instructions.json" with { type: "json" };
+import provenance from "./instruction-provenance.json" with { type: "json" };
+import seeds from "../seed-gpt-apps/apps.json" with { type: "json" };
 import { resolveOperationalInstructions, appendInstructionFidelity } from "./instruction-fidelity";
 
 const root = new URL("../../../", import.meta.url);

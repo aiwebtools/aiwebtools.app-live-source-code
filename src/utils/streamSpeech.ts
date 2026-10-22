@@ -126,6 +126,36 @@ export const beginSpeechClip = (url: string, init: RequestInit, outer: AbortSign
   };
 };
 
+/**
+ * Drain a queue of spoken clips in order. When the lifelike engine fails
+ * (commonly AI credits recharging), the failed sentence and everything still
+ * queued is handed to the free on-device fallback instead — complete replies
+ * are preserved and nothing already heard is re-read.
+ */
+export const drainStudioQueue = async (
+  queue: Array<{ text: string; clip: SpeechClip }>,
+  opts: {
+    play: (clip: SpeechClip) => Promise<void>;
+    isAborted: () => boolean;
+    onStudioDown: () => void;
+    playFallback: (text: string) => void;
+  },
+): Promise<void> => {
+  while (queue.length) {
+    const next = queue.shift()!;
+    if (opts.isAborted()) return;
+    try {
+      await opts.play(next.clip);
+    } catch {
+      if (opts.isAborted()) return;
+      opts.onStudioDown();
+      opts.playFallback(next.text);
+      for (const rest of queue.splice(0)) opts.playFallback(rest.text);
+      return;
+    }
+  }
+};
+
 let context: AudioContext | null = null;
 const liveSources = new Set<AudioBufferSourceNode>();
 
