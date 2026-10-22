@@ -95,6 +95,33 @@ export type Database = {
         }
         Relationships: []
       }
+      chat_provider_state: {
+        Row: {
+          created_at: string
+          http_status: number | null
+          provider: string
+          retry_at: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          http_status?: number | null
+          provider: string
+          retry_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          http_status?: number | null
+          provider?: string
+          retry_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       community_apps: {
         Row: {
           ai_reason: string | null
