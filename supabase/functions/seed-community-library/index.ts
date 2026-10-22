@@ -16,10 +16,12 @@ type Rec = { slug: string; display_name: string; tagline: string; system_prompt:
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
   const body = await req.json().catch(() => ({}));
-  // TEMPORARY one-time window: import the 25 archived survival drafts from the
-  // bundled JSON. Ungated only until the import completes, then re-secured.
+  const secret = Deno.env.get("GPT_SEED_SECRET");
+  if (!secret || req.headers.get("x-cron-secret") !== secret) return json({ error: "Unauthorized" }, 401);
+  const admin = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+
+  // Secret-gated: import the 25 archived survival drafts from the bundled JSON.
   if ((body as { action?: string }).action === "import-survival-drafts") {
-    const admin = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
     const records = survivalDrafts as Array<Record<string, unknown>>;
     const { error: appErr } = await admin.from("gpt_apps").upsert(records.map((r) => ({
       slug: r.slug, display_name: r.display_name, tool_title: null, tagline: r.tagline,
@@ -32,9 +34,6 @@ Deno.serve(async (req) => {
     if (promptErr) return json({ error: promptErr.message }, 500);
     return json({ ok: true, upserted: records.length });
   }
-  const secret = Deno.env.get("GPT_SEED_SECRET");
-  if (!secret || req.headers.get("x-cron-secret") !== secret) return json({ error: "Unauthorized" }, 401);
-  const admin = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
 
   if (body.action === "image") {
     const { slug, name, summary, family = [] } = body as { slug: string; name: string; summary: string; family: string[] };
