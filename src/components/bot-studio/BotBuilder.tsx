@@ -99,6 +99,12 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
             <SelectContent className="z-[190]">{VOICES.map(([id, label]) => <SelectItem key={id} value={id}>{label}</SelectItem>)}</SelectContent>
           </Select>
         </div>
+        <div className="text-xs font-semibold uppercase tracking-wider text-primary">Category
+          <Select value={subject} onValueChange={(v) => setSubject(v as BotSubject)}>
+            <SelectTrigger className="mt-1" aria-label="Bot category"><SelectValue /></SelectTrigger>
+            <SelectContent className="z-[190]">{BOT_SUBJECTS.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+          </Select>
+        </div>
         <div className="flex items-start gap-2 text-sm text-foreground"><Checkbox id="builder-public-share" aria-label="Share in public Community GPT library" className="mt-1 shrink-0" checked={share} onCheckedChange={(checked) => setShare(checked === true)} /><label htmlFor="builder-public-share">Share it in the public Community GPT library. An AI ethics review checks it first, then it is published automatically for everyone.</label></div>
         {status && <p role="status" className="rounded-md border border-primary/40 p-3 text-xs text-foreground">{status}</p>}
         <Button type="button" className="studio-new w-full gap-2" disabled={busy || preparingAvatar} onClick={() => void save()}><Wand2 className="h-4 w-4" />{busy ? "Reviewing & publishing…" : share ? "Save, review & publish" : "Save & launch my bot"}</Button>
