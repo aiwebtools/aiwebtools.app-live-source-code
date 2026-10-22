@@ -227,15 +227,6 @@ export const perplexityBotsBatch2026: Tool[] = [
     tagline: "The Perplexity Bot edition of Cannabis by AIWebTools.ai"
   },
   {
-    icon: Briefcase, title: "Ccsba Receipt Generator PERPLEXITY BOT", emoji: "🧾", color: "from-yellow-500 to-amber-600",
-    description: "Ccsba Receipt Generator PERPLEXITY BOT is the Perplexity-powered edition of the AIWebTools.ai Ccsba Receipt Generator custom GPT, published as an independent public Perplexity Project with its own full operational instructions. It answers with live web grounding and cited sources, and anyone can open the link and use it free — no sign-in required to view.",
-    directUrl: "https://www.perplexity.ai/projects/ccsba-receipt-generator-gpt-qs4NPKLEQVOcbwqIJjYTbQ",
-    imageUrl: perplexityBotImage("business-plan-generator-perplexity-bot"),
-    tags: ["Ccsba Receipt Generator PERPLEXITY BOT", "Ccsba Receipt Generator", "Ccsba Receipt Generator GPT", "Ccsba Receipt Generator Perplexity", "Perplexity Bots", "Perplexity Bot", "Perplexity Project", "AIWebTools", "AIWebTools GPT", "custom GPT", "Perplexity AI", "free", "Free", "business"],
-    category: "Perplexity Bots", rating: 4.8, totalVotes: 120, isFree: true,
-    tagline: "The Perplexity Bot edition of Ccsba Receipt Generator by AIWebTools.ai"
-  },
-  {
     icon: Globe, title: "Celebrity Chatline PERPLEXITY BOT", emoji: "🎤", color: "from-teal-500 to-emerald-600",
     description: "Celebrity Chatline PERPLEXITY BOT is the Perplexity-powered edition of the AIWebTools.ai Celebrity Chatline custom GPT, published as an independent public Perplexity Project with its own full operational instructions. It answers with live web grounding and cited sources, and anyone can open the link and use it free — no sign-in required to view.",
     directUrl: "https://www.perplexity.ai/projects/celebrity-chatline-gpt-C_46HDljST6sULcUaLDwhA",

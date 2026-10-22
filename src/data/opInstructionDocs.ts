@@ -21,7 +21,6 @@ export const OP_INSTRUCTION_DOCS: Record<string, string> = {
   "buildyourgpts": "BuildYourGPTs directions.docx",
   "business-plan-generator-gpt": "Business Plan Generator GPT - Operational Instructions.docx",
   "cannabis-gpt-not-gpt4o1-compliant": "CANNABIS GPT OPERATIONAL INSTRUCTIONS OLD (NOT GPT4o1 Compliant).docx",
-  "ccsba-receipt-generator-gpt-for-donors": "CCSBA Receipt Generator GPT (For DONORS)_ Operational Instructions.docx",
   "celebrity-chatline-gpt": "Celebrity Chatline GPT instructions.docx",
   "children-s-picture-book-generator": "Children_s picture book generator operational instructions.docx",
   "clarity-writer-gpt": "Clarity Writer GPT Instructions.docx",
