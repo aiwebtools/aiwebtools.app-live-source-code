@@ -2,6 +2,7 @@
 // Each bot (and every distinct archived version) becomes a community- room whose prompt is the
 // verbatim archived text. Upsert only — this function never deletes bots.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+import survivalDrafts from "./survival-drafts.json" with { type: "json" };
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -19,7 +20,7 @@ Deno.serve(async (req) => {
   // bundled JSON. Ungated only until the import completes, then re-secured.
   if ((body as { action?: string }).action === "import-survival-drafts") {
     const admin = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
-    const records = JSON.parse(await Deno.readTextFile(new URL("./survival-drafts.json", import.meta.url))) as Array<Record<string, unknown>>;
+    const records = survivalDrafts as Array<Record<string, unknown>>;
     const { error: appErr } = await admin.from("gpt_apps").upsert(records.map((r) => ({
       slug: r.slug, display_name: r.display_name, tool_title: null, tagline: r.tagline,
       greeting: r.greeting, starter_prompts: r.starter_prompts,
