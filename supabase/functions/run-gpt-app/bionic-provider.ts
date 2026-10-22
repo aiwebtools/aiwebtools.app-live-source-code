@@ -18,7 +18,7 @@ export async function callBionic(
   request: typeof fetch = fetch,
 ): Promise<Response> {
   if (!isBionicModel(payload.model)) return new Response(JSON.stringify({ error: "Unsupported Bionic model." }), { status: 400 });
-  if (!key) return new Response(JSON.stringify({ error: "The site's Bionic connection is not configured." }), { status: 503 });
+  if (!key) return new Response(JSON.stringify({ error: "The site's Bionic connection is not configured." }), { status: 503, headers: { "X-Bionic-Failure": "configuration" } });
   // Keep full prompt/history, multimodal content, tool_choice and tool results unchanged.
   // Gateway-specific reasoning settings are not part of the verified Bionic contract.
   const { reasoning_effort: _reasoning, ...body } = payload;

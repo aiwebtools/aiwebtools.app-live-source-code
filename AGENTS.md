@@ -35,4 +35,4 @@
 - Pre-mount large header menus during idle (forceMount + hidden when closed) so the first tap only reveals them.
 - Community apps are listed from `community_apps` and only inserted by the AI-reviewing `submit-community-app` function; keeps unverified links out of the menu.
 - Keep personal keys in owner-bound page memory and authenticated chat requests, never storage/tracking/logs; explicit activation cannot silently fall back to paid default AI.
-- Select builder-paid chat transport server-side behind the existing tool loop, retaining personal-provider precedence and separate image/search/speech services; this avoids duplicated capabilities or credential exposure.
+- Select builder-paid chat transport server-side behind the existing tool loop, retaining personal-provider precedence and separate image/search/speech services; persist outage/credit/denial states shared with the watchdog so authorized fallback never bypasses refusals or exposes credentials.
