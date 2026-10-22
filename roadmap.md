@@ -1,10 +1,15 @@
 # Chatbot completion roadmap
 
-# Current menu, categories and Gemini fallback repair
+# Current Bionic model connection
+- [ ] Securely collect builder Bionic key; verify both exact model IDs and capabilities.
+- [ ] Route ordinary default bot chats to GLM and advanced reasoning/coding to DeepSeek, preserving instructions, tools and personal-provider priority; hold Gemini fallback.
+- [ ] Test routing/error/privacy rules and several real bot conversations, search/image/attachment behavior; record unsupported abilities honestly.
+
+# Current menu, categories and sign-in repair
 - [ ] Make desktop Web3 Domains panel opaque and verify expanded content.
 - [ ] Reduce All AI Tools first-card loading and preserve complete catalog/search/pagination.
 - [ ] Reproduce and repair sign-in error; verify personal-key controls without weakening key ownership.
-- [ ] Add secure Gemini fallback only for exhausted Lovable credits; preserve explicit personal providers and test real Gemini reply.
+- [x] Hold off shared Gemini fallback at Master's request; superseded by Bionic connection above.
 
 # Starter prompts, compact reading and personal AI providers (Oct 21)
 - [x] Replace operational-text starters with one short purpose-trigger prompt per bot; label STARTER PROMPT and reduce chat text to 14px. All 422 catalog families/variants pass coverage; screenshot bots and Book Writer verified on phone, real reply and desktop checked with no page errors. Frontend remains preview-only.
