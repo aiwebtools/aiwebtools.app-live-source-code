@@ -1,3 +1,4 @@
+import { callGlmHelper, parseLooseJson } from "../_shared/glm-helper.ts";
 // Community app submissions: fetches the submitted page (SSRF-guarded), asks
 // AI whether the title/description truly match the live page and look legit,
 // and auto-publishes approved apps into public.community_apps.
@@ -93,7 +94,18 @@ Deno.serve(async (req) => {
   if (!key) return json({ status: "error", message: "Review is unavailable right now. Please try again later." }, 500);
   const sys = "You review community-submitted web apps for a family-friendly AI directory. Approve only if: the page is a real, working web app or site (not parked, empty, error, login-only spam or a scam); the submitted title and description honestly match what the page shows; and content is safe (no adult, gambling, malware, phishing, hate, or illegal content). Single-page apps may show little text; judge mainly from the page title and meta description then. Be strict about mismatches. Reply in JSON.";
   const usr = `SUBMITTED\nTitle: ${title}\nURL: ${url}\nDescription: ${description}\n\nLIVE PAGE (final URL ${page.finalUrl})\n<title>: ${page.title}\nog:title: ${page.ogTitle}\nmeta description: ${page.description}\nVisible text: ${page.text}`;
-  const ai = await fetch("https://ai.gateway.lovable.dev/v1/responses", {
+  type Verdict = { approve: boolean; score: number; reason: string };
+  const validVerdict = (x: unknown): x is Verdict => !!x && typeof (x as Verdict).approve === "boolean" && typeof (x as Verdict).score === "number" && typeof (x as Verdict).reason === "string";
+  let glmVerdict: Verdict | null = null;
+  const glm = await callGlmHelper({ messages: [
+    { role: "system", content: sys + ' Reply with only a JSON object: {"approve": boolean, "score": integer 0-100, "reason": string}.' },
+    { role: "user", content: usr },
+  ] });
+  if (glm) {
+    const parsed = parseLooseJson<Verdict>((await glm.json().catch(() => null))?.choices?.[0]?.message?.content ?? "");
+    if (validVerdict(parsed)) glmVerdict = parsed;
+  }
+  const ai = glmVerdict ? new Response(null, { status: 204 }) : await fetch("https://ai.gateway.lovable.dev/v1/responses", {
     method: "POST",
     headers: { "Lovable-API-Key": key, Authorization: `Bearer ${key}`, "Content-Type": "application/json", "X-Lovable-AIG-SDK": "fetch" },
     body: JSON.stringify({
@@ -105,8 +117,8 @@ Deno.serve(async (req) => {
     }),
   });
   if (ai.status === 429 || ai.status === 402) return json({ status: "error", message: "Review is busy right now. Please try again in a few minutes." }, 503);
-  let v: { approve: boolean; score: number; reason: string } | null = null;
-  if (ai.ok && ai.body) {
+  let v: { approve: boolean; score: number; reason: string } | null = glmVerdict;
+  if (!v && ai.ok && ai.body) {
     let out = "", buf = "";
     const reader = ai.body.pipeThrough(new TextDecoderStream()).getReader();
     for (;;) {
@@ -118,7 +130,7 @@ Deno.serve(async (req) => {
       }
     }
     try { v = JSON.parse(out); } catch { v = null; }
-  } else console.error("review gateway error", ai.status, await ai.text().catch(() => ""));
+  } else if (!v) console.error("review gateway error", ai.status, await ai.text().catch(() => ""));
   if (!v) return json({ status: "error", message: "Review failed. Please try again." }, 502);
 
   const approved = v.approve && v.score >= 70;

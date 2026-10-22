@@ -1,4 +1,5 @@
 import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors';
+import { callGlmHelper, GLM_HELPER_MODEL } from '../_shared/glm-helper.ts';
 
 const SYSTEM_PROMPT = `You are the AIWebTools Care Bot — the all-knowing AI Tool Expert AND gentle Gnostic guide for AIWebTools.ai, a directory of 5,500+ real AI tools.
 
@@ -301,7 +302,10 @@ Deno.serve(async (req) => {
     const systemContent =
       SYSTEM_PROMPT + SPIRIT_PERSONA + contextBlock + csvBlock + (shouldRemind ? LIGHT_REMINDER : '');
 
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const chatMessages = [{ role: 'system', content: systemContent }, ...trimmedMessages];
+    const glm = await callGlmHelper({ messages: chatMessages, stream: true });
+    const usedModel = glm ? GLM_HELPER_MODEL : 'google/gemini-3-flash-preview';
+    const response = glm ?? await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${LOVABLE_API_KEY}`,
@@ -333,6 +337,7 @@ Deno.serve(async (req) => {
       const t = await response.text();
       console.error('AI gateway error:', response.status, t);
       logTurn({
+        model: usedModel,
         ip,
         userMessage: trimmedMessages[trimmedMessages.length - 1]?.content ?? '',
         assistantReply: '',
@@ -360,6 +365,7 @@ Deno.serve(async (req) => {
 
     const teedStream = teeAndCollect(response.body!, (replyText) => {
       logTurn({
+        model: usedModel,
         ip,
         userMessage,
         assistantReply: replyText,
@@ -448,6 +454,7 @@ interface LogTurnArgs {
   latencyMs: number;
   userAgent: string;
   error?: string;
+  model?: string;
 }
 
 async function logTurn(args: LogTurnArgs): Promise<void> {
@@ -477,7 +484,7 @@ async function logTurn(args: LogTurnArgs): Promise<void> {
     tool_titles: args.toolTitles.slice(0, 12),
     turn_count: args.turnCount,
     latency_ms: args.latencyMs,
-    model: 'google/gemini-3-flash-preview',
+    model: args.model ?? 'google/gemini-3-flash-preview',
     error: args.error ?? null,
   };
 
