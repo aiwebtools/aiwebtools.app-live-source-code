@@ -2,6 +2,7 @@
 // Each bot (and every distinct archived version) becomes a community- room whose prompt is the
 // verbatim archived text. Upsert only — this function never deletes bots.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+import survivalDrafts from "./survival-drafts.json" with { type: "json" };
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -14,10 +15,25 @@ type Rec = { slug: string; display_name: string; tagline: string; system_prompt:
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
+  const body = await req.json().catch(() => ({}));
   const secret = Deno.env.get("GPT_SEED_SECRET");
   if (!secret || req.headers.get("x-cron-secret") !== secret) return json({ error: "Unauthorized" }, 401);
   const admin = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
-  const body = await req.json().catch(() => ({}));
+
+  // Secret-gated: import the 25 archived survival drafts from the bundled JSON.
+  if ((body as { action?: string }).action === "import-survival-drafts") {
+    const records = survivalDrafts as Array<Record<string, unknown>>;
+    const { error: appErr } = await admin.from("gpt_apps").upsert(records.map((r) => ({
+      slug: r.slug, display_name: r.display_name, tool_title: null, tagline: r.tagline,
+      greeting: r.greeting, starter_prompts: r.starter_prompts,
+      model: r.model, is_active: true, supports_images: true, voice: r.voice,
+      subject: r.subject, source_file: r.source_file,
+    })), { onConflict: "slug" });
+    if (appErr) return json({ error: appErr.message }, 500);
+    const { error: promptErr } = await admin.from("gpt_app_prompts").upsert(records.map((r) => ({ app_slug: r.slug, system_prompt: r.system_prompt, updated_at: new Date().toISOString() })), { onConflict: "app_slug" });
+    if (promptErr) return json({ error: promptErr.message }, 500);
+    return json({ ok: true, upserted: records.length });
+  }
 
   if (body.action === "image") {
     const { slug, name, summary, family = [] } = body as { slug: string; name: string; summary: string; family: string[] };

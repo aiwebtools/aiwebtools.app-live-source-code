@@ -5,7 +5,7 @@ import { getSurvivalDraft } from "@/utils/survivalDrafts";
 
 export const BOT_SUBJECTS = ["Off Grid Living", "Apocalypse Survival & Nature", "History & Time Travel", "Health & Wellness", "Legal & Government", "Business & Finance", "Science & Research", "Spiritual & Philosophy", "Engineering & Planning", "Creative & Design", "Film, Music & Media", "Education & Learning", "Farming, Food & Outdoors", "Trades & Home", "Security & Safety", "General & Productivity"] as const;
 export type BotSubject = typeof BOT_SUBJECTS[number];
-type SubjectBot = Pick<StudioBot, "slug" | "display_name" | "tagline">;
+type SubjectBot = Pick<StudioBot, "slug" | "display_name" | "tagline"> & { subject?: string | null };
 // Word boundaries prevent "art" in artificial, "plan" in planet and "car" in care.
 const RULES: [RegExp, BotSubject][] = [
   [/\b(?:time machine|time travel|time rift|histor(?:y|ical)|titanic|archaeolog\w*|ancient egypt|ancient rome|age of exploration|interpretis|etymolog\w*)\b/, "History & Time Travel"],
@@ -24,6 +24,8 @@ const RULES: [RegExp, BotSubject][] = [
 ];
 const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 export function getBotCategory(bot: SubjectBot): BotSubject {
+  // A creator-chosen category saved at publish time always wins.
+  if (bot.subject && (BOT_SUBJECTS as readonly string[]).includes(bot.subject)) return bot.subject as BotSubject;
   if (getSurvivalDraft(bot.slug)) return "Apocalypse Survival & Nature";
   if (getOffGridBotMetadata(bot.slug)) return "Off Grid Living";
   const name = normalize(bot.display_name);

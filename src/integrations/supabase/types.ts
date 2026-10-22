@@ -292,6 +292,7 @@ export type Database = {
           slug: string
           source_file: string | null
           starter_prompts: string[]
+          subject: string | null
           supports_images: boolean
           tagline: string | null
           tool_title: string | null
@@ -309,6 +310,7 @@ export type Database = {
           slug: string
           source_file?: string | null
           starter_prompts?: string[]
+          subject?: string | null
           supports_images?: boolean
           tagline?: string | null
           tool_title?: string | null
@@ -326,6 +328,7 @@ export type Database = {
           slug?: string
           source_file?: string | null
           starter_prompts?: string[]
+          subject?: string | null
           supports_images?: boolean
           tagline?: string | null
           tool_title?: string | null

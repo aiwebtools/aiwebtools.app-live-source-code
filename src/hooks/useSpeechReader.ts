@@ -43,9 +43,19 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const spokenRef = useRef(0);
   const bufferRef = useRef("");
   const requestRef = useRef<AbortController | null>(null);
-  const pendingRef = useRef<SpeechClip[]>([]);
+  const pendingRef = useRef<Array<{ text: string; clip: SpeechClip }>>([]);
   const queueBusyRef = useRef(false);
   const generationRef = useRef(0);
+  // Set when the lifelike studio voice fails (e.g. AI credits recharging):
+  // replies fall back to the free on-device voice for the rest of the session.
+  const studioDownRef = useRef(false);
+  const studioToastShownRef = useRef(false);
+  const noteStudioDown = useCallback(() => {
+    studioDownRef.current = true;
+    if (studioToastShownRef.current) return;
+    studioToastShownRef.current = true;
+    toast({ title: "Using your device's free voice", description: "The lifelike studio voice is unavailable right now, so replies are read by your device's built-in voice instead." });
+  }, [toast]);
 
   useEffect(() => {
     if (!supported) return;
@@ -93,10 +103,19 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       requestRef.current = controller;
       setSpeaking(true);
       try {
-        const clips = splitSpeechText(clean, 600).filter(speakable).map((chunk) => startClip(chunk, controller.signal));
-        for (const clip of clips) {
+        const clips = splitSpeechText(clean, 600).filter(speakable).map((chunk) => ({ text: chunk, clip: startClip(chunk, controller.signal) }));
+        for (let i = 0; i < clips.length; i++) {
           if (controller.signal.aborted) return false;
-          await playSpeechClip(clip, clipSpeed(profile.speed));
+          try {
+            await playSpeechClip(clips[i].clip, clipSpeed(profile.speed));
+          } catch (clipError) {
+            if (controller.signal.aborted) return false;
+            // Lifelike engine failed (commonly AI credits recharging): read the
+            // rest of this reply with the free on-device voice so nothing is lost.
+            noteStudioDown();
+            for (const rest of clips.slice(i)) speakChunk(rest.text);
+            return false;
+          }
         }
         return !controller.signal.aborted;
       } catch (error) {
@@ -120,7 +139,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       if (!stripForSpeech(text) || !profile || !ANON_KEY) return;
       if (!requestRef.current || requestRef.current.signal.aborted) requestRef.current = new AbortController();
       const controller = requestRef.current;
-      pendingRef.current.push(...splitSpeechText(stripForSpeech(text), 600).filter(speakable).map((chunk) => startClip(chunk, controller.signal)));
+      pendingRef.current.push(...splitSpeechText(stripForSpeech(text), 600).filter(speakable).map((chunk) => ({ text: chunk, clip: startClip(chunk, controller.signal) })));
       if (queueBusyRef.current) return;
       queueBusyRef.current = true;
       const generation = generationRef.current;
@@ -128,10 +147,20 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       void (async () => {
         try {
           while (generation === generationRef.current && pendingRef.current.length) {
-            const clip = pendingRef.current.shift();
-            if (!clip) break;
+            const next = pendingRef.current.shift();
+            if (!next) break;
             if (generation !== generationRef.current || controller.signal.aborted) return;
-            await playSpeechClip(clip, clipSpeed(profile.speed));
+            try {
+              await playSpeechClip(next.clip, clipSpeed(profile.speed));
+            } catch (clipError) {
+              if (generation !== generationRef.current || controller.signal.aborted) return;
+              // Lifelike engine failed (commonly AI credits recharging): the free
+              // on-device voice reads this sentence and everything still queued.
+              noteStudioDown();
+              speakChunk(next.text);
+              for (const rest of pendingRef.current.splice(0)) speakChunk(rest.text);
+              return;
+            }
           }
         } catch (error) {
           if (generation === generationRef.current && !controller.signal.aborted) {
@@ -181,7 +210,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       if (lastBreak < 0) return;
       const ready = pending.slice(0, lastBreak + 1);
       spokenRef.current += ready.length;
-      if (profile) enqueue(ready);
+      if (profile && !studioDownRef.current) enqueue(ready);
       else speakChunk(ready);
     },
     [enqueue, profile, speakChunk, supported],
@@ -192,7 +221,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     if (!supported || !enabledRef.current || listeningRef.current) return;
     const rest = bufferRef.current.slice(spokenRef.current);
     spokenRef.current = bufferRef.current.length;
-    if (profile) enqueue(rest);
+    if (profile && !studioDownRef.current) enqueue(rest);
     else speakChunk(rest);
   }, [enqueue, profile, speakChunk, supported]);
 
