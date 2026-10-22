@@ -1,4 +1,6 @@
 export const DAILY_LIMIT = 10;
+// Mirrors the studio's subject list (src/components/bot-studio/botSubjects.ts BOT_SUBJECTS).
+export const SUBJECTS = ["Off Grid Living", "Apocalypse Survival & Nature", "History & Time Travel", "Health & Wellness", "Legal & Government", "Business & Finance", "Science & Research", "Spiritual & Philosophy", "Engineering & Planning", "Creative & Design", "Film, Music & Media", "Education & Learning", "Farming, Food & Outdoors", "Trades & Home", "Security & Safety", "General & Productivity"] as const;
 export const VOICES = ["alloy", "ash", "ballad", "coral", "echo", "fable", "nova", "onyx", "sage", "shimmer", "verse"] as const;
 export function validateAvatar(value: unknown): { bytes: Uint8Array; contentType: string } | null {
   if (value == null || value === "") return null;

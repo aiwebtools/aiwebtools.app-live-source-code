@@ -277,24 +277,27 @@ Deno.serve(async (req) => {
   const used = usage?.message_count ?? 0;
 
   // Device-saved custom bots built in the Matrix studio carry their own instructions.
+  // A hosted room that happens to share the custom- prefix (e.g. custom-gpt-maker)
+  // still wins: the database is checked first so its authored directions apply.
   const isCustom = slug.startsWith("custom-");
   const customInstructions = typeof body.custom?.instructions === "string" ? body.custom.instructions.trim().slice(0, 20000) : "";
   const customName = typeof body.custom?.name === "string" ? body.custom.name.trim().slice(0, 80) : "";
+  const { data: dbApp } = await admin
+    .from("gpt_apps")
+    .select("slug, display_name, model, is_active, supports_images")
+    .eq("slug", slug)
+    .maybeSingle();
+  const hosted = dbApp && dbApp.is_active ? dbApp : null;
   let app: { display_name: string; model: string | null; supports_images: boolean | null };
   let basePrompt = "";
-  if (isCustom) {
+  if (!hosted && isCustom) {
     if (customInstructions.length < 10 || !customName) return json({ error: "Your custom bot needs a name and instructions." }, 400);
     app = { display_name: customName, model: "bionic/glm-5.3-flash", supports_images: true };
     const customTagline = typeof body.custom?.tagline === "string" ? body.custom.tagline.trim().slice(0, 160) : "";
     basePrompt = `You are "${customName}"${customTagline ? ` — ${customTagline}` : ""}, a custom assistant created by a user on AIWebTools.app.\n\nOPERATIONAL INSTRUCTIONS:\n${customInstructions}`;
   } else {
-    const { data: dbApp } = await admin
-      .from("gpt_apps")
-      .select("slug, display_name, model, is_active, supports_images")
-      .eq("slug", slug)
-      .maybeSingle();
-    if (!dbApp || !dbApp.is_active) return json({ error: "This tool is not available." }, 404);
-    app = dbApp;
+    if (!hosted) return json({ error: "This tool is not available." }, 404);
+    app = hosted;
     const { data: promptRow } = await admin
       .from("gpt_app_prompts")
       .select("system_prompt")
