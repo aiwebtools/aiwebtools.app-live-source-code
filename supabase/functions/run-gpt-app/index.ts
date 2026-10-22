@@ -3,6 +3,8 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import { selectBotModel, selectTurnModel } from "./model-selection.ts";
 import { callBionic, isBionicModel, bionicError } from "./bionic-provider.ts";
+import { createFallbackChat } from "./chat-fallback.ts";
+import type { ProviderState, ProviderStore } from "../_shared/chat-provider-state.ts";
 import { appendInstructionFidelity, resolveOperationalInstructions } from "./instruction-fidelity.ts";
 import { readChatStreamEvent } from "./stream-events.ts";
 import { normalizeMessage, toModelMessage, requiresFirstSearch, type IncomingMessage } from "./input-context.ts";
@@ -375,15 +377,27 @@ Deno.serve(async (req) => {
   const gateway = createLovableAiGatewayRunIdFetch();
   const personalAdapter = personalAi ? (await import("./personal-provider.ts")).callPersonalProvider : null;
   const personalRun = {};
-  const callGateway = (payload: Record<string, unknown>) => {
-    if (personalAi && personalAdapter) return personalAdapter(personalAi, payload, req.signal, personalRun);
-    if (isBionicModel(payload.model)) return callBionic(BIONIC_API_KEY, payload, req.signal);
-    return gateway.fetch(CHAT_URL, {
+  const providerStore: ProviderStore = {
+    get: async (provider) => {
+      const { data, error } = await admin.from("chat_provider_state").select("provider,status,http_status,retry_at").eq("provider", provider).maybeSingle();
+      if (error) throw new Error("Provider safety state is unavailable.");
+      return data as ProviderState | null;
+    },
+    set: async (state) => {
+      const { error } = await admin.from("chat_provider_state").upsert(state, { onConflict: "provider" });
+      if (error) throw new Error("Provider safety state could not be saved.");
+    },
+  };
+  const routedChat = createFallbackChat(providerStore,
+    (payload) => callBionic(BIONIC_API_KEY, payload, req.signal),
+    (payload) => gateway.fetch(CHAT_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json", "Lovable-API-Key": LOVABLE_API_KEY || "", "X-Lovable-AIG-SDK": "fetch" },
-      signal: req.signal,
-      body: JSON.stringify(payload),
-    });
+      signal: req.signal, body: JSON.stringify(payload),
+    }), req.signal);
+  const callGateway = (payload: Record<string, unknown>) => {
+    if (personalAi && personalAdapter) return personalAdapter(personalAi, payload, req.signal, personalRun);
+    return routedChat.call(payload);
   };
 
   // Bionic is the default; advanced work uses DeepSeek. Explicit personal/manual choices stay fixed.
@@ -410,10 +424,8 @@ Deno.serve(async (req) => {
     let safeMessage = "The AI could not respond right now.";
     try { const parsed = JSON.parse(detail); safeMessage = parsed.message || parsed.error?.message || (typeof parsed.error === "string" ? parsed.error : safeMessage); } catch { /* non-JSON gateway failure */ }
     if (personalAi) safeMessage = personalProviderError({ statusCode: upstream.status });
-    else if (usingBionic) safeMessage = upstream.status === 503 ? "The site's Bionic connection is not configured." : bionicError(upstream.status);
-    else if (upstream.status === 402) safeMessage = "Our bots are resting — the site's AI credits have run out. Please check back soon.";
     const { error: logErr } = await admin.from("gpt_chat_logs").insert({
-      app_slug: slug, is_guest: isGuest, user_id: userId ?? null, model: personalAi ? `${personalAi.provider}/${basePayload.model}` : basePayload.model,
+      app_slug: slug, is_guest: isGuest, user_id: userId ?? null, model: personalAi ? `${personalAi.provider}/${basePayload.model}` : routedChat.getModel(),
       turn_count: recentMessages.length, prompt_chars: lastUser?.content?.length ?? 0, reply_chars: 0,
       image_requested: false, image_succeeded: false, latency_ms: 0, status: usingDirectProvider ? "provider_error" : "gateway_error",
       error: `HTTP ${upstream.status}: ${(usingDirectProvider ? safeMessage : detail || safeMessage).slice(0, 500)}`, user_message: lastUser?.content?.slice(0, 8000) ?? null, assistant_reply: null,
@@ -442,7 +454,7 @@ Deno.serve(async (req) => {
       app_slug: slug,
       is_guest: isGuest,
       user_id: userId ?? null,
-      model: personalAi ? `${personalAi.provider}/${basePayload.model}` : basePayload.model,
+      model: personalAi ? `${personalAi.provider}/${basePayload.model}` : routedChat.getModel(),
       turn_count: recentMessages.length,
       prompt_chars: lastUser?.content?.length ?? 0,
       reply_chars: assistant.length,
@@ -450,7 +462,7 @@ Deno.serve(async (req) => {
       image_succeeded: imageSucceeded,
       latency_ms: Date.now() - requestStartedAt,
       status: finalStatus,
-      error: finalError,
+      error: finalError || (routedChat.getReason() ? `Bionic ${routedChat.getReason()}; authorized Lovable fallback used.` : null),
       user_message: lastUser?.content?.slice(0, 8000) ?? null,
       assistant_reply: assistant.slice(0, 40000) || null,
     });
@@ -622,7 +634,7 @@ Deno.serve(async (req) => {
           if (!follow.ok || !follow.body) {
             const detail = await follow.json().catch(() => ({}));
             finalStatus = usingDirectProvider ? "provider_error" : "stream_error";
-            finalError = usingBionic ? bionicError(follow.status) : personalAi ? personalProviderError({ statusCode: follow.status }) : detail.message || detail.error?.message || "The assistant could not finish this reply.";
+            finalError = personalAi ? personalProviderError({ statusCode: follow.status }) : detail.message || (typeof detail.error === "string" ? detail.error : detail.error?.message) || "The assistant could not finish this reply.";
             controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: finalError })}\n\n`));
             break;
           }

@@ -7,6 +7,7 @@
 // Auth: x-cron-secret (DIGEST_CRON_SECRET) or an admin Bearer token.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import { isReplyFailure } from "./failure-status.ts";
+import { isPaused, type ProviderState } from "../_shared/chat-provider-state.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -75,7 +76,7 @@ Deno.serve(async (req) => {
     });
   }
 
-  let body: { windowMinutes?: number; force?: boolean } = {};
+  let body: { windowMinutes?: number; force?: boolean; resumeProvider?: string; accessRestored?: boolean } = {};
   try {
     body = await req.json();
   } catch {
@@ -91,6 +92,21 @@ Deno.serve(async (req) => {
     Deno.env.get("SUPABASE_URL")!,
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
   );
+
+  // Protected owner action only. Cron runs inspect state but never probe blocked providers.
+  if (body.resumeProvider !== undefined) {
+    if (!req.headers.get("Authorization")?.startsWith("Bearer ") || !["bionic", "lovable_chat"].includes(body.resumeProvider) || body.accessRestored !== true) {
+      return new Response(JSON.stringify({ error: "An administrator must confirm restored access or credits to resume." }), { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    }
+    const { data: claims } = await supabase.auth.getClaims(req.headers.get("Authorization")?.slice(7) || "");
+    const { data: admin } = await supabase.rpc("has_role", { _user_id: claims?.claims?.sub, _role: "admin" });
+    if (!admin) return new Response(JSON.stringify({ error: "Administrator access required." }), { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    const { error } = await supabase.from("chat_provider_state").update({ status: "ready", http_status: null, retry_at: null }).eq("provider", body.resumeProvider);
+    if (error) return new Response(JSON.stringify({ error: "Provider could not resume." }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+  }
+  const { data: providerStates, error: stateError } = await supabase.from("chat_provider_state").select("provider,status,http_status,retry_at");
+  if (stateError) return new Response(JSON.stringify({ error: "Provider safety state is unavailable." }), { status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+  const pausedProviders = (providerStates as ProviderState[] || []).filter((state) => isPaused(state));
 
   const since = new Date(Date.now() - windowMinutes * 60_000).toISOString();
 
@@ -144,9 +160,11 @@ Deno.serve(async (req) => {
     roomsChecked: rooms.size,
     troubledRooms: troubled.length,
     emailed: false,
+    providers: providerStates,
+    pausedProviders: pausedProviders.map((state) => state.provider),
   };
 
-  if (troubled.length === 0 && !body.force) {
+  if (troubled.length === 0 && !pausedProviders.length && !body.force) {
     return new Response(JSON.stringify({ ...summary, ok: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
