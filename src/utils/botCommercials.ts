@@ -17,9 +17,8 @@ export function commercialEmbed(url: string): string | null {
   } catch { return null; }
 }
 export async function getBotCommercial(toolTitle: string | null, name: string): Promise<string | null> {
-  console.log("[commercial] getBotCommercial start", { toolTitle, name });
+  if (import.meta.env.DEV && new URLSearchParams(window.location.search).has("stub-commercial")) return "https://youtu.be/J31nNY5_PB4";
   const { allTools } = await import("@/data/toolsData");
-  console.log("[commercial] allTools loaded", allTools.length);
   const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
   const own = allTools.filter((t) => t.videoUrl && t.tags?.some((tag) => /aiwebtools/i.test(tag)));
   // Version/variant rooms share their family's single commercial (e.g. every Time Machine / Father Time room).
