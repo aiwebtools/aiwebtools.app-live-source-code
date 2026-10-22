@@ -12,6 +12,16 @@ test("personal providers and manual picks cannot be overridden by auto routing",
   expect(selectTurnModel("x", "default", "Debug my code", "Assistant", "gemini-2.5-flash")).toBe("gemini-2.5-flash");
   expect(selectTurnModel("x", "bionic/glm-5.3-flash", "Debug my code", "Assistant")).toBe("bionic/glm-5.3-flash");
 });
+test("ordinary tasks stay GLM even in specialist bot brains", () => {
+  for (const message of ["Hello, tell me what you can do for me today", "Write a multi-step plan for growing tomatoes", "Implement a daily exercise routine", "I need proof of address", "Tell me about the history of algorithms"]) {
+    expect(selectTurnModel("x", "default", message, "Software engineer, coding assistant, mathematician")).toBe("bionic/glm-5.3-flash");
+  }
+});
+test("real coding and advanced analysis tasks benefit from DeepSeek", () => {
+  for (const message of ["Write a Python script to sort my CSV", "Implement a function to parse dates", "Derive the equation for orbital velocity", "Run regression analysis on this dataset"]) {
+    expect(selectTurnModel("x", "default", message, "Assistant")).toBe("bionic/deepseek-v4.1-flash");
+  }
+});
 test("only budget models are selectable, never premium ones", () => {
   expect(selectBotModel("x", "openai/gpt-6-luna")).toBe("openai/gpt-6-luna");
   expect(selectBotModel("x", "google/gemini-3-flash-preview")).toBe("google/gemini-3-flash-preview");

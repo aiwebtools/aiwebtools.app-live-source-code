@@ -5,6 +5,7 @@ export const LOVABLE_FALLBACK_MODEL = "openai/gpt-6-luna";
 type Payload = Record<string, unknown>;
 type Transport = (payload: Payload) => Promise<Response>;
 const pausedResponse = (provider: string, status?: number | null) => new Response(JSON.stringify({ error: `${provider} is paused. The site owner needs to restore access or credits and resume it.` }), { status: status || 503 });
+export const RESTING_MESSAGE = "Our bots are resting — both Bionic and Lovable chat credits have run out. Please check back after credits are replenished.";
 
 /** One authorized provider switch before receiving a stream, never on refusals or partial replies. */
 export function createFallbackChat(store: ProviderStore, bionic: Transport, lovable: Transport, signal: AbortSignal) {
@@ -14,10 +15,16 @@ export function createFallbackChat(store: ProviderStore, bionic: Transport, lova
   let started = false;
   const gateway = async (payload: Payload) => {
     const state = await store.get("lovable_chat");
-    if (isPaused(state)) return pausedResponse("Lovable chat", state?.http_status);
+    const bothExhausted = async () => state?.status === "credits" && (await store.get("bionic"))?.status === "credits";
+    if (isPaused(state)) return await bothExhausted() ? new Response(JSON.stringify({ error: RESTING_MESSAGE }), { status: 402 }) : pausedResponse("Lovable chat", state?.http_status);
     model = String(payload.model);
     const response = await lovable(payload);
     await recordProviderFailure(store, "lovable_chat", response.status);
+    if (response.status === 402 && (await store.get("bionic"))?.status === "credits") {
+      const detail = await response.json().catch(() => ({}));
+      const message = detail.message || (typeof detail.error === "string" ? detail.error : detail.error?.message);
+      return new Response(JSON.stringify({ error: RESTING_MESSAGE + (message ? ` ${message}` : "") }), { status: 402 });
+    }
     if (response.ok && state?.status === "outage") await store.set({ provider: "lovable_chat", status: "ready", http_status: null, retry_at: null });
     return response;
   };

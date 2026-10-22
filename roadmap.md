@@ -1,6 +1,7 @@
 # Chatbot completion roadmap
 
 # Current Bionic model connection
+- [ ] Restrict automatic DeepSeek selection to advanced/coding tasks, show actual reply model/provider token counts discreetly, and reserve resting status for both exhausted credit balances; verify tests and live UI.
 - [x] Add owner-authorized outage/credit-only Lovable fallback with persistent circuit states, hourly watchdog integration and no denial/refusal bypass; no partial-reply replay, automatic top-up or scheduled AI probes. Admin-confirmed resume after restoring credits/access. Mocked failure paths pass; exact Lovable Luna streaming/tool-schema live check HTTP 200; deployed both functions.
 - [x] Audit all 1,519 active in-house bot defaults: zero non-GLM defaults in database; device-created bots default GLM too, advanced/coding routes to DeepSeek, explicit models and personal keys preserved. Representative Time Machine, Book Writer, Stellaris and coding replies verified in logs, not all 1,519 live rerun. Browser Stellaris Run Python prints 55 with no page errors; existing generated image success confirmed in logs, separate image/search services preserved.
 - [x] Securely collect builder Bionic key; verify both exact model IDs, streaming, vision input and tool calls. GLM recognized the photo test; DeepSeek misidentified its color.

@@ -1,6 +1,7 @@
 import type { BotAttachment } from "./botAttachments";
+import type { ChatUsage } from "../../supabase/functions/_shared/chat-usage";
 export interface BotActivity { id: string; name: string; input: string; state: "input-available" | "output-available" | "output-error"; error?: string }
-export interface BotMessage { role: "user" | "assistant"; content: string; activities?: BotActivity[]; attachments?: BotAttachment[] }
+export interface BotMessage { role: "user" | "assistant"; content: string; activities?: BotActivity[]; attachments?: BotAttachment[]; usage?: ChatUsage }
 export interface BotConversation {
   id: string;
   slug: string;
