@@ -62,6 +62,10 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
       sessionStorage.removeItem("awt-open-builder");
       setBuilderOpen(true);
     }
+    // Header shortcuts fire this when a bot room is already open, so the builder still opens without a remount.
+    const openBuilder = () => { sessionStorage.removeItem("awt-open-builder"); setBuilderOpen(true); };
+    window.addEventListener("awt-open-builder", openBuilder);
+    return () => window.removeEventListener("awt-open-builder", openBuilder);
   }, []);
   const [celebrations, setCelebrations] = useState(true);
   const [celebrationSound, setCelebrationSound] = useState(true);

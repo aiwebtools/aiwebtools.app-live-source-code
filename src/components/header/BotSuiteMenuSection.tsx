@@ -31,12 +31,22 @@ export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false }: { 
     // A transition here can keep the old page on screen indefinitely while the bot room loads.
     requestAnimationFrame(() => navigate(path));
   };
+  const openBuilder = () => {
+    onNavigate?.();
+    if (window.location.pathname.startsWith("/app/")) {
+      // Already inside a bot room: open the builder in place instead of waiting on a route change.
+      requestAnimationFrame(() => window.dispatchEvent(new Event("awt-open-builder")));
+      return;
+    }
+    sessionStorage.setItem("awt-open-builder", "1");
+    requestAnimationFrame(() => navigate("/app/custom-gpt-maker?builder=1"));
+  };
   const stop = (e: React.SyntheticEvent) => e.stopPropagation();
 
   return (
     <div className={gptsOnly ? "grid gap-2" : "mb-4 grid gap-2"} onKeyDown={stop} onPointerDown={stop}>
       {gptsOnly ? (
-        <Button variant="ghost" type="button" onClick={() => { go("/app/custom-gpt-maker?builder=1"); }}
+        <Button variant="ghost" type="button" onClick={openBuilder}
           className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-accent/60 bg-accent/10 px-3 text-sm font-bold text-accent-foreground hover:bg-accent/20">
           <Wand2 className="h-4 w-4" />CUSTOM GPT BUILDER
         </Button>
@@ -46,7 +56,7 @@ export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false }: { 
         <span className="flex items-center gap-2"><Bot className="h-4 w-4" />AWT Custom Creative Bot Suite{bots ? <span className="text-[10px] font-normal opacity-70">{bots.length}</span> : null}</span>
         <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
       </Button>
-      <Button variant="ghost" type="button" onClick={() => { go("/app/custom-gpt-maker?builder=1"); }}
+      <Button variant="ghost" type="button" onClick={openBuilder}
         className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-accent/60 bg-accent/10 px-3 text-sm font-bold text-accent-foreground hover:bg-accent/20">
         <Wand2 className="h-4 w-4" />CUSTOM GPT MAKER
       </Button>
