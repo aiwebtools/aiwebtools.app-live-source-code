@@ -33,7 +33,7 @@ export default function BotCommercial({ slug, name, toolTitle, userId, voice, cu
       markCommercialSeen(slug, userId);
       if (!embed) { finish(); return; }
       setSrc(embed); setOpen(true);
-    }).catch(() => { if (alive) finish(); });
+    }).catch((err) => { console.log("[commercial] lookup error:", err); if (alive) finish(); });
     return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug, userId]);
