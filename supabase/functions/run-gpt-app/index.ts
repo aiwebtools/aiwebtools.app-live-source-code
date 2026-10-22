@@ -1,10 +1,11 @@
 // Streams a hosted AIWebTools GPT. Members only. Instructions stay server-side.
 // Supports image generation (Nano Banana) for bots whose instructions require it.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
-import { selectBotModel } from "./model-selection.ts";
+import { selectBotModel, selectTurnModel } from "./model-selection.ts";
+import { callBionic, isBionicModel, bionicError } from "./bionic-provider.ts";
 import { appendInstructionFidelity, resolveOperationalInstructions } from "./instruction-fidelity.ts";
 import { readChatStreamEvent } from "./stream-events.ts";
-import { normalizeMessage, toModelMessage, requiresFirstSearch, requiresDeepThinking, type IncomingMessage } from "./input-context.ts";
+import { normalizeMessage, toModelMessage, requiresFirstSearch, type IncomingMessage } from "./input-context.ts";
 import { createLovableAiGatewayRunIdFetch, getLovableAiGatewayResponseHeaders } from "../_shared/run-id.ts";
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 import { parsePersonalAi, personalProviderError, type PersonalAi } from "../_shared/personal-provider-policy.ts";
@@ -140,6 +141,7 @@ Deno.serve(async (req) => {
     });
 
   const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+  const BIONIC_API_KEY = Deno.env.get("BIONIC_API_KEY");
 
   const authHeader = req.headers.get("Authorization") || "";
 
@@ -211,7 +213,7 @@ Deno.serve(async (req) => {
     return json({ ok: true });
   }
 
-  if (!personalAi && !LOVABLE_API_KEY) return json({ error: "AI is not configured" }, 500);
+  if (!personalAi && !BIONIC_API_KEY && !LOVABLE_API_KEY) return json({ error: "AI is not configured" }, 500);
 
   // Guests and members can chat without an application-level daily cap.
   const isGuest = !userId;
@@ -375,6 +377,7 @@ Deno.serve(async (req) => {
   const personalRun = {};
   const callGateway = (payload: Record<string, unknown>) => {
     if (personalAi && personalAdapter) return personalAdapter(personalAi, payload, req.signal, personalRun);
+    if (isBionicModel(payload.model)) return callBionic(BIONIC_API_KEY, payload, req.signal);
     return gateway.fetch(CHAT_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json", "Lovable-API-Key": LOVABLE_API_KEY || "", "X-Lovable-AIG-SDK": "fetch" },
@@ -383,13 +386,14 @@ Deno.serve(async (req) => {
     });
   };
 
-  // Maths/statistics turns on the default engine move to the reasoning model; an explicit user pick is always kept.
-  const thinkingTurn = !personalAi && (body.model === undefined || body.model === "default") && requiresDeepThinking(lastUser?.content?.split("USER DATA ATTACHMENT")[0] || "", basePrompt);
-  const turnModel = thinkingTurn ? "google/gemini-3-flash-preview" : selectedModel;
+  // Bionic is the default; advanced work uses DeepSeek. Explicit personal/manual choices stay fixed.
+  const turnModel = selectTurnModel(app.model || selectedModel, body.model, lastUser?.content?.split("USER DATA ATTACHMENT")[0] || "", basePrompt, personalAi?.model);
+  if (!turnModel) return json({ error: "That model is not supported by this assistant." }, 400);
+  const usingBionic = !personalAi && isBionicModel(turnModel);
+  const usingDirectProvider = Boolean(personalAi) || usingBionic;
   const basePayload = {
     model: turnModel,
     ...(turnModel === "openai/gpt-6-luna" ? { reasoning_effort: "none" } : {}),
-    ...(thinkingTurn ? { reasoning_effort: "low" } : {}),
     stream: true,
     tools: [IMAGE_TOOL, SEARCH_TOOL],
   };
@@ -402,16 +406,17 @@ Deno.serve(async (req) => {
 
   if (!upstream.ok || !upstream.body) {
     const detail = await upstream.text().catch(() => "");
-    if (!personalAi) console.error("gateway error", upstream.status, detail.slice(0, 400));
+    if (!usingDirectProvider) console.error("gateway error", upstream.status, detail.slice(0, 400));
     let safeMessage = "The AI could not respond right now.";
     try { const parsed = JSON.parse(detail); safeMessage = parsed.message || parsed.error?.message || (typeof parsed.error === "string" ? parsed.error : safeMessage); } catch { /* non-JSON gateway failure */ }
     if (personalAi) safeMessage = personalProviderError({ statusCode: upstream.status });
+    else if (usingBionic) safeMessage = upstream.status === 503 ? "The site's Bionic connection is not configured." : bionicError(upstream.status);
     else if (upstream.status === 402) safeMessage = "Our bots are resting — the site's AI credits have run out. Please check back soon.";
     const { error: logErr } = await admin.from("gpt_chat_logs").insert({
       app_slug: slug, is_guest: isGuest, user_id: userId ?? null, model: personalAi ? `${personalAi.provider}/${basePayload.model}` : basePayload.model,
       turn_count: recentMessages.length, prompt_chars: lastUser?.content?.length ?? 0, reply_chars: 0,
-      image_requested: false, image_succeeded: false, latency_ms: 0, status: personalAi ? "provider_error" : "gateway_error",
-      error: `HTTP ${upstream.status}: ${(personalAi ? safeMessage : detail || safeMessage).slice(0, 500)}`, user_message: lastUser?.content?.slice(0, 8000) ?? null, assistant_reply: null,
+      image_requested: false, image_succeeded: false, latency_ms: 0, status: usingDirectProvider ? "provider_error" : "gateway_error",
+      error: `HTTP ${upstream.status}: ${(usingDirectProvider ? safeMessage : detail || safeMessage).slice(0, 500)}`, user_message: lastUser?.content?.slice(0, 8000) ?? null, assistant_reply: null,
     });
     if (logErr) console.error("chat log failed", logErr.message);
     return json({ error: safeMessage }, upstream.status);
@@ -616,17 +621,17 @@ Deno.serve(async (req) => {
           const follow = await callGateway({ ...basePayload, ...(searchFailed ? { tools: [IMAGE_TOOL] } : {}), messages: convo });
           if (!follow.ok || !follow.body) {
             const detail = await follow.json().catch(() => ({}));
-            finalStatus = personalAi ? "provider_error" : "stream_error";
-            finalError = detail.message || detail.error?.message || "The assistant could not finish this reply.";
+            finalStatus = usingDirectProvider ? "provider_error" : "stream_error";
+            finalError = usingBionic ? bionicError(follow.status) : personalAi ? personalProviderError({ statusCode: follow.status }) : detail.message || detail.error?.message || "The assistant could not finish this reply.";
             controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: finalError })}\n\n`));
             break;
           }
           calls = await pump(follow, controller);
         }
       } catch (err) {
-        finalStatus = req.signal.aborted ? "cancelled" : personalAi ? "provider_error" : "stream_error";
-        finalError = err instanceof Error ? err.message : "Unknown stream error";
-        if (!personalAi) console.error("stream error", err);
+        finalStatus = req.signal.aborted ? "cancelled" : usingDirectProvider ? "provider_error" : "stream_error";
+        finalError = usingBionic ? (req.signal.aborted ? "Reply stopped." : bionicError(502)) : personalAi ? personalProviderError(err) : err instanceof Error ? err.message : "Unknown stream error";
+        if (!usingDirectProvider) console.error("stream error", err);
         controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: finalError })}\n\n`));
       } finally {
         if (conversationId && assistant.trim()) {

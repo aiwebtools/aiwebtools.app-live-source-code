@@ -60,7 +60,7 @@ export default function PersonalAiSettings({ session, busy }: { session: Session
   const active = usePersonalAi(session?.user.id);
   return <div className="studio-setting-section">
     <h2 className="studio-label"><KeyRound className="h-4 w-4" />Use your own AI key</h2>
-    <p className="mt-3 break-words text-xs text-muted-foreground">{active ? `${PERSONAL_PROVIDERS[active.provider].name} · ${active.model}` : "Default Lovable AI active"}</p>
+    <p className="mt-3 break-words text-xs text-muted-foreground">{active ? `${PERSONAL_PROVIDERS[active.provider].name} · ${active.model}` : "Default site AI · Bionic GLM / DeepSeek"}</p>
     <p className="mt-2 text-xs text-muted-foreground">Personal keys cover text replies only. Provider fees may apply. Voice, images, web search and hosting stay separate. Keys clear on reload.</p>
     {!session && <Button asChild variant="outline" className="mt-3 w-full"><Link to={`/join?mode=signin&next=${encodeURIComponent(window.location.pathname)}`}>Sign in to use your key</Link></Button>}
     {(Object.keys(PERSONAL_PROVIDERS) as PersonalProvider[]).map((provider) => <ProviderKey key={provider} provider={provider} session={session} busy={busy} />)}

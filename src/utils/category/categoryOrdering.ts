@@ -91,14 +91,18 @@ export const orderCategoryTools = (tools: Tool[], categoryKey: string): Tool[] =
     hash(`${categoryKey}::${tool.title}`) * 100 + qualityScore(tool) * 0.15 -
     (isCompetingDirectory(tool, categoryKey) ? 500 : 0);
 
+  // Calculate once per record, not twice on every sorting comparison.
+  const ranks = new Map(uniqueTools.map((tool) => [tool, rank(tool)]));
+  const compareRank = (a: Tool, b: Tool) => (ranks.get(b) ?? 0) - (ranks.get(a) ?? 0);
+
   const gpts: Tool[] = [];
   const rest: Tool[] = [];
   for (const tool of uniqueTools) {
     (isAIWebToolsGPT(tool) ? gpts : rest).push(tool);
   }
 
-  gpts.sort((a, b) => rank(b) - rank(a));
-  rest.sort((a, b) => rank(b) - rank(a));
+  gpts.sort(compareRank);
+  rest.sort(compareRank);
 
   if (!gpts.length) return rest;
 

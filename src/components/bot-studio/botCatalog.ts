@@ -36,10 +36,12 @@ export function loadStudioBots(): Promise<StudioBot[]> {
 export const botFamilyKey = (slug: string) => slug.replace(/^community-/, "").replace(/-v\d+$/, "");
 export const botVersionNumber = (slug: string) => Number(slug.match(/-v(\d+)$/)?.[1] || 1);
 
-// Exact budget IDs from the authenticated workspace catalog; default resolves server-side.
+// Verified Bionic IDs; default resolves server-side and manual picks remain explicit.
 export const STUDIO_MODELS = [
-  { id: "default", label: "Economy (cheapest)" },
-  { id: "openai/gpt-6-luna", label: "GPT-6 Luna (cheapest)" },
+  { id: "default", label: "Auto · GLM / DeepSeek" },
+  { id: "bionic/glm-5.3-flash", label: "GLM 5.3 Flash · Economy" },
+  { id: "bionic/deepseek-v4.1-flash", label: "DeepSeek V4.1 Flash · Reasoning / Code" },
+  { id: "openai/gpt-6-luna", label: "GPT-6 Luna · Lovable" },
   { id: "google/gemini-3-flash-preview", label: "Gemini 3 Flash Preview" },
   { id: "google/gemini-3.1-flash-lite", label: "Gemini 3.1 Flash Lite" },
 ];
