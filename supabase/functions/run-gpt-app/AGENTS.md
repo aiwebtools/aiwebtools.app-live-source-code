@@ -6,5 +6,6 @@
 - Select first-turn web research when the request or operational instructions require it and expose failed retrieval as a failed activity; never substitute encyclopedia results or model knowledge as successful live web research.
 - Retry the primary Perplexity search once before falling back to scrapers, and log each source's failure reason to gpt_chat_logs only; the Oct 13–15 2026 outage showed transient gateway failures otherwise cost chats their research.
 - Isolate personal-provider SDK translation behind the shared tool/stream loop; allowlist direct IDs/endpoints, require verified sign-in, omit raw SDK errors from logs, and preserve explicit activation precedence.
+- Validate personal-key sessions with Supabase getUser for client-version compatibility; personal Bionic reuses the fixed transport with visitor credentials and never enters site circuit/fallback state.
 - Route builder-owned chat through the server-only Bionic adapter and shared tool loop; use owner-authorized Lovable fallback only before streams on exhausted Bionic credits or service outages, persist provider pauses, and never bypass denials/refusals or personal keys.
 - Reserve resting status for two confirmed credit-exhaustion states; classify other failures honestly and emit actual model/provider token metadata separately from speech and authored replies.
