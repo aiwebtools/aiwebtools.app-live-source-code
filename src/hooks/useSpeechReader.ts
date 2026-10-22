@@ -147,18 +147,25 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       void (async () => {
         try {
           while (generation === generationRef.current && pendingRef.current.length) {
-            const clip = pendingRef.current.shift();
-            if (!clip) break;
+            const next = pendingRef.current.shift();
+            if (!next) break;
             if (generation !== generationRef.current || controller.signal.aborted) return;
-            await playSpeechClip(clip, clipSpeed(profile.speed));
+            try {
+              await playSpeechClip(next.clip, clipSpeed(profile.speed));
+            } catch (clipError) {
+              if (generation !== generationRef.current || controller.signal.aborted) return;
+              // Lifelike engine failed (commonly AI credits recharging): the free
+              // on-device voice reads this sentence and everything still queued.
+              noteStudioDown();
+              speakChunk(next.text);
+              for (const rest of pendingRef.current.splice(0)) speakChunk(rest.text);
+              return;
+            }
           }
         } catch (error) {
           if (generation === generationRef.current && !controller.signal.aborted) {
-            const remaining = pendingRef.current.splice(0);
-            noteStudioDown();
-            // Re-read nothing already heard; speak only what was still queued.
-            void error;
-            void remaining;
+            pendingRef.current = [];
+            toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Please try voice playback again.", variant: "destructive" });
           }
         } finally {
           if (generation === generationRef.current) { queueBusyRef.current = false; setSpeaking(false); }
