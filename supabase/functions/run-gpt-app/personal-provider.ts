@@ -120,6 +120,7 @@ export async function callPersonalProvider(config: PersonalAi, payload: Record<s
             else if (part.type === "tool-call") event = { choices: [{ delta: { tool_calls: [{ index: toolIndex++, id: part.toolCallId, function: { name: part.toolName, arguments: JSON.stringify(part.input) } }] } }] };
             else if (part.type === "error") { event = { error: personalProviderError(part.error) }; }
             else if (part.type === "abort") { event = { error: "Reply stopped." }; }
+            else if (part.type === "finish-step") { event = { usage: part.usage }; }
             if (event) controller.enqueue(encoder.encode(`data: ${JSON.stringify(event)}\n\n`));
             if (part.type === "error" || part.type === "abort") break;
             next = pending.shift() || await iterator.next();
