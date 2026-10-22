@@ -1,3 +1,4 @@
+import { callGlmHelper } from "../_shared/glm-helper.ts";
 // Weekly AI research agent: scans AI news feeds, blends in this week's directory
 // activity, writes the digest with Lovable AI, archives it and emails subscribers.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
@@ -149,12 +150,7 @@ Deno.serve(async (req) => {
     ...(trending || []).map((t) => `- ${t.tool_title} (${t.tool_category})`),
   ].join("\n");
 
-  const aiRes = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "Lovable-API-Key": LOVABLE_API_KEY },
-    body: JSON.stringify({
-      model: "google/gemini-3.7-flash",
-      messages: [
+  const digestMessages = [
         {
           role: "system",
           content:
@@ -165,8 +161,11 @@ Deno.serve(async (req) => {
             "and a closing line inviting readers to explore " + SITE + ". Keep it under 700 words.",
         },
         { role: "user", content: research },
-      ],
-    }),
+      ];
+  const aiRes = (await callGlmHelper({ messages: digestMessages })) ?? await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Lovable-API-Key": LOVABLE_API_KEY },
+    body: JSON.stringify({ model: "google/gemini-3.7-flash", messages: digestMessages }),
   });
 
   if (!aiRes.ok) {
