@@ -2,7 +2,8 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
-import { DAILY_LIMIT, VOICES, validateAvatar, ETHICS_POLICY } from "./creator-validation.ts";
+import { callGlmHelper, parseLooseJson } from "../_shared/glm-helper.ts";
+import { DAILY_LIMIT, VOICES, SUBJECTS, validateAvatar, ETHICS_POLICY } from "./creator-validation.ts";
 import { approvedOwnerBatch, OWNER_BATCH_SOURCE } from "./owner-batch.ts";
 const json = (b: unknown, status = 200) => new Response(JSON.stringify(b), { status, headers: { ...corsHeaders, "Content-Type": "application/json" } });
 
