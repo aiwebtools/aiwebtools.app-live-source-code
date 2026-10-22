@@ -20,13 +20,16 @@ export default function BotCommercial({ slug, name, toolTitle, userId, voice, cu
   }, [slug, name, voice, userId, custom]);
 
   useEffect(() => {
+    console.log("[commercial] effect", { slug, toolTitle, seen: hasSeenCommercial(slug, userId) });
     done.current = false; setOpen(false); setSrc(null); setNeedsTap(false);
-    if (hasSeenCommercial(slug, userId)) { void playBotIntro({ slug, name, voice, userId, custom }); return; }
+    if (hasSeenCommercial(slug, userId)) { console.log("[commercial] already seen, intro only"); void playBotIntro({ slug, name, voice, userId, custom }); return; }
     let alive = true;
     const run = custom ? Promise.resolve(null) : getBotCommercial(toolTitle, name);
     void run.then((url) => {
+      console.log("[commercial] resolved url:", url);
       if (!alive) return;
       const embed = url ? commercialEmbed(url) : null;
+      console.log("[commercial] embed:", embed);
       markCommercialSeen(slug, userId);
       if (!embed) { finish(); return; }
       setSrc(embed); setOpen(true);
