@@ -2,11 +2,12 @@
 // Supports image generation (Nano Banana) for bots whose instructions require it.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import { selectBotModel, selectTurnModel } from "./model-selection.ts";
-import { callBionic, isBionicModel, bionicError } from "./bionic-provider.ts";
+import { callBionic, isBionicModel } from "./bionic-provider.ts";
 import { createFallbackChat } from "./chat-fallback.ts";
 import type { ProviderState, ProviderStore } from "../_shared/chat-provider-state.ts";
 import { appendInstructionFidelity, resolveOperationalInstructions } from "./instruction-fidelity.ts";
-import { readChatStreamEvent } from "./stream-events.ts";
+import { readChatStreamEvent, ChatStreamFailure } from "./stream-events.ts";
+import { recordProviderFailure } from "../_shared/chat-provider-state.ts";
 import { normalizeMessage, toModelMessage, requiresFirstSearch, type IncomingMessage } from "./input-context.ts";
 import { createLovableAiGatewayRunIdFetch, getLovableAiGatewayResponseHeaders } from "../_shared/run-id.ts";
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
@@ -282,7 +283,7 @@ Deno.serve(async (req) => {
   let basePrompt = "";
   if (isCustom) {
     if (customInstructions.length < 10 || !customName) return json({ error: "Your custom bot needs a name and instructions." }, 400);
-    app = { display_name: customName, model: "google/gemini-3.1-flash-lite", supports_images: true };
+    app = { display_name: customName, model: "bionic/glm-5.3-flash", supports_images: true };
     const customTagline = typeof body.custom?.tagline === "string" ? body.custom.tagline.trim().slice(0, 160) : "";
     basePrompt = `You are "${customName}"${customTagline ? ` — ${customTagline}` : ""}, a custom assistant created by a user on AIWebTools.app.\n\nOPERATIONAL INSTRUCTIONS:\n${customInstructions}`;
   } else {
@@ -528,6 +529,7 @@ Deno.serve(async (req) => {
     controller: ReadableStreamDefaultController<Uint8Array>,
   ): Promise<{ name: string; args: string; id: string }[]> => {
     if (!res.body) return [];
+    routedChat.markStarted();
     const reader = res.body.getReader();
     const calls: { name: string; args: string; id: string }[] = [];
     let buffer = "";
@@ -642,7 +644,10 @@ Deno.serve(async (req) => {
         }
       } catch (err) {
         finalStatus = req.signal.aborted ? "cancelled" : usingDirectProvider ? "provider_error" : "stream_error";
-        finalError = usingBionic ? (req.signal.aborted ? "Reply stopped." : bionicError(502)) : personalAi ? personalProviderError(err) : err instanceof Error ? err.message : "Unknown stream error";
+        finalError = req.signal.aborted ? "Reply stopped." : personalAi ? personalProviderError(err) : err instanceof Error ? err.message : "Unknown stream error";
+        if (!personalAi && err instanceof ChatStreamFailure && err.status) {
+          await recordProviderFailure(providerStore, isBionicModel(routedChat.getModel()) ? "bionic" : "lovable_chat", err.status);
+        }
         if (!usingDirectProvider) console.error("stream error", err);
         controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: finalError })}\n\n`));
       } finally {

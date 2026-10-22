@@ -1,0 +1,1 @@
+UPDATE public.gpt_apps SET model = 'bionic/glm-5.3-flash' WHERE is_active = true AND model IS DISTINCT FROM 'bionic/glm-5.3-flash'; ALTER TABLE public.gpt_apps ALTER COLUMN model SET DEFAULT 'bionic/glm-5.3-flash';

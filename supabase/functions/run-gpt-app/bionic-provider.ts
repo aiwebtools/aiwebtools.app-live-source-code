@@ -31,8 +31,13 @@ export async function callBionic(
       redirect: "error",
     });
     if (response.ok) return response;
-    await response.body?.cancel();
-    return new Response(JSON.stringify({ error: bionicError(response.status) }), { status: response.status });
+    const detail = await response.json().catch(() => ({}));
+    const type = String(detail?.error?.type || detail?.type || detail?.error?.code || detail?.code || "");
+    const accountProblem = /account|configuration|authentication|invalid_api_key|permission|access_denied/i.test(type);
+    return new Response(JSON.stringify({ error: bionicError(response.status) }), {
+      status: response.status,
+      headers: accountProblem ? { "X-Bionic-Failure": "configuration" } : {},
+    });
   } catch {
     return new Response(JSON.stringify({ error: signal.aborted ? "Reply stopped." : bionicError(502) }), { status: signal.aborted ? 499 : 502 });
   }
