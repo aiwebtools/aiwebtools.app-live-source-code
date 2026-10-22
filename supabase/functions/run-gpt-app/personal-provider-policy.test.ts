@@ -5,8 +5,9 @@ describe("personal AI rules", () => {
   test("requires sign-in, even for a key check", () => {
     expect(() => parsePersonalAi({ provider: "openai", apiKey: "test-placeholder-not-a-credential" }, false, true)).toThrow("Sign in");
   });
-  test("only permits the requested four providers", () => {
-    expect(Object.keys(PERSONAL_PROVIDERS)).toEqual(["openai", "gemini", "claude", "deepseek"]);
+  test("permits Bionic and the existing four personal providers", () => {
+    expect(Object.keys(PERSONAL_PROVIDERS)).toEqual(["bionic", "openai", "gemini", "claude", "deepseek"]);
+    expect(parsePersonalAi({ provider: "bionic", apiKey: "test-placeholder-not-a-credential", model: "bionic/glm-5.3-flash" }, true).model).toBe("bionic/glm-5.3-flash");
     expect(() => parsePersonalAi({ provider: "localhost", apiKey: "test-placeholder-not-a-credential", model: "anything", baseURL: "http://localhost" }, true)).toThrow("not supported");
   });
   test("provider-owned model IDs are allowlisted, not gateway IDs", () => {

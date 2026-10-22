@@ -9,6 +9,7 @@
 - [x] Pass 453 routing/instruction/privacy regression tests; live Time Machine, Stellaris, coding and web search pass. Actual visitor Stellaris reply and generated spacecraft image with Download/View/Revise verified without page errors. Correction: existing Run Python executes code on the visitor's device via Pyodide; there is no server-side autonomous Python tool.
 
 # Current menu, categories and sign-in repair
+- [ ] Add authenticated personal Bionic alongside existing provider inputs; repair session validation and visible sign-in failure handling; test routing/privacy and public flow. Real successful sign-in and visitor-key chat need an authenticated session unavailable to this external Supabase sandbox.
 - [x] Make desktop Web3 Domains panel opaque and verify expanded content: screenshot and computed RGB(13,13,13), no page errors.
 - [x] Reduce redundant All AI Tools ranking work without changing ordering: rank computed once per record, two preservation tests pass; browser verifies 5,431 records and working load-more without page errors. Cold Vite visit still took 21 seconds including entrance; cannot claim instant loading or production speed.
 - [ ] Reproduce and repair sign-in error; verify personal-key controls without weakening key ownership: public sign-in form renders correctly without page errors, but authenticated flow blocked by external unmanaged authentication and no reproducible error.

@@ -16,6 +16,10 @@ export const useAuthSession = () => {
       clearOtherPersonalAi(next?.user.id);
       setSession(next);
       setLoading(false);
+    }).catch(() => {
+      clearOtherPersonalAi();
+      setSession(null);
+      setLoading(false);
     });
 
     supabase.auth.getSession().then(({ data }) => {

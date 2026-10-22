@@ -17,7 +17,8 @@ const JoinPage = () => {
   const { toast } = useToast();
   const { session, loading: sessionLoading } = useAuthSession();
 
-  const redirectTo = params.get("next") || "/account";
+  const candidate = params.get("next") || "/account";
+  const redirectTo = candidate.startsWith("/") && !candidate.startsWith("//") && !candidate.includes("\\") ? candidate : "/account";
   const [mode, setMode] = useState<"signup" | "signin">(params.get("mode") === "signin" ? "signin" : "signup");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,6 +26,7 @@ const JoinPage = () => {
   const [prefTools, setPrefTools] = useState(true);
   const [prefDigest, setPrefDigest] = useState(true);
   const [busy, setBusy] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (!sessionLoading && session) navigate(redirectTo, { replace: true });
@@ -34,6 +36,7 @@ const JoinPage = () => {
     e.preventDefault();
     if (busy) return;
     setBusy(true);
+    setErrorMessage("");
     try {
       if (mode === "signup") {
         const { error } = await supabase.auth.signUp({
@@ -69,6 +72,7 @@ const JoinPage = () => {
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : "Something went wrong. Please try again.";
+      setErrorMessage(message);
       toast({ title: "We could not do that", description: message, variant: "destructive" });
     } finally {
       setBusy(false);
@@ -77,12 +81,19 @@ const JoinPage = () => {
 
   const googleSignIn = async () => {
     setBusy(true);
+    setErrorMessage("");
+    try {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: { redirectTo: `${window.location.origin}${redirectTo}` },
     });
     if (error) {
+      setErrorMessage(error.message);
       toast({ title: "Google sign-in unavailable", description: error.message, variant: "destructive" });
+      setBusy(false);
+    }
+    } catch {
+      setErrorMessage("Google sign-in could not connect. Please try email sign-in or try again.");
       setBusy(false);
     }
   };
@@ -118,6 +129,7 @@ const JoinPage = () => {
           <span className="h-px flex-1 bg-border" /> or use email <span className="h-px flex-1 bg-border" />
         </div>
 
+        {errorMessage && <p role="alert" className="mb-4 break-words text-sm text-destructive">{errorMessage}</p>}
         <form onSubmit={submit} className="space-y-4">
           {mode === "signup" && (
             <div className="space-y-1.5">
