@@ -27,7 +27,7 @@ export default function BotCommercial({ slug, name, toolTitle, userId, voice, cu
     if (started.current === slug && shown.current) return;
     const firstForSlug = started.current !== slug;
     started.current = slug;
-    if (firstForSlug) { done.current = false; setOpen(false); setSrc(null); setNeedsTap(false); }
+    if (firstForSlug) { done.current = false; shown.current = false; setOpen(false); setSrc(null); setNeedsTap(false); }
     if (hasSeenCommercial(slug, userId)) { void playBotIntro({ slug, name, voice, userId, custom }); return; }
     let alive = true;
     const run = custom ? Promise.resolve(null) : getBotCommercial(toolTitle, name);
