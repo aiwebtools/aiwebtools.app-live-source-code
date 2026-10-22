@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Volume2, X } from "lucide-react";
+import { Volume2 } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { commercialEmbed, getBotCommercial, hasSeenCommercial, markCommercialSeen } from "@/utils/botCommercials";
@@ -50,17 +50,16 @@ export default function BotCommercial({ slug, name, toolTitle, userId, voice, cu
     };
     window.addEventListener("message", onMsg);
     const listen = window.setInterval(() => frame.current?.contentWindow?.postMessage(JSON.stringify({ event: "listening", id: slug }), "*"), 500);
-    const blocked = window.setTimeout(() => { if (!playing) setNeedsTap(true); }, 2500);
+    const blocked = window.setTimeout(() => { if (!playing) { command("mute"); command("playVideo"); setNeedsTap(true); } }, 2500);
     return () => { window.removeEventListener("message", onMsg); clearInterval(listen); clearTimeout(blocked); };
   }, [open, finish, slug]);
 
   const command = (func: string) => frame.current?.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args: [] }), "*");
 
   return <Dialog open={open} onOpenChange={(value) => { if (!value) finish(); }}>
-    <DialogContent className="w-[calc(100%-1.5rem)] max-w-3xl overflow-hidden border-primary/40 p-0 pt-12 [&>button]:hidden">
+    <DialogContent className="w-[calc(100%-1.5rem)] max-w-3xl overflow-hidden border-primary/40 p-0 pt-12">
       <DialogTitle className="sr-only">{name} commercial</DialogTitle>
       <DialogDescription className="sr-only">Introduction video for {name}</DialogDescription>
-      <Button variant="destructive" size="icon" onClick={finish} aria-label="Close video" className="absolute right-2 top-2 z-10 h-9 w-9 rounded-full"><X className="h-5 w-5" /></Button>
       {open && src && <div className="relative">
         <iframe ref={frame} title={`${name} commercial`} src={src} allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen className="aspect-video max-h-[75dvh] w-full border-0" />
         {needsTap && <Button onClick={() => { command("unMute"); command("playVideo"); setNeedsTap(false); }} className="absolute bottom-3 left-1/2 -translate-x-1/2 gap-2"><Volume2 className="h-4 w-4" />Tap to play with sound</Button>}
