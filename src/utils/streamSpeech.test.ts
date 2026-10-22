@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { expect, test } from "bun:test";
-import { beginSpeechClip, decodePCM, unlockSpeechPlayback } from "./streamSpeech";
+import { beginSpeechClip, decodePCM, drainStudioQueue, unlockSpeechPlayback } from "./streamSpeech";
 
 const bytes = (...values: number[]) => Uint8Array.from(values);
 
@@ -33,6 +33,40 @@ test("streamed preview rejects missing completion rather than silently succeedin
     expect(clip.started).toBe(true);
     expect(clip.error?.message).toBe("The voice clip ended before it was complete.");
   } finally { globalThis.fetch = original; }
+});
+
+test("studio voice failure hands the failed sentence and the rest of the queue to the free device voice, in order", async () => {
+  const mk = (text) => ({ text, clip: { abort() {} } });
+  const queue = [mk("First."), mk("Second."), mk("Third.")];
+  const played = [];
+  const fallback = [];
+  let downCalls = 0;
+  await drainStudioQueue(queue, {
+    play: async (clip) => {
+      played.push(clip);
+      if (played.length === 2) throw new Error("credits recharging");
+    },
+    isAborted: () => false,
+    onStudioDown: () => { downCalls++; },
+    playFallback: (text) => fallback.push(text),
+  });
+  expect(played.length).toBe(2); // the first sentence played, the second failed
+  expect(downCalls).toBe(1);
+  expect(fallback).toEqual(["Second.", "Third."]); // nothing skipped, nothing re-read
+  expect(queue.length).toBe(0);
+});
+
+test("an aborted drain never falls back or replays queued speech", async () => {
+  const mk = (text) => ({ text, clip: { abort() {} } });
+  const queue = [mk("First."), mk("Second.")];
+  const fallback = [];
+  await drainStudioQueue(queue, {
+    play: async () => { throw new Error("engine down"); },
+    isAborted: () => true,
+    onStudioDown: () => { throw new Error("must not mark studio down after abort"); },
+    playFallback: (text) => fallback.push(text),
+  });
+  expect(fallback).toEqual([]);
 });
 
 test("gesture unlock resumes a suspended audio context before playback", async () => {
