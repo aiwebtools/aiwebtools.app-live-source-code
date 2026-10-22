@@ -210,7 +210,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       if (lastBreak < 0) return;
       const ready = pending.slice(0, lastBreak + 1);
       spokenRef.current += ready.length;
-      if (profile) enqueue(ready);
+      if (profile && !studioDownRef.current) enqueue(ready);
       else speakChunk(ready);
     },
     [enqueue, profile, speakChunk, supported],
@@ -221,7 +221,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     if (!supported || !enabledRef.current || listeningRef.current) return;
     const rest = bufferRef.current.slice(spokenRef.current);
     spokenRef.current = bufferRef.current.length;
-    if (profile) enqueue(rest);
+    if (profile && !studioDownRef.current) enqueue(rest);
     else speakChunk(rest);
   }, [enqueue, profile, speakChunk, supported]);
 
