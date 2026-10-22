@@ -102,7 +102,7 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <Input
                 type="text"
-                placeholder="Search through 700+ AI tools..."
+                placeholder="Search 4,000+ AI tools..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10 bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-cyan-500 text-lg py-4"

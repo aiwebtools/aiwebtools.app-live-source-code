@@ -136,7 +136,8 @@ for (const w of written) console.log(`   • ${w.file}: ${w.count}`);
 // ---------------------------------------------------------------------------
 const countOutPath = path.resolve(process.cwd(), "src/data/generated/toolCount.ts");
 const totalTools = allTools.length;
-const marketingTotal = `${Math.floor(totalTools / 1000) * 1000}+`;
+// Branding rule: the public count is always "4,000+" regardless of the raw total.
+const marketingTotal = "4,000+";
 const categorySet = new Set(
   allTools.map((t) => (t.category || "").trim()).filter(Boolean)
 );

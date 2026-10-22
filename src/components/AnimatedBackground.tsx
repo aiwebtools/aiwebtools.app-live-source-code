@@ -8,12 +8,19 @@ const AnimatedBackground = () => {
   const matrixRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Scale ambient decoration counts to the device: phones get the same
+    // look with far fewer animated nodes so scroll stays smooth.
+    const isMobileView = window.innerWidth < 768;
+    const starCount = isMobileView ? 80 : 200;
+    const particleCount = isMobileView ? 8 : 20;
+    const shootingStarCount = isMobileView ? 4 : 10;
+
     // Create stars - optimized for performance
     const createStars = () => {
       const starsContainer = starsRef.current;
       if (!starsContainer) return;
 
-      for (let i = 0; i < 200; i++) {
+      for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
         star.className = 'star';
         star.style.left = Math.random() * 100 + '%';
@@ -31,7 +38,7 @@ const AnimatedBackground = () => {
       const particlesContainer = particlesRef.current;
       if (!particlesContainer) return;
 
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
         particle.style.left = Math.random() * 100 + '%';
@@ -48,7 +55,7 @@ const AnimatedBackground = () => {
       const shootingStarsContainer = shootingStarsRef.current;
       if (!shootingStarsContainer) return;
 
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < shootingStarCount; i++) {
         const shootingStar = document.createElement('div');
         shootingStar.className = 'shooting-star';
         shootingStar.style.left = Math.random() * 100 + '%';
