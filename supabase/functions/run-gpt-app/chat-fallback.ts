@@ -47,7 +47,7 @@ export function createFallbackChat(store: ProviderStore, bionic: Transport, lova
       const kind = response.headers.get("X-Bionic-Failure");
       // Missing configuration is not a service outage. Never bypass account/access problems.
       if (kind === "configuration") {
-        await store.set({ provider: "bionic", status: "configuration", http_status: 503, retry_at: null });
+        await store.set({ provider: "bionic", status: "configuration", http_status: response.status, retry_at: null });
         return response;
       }
       await recordProviderFailure(store, "bionic", response.status);

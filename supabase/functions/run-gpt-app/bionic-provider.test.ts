@@ -25,3 +25,8 @@ test("Bionic exhausted balance is redacted and never retried on another paid pro
   expect(response.status).toBe(402);
   expect(await response.text()).not.toContain("sensitive-provider-details");
 });
+test("confirmed account problems remain terminal even when provider returns HTTP 500", async () => {
+  const response = await callBionic("test-only-placeholder", { model: "bionic/glm-5.3-flash" }, new AbortController().signal, (async () => new Response('{"error":{"type":"account_configuration_error"}}', { status: 500 })) as typeof fetch);
+  expect(response.headers.get("X-Bionic-Failure")).toBe("configuration");
+  expect(response.status).toBe(500);
+});

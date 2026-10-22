@@ -2,7 +2,7 @@
 // Supports image generation (Nano Banana) for bots whose instructions require it.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import { selectBotModel, selectTurnModel } from "./model-selection.ts";
-import { callBionic, isBionicModel, bionicError } from "./bionic-provider.ts";
+import { callBionic, isBionicModel } from "./bionic-provider.ts";
 import { createFallbackChat } from "./chat-fallback.ts";
 import type { ProviderState, ProviderStore } from "../_shared/chat-provider-state.ts";
 import { appendInstructionFidelity, resolveOperationalInstructions } from "./instruction-fidelity.ts";
