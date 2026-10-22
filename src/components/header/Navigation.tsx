@@ -165,7 +165,7 @@ const Navigation = () => {
             <span className="hidden xl:inline">Domains</span>
           </button>
         </PopoverTrigger>
-        <PopoverContent className="w-[420px] max-h-[85vh] overflow-y-auto bg-black/98 border border-cyan-500/40 backdrop-blur-lg z-[200] shadow-2xl" align="end" side="bottom" collisionPadding={20} sideOffset={8}>
+        <PopoverContent className="w-[420px] max-h-[85vh] overflow-y-auto bg-popover text-popover-foreground border border-cyan-500/40 z-[200] shadow-2xl" align="end" side="bottom" collisionPadding={20} sideOffset={8}>
           <div className="mb-4 p-4 bg-gradient-to-r from-purple-900/60 to-blue-900/60 rounded-xl border border-purple-500/40 shadow-lg">
             <h3 className="text-sm font-bold text-cyan-400 mb-2 flex items-center gap-2">
               <span className="text-lg">🔗</span> Connect to Your Crypto Wallet
