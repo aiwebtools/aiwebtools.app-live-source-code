@@ -1,3 +1,4 @@
+// @ts-ignore -- Bun test runtime import, matching existing project tests
 import { expect, test } from "bun:test";
 import { Bot } from "lucide-react";
 import { orderCategoryTools, dedupeTools } from "./categoryOrdering";

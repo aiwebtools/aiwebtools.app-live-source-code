@@ -3,11 +3,11 @@
 # Current Bionic model connection
 - [x] Securely collect builder Bionic key; verify both exact model IDs, streaming, vision input and tool calls. GLM recognized the photo test; DeepSeek misidentified its color.
 - [x] Route ordinary default bot chats to GLM and advanced reasoning/coding to DeepSeek, preserving instructions, tools and personal-provider priority; hold Gemini fallback. Deployed run-gpt-app; verified logged model selection.
-- [x] Pass 453 routing/instruction/privacy regression tests; live Time Machine, Stellaris, coding and web search pass. Actual visitor Stellaris reply verified without page errors. Image executor succeeded but test client disconnected before final reply; full image delivery remains to verify. No Python executor exists; model changes do not add it.
+- [x] Pass 453 routing/instruction/privacy regression tests; live Time Machine, Stellaris, coding and web search pass. Actual visitor Stellaris reply and generated spacecraft image with Download/View/Revise verified without page errors. No Python executor exists; model changes do not add it.
 
 # Current menu, categories and sign-in repair
 - [x] Make desktop Web3 Domains panel opaque and verify expanded content: screenshot and computed RGB(13,13,13), no page errors.
-- [ ] Reduce All AI Tools first-card loading and preserve complete catalog/search/pagination: rank computation now once per record; verify result and timing.
+- [x] Reduce redundant All AI Tools ranking work without changing ordering: rank computed once per record, two preservation tests pass; browser verifies 5,431 records and working load-more without page errors. Cold Vite visit still took 21 seconds including entrance; cannot claim instant loading or production speed.
 - [ ] Reproduce and repair sign-in error; verify personal-key controls without weakening key ownership: public sign-in form renders correctly without page errors, but authenticated flow blocked by external unmanaged authentication and no reproducible error.
 - [x] Hold off shared Gemini fallback at Master's request; superseded by Bionic connection above.
 
