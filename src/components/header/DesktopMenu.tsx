@@ -125,11 +125,12 @@ const DesktopMenu = () => {
   return (
     <TooltipProvider>
       <div className="hidden lg:block">
-        <DropdownMenu open={isMenuOpen} onOpenChange={handleMenuToggle}>
+        <DropdownMenu modal={false} open={isMenuOpen} onOpenChange={handleMenuToggle}>
           <DropdownMenuTrigger asChild>
             <Button 
               variant="outline" 
               size="default" 
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               className="border-cyan-500/30 bg-black/80 text-cyan-100 hover:bg-cyan-500/20 px-4 py-2"
             >
               <Menu className="w-5 h-5" />
