@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { lazy, Suspense, useRef, useState } from "react";
 import { ImagePlus, X, Wand2 } from "lucide-react";
 import { prepareBotAvatar } from "@/utils/botAvatarUpload";
 import { Button } from "@/components/ui/button";
@@ -9,8 +9,11 @@ import { saveCustomBot, type CustomBot } from "@/utils/customBots";
 import { getGuestId } from "@/utils/guestId";
 import { refreshStudioBots } from "./botCatalog";
 import type { GptVoiceProfile } from "@/utils/gptVoiceProfiles";
-import SurvivalDraftPicker from "./SurvivalDraftPicker";
 import { loadSurvivalBuilderDraft } from "@/utils/survivalDrafts";
+import { BOT_SUBJECTS, type BotSubject } from "./botSubjects";
+
+// Heavy draft artwork loads only when the builder is actually opened.
+const SurvivalDraftPicker = lazy(() => import("./SurvivalDraftPicker"));
 
 const VOICES: Array<[GptVoiceProfile["voice"], string]> = [
   ["alloy", "Alloy · balanced guide"], ["ash", "Ash · confident analyst"], ["ballad", "Ballad · mystic narrator"],
@@ -24,6 +27,7 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
   const [tagline, setTagline] = useState("");
   const [instructions, setInstructions] = useState("");
   const [voice, setVoice] = useState<GptVoiceProfile["voice"]>("alloy");
+  const [subject, setSubject] = useState<BotSubject>("General & Productivity");
   const [avatar, setAvatar] = useState("");
   const [preparingAvatar, setPreparingAvatar] = useState(false);
   const avatarInput = useRef<HTMLInputElement | null>(null);
@@ -45,7 +49,7 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
     if (share) {
       setBusy(true); setStatus("AI ethics review in progress…");
       try {
-        const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/publish-community-gpt`, { method: "POST", headers: { "Content-Type": "application/json", apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY }, body: JSON.stringify({ name: bot.display_name, tagline: bot.tagline, instructions: bot.instructions, voice: bot.voice, avatar: bot.image_url, guestId: getGuestId() }) });
+        const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/publish-community-gpt`, { method: "POST", headers: { "Content-Type": "application/json", apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY }, body: JSON.stringify({ name: bot.display_name, tagline: bot.tagline, instructions: bot.instructions, voice: bot.voice, avatar: bot.image_url, subject, guestId: getGuestId() }) });
         const data = await res.json().catch(() => ({}));
         if (!res.ok) { setStatus(`Saved on this device. Not published: ${data.error || "the review failed."}`); setBusy(false); return; }
         if (!data.approved) { setStatus(`Saved on this device. The ethics review did not approve publishing: ${data.reason}`); setBusy(false); return; }
@@ -64,10 +68,10 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
         <DialogDescription>Saved on this device. Web search, image creation, voice, long memory and every studio ability are switched on automatically.</DialogDescription>
       </DialogHeader>
       <div className="space-y-4">
-        <SurvivalDraftPicker onChoose={(slug) => { void loadSurvivalBuilderDraft(slug).then((draft) => {
+        <Suspense fallback={null}><SurvivalDraftPicker onChoose={(slug) => { void loadSurvivalBuilderDraft(slug).then((draft) => {
           if (!draft) return;
           setSavedBot(null); setName(draft.display_name); setTagline(draft.tagline); setInstructions(draft.instructions); setVoice(draft.voice); setAvatar(draft.image_url || ""); setShare(true); setStatus("Draft loaded. Public publication requires ethics review and available daily allowance.");
-        }).catch(() => setStatus("This draft could not load. Please try again.")); }} />
+        }).catch(() => setStatus("This draft could not load. Please try again.")); }} /></Suspense>
         <div className="flex items-center gap-3">
           {avatar && <img src={avatar} alt="Bot avatar preview" className="h-16 w-16 rounded-md object-cover" />}
           <input ref={avatarInput} type="file" accept="image/jpeg,image/png,image/webp" aria-label="Bot avatar picture" className="hidden" onChange={async (e) => {
