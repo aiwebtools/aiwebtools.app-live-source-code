@@ -6,6 +6,11 @@ import { commercialEmbed, getBotCommercial, hasSeenCommercial, markCommercialSee
 import { playBotIntro } from "@/utils/botIntroVoice";
 
 /** Once per bot per device: its own video commercial (sound on, auto-closes at the end), then its spoken welcome. */
+
+// Survives the BotStudio remount caused by the /app/:slug -> /app/:slug/chat/:threadId key change,
+// so a replayed mount restores the same video instead of dropping it.
+const liveShow: { slug: string | null; embed: string | null } = { slug: null, embed: null };
+
 export default function BotCommercial({ slug, name, toolTitle, userId, voice, custom }: { slug: string; name: string; toolTitle: string | null; userId?: string; voice: string; custom?: boolean }) {
   const [src, setSrc] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
