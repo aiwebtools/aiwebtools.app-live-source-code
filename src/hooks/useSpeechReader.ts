@@ -46,6 +46,16 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const pendingRef = useRef<SpeechClip[]>([]);
   const queueBusyRef = useRef(false);
   const generationRef = useRef(0);
+  // Set when the lifelike studio voice fails (e.g. AI credits recharging):
+  // replies fall back to the free on-device voice for the rest of the session.
+  const studioDownRef = useRef(false);
+  const studioToastShownRef = useRef(false);
+  const noteStudioDown = useCallback(() => {
+    studioDownRef.current = true;
+    if (studioToastShownRef.current) return;
+    studioToastShownRef.current = true;
+    toast({ title: "Using your device's free voice", description: "The lifelike studio voice is unavailable right now, so replies are read by your device's built-in voice instead." });
+  }, [toast]);
 
   useEffect(() => {
     if (!supported) return;
@@ -101,7 +111,8 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
         return !controller.signal.aborted;
       } catch (error) {
         if (!controller.signal.aborted) {
-          toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Please try voice playback again.", variant: "destructive" });
+          noteStudioDown();
+          for (const chunk of splitSpeechText(clean, 300).filter(speakable)) speakChunkRef.current(chunk);
         }
         return false;
       } finally {
@@ -135,8 +146,11 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
           }
         } catch (error) {
           if (generation === generationRef.current && !controller.signal.aborted) {
-            pendingRef.current = [];
-            toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Please try voice playback again.", variant: "destructive" });
+            const remaining = pendingRef.current.splice(0);
+            noteStudioDown();
+            // Re-read nothing already heard; speak only what was still queued.
+            void error;
+            void remaining;
           }
         } finally {
           if (generation === generationRef.current) { queueBusyRef.current = false; setSpeaking(false); }
