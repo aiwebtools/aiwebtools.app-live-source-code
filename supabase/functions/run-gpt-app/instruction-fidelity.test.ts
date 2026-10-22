@@ -3,7 +3,7 @@ import { expect, test } from "bun:test";
 import { appendInstructionFidelity, isStellarisSpaceBot, isTimeMachineStoryBot, resolveOperationalInstructions } from "./instruction-fidelity.ts";
 import { readFileSync } from "node:fs";
 import { unzipSync } from "fflate";
-import decoded from "./decoded-archive-instructions.json";
+import decoded from "./decoded-archive-instructions.json" with { type: "json" };
 import { BOT_ENHANCEMENTS } from "./instruction-fidelity.ts";
 
 test("reviewed bot enhancements match real slugs without changing authored prefixes", () => {
