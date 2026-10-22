@@ -197,10 +197,11 @@ Deno.serve(async (req) => {
         body: JSON.stringify({
           from: "AIWebTools Chat Watchdog <onboarding@resend.dev>",
           to,
-          subject: `🤖 Chat watchdog: ${troubled.length} room(s) reporting failures`,
+          subject: `🤖 Chat watchdog: ${troubled.length} room(s), ${pausedProviders.length} provider pause(s)`,
           html: `
             <div style="background:#000;color:#00ff41;font-family:'Courier New',monospace;padding:24px;">
               <h2 style="color:#00ff41;">Chat Room Watchdog</h2>
+              <p>${pausedProviders.map((state) => `${escapeHtml(state.provider)}: ${escapeHtml(state.status)}; restore access/credits and explicitly resume. No automatic top-ups.`).join("<br>")}</p>
               <p>Window: last <strong>${windowMinutes}</strong> minutes — <strong>${totalMessages}</strong> messages across <strong>${rooms.size}</strong> rooms.</p>
               <p><strong>${troubled.length}</strong> room(s) had a failed reply, an empty reply, or a picture that did not generate.</p>
               <table style="width:100%;border-collapse:collapse;font-size:12px;">

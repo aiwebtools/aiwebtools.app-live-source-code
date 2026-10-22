@@ -53,3 +53,9 @@ test("successful HTTP response, including empty/refusal streams, is never replay
   await s.route.call(payload);
   expect(s.calls).toHaveLength(0);
 });
+test("Bionic failures after text or tools start never switch models mid-reply", async () => {
+  const s = setup(402);
+  s.route.markStarted();
+  expect((await s.route.call(payload)).status).toBe(402);
+  expect(s.calls).toHaveLength(0);
+});

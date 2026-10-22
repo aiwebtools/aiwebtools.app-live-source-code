@@ -11,6 +11,7 @@ export function createFallbackChat(store: ProviderStore, bionic: Transport, lova
   let fallback = false;
   let model = "";
   let reason: string | null = null;
+  let started = false;
   const gateway = async (payload: Payload) => {
     const state = await store.get("lovable_chat");
     if (isPaused(state)) return pausedResponse("Lovable chat", state?.http_status);
@@ -27,6 +28,7 @@ export function createFallbackChat(store: ProviderStore, bionic: Transport, lova
   return {
     getModel: () => model,
     getReason: () => reason,
+    markStarted: () => { started = true; },
     call: async (payload: Payload): Promise<Response> => {
       model = String(payload.model);
       if (!isBionicModel(payload.model)) return gateway(payload);
@@ -34,6 +36,7 @@ export function createFallbackChat(store: ProviderStore, bionic: Transport, lova
       const state = await store.get("bionic");
       if (isPaused(state)) {
         if (state?.status === "credits" || state?.status === "outage") {
+          if (started) return pausedResponse("Bionic", state?.http_status);
           reason = state.status;
           return useFallback(payload);
         }
@@ -53,6 +56,7 @@ export function createFallbackChat(store: ProviderStore, bionic: Transport, lova
         return response;
       }
       if (response.status !== 402 && !(response.status >= 500 && response.status <= 599)) return response;
+      if (started) return response;
       reason = response.status === 402 ? "credits" : "outage";
       await response.body?.cancel();
       // Switching after an outage is delayed, not an immediate retry storm.
