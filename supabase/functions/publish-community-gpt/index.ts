@@ -11,7 +11,7 @@ const json = (b: unknown, status = 200) => new Response(JSON.stringify(b), { sta
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
-  let body: { name?: unknown; tagline?: unknown; instructions?: unknown; guestId?: unknown; voice?: unknown; avatar?: unknown } = {};
+  let body: { name?: unknown; tagline?: unknown; instructions?: unknown; guestId?: unknown; voice?: unknown; avatar?: unknown; subject?: unknown } = {};
   try { body = await req.json(); } catch { return json({ error: "Invalid request" }, 400); }
   const name = typeof body.name === "string" ? body.name.trim().replace(/\s+/g, " ").slice(0, 80) : "";
   const tagline = typeof body.tagline === "string" ? body.tagline.trim().slice(0, 160) : "";
@@ -21,6 +21,7 @@ Deno.serve(async (req) => {
 
   const voice = body.voice ?? "alloy";
   if (typeof voice !== "string" || !VOICES.some((v) => v === voice)) return json({ error: "Choose a supported speaking voice." }, 400);
+  const subject = typeof body.subject === "string" && (SUBJECTS as readonly string[]).includes(body.subject) ? body.subject : null;
   let avatar: ReturnType<typeof validateAvatar>;
   try { avatar = validateAvatar(body.avatar); } catch (error) { return json({ error: error instanceof Error ? error.message : "Invalid avatar" }, 400); }
   const url = Deno.env.get("SUPABASE_URL"); const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -40,27 +41,40 @@ Deno.serve(async (req) => {
   const { count: dupe } = await admin.from("gpt_apps").select("id", { count: "exact", head: true }).ilike("display_name", name);
   if ((dupe ?? 0) > 0) return json({ error: "A bot with that name already exists in the library. Please choose a different name." }, 409);
 
-  // AI ethics review
+  // AI ethics review: fast gateway model first; when it is out of credits, rate
+  // limited or down, the same policy runs on the builder's GLM so publishing
+  // never gets stuck. Access denials and rejections are never retried.
   const key = Deno.env.get("LOVABLE_API_KEY");
-  if (!key) return json({ error: "The review service is not configured." }, 500);
-  const review = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: "google/gemini-3-flash-preview",
-      messages: [
-        { role: "system", content: ETHICS_POLICY },
-        { role: "user", content: `Review this assistant and return JSON {"approved": boolean, "reason": string, "category": string}.\n\nNAME: ${name}\nSUBHEADER: ${tagline}\nINSTRUCTIONS:\n${instructions}` },
-      ],
-      response_format: { type: "json_schema", json_schema: { name: "review", strict: true, schema: { type: "object", additionalProperties: false, required: ["approved", "reason", "category"], properties: { approved: { type: "boolean" }, reason: { type: "string" }, category: { type: "string" } } } } },
-    }),
-  });
-  if (!review.ok) {
-    const failure = await review.json().catch(() => ({}));
-    return json({ error: failure.message || failure.error?.message || "The safety review could not finish. Your bot remains saved on this device." }, review.status);
+  const reviewMessages = [
+    { role: "system", content: ETHICS_POLICY },
+    { role: "user", content: `Review this assistant and return JSON {"approved": boolean, "reason": string, "category": string}.\n\nNAME: ${name}\nSUBHEADER: ${tagline}\nINSTRUCTIONS:\n${instructions}` },
+  ];
+  let content = "";
+  if (key) {
+    const review = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "google/gemini-3-flash-preview",
+        messages: reviewMessages,
+        response_format: { type: "json_schema", json_schema: { name: "review", strict: true, schema: { type: "object", additionalProperties: false, required: ["approved", "reason", "category"], properties: { approved: { type: "boolean" }, reason: { type: "string" }, category: { type: "string" } } } } },
+      }),
+    });
+    if (review.ok) {
+      content = (await review.json()).choices?.[0]?.message?.content || "";
+    } else {
+      const failure = await review.json().catch(() => ({}));
+      const recoverable = review.status === 402 || review.status === 429 || review.status >= 500;
+      if (!recoverable) return json({ error: failure.message || failure.error?.message || "The safety review could not finish. Your bot remains saved on this device." }, review.status);
+      console.error("primary ethics review unavailable", review.status);
+    }
   }
-  let verdict: { approved?: boolean; reason?: string } = {};
-  try { verdict = JSON.parse((await review.json()).choices?.[0]?.message?.content || "{}"); } catch { /* treated as rejection */ }
+  if (!content) {
+    const glm = await callGlmHelper({ messages: reviewMessages, temperature: 0 });
+    if (!glm) return json({ error: "The safety review could not finish. Your bot remains saved on this device." }, 503);
+    content = (await glm.json()).choices?.[0]?.message?.content || "";
+  }
+  const verdict = parseLooseJson<{ approved?: boolean; reason?: string }>(content) || {};
   if (verdict.approved !== true) return json({ approved: false, reason: verdict.reason || "The bot did not pass the ethics review." });
 
   const base = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 50) || "bot";
@@ -76,7 +90,7 @@ Deno.serve(async (req) => {
   const { error: appErr } = await admin.from("gpt_apps").insert({
     slug, display_name: name, tagline: tagline ? `${tagline} · Community GPT` : "Community GPT", greeting,
     starter_prompts: [`What can you help me with, ${name}?`, "Walk me through your first step."],
-    model: "google/gemini-3-flash-preview", is_active: true, supports_images: true, source_file: ownerBatch ? OWNER_BATCH_SOURCE : `community:${owner}`, voice, image_url: imageUrl,
+    model: "google/gemini-3-flash-preview", is_active: true, supports_images: true, source_file: ownerBatch ? OWNER_BATCH_SOURCE : `community:${owner}`, voice, image_url: imageUrl, subject,
   });
   if (appErr) return json({ error: "Publishing failed. Please try again." }, 500);
   const prompt = `You are "${name}"${tagline ? ` — ${tagline}` : ""}, a community-made assistant published on AIWebTools.app.\n\nOPERATIONAL INSTRUCTIONS:\n${instructions}`;
