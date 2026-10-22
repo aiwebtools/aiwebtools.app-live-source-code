@@ -6,9 +6,9 @@
 - [x] Pass 453 routing/instruction/privacy regression tests; live Time Machine, Stellaris, coding and web search pass. Actual visitor Stellaris reply verified without page errors. Image executor succeeded but test client disconnected before final reply; full image delivery remains to verify. No Python executor exists; model changes do not add it.
 
 # Current menu, categories and sign-in repair
-- [ ] Make desktop Web3 Domains panel opaque and verify expanded content.
-- [ ] Reduce All AI Tools first-card loading and preserve complete catalog/search/pagination.
-- [ ] Reproduce and repair sign-in error; verify personal-key controls without weakening key ownership.
+- [x] Make desktop Web3 Domains panel opaque and verify expanded content: screenshot and computed RGB(13,13,13), no page errors.
+- [ ] Reduce All AI Tools first-card loading and preserve complete catalog/search/pagination: rank computation now once per record; verify result and timing.
+- [ ] Reproduce and repair sign-in error; verify personal-key controls without weakening key ownership: public sign-in form renders correctly without page errors, but authenticated flow blocked by external unmanaged authentication and no reproducible error.
 - [x] Hold off shared Gemini fallback at Master's request; superseded by Bionic connection above.
 
 # Starter prompts, compact reading and personal AI providers (Oct 21)
