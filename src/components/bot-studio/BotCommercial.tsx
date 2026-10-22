@@ -13,6 +13,7 @@ export default function BotCommercial({ slug, name, toolTitle, userId, voice, cu
   const frame = useRef<HTMLIFrameElement>(null);
   const done = useRef(false);
   const started = useRef<string | null>(null);
+  const shown = useRef(false);
 
   const finish = useCallback(() => {
     if (done.current) return; done.current = true;
@@ -22,10 +23,11 @@ export default function BotCommercial({ slug, name, toolTitle, userId, voice, cu
 
   useEffect(() => {
     // StrictMode remounts and async session changes re-run this effect for the same bot;
-    // never reset or re-trigger a commercial already started for this slug.
-    if (started.current === slug) return;
+    // never reset or re-trigger a commercial that is already (or about to be) showing.
+    if (started.current === slug && shown.current) return;
+    const firstForSlug = started.current !== slug;
     started.current = slug;
-    done.current = false; setOpen(false); setSrc(null); setNeedsTap(false);
+    if (firstForSlug) { done.current = false; setOpen(false); setSrc(null); setNeedsTap(false); }
     if (hasSeenCommercial(slug, userId)) { void playBotIntro({ slug, name, voice, userId, custom }); return; }
     let alive = true;
     const run = custom ? Promise.resolve(null) : getBotCommercial(toolTitle, name);
@@ -34,6 +36,7 @@ export default function BotCommercial({ slug, name, toolTitle, userId, voice, cu
       const embed = url ? commercialEmbed(url) : null;
       markCommercialSeen(slug, userId);
       if (!embed) { finish(); return; }
+      shown.current = true;
       setSrc(embed); setOpen(true);
     }).catch(() => { if (alive) finish(); });
     return () => { alive = false; };
