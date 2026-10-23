@@ -57,6 +57,9 @@ export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false, full
           className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-accent/60 bg-accent/10 px-3 text-sm font-bold text-accent-foreground hover:bg-accent/20">
           <Wand2 className="h-4 w-4" />CUSTOM GPT BUILDER
         </Button>
+      ) : null}
+      {gptsOnly && !fullPage ? (
+        <Button variant="outline" type="button" onClick={() => go("/gpts")} className="min-h-9 w-full text-xs font-semibold text-primary">Open full bot directory page</Button>
       ) : (<>
       <Button variant="ghost" type="button" aria-expanded={open} onClick={() => setOpen((v) => !v)}
         className="flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border border-primary/60 bg-primary/10 px-3 text-left text-sm font-bold text-primary hover:bg-primary/20">
