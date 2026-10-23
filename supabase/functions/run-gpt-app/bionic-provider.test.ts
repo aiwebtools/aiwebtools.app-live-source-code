@@ -6,7 +6,7 @@ test("Bionic preserves full instructions, photo input, tools and follow-up histo
   const response = new Response('data: {"choices":[{"delta":{"content":"Ready"}}]}\n\ndata: [DONE]\n\n');
   const result = await callBionic("test-only-placeholder", payload, new AbortController().signal, (async (url, init) => {
     expect(url).toBe(BIONIC_CHAT_URL);
-    expect(JSON.parse(String(init?.body))).toEqual(payload);
+    expect(JSON.parse(String(init?.body))).toEqual({ ...payload, reasoning_effort: "low" });
     expect(init?.redirect).toBe("error");
     return response;
   }) as typeof fetch);
@@ -29,4 +29,12 @@ test("confirmed account problems remain terminal even when provider returns HTTP
   const response = await callBionic("test-only-placeholder", { model: "bionic/glm-5.3-flash" }, new AbortController().signal, (async () => new Response('{"error":{"type":"account_configuration_error"}}', { status: 500 })) as typeof fetch);
   expect(response.headers.get("X-Bionic-Failure")).toBe("configuration");
   expect(response.status).toBe(500);
+});
+test("GLM uses low reasoning effort for speed while DeepSeek keeps full reasoning", async () => {
+  const sent: Record<string, unknown>[] = [];
+  const fake = (async (_u: string, init?: RequestInit) => { sent.push(JSON.parse(String(init?.body))); return new Response("ok"); }) as typeof fetch;
+  await callBionic("k", { model: "bionic/glm-5.3-flash", reasoning_effort: "high" }, new AbortController().signal, fake);
+  await callBionic("k", { model: "bionic/deepseek-v4.1-flash", reasoning_effort: "high" }, new AbortController().signal, fake);
+  expect(sent[0].reasoning_effort).toBe("low");
+  expect(sent[1].reasoning_effort).toBeUndefined();
 });

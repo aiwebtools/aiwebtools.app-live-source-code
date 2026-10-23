@@ -29,6 +29,3 @@ verify_jwt = false
 
 [functions.submit-community-app]
 verify_jwt = false
-
-[functions.tmp-bionic-speed]
-verify_jwt = false
