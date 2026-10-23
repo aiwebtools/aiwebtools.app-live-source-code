@@ -1,6 +1,7 @@
 import { communityBotName, communityBotImage } from "./communityBotIdentity";
 import { supabase } from "@/integrations/supabase/client";
 import { getOffGridBotMetadata } from "./offGridBots";
+import { resolveMigratedBotMedia } from "./migratedBotMedia";
 
 export interface CommunityBotTool {
   title: string;
@@ -43,7 +44,7 @@ export function loadCommunityBots(): Promise<CommunityBotTool[]> {
         title: communityBotName(b.slug, b.display_name),
         description: (b.tagline || "Community GPT").replace(/\s*·\s*Community GPT$/, "") + " — a community AI assistant published on AIWebTools.",
         category: getOffGridBotMetadata(b.slug) ? "Off Grid Living" : "Community GPTs",
-        imageUrl: b.image_url || communityBotImage(b.slug) || BUNDLED[b.slug] || undefined,
+        imageUrl: resolveMigratedBotMedia(b.image_url) || communityBotImage(b.slug) || BUNDLED[b.slug] || undefined,
         categoryPath: `/app/${b.slug}`,
         tags: ["community gpt", "custom gpt", "ai assistant", "chatbot", ...(getOffGridBotMetadata(b.slug)?.tags || []), ...communityBotName(b.slug, b.display_name).toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 2)],
         isCommunityGpt: true as const,

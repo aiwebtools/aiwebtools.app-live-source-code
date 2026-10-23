@@ -1,5 +1,6 @@
 import { communityBotName, communityBotImage } from "@/utils/communityBotIdentity";
 import { supabase } from "@/integrations/supabase/client";
+import { resolveMigratedBotMedia } from "@/utils/migratedBotMedia";
 
 export interface StudioBot {
   slug: string;
@@ -28,13 +29,13 @@ async function fetchAllBots(): Promise<StudioBot[]> {
     rows.push(...((data ?? []) as StudioBot[]));
     if (!data || data.length < PAGE) break;
   }
-  return rows.filter((bot) => bot.slug && bot.display_name).map((bot) => ({ ...bot, display_name: communityBotName(bot.slug, bot.display_name), image_url: bot.image_url || communityBotImage(bot.slug) })).sort((a, b) => a.display_name.localeCompare(b.display_name) || a.slug.localeCompare(b.slug));
+  return rows.filter((bot) => bot.slug && bot.display_name).map((bot) => ({ ...bot, display_name: communityBotName(bot.slug, bot.display_name), image_url: resolveMigratedBotMedia(bot.image_url) || communityBotImage(bot.slug) })).sort((a, b) => a.display_name.localeCompare(b.display_name) || a.slug.localeCompare(b.slug));
 }
 /** Bundled snapshot of the in-house bots, loaded only when the live directory is unreachable. */
 async function loadFallbackBots(): Promise<StudioBot[]> {
   const mod = await import("@/data/generated/botCatalogFallback.json");
   const rows = (mod.default ?? mod) as unknown as StudioBot[];
-  return rows.map((bot) => ({ ...bot, image_url: communityBotImage(bot.slug) })).sort((a, b) => a.display_name.localeCompare(b.display_name) || a.slug.localeCompare(b.slug));
+  return rows.map((bot) => ({ ...bot, image_url: resolveMigratedBotMedia(bot.image_url) || communityBotImage(bot.slug) })).sort((a, b) => a.display_name.localeCompare(b.display_name) || a.slug.localeCompare(b.slug));
 }
 export function loadStudioBots(): Promise<StudioBot[]> {
   if (!catalogPromise) {
