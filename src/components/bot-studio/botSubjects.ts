@@ -85,7 +85,9 @@ export function searchStudioBots<T extends SubjectBot>(bots: T[], query: string)
     for (const w of expanded) { if (name.includes(w)) score += 18; else if (rest.includes(w)) score += 5; }
     if (score > 0 && taskCategories.has(category)) score += 8;
     else if (score === 0 && taskCategories.has(category)) score = 3;
-    return { bot, score };
+    return { bot, score, full: hits === terms.length };
   }).filter((r) => r.score > 0);
-  return scored.sort((a, b) => b.score - a.score || a.bot.display_name.localeCompare(b.bot.display_name)).map((r) => r.bot);
+  // Exact matches for every typed word win; otherwise fall back to task-meaning matches.
+  const full = scored.filter((r) => r.full);
+  return (full.length ? full : scored).sort((a, b) => b.score - a.score || a.bot.display_name.localeCompare(b.bot.display_name)).map((r) => r.bot);
 }

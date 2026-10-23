@@ -33,4 +33,9 @@ test("all thirty published community-support bots belong to Off Grid Living and 
   expect(groupBotsByCategory(bots).map(([category, families]) => [category, families.length])).toEqual([["Off Grid Living", 30]]);
   expect(searchStudioBots(bots, "off grid living")).toHaveLength(30);
   expect(searchStudioBots(bots, "rainwater harvest")[0]?.display_name).toBe("Rainwater Harvest Budget GPT");
+});test("task phrases find the best bot for the job", () => {
+  const list = [bot("Automobile GPT"), bot("Time Machine GPT"), bot("Personalized DR. GPT"), bot("Chef Sizzle GPT")];
+  expect(searchStudioBots(list, "help me fix my car")[0]?.display_name).toBe("Automobile GPT");
+  expect(searchStudioBots(list, "what should I cook for dinner")[0]?.display_name).toBe("Chef Sizzle GPT");
+  expect(searchStudioBots(list, "I feel sick")[0]?.display_name).toBe("Personalized DR. GPT");
 });
