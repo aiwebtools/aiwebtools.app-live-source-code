@@ -1,4 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
+import { getSavedBotIntroUrl } from "./botIntroAssets";
 
 // Each bot introduces itself once per device: a lifelike recording (made once with ElevenLabs, never Lovable AI),
 // or the device's free built-in voice when no recording is available.
@@ -25,7 +26,10 @@ export async function playBotIntro({ slug, name, voice, userId, custom }: { slug
   if (custom) { deviceVoice(localIntro(name)); return; }
   let text = localIntro(name);
   try {
-    const { data } = await supabase.functions.invoke("bot-intro-voice", { body: { slug, voice } });
+    const savedUrl = getSavedBotIntroUrl(slug, voice);
+    const data = savedUrl
+      ? { url: savedUrl, text }
+      : (await supabase.functions.invoke("bot-intro-voice", { body: { slug, voice } })).data;
     if (data?.text) text = data.text;
     if (data?.url) {
       const audio = new Audio(data.url);
