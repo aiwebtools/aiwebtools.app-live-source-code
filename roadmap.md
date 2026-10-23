@@ -1,5 +1,9 @@
 # Roadmap
 
+- [ ] Move existing community bot pictures to Lovable Assets without changing their appearance
+- [ ] Verify migrated pictures throughout the app, then remove only verified Supabase copies
+- [ ] Confirm storage is safely under 1 GB and report remaining downgrade limits
+
 - [x] Diagnose hamburger bot search failure: live catalog returns HTTP 402 hosting quota restriction
 - [x] Add accurate service-unavailable message and working retry to shared header bot directory
 - [ ] Restore live bot search: blocked by Supabase storage and cached-egress quota restriction; owner must restore service
