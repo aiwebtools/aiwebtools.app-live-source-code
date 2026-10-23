@@ -40,12 +40,52 @@ export function getBotCategory(bot: SubjectBot): BotSubject {
   const description = normalize(bot.tagline || "");
   return RULES.find(([pattern]) => pattern.test(description))?.[1] || "General & Productivity";
 }
+const STOP = new Set("a an the i im i'm me my we our you your to for of on in at by with and or is are be it this that how what can do does want need help please some get make find about from into like".split(" "));
+// Everyday task words → words that appear in bot names, descriptions and categories.
+const TASK_WORDS: Record<string, string> = {
+  sick: "doctor medical health medicus", ill: "doctor medical health", pain: "doctor health medical", symptom: "doctor medical health", symptoms: "doctor medical health",
+  medicine: "pharmaceutical doctor medical", pet: "veterinarian petcare", dog: "veterinarian petcare", cat: "veterinarian petcare",
+  car: "automobile automotive mechanic repair", truck: "automobile automotive", engine: "automobile mechanic engineering", fix: "repair renovator troubleshoot",
+  house: "home renovator property", lawyer: "legal law defender", sue: "legal law", arrested: "public defender legal", court: "legal defender",
+  money: "finance trader taxes budget", stocks: "trader trading invest", taxes: "tax", tax: "taxes", job: "resume job finder", hired: "resume job",
+  resume: "resume job", company: "business startup", idea: "startup validator brainstorm", invention: "inventor tesla engineering", sell: "marketing sales business",
+  song: "music melodies lyric", songs: "music lyric", movie: "film script scene", script: "screenplay script writer", story: "book writer story",
+  write: "writer writing", essay: "writer article clarity", picture: "image graphic design", draw: "sketch artist image", logo: "graphic design logo",
+  study: "learn course education tutor", homework: "learn course tutor education", class: "course college learn", teach: "course education homeschool",
+  cook: "chef recipe food", dinner: "chef recipe food", drink: "mixologist cocktail", cocktail: "mixologist", grow: "farming garden agronomus plant",
+  fishing: "fisherman fish", mushrooms: "fungus mushroom", travel: "travel advisor trip", vacation: "travel advisor", trip: "travel advisor",
+  past: "history time machine", ancient: "history archaeology", future: "prediction fortune probability", predict: "prediction illuminous fortune",
+  god: "spiritual gods", pray: "spiritual", meaning: "philosophy spiritual", dream: "dream interpreter", sad: "mental wellness", anxiety: "mental wellness",
+  marriage: "marriage mender relationship", wife: "marriage mender", husband: "marriage mender", hack: "cyber security", virus: "cyber security",
+  off: "off grid", grid: "off grid", solar: "solar off grid", survive: "survival survivalist", prepper: "survival", fire: "firefighter",
+  space: "stellaris space", ship: "stellaris space", math: "algebraic mathematics", app: "saas microsaas coding", code: "coding developer", website: "coding saas",
+  presentation: "ppt powerpoint", slides: "ppt powerpoint", podcast: "podcast", game: "game design", tattoo: "tattoo", antique: "appraisal antique", worth: "appraisal valuation",
+  fact: "fact checker", true: "fact checker probability", news: "headlines fact", prompt: "prompt engine", video: "video sora movie",
+};
+const stem = (w: string) => w.length > 4 ? w.replace(/(ing|ers|er|es|s)$/, "") : w;
 export function searchStudioBots<T extends SubjectBot>(bots: T[], query: string): T[] {
-  const words = normalize(query).split(/\s+/).filter(Boolean);
+  const q = normalize(query);
+  const words = q.split(/\s+/).filter(Boolean);
   if (!words.length) return bots;
-  return bots.filter((bot) => {
-    const metadata = getOffGridBotMetadata(bot.slug);
-    const hay = normalize(`${bot.display_name} ${bot.tagline || ""} ${getBotCategory(bot)} ${metadata?.tags.join(" ") || ""}`);
-    return words.every((word) => hay.includes(word));
-  }).sort((a, b) => Number(normalize(b.display_name) === normalize(query)) - Number(normalize(a.display_name) === normalize(query)) || a.display_name.localeCompare(b.display_name));
+  const core = words.filter((w) => !STOP.has(w));
+  const terms = core.length ? core : words;
+  const expanded = [...new Set(terms.flatMap((w) => (TASK_WORDS[w] || "").split(" ").filter(Boolean)))].filter((w) => !terms.includes(w));
+  const taskCategories = new Set(RULES.filter(([re]) => re.test(q)).map(([, s]) => s));
+  const scored = bots.map((bot) => {
+    const name = normalize(bot.display_name);
+    const category = getBotCategory(bot);
+    const rest = normalize(`${bot.tagline || ""} ${category} ${getOffGridBotMetadata(bot.slug)?.tags.join(" ") || ""}`);
+    let score = name === q ? 1000 : name.includes(q) ? 300 : 0;
+    let hits = 0;
+    for (const w of terms) {
+      const s = stem(w);
+      if (name.includes(s)) { score += 40; hits++; } else if (rest.includes(s)) { score += 12; hits++; }
+    }
+    if (hits === terms.length) score += 60;
+    for (const w of expanded) { if (name.includes(w)) score += 18; else if (rest.includes(w)) score += 5; }
+    if (score > 0 && taskCategories.has(category)) score += 8;
+    else if (score === 0 && taskCategories.has(category)) score = 3;
+    return { bot, score };
+  }).filter((r) => r.score > 0);
+  return scored.sort((a, b) => b.score - a.score || a.bot.display_name.localeCompare(b.bot.display_name)).map((r) => r.bot);
 }
