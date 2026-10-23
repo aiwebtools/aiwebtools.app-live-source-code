@@ -60,7 +60,7 @@ const DownloadCenterDialog = () => {
               className="w-full flex items-center gap-3 rounded-lg border border-primary/60 bg-card px-3 py-2 text-left hover:border-primary transition-colors"
             >
               <Code2 className="h-4 w-4 text-primary shrink-0" aria-hidden="true" />
-              <span className="flex-1 text-sm text-foreground">Website Source Code (always latest)</span>
+              <span className="flex-1 text-sm text-foreground">Website Source Code + Website Assets (always latest)</span>
               <Download className="h-4 w-4 text-primary" aria-hidden="true" />
             </button>
           </li>
