@@ -1,6 +1,7 @@
 # Roadmap
 
-- [ ] Replace verified existing Supabase pictures with high-quality compressed copies at unchanged URLs (~536 MB total projected)
+- [x] Prepare and verify all 847 high-quality compressed copies; original backups retained; live catalogs prefer smaller hosted copies
+- [ ] Replace verified existing Supabase pictures at unchanged URLs (~536 MB total projected; blocked: no authenticated administrator session and no admin role assigned)
 - [ ] Verify bot/prompt counts, stored file bytes and current Free-tier usage; provide honest downgrade/refund guidance
 
 - [x] Move existing community bot pictures to Lovable Assets without changing their appearance (847 byte-identical copies verified)

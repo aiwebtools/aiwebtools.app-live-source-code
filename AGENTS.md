@@ -1,5 +1,5 @@
 # Architecture Rules
-- Resolve verified community portrait copies through `migratedBotMedia` in both live catalogs; exact source matching preserves new uploads while shifting existing picture traffic off Supabase.
+- Resolve verified compressed community portraits through `migratedBotMedia` in both live catalogs, retaining byte-identical originals as backups; exact source matching preserves new uploads and reduces picture transfer size.
 - Subdirectories may have their own `AGENTS.md`; read it before changing files there.
 - Queue deferred mounts cancellably with lazy fallbacks to prevent loading gaps.
 - Share companion links across device menus to keep destinations consistent.
