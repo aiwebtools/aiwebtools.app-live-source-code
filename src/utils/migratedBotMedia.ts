@@ -6,7 +6,7 @@ const pointers = import.meta.glob<AssetPointer>("../assets/migrated-bots/*.asset
 const migratedByFilename: Record<string, string> = {};
 for (const [path, pointer] of Object.entries(pointers)) {
   const filename = path.split("/").pop()?.replace(/\.asset\.json$/, "");
-  if (filename) migratedByFilename[filename] = pointer.url;
+  if (filename) migratedByFilename[filename] = `https://aiwebtools.app${pointer.url}`;
 }
 
 export function resolveMigratedBotMedia(source: string | null | undefined): string | undefined {
