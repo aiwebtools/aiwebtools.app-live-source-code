@@ -30,8 +30,20 @@ async function fetchAllBots(): Promise<StudioBot[]> {
   }
   return rows.filter((bot) => bot.slug && bot.display_name).map((bot) => ({ ...bot, display_name: communityBotName(bot.slug, bot.display_name), image_url: bot.image_url || communityBotImage(bot.slug) })).sort((a, b) => a.display_name.localeCompare(b.display_name) || a.slug.localeCompare(b.slug));
 }
+/** Bundled snapshot of the in-house bots, loaded only when the live directory is unreachable. */
+async function loadFallbackBots(): Promise<StudioBot[]> {
+  const mod = await import("@/data/generated/botCatalogFallback.json");
+  const rows = (mod.default ?? mod) as unknown as StudioBot[];
+  return rows.map((bot) => ({ ...bot, image_url: communityBotImage(bot.slug) })).sort((a, b) => a.display_name.localeCompare(b.display_name) || a.slug.localeCompare(b.slug));
+}
 export function loadStudioBots(): Promise<StudioBot[]> {
-  if (!catalogPromise) catalogPromise = fetchAllBots().catch((error) => { catalogPromise = null; throw error; });
+  if (!catalogPromise) {
+    catalogPromise = fetchAllBots().catch(async (error) => {
+      catalogPromise = null; // retry live next time
+      try { const fallback = await loadFallbackBots(); if (fallback.length) return fallback; } catch { /* use original error */ }
+      throw error;
+    });
+  }
   return catalogPromise;
 }
 
