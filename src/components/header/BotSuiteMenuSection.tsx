@@ -8,7 +8,7 @@ import CommunityAppsMenuSection from "./CommunityAppsMenuSection";
 import { searchStudioBots } from "@/components/bot-studio/botSubjects";
 
 /** Header fast-track into every in-site bot room plus the community bot builder. */
-export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false }: { onNavigate?: () => void; gptsOnly?: boolean }) {
+export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false, fullPage = false }: { onNavigate?: () => void; gptsOnly?: boolean; fullPage?: boolean }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(gptsOnly);
   const [bots, setBots] = useState<StudioBot[] | null>(null);
@@ -29,10 +29,9 @@ export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false }: { 
     return () => { alive = false; };
   }, [open, bots, retry]);
 
-  const groups = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return groupBotsByCategory(searchStudioBots(bots || [], q));
-  }, [bots, query]);
+  const matches = useMemo(() => searchStudioBots(bots || [], query.trim()), [bots, query]);
+  const groups = useMemo(() => groupBotsByCategory(matches), [matches]);
+  const best = query.trim() ? matches.slice(0, 3) : [];
 
   const go = (path: string) => {
     onNavigate?.();
@@ -73,10 +72,10 @@ export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false }: { 
         <div className="rounded-lg border border-primary/30 bg-background/95 p-2">
           <label className="flex items-center gap-2 rounded-md border border-primary/30 px-2">
             <Search className="h-4 w-4 text-primary" />
-            <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Find a bot…" aria-label="Find a bot in the AWT bot suite"
+            <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Find a bot or describe your task…" aria-label="Find a bot in the AWT bot suite"
               className="h-9 w-full bg-transparent text-sm text-foreground outline-none" />
           </label>
-          <div className="mt-2 max-h-80 overflow-y-auto overscroll-contain">
+          <div className={fullPage ? "mt-2" : "mt-2 max-h-80 overflow-y-auto overscroll-contain"}>
             {error && <div role="status" className="grid gap-2 p-2">
               <p className="text-xs text-destructive">{error}</p>
               <Button variant="outline" type="button" onClick={() => { setError(""); setRetry((value) => value + 1); }} className="justify-self-start gap-2 text-xs">
@@ -84,6 +83,10 @@ export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false }: { 
               </Button>
             </div>}
             {!bots && !error && <p className="p-2 text-xs text-muted-foreground">Loading bots…</p>}
+            {best.length > 0 && <div className="mb-2 rounded-md border border-accent/40 bg-accent/10 p-1.5">
+              <p className="px-1 text-[10px] font-bold uppercase tracking-wide text-accent-foreground">Best match for your task</p>
+              {best.map((b) => <Button variant="ghost" key={b.slug} type="button" onClick={() => go(`/app/${b.slug}`)} className="h-auto min-h-9 w-full justify-start px-1 py-1 text-left text-sm font-semibold text-foreground">{b.display_name}</Button>)}
+            </div>}
             {bots && groups.length === 0 && <p className="p-2 text-xs text-muted-foreground">No bots match.</p>}
             {groups.map(([category, families]) => {
               const expanded = Boolean(query) || openGroup === category;

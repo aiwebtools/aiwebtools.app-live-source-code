@@ -66,6 +66,7 @@ const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
 const DisclaimersPage = lazyWithRetry(() => import("./pages/DisclaimersPage"));
 const OurStoryPage = lazyWithRetry(() => import("./pages/OurStoryPage"));
 const AIToolsHub = lazyWithRetry(() => import("./pages/AIToolsHub"));
+const BotDirectory = lazyWithRetry(() => import("./pages/BotDirectory"));
 const AIAgentsDirectory = lazyWithRetry(() => import("./pages/AIAgentsDirectory"));
 const ChatGPTAlternatives = lazyWithRetry(() => import("./pages/ChatGPTAlternatives"));
 const BlogPage = lazyWithRetry(() => import("./pages/BlogPage"));
@@ -347,6 +348,7 @@ const AnimatedRoutes = () => {
         <Route path="/privacy-policy" element={<RouteReadySignal><PrivacyPolicy /></RouteReadySignal>} />
         <Route path="/similar-tools/:toolId" element={<RouteReadySignal><SimilarToolsPage /></RouteReadySignal>} />
         <Route path="/ai-tools-hub" element={<RouteReadySignal><AIToolsHub /></RouteReadySignal>} />
+        <Route path="/gpts" element={<RouteReadySignal><BotDirectory /></RouteReadySignal>} />
         <Route path="/ai-agents-directory" element={<RouteReadySignal><AIAgentsDirectory /></RouteReadySignal>} />
         <Route path="/chatgpt-alternatives" element={<RouteReadySignal><ChatGPTAlternatives /></RouteReadySignal>} />
         <Route path="/blog" element={<RouteReadySignal><BlogPage /></RouteReadySignal>} />
