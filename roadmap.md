@@ -1,8 +1,9 @@
 # Roadmap
 
 - [x] Move existing community bot pictures to Lovable Assets without changing their appearance (847 byte-identical copies verified)
-- [ ] Verify migrated pictures throughout the app, then remove only verified Supabase copies (cleanup blocked by expired Supabase management connection)
-- [ ] Confirm storage is safely under 1 GB and report remaining downgrade limits
+- [x] Route both live catalogs to verified migrated pictures; bot room screenshot confirms original artwork renders, tests pass
+- [ ] Update stored picture references and remove only verified Supabase copies (blocked by expired Supabase management connection; verified inventory saved)
+- [ ] Confirm storage is safely under 1 GB after cleanup (expected ~190 MB, not yet achieved); traffic/function free-tier limits must also be checked before downgrade
 
 - [x] Diagnose hamburger bot search failure: live catalog returns HTTP 402 hosting quota restriction
 - [x] Add accurate service-unavailable message and working retry to shared header bot directory
