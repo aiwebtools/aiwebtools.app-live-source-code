@@ -833,7 +833,9 @@ const PinnedVideoPlayer = memo(() => {
     setIsMuted(shouldMute);
 
     if (!shouldMute) {
-      pauseOtherYouTubePlayers();
+      // Do NOT pause other players here — this fires on auto-advance too and
+      // was stopping the main page video mid-watch. Pausing others now only
+      // happens on explicit user gestures (play/unmute/mode select).
       window.dispatchEvent(new CustomEvent('pinnedPlayerPlaying'));
       // Gentle retries only to OUR iframe. Never pause other players from a
       // background timer — that was stopping the main page video when tapped.
