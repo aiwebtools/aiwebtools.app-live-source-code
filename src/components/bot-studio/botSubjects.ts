@@ -62,6 +62,7 @@ const TASK_WORDS: Record<string, string> = {
   presentation: "ppt powerpoint", slides: "ppt powerpoint", podcast: "podcast", game: "game design", tattoo: "tattoo", antique: "appraisal antique", worth: "appraisal valuation",
   fact: "fact checker", true: "fact checker probability", news: "headlines fact", prompt: "prompt engine", video: "video sora movie",
 };
+const has = (tokens: string[], w: string) => tokens.some((t) => t === w || t === `${w}s` || (w.length >= 4 && t.startsWith(w)));
 const stem = (w: string) => w.length > 4 ? w.replace(/(ing|ers|er|es|s)$/, "") : w;
 export function searchStudioBots<T extends SubjectBot>(bots: T[], query: string): T[] {
   const q = normalize(query);
@@ -75,14 +76,15 @@ export function searchStudioBots<T extends SubjectBot>(bots: T[], query: string)
     const name = normalize(bot.display_name);
     const category = getBotCategory(bot);
     const rest = normalize(`${bot.tagline || ""} ${category} ${getOffGridBotMetadata(bot.slug)?.tags.join(" ") || ""}`);
+    const nameT = name.split(" "), restT = rest.split(" ");
     let score = name === q ? 1000 : name.includes(q) ? 300 : 0;
     let hits = 0;
     for (const w of terms) {
       const s = stem(w);
-      if (name.includes(s)) { score += 40; hits++; } else if (rest.includes(s)) { score += 12; hits++; }
+      if (has(nameT, s)) { score += 40; hits++; } else if (has(restT, s)) { score += 12; hits++; }
     }
     if (hits === terms.length) score += 60;
-    for (const w of expanded) { if (name.includes(w)) score += 18; else if (rest.includes(w)) score += 5; }
+    for (const w of expanded) { if (has(nameT, w)) score += 18; else if (has(restT, w)) score += 5; }
     if (score > 0 && taskCategories.has(category)) score += 8;
     else if (score === 0 && taskCategories.has(category)) score = 3;
     return { bot, score, full: hits === terms.length };
