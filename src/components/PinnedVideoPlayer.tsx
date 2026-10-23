@@ -807,7 +807,9 @@ const PinnedVideoPlayer = memo(() => {
   const videoSrc = useMemo(() => {
     if (!currentVideoId) return "";
     const origin = typeof window !== 'undefined' ? window.location.origin : '';
-    return `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&mute=0&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&enablejsapi=1&playsinline=1&loop=0&vq=hd1080&hd=1&origin=${encodeURIComponent(origin)}&widget_referrer=${encodeURIComponent(origin)}`;
+    // No forced quality (vq/hd params): forcing 1080p makes phones buffer
+    // constantly, which sounds like static/stutter. YouTube auto-selects.
+    return `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&mute=0&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&enablejsapi=1&playsinline=1&loop=0&origin=${encodeURIComponent(origin)}&widget_referrer=${encodeURIComponent(origin)}`;
   }, [currentVideoId]);
   const lastVideoIdRef = useRef<string>(currentVideoId || "");
   
@@ -831,13 +833,16 @@ const PinnedVideoPlayer = memo(() => {
     setIsMuted(shouldMute);
 
     if (!shouldMute) {
-      pauseOtherYouTubePlayers();
+      // Do NOT pause other players here — this fires on auto-advance too and
+      // was stopping the main page video mid-watch. Pausing others now only
+      // happens on explicit user gestures (play/unmute/mode select).
       window.dispatchEvent(new CustomEvent('pinnedPlayerPlaying'));
-      const retryDelays = [200, 400, 700, 1100, 1600, 2200, 3000, 4000, 5500];
+      // Gentle retries only to OUR iframe. Never pause other players from a
+      // background timer — that was stopping the main page video when tapped.
+      const retryDelays = [600, 1500, 3000];
       const timers = retryDelays.map(delay =>
         setTimeout(() => {
           if (userPausedRef.current) return;
-          pauseOtherYouTubePlayers();
           sendYTCommand('unMute');
           sendYTCommand('playVideo');
         }, delay)
@@ -1036,9 +1041,11 @@ const PinnedVideoPlayer = memo(() => {
           // boundary, network hiccup) but the user did NOT press pause,
           // immediately resume so music videos play through end-to-end.
           if (!userPausedRef.current && isMusicMode) {
+            // Longer delay: resuming within 150ms fights YouTube's buffering
+            // and causes rapid pause/play cycles that sound like static.
             setTimeout(() => {
               if (!userPausedRef.current) sendYTCommand('playVideo');
-            }, 150);
+            }, 1200);
           }
         }
         if (data?.info?.playerState === 2) {
@@ -1046,7 +1053,7 @@ const PinnedVideoPlayer = memo(() => {
           if (!userPausedRef.current && isMusicMode) {
             setTimeout(() => {
               if (!userPausedRef.current) sendYTCommand('playVideo');
-            }, 150);
+            }, 1200);
           }
         }
         
@@ -1219,10 +1226,11 @@ const PinnedVideoPlayer = memo(() => {
   const handleIframeLoad = useCallback(() => {
     playerMountedRef.current = true;
     if (!isMuted) {
-      [100, 300, 700, 1200, 2200].forEach(delay => {
+      // Only command our own iframe on load; pausing other players here was
+      // blocking the main page video from starting.
+      [300, 1200].forEach(delay => {
         window.setTimeout(() => {
           if (userPausedRef.current) return;
-          pauseOtherYouTubePlayers();
           sendYTCommand('unMute');
           sendYTCommand('playVideo');
         }, delay);
