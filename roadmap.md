@@ -1,5 +1,9 @@
 # Roadmap
 
+- [x] Diagnose hamburger bot search failure: live catalog returns HTTP 402 hosting quota restriction
+- [x] Add accurate service-unavailable message and working retry to shared header bot directory
+- [ ] Restore live bot search: blocked by Supabase storage and cached-egress quota restriction; owner must restore service
+
 - [x] Fix Custom GPT Maker bot: hosted `custom-` slugs now resolve server-side prompts (live-verified)
 - [x] GPT Maker opens faster: survival draft artwork lazy-loads only when the picker opens
 - [x] Category picker added to GPT Maker; publish-community-gpt stores the chosen subject
