@@ -1,5 +1,9 @@
 # Roadmap
 
+- [ ] Copy existing active-bot welcome recordings to website assets, verify byte-identical copies, and play them without Supabase
+- [ ] Verify public bot portraits remain portable; keep generated private chat pictures out of public clones
+- [ ] Test direct recording playback and document which clone features still require services
+
 - [x] Prepare and verify all 847 high-quality compressed copies; original backups retained; live catalogs prefer smaller hosted copies
 - [ ] Replace verified existing Supabase pictures at unchanged URLs (~536 MB total projected; blocked: no authenticated administrator session and no admin role assigned)
 - [x] Verify preservation: 1,544 bot records, 1,542 active, 1,544 prompts unchanged; database ~43 MB; original/compacted images verified
