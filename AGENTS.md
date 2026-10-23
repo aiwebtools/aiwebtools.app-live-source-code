@@ -1,4 +1,5 @@
 # Architecture Rules
+- Resolve existing active-bot intro recordings through website asset pointers before invoking Supabase; preserves voices in clones without regenerating audio, while private chat pictures stay in access-controlled storage.
 - Resolve verified compressed community portraits through `migratedBotMedia` in both live catalogs, retaining byte-identical originals as backups; exact source matching preserves new uploads and reduces picture transfer size.
 - Subdirectories may have their own `AGENTS.md`; read it before changing files there.
 - Queue deferred mounts cancellably with lazy fallbacks to prevent loading gaps.
