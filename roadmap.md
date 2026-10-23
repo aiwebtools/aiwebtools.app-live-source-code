@@ -2,7 +2,7 @@
 
 - [x] Copy existing active-bot welcome recordings to website assets: 362 byte-identical recordings verified; direct playback prefers website assets
 - [x] Verify public bot portraits remain portable; keep generated private chat pictures out of public clones
-- [ ] Test direct recording playback and document which clone features still require services
+- [x] Test direct recording playback with Supabase blocked; seven media tests pass; PORTABLE-MEDIA.md documents online asset pointers and remaining service dependencies
 
 - [x] Prepare and verify all 847 high-quality compressed copies; original backups retained; live catalogs prefer smaller hosted copies
 - [ ] Replace verified existing Supabase pictures at unchanged URLs (~536 MB total projected; blocked: no authenticated administrator session and no admin role assigned)
