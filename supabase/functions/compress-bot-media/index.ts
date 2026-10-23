@@ -1,6 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.56.0";
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 import manifest from "./manifest.json" with { type: "json" };
+import { validOffset, matchesCompressedCopy } from "./validation.ts";
 
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { ...corsHeaders, "Content-Type": "application/json" } });
 // A fixed verified manifest, not caller-selected paths, restricts this one-time operation.
@@ -19,13 +20,13 @@ Deno.serve(async (req) => {
   const { data: admin } = await db.rpc("has_role", { _user_id: user.user.id, _role: "admin" });
   if (admin !== true) return json({ error: "Administrator access required" }, 403);
   const body = await req.json().catch(() => null);
-  if (!body || !Number.isInteger(body.offset) || body.offset < 0 || body.offset >= manifest.length) return json({ error: "Invalid batch offset" }, 400);
+  if (!body || !validOffset(body.offset, manifest.length)) return json({ error: "Invalid batch offset" }, 400);
   const results = [];
   for (const entry of manifest.slice(body.offset, body.offset + 10)) {
     const response = await fetch(entry.compressed_url);
     if (!response.ok) return json({ error: "Verified compressed copy unavailable", path: entry.path }, 502);
     const bytes = new Uint8Array(await response.arrayBuffer());
-    if (bytes.length !== entry.compressed_bytes || bytes.length >= entry.bytes) return json({ error: "Compressed copy failed size verification", path: entry.path }, 409);
+    if (!await matchesCompressedCopy(bytes, entry)) return json({ error: "Compressed copy failed integrity verification", path: entry.path }, 409);
     const { error } = await db.storage.from("tool-images").upload(entry.path, bytes, { upsert: true, contentType: "image/webp", cacheControl: "31536000" });
     if (error) return json({ error: "Picture replacement failed", path: entry.path }, 500);
     results.push(entry.path);
