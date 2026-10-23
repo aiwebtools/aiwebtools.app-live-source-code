@@ -1,9 +1,13 @@
 # Roadmap
 
+- [x] Prepare and verify all 847 high-quality compressed copies; original backups retained; live catalogs prefer smaller hosted copies
+- [ ] Replace verified existing Supabase pictures at unchanged URLs (~536 MB total projected; blocked: no authenticated administrator session and no admin role assigned)
+- [x] Verify preservation: 1,544 bot records, 1,542 active, 1,544 prompts unchanged; database ~43 MB; original/compacted images verified
+- [ ] Verify current egress, function invocations and Realtime/MAU usage in Supabase organization Usage before downgrade (dashboard measurement unavailable)
+
 - [x] Move existing community bot pictures to Lovable Assets without changing their appearance (847 byte-identical copies verified)
 - [x] Route both live catalogs to verified migrated pictures; bot room screenshot confirms original artwork renders, tests pass
-- [ ] Update stored picture references and remove only verified Supabase copies (blocked by expired Supabase management connection; verified inventory saved)
-- [ ] Confirm storage is safely under 1 GB after cleanup (expected ~190 MB, not yet achieved); traffic/function free-tier limits must also be checked before downgrade
+- [ ] Confirm stored files under 1 GB after same-URL compression (~536 MB projected, current ~2.15 GB); do not delete any original until verified replacement succeeds
 
 - [x] Diagnose hamburger bot search failure: live catalog returns HTTP 402 hosting quota restriction
 - [x] Add accurate service-unavailable message and working retry to shared header bot directory
