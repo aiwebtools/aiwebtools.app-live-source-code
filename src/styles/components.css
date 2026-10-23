@@ -63,6 +63,15 @@
 .gpt-thinking, .gpt-image-progress { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem; border: 1px solid hsl(var(--bot-accent) / .38); border-radius: .6rem; background: hsl(var(--bot-soft) / .52); padding: .65rem .75rem; color: hsl(var(--foreground) / .9); font-size: .75rem; }
 .gpt-thinking { max-width: 31rem; }
 .gpt-thinking-avatar { width: 2rem; height: 2rem; border-radius: 9999px; border: 1px solid hsl(var(--bot-accent) / .7); object-fit: cover; animation: gpt-avatar-pulse 1.5s ease-in-out infinite; }
+.gpt-thinking-orb { position: relative; display: inline-grid; place-items: center; width: 2.6rem; height: 2.6rem; }
+.gpt-thinking-ring { position: absolute; inset: 0; border-radius: 9999px; border: 2px solid transparent; border-top-color: hsl(var(--bot-accent)); border-right-color: hsl(var(--bot-accent) / .35); animation: gpt-ring-spin 1.1s linear infinite; box-shadow: 0 0 10px hsl(var(--bot-accent) / .35); }
+.gpt-thinking-ring-2 { inset: -.25rem; border-top-color: transparent; border-bottom-color: hsl(var(--primary) / .8); animation-duration: 1.8s; animation-direction: reverse; }
+.gpt-thinking-dots { display: inline-flex; gap: .2rem; }
+.gpt-thinking-dots i { width: .3rem; height: .3rem; border-radius: 9999px; background: hsl(var(--bot-accent)); animation: gpt-dot-bounce 1s ease-in-out infinite; }
+.gpt-thinking-dots i:nth-child(2) { animation-delay: .15s; } .gpt-thinking-dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes gpt-ring-spin { to { transform: rotate(360deg); } }
+@keyframes gpt-dot-bounce { 0%, 100% { opacity: .3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
+@media (prefers-reduced-motion: reduce) { .gpt-thinking-ring, .gpt-thinking-dots i { animation: none; } }
 .gpt-image-progress-ring { position: relative; display: grid; width: 2rem; height: 2rem; place-items: center; border-radius: 9999px; color: hsl(var(--bot-accent)); }
 @keyframes gpt-avatar-pulse { 50% { box-shadow: 0 0 18px hsl(var(--bot-accent) / .65); transform: scale(1.04); } }
 .gpt-room-input { border-color: hsl(var(--bot-accent) / .45); background: hsl(var(--bot-deep) / .9); }
