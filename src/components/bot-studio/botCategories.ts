@@ -1,7 +1,7 @@
-import { BOT_SUBJECTS, getBotCategory } from "./botSubjects";
+import { getBotCategory } from "./botSubjects";
 import { botFamilyKey, botVersionNumber, type StudioBot } from "./botCatalog";
 
-const ORDER: readonly string[] = BOT_SUBJECTS;
+const byName = (a: string, b: string) => a.localeCompare(b, "en", { sensitivity: "base" });
 
 /** A bot plus every archived version of its operational instructions, V1 first. */
 export type BotFamily = { key: string; base: StudioBot; versions: StudioBot[] };
@@ -25,5 +25,7 @@ export function groupBotsByCategory(bots: StudioBot[]): [string, BotFamily[]][] 
     const label = getBotCategory(family.base);
     groups.set(label, [...(groups.get(label) || []), family]);
   }
-  return [...groups.entries()].sort(([a], [b]) => (ORDER.indexOf(a) + 1 || 99) - (ORDER.indexOf(b) + 1 || 99));
+  return [...groups.entries()]
+    .map(([label, families]): [string, BotFamily[]] => [label, [...families].sort((a, b) => byName(a.base.display_name, b.base.display_name))])
+    .sort(([a], [b]) => byName(a, b));
 }

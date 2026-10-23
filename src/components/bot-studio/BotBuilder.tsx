@@ -102,7 +102,7 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
         <div className="text-xs font-semibold uppercase tracking-wider text-primary">Category
           <Select value={subject} onValueChange={(v) => setSubject(v as BotSubject)}>
             <SelectTrigger className="mt-1" aria-label="Bot category"><SelectValue /></SelectTrigger>
-            <SelectContent className="z-[190]">{BOT_SUBJECTS.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+            <SelectContent className="z-[190]">{[...BOT_SUBJECTS].sort((a, b) => a.localeCompare(b)).map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
           </Select>
         </div>
         <div className="flex items-start gap-2 text-sm text-foreground"><Checkbox id="builder-public-share" aria-label="Share in public Community GPT library" className="mt-1 shrink-0" checked={share} onCheckedChange={(checked) => setShare(checked === true)} /><label htmlFor="builder-public-share">Share it in the public Community GPT library. An AI ethics review checks it first, then it is published automatically for everyone.</label></div>
