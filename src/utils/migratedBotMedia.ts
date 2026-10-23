@@ -1,3 +1,4 @@
+import { resolveVerifiedBotMedia } from "./migratedBotMediaPolicy";
 type AssetPointer = { url: string };
 
 // Only exact, verified copies are eligible; newer uploads keep their own URL.
@@ -9,9 +10,5 @@ for (const [path, pointer] of Object.entries(pointers)) {
 }
 
 export function resolveMigratedBotMedia(source: string | null | undefined): string | undefined {
-  if (!source) return undefined;
-  const prefix = "https://huupailptzvcykyqdkar.supabase.co/storage/v1/object/public/tool-images/community-bots/";
-  if (!source.startsWith(prefix)) return source;
-  const filename = source.slice(prefix.length);
-  return migratedByFilename[filename] || source;
+  return resolveVerifiedBotMedia(source, migratedByFilename);
 }
