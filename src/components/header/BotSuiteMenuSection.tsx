@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Bot, ChevronDown, Search, Wand2 } from "lucide-react";
+import { Bot, ChevronDown, RotateCw, Search, Wand2 } from "lucide-react";
 import { loadStudioBots, type StudioBot } from "@/components/bot-studio/botCatalog";
 import { Button } from "@/components/ui/button";
 import { groupBotsByCategory } from "@/components/bot-studio/botCategories";
@@ -13,13 +13,21 @@ export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false }: { 
   const [open, setOpen] = useState(gptsOnly);
   const [bots, setBots] = useState<StudioBot[] | null>(null);
   const [error, setError] = useState("");
+  const [retry, setRetry] = useState(0);
   const [query, setQuery] = useState("");
   const [openGroup, setOpenGroup] = useState<string | null>(null);
 
   useEffect(() => {
     if (!open || bots) return;
-    loadStudioBots().then(setBots).catch((e: Error) => setError(e.message));
-  }, [open, bots]);
+    let alive = true;
+    setError("");
+    void loadStudioBots().then((loaded) => {
+      if (alive) { setBots(loaded); setError(""); }
+    }).catch((e: unknown) => {
+      if (alive) setError(e instanceof Error ? e.message : "The assistant directory could not load. Please try again.");
+    });
+    return () => { alive = false; };
+  }, [open, bots, retry]);
 
   const groups = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -69,7 +77,12 @@ export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false }: { 
               className="h-9 w-full bg-transparent text-sm text-foreground outline-none" />
           </label>
           <div className="mt-2 max-h-80 overflow-y-auto overscroll-contain">
-            {error && <p className="p-2 text-xs text-destructive">{error}</p>}
+            {error && <div role="status" className="grid gap-2 p-2">
+              <p className="text-xs text-destructive">{error}</p>
+              <Button variant="outline" type="button" onClick={() => { setError(""); setRetry((value) => value + 1); }} className="justify-self-start gap-2 text-xs">
+                <RotateCw className="h-3.5 w-3.5" />Retry bot directory
+              </Button>
+            </div>}
             {!bots && !error && <p className="p-2 text-xs text-muted-foreground">Loading bots…</p>}
             {bots && groups.length === 0 && <p className="p-2 text-xs text-muted-foreground">No bots match.</p>}
             {groups.map(([category, families]) => {
