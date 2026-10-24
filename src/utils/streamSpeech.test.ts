@@ -35,6 +35,21 @@ test("streamed preview rejects missing completion rather than silently succeedin
   } finally { globalThis.fetch = original; }
 });
 
+test("a 200 JSON quota response is treated as a studio failure, not playable audio", async () => {
+  const original = globalThis.fetch;
+  globalThis.fetch = async () =>
+    new Response(JSON.stringify({ error: "The voice studio is out of AI credits right now.", status: 402 }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  try {
+    const clip = beginSpeechClip("/test", {}, new AbortController().signal);
+    while (!clip.finished) await clip.wait();
+    expect(clip.started).toBe(false);
+    expect(clip.error?.message).toBe("The voice studio is out of AI credits right now.");
+  } finally { globalThis.fetch = original; }
+});
+
 test("studio voice failure hands the failed sentence and the rest of the queue to the free device voice, in order", async () => {
   const mk = (text) => ({ text, clip: { abort() {} } });
   const queue = [mk("First."), mk("Second."), mk("Third.")];
