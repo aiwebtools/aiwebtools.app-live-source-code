@@ -50,12 +50,11 @@ Deno.serve(async (req) => {
       const gem = await requestSpeech({ baseURL: 'https://ai.gateway.lovable.dev', apiKey: key, model: 'google/gemini-3.1-flash-tts-preview', format: 'gemini', voice: GEMINI_VOICES[voice] }, prompt, !wantsStream, req.signal);
       if (!gem.ok) {
         const details = await gem.json().catch(() => ({}));
-        const message = details?.error?.message || details?.message || (gem.status === 402
-          ? 'The voice studio is out of AI credits right now.'
-          : gem.status === 429 ? 'The voice studio is busy — try again in a moment.' : 'The voice could not be generated.');
         // Quota exhaustion is an expected operational state, not a crash: answer 200
         // with the error in the body so clients fall back without a platform error card.
-        if (gem.status === 402) return json({ error: message, status: 402 });
+        if (gem.status === 402) return json({ error: 'The voice studio is out of AI credits right now.', status: 402 });
+        const message = details?.error?.message || details?.message || (gem.status === 429
+          ? 'The voice studio is busy — try again in a moment.' : 'The voice could not be generated.');
         return json({ error: message, status: gem.status }, gem.status);
       }
       // Live playback: hand the browser the audio stream as it is produced so speech
@@ -91,14 +90,12 @@ Deno.serve(async (req) => {
 
     if (!upstream.ok) {
       const details = await upstream.json().catch(() => ({}));
-      const message =
-        details?.error?.message || details?.message || (upstream.status === 402
-          ? 'The voice studio is out of AI credits right now.'
-          : upstream.status === 429
-            ? 'The voice studio is busy — try again in a moment.'
-            : 'The voice studio could not generate that clip.');
       // Same 402 treatment as the Gemini path above.
-      if (upstream.status === 402) return json({ error: message, status: 402 });
+      if (upstream.status === 402) return json({ error: 'The voice studio is out of AI credits right now.', status: 402 });
+      const message =
+        details?.error?.message || details?.message || (upstream.status === 429
+          ? 'The voice studio is busy — try again in a moment.'
+          : 'The voice studio could not generate that clip.');
       return json({ error: message, status: upstream.status }, upstream.status);
     }
 
