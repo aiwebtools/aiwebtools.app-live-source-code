@@ -62,7 +62,7 @@ export const beginSpeechClip = (url: string, init: RequestInit, outer: AbortSign
   const run = async () => {
     try {
       const response = await fetch(url, { ...init, signal: controller.signal });
-      if (!response.ok) {
+      if (!response.ok || (response.headers.get("Content-Type") || "").includes("application/json")) {
         const detail = await response.json().catch(() => ({}));
         throw new Error(detail?.error || detail?.message || "Voice playback is unavailable right now.");
       }

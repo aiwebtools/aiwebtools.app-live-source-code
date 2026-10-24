@@ -72,10 +72,9 @@ export async function requestAudio(name: string, body: object, signal?: AbortSig
     method: "POST", headers: { "Content-Type": "application/json", apikey: key, Authorization: `Bearer ${key}` },
     body: JSON.stringify(body), signal,
   });
-  if (!res.ok) {
+  if (!res.ok || !(res.headers.get("Content-Type") || "").startsWith("audio/")) {
     const data = await res.json().catch(() => ({}));
-    throw new Error(typeof data.error === "string" ? data.error : data.message || `Audio generation failed (${res.status}).`);
+    throw new Error(typeof data.error === "string" ? data.error : data.message || (res.ok ? "The service returned no playable audio." : `Audio generation failed (${res.status}).`));
   }
-  if (!(res.headers.get("Content-Type") || "").startsWith("audio/")) throw new Error("The service returned no playable audio.");
   return res.blob();
 }
