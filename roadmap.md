@@ -3,7 +3,7 @@
 ## Current finish request
 - [x] Remove remaining forced video quality settings without changing videos or audio controls
 - [x] Verify directory task search and existing bot guidance: live directory A–Z, task shortlist, main/music video controls and 19 instruction/speech tests pass; actual phone audio and new model reply quality remain unverified
-- [ ] Publish the completed updates and confirm the live site responds
+- [ ] Publication requested for aiwebtools.app; deployment completion and the updated live version await hosting confirmation
 
 - [x] Copy existing active-bot welcome recordings to website assets: 362 byte-identical recordings verified; direct playback prefers website assets
 - [x] Verify public bot portraits remain portable; keep generated private chat pictures out of public clones
