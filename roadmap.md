@@ -1,5 +1,10 @@
 # Roadmap
 
+## Current finish request
+- [ ] Remove remaining forced video quality settings without changing videos or audio controls
+- [ ] Verify directory task search and the shared gather-before-solving bot guidance
+- [ ] Publish the completed updates and confirm the live site responds
+
 - [x] Copy existing active-bot welcome recordings to website assets: 362 byte-identical recordings verified; direct playback prefers website assets
 - [x] Verify public bot portraits remain portable; keep generated private chat pictures out of public clones
 - [x] Test direct recording playback with Supabase blocked; seven media tests pass; PORTABLE-MEDIA.md documents online asset pointers and remaining service dependencies
