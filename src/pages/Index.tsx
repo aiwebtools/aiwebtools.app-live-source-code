@@ -116,7 +116,7 @@ const Index = () => {
                 {mainVideoActive ? (
                   <iframe
                     className="absolute inset-0 w-full h-full bg-slate-950"
-                    src="https://www.youtube.com/embed/4zflGSSuBcA?autoplay=1&controls=1&rel=0&modestbranding=1&enablejsapi=1&playsinline=1&vq=hd1080&iv_load_policy=3&cc_load_policy=0&fs=1&color=red&theme=dark"
+                    src="https://www.youtube.com/embed/4zflGSSuBcA?autoplay=1&controls=1&rel=0&modestbranding=1&enablejsapi=1&playsinline=1&iv_load_policy=3&cc_load_policy=0&fs=1&color=red&theme=dark"
                     title="AI Web Tools Featured Video - 1080p HD"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"

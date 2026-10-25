@@ -1,17 +1,22 @@
 # Roadmap
 
+## Current finish request
+- [x] Remove remaining forced video quality settings without changing videos or audio controls
+- [x] Verify directory task search and existing bot guidance: live directory A–Z, task shortlist, main/music video controls and 19 instruction/speech tests pass; actual phone audio and new model reply quality remain unverified
+- [ ] Publication requested for aiwebtools.app; deployment completion and the updated live version await hosting confirmation
+
 - [x] Copy existing active-bot welcome recordings to website assets: 362 byte-identical recordings verified; direct playback prefers website assets
 - [x] Verify public bot portraits remain portable; keep generated private chat pictures out of public clones
 - [x] Test direct recording playback with Supabase blocked; seven media tests pass; PORTABLE-MEDIA.md documents online asset pointers and remaining service dependencies
 
 - [x] Prepare and verify all 847 high-quality compressed copies; original backups retained; live catalogs prefer smaller hosted copies
-- [ ] Replace verified existing Supabase pictures at unchanged URLs (~536 MB total projected; blocked: no authenticated administrator session and no admin role assigned)
+- [x] Superseded by completed website-asset migration and external originals backup; do not restore originals into Supabase
 - [x] Verify preservation: 1,544 bot records, 1,542 active, 1,544 prompts unchanged; database ~43 MB; original/compacted images verified
-- [ ] Verify current egress, function invocations and Realtime/MAU usage in Supabase organization Usage before downgrade (dashboard measurement unavailable)
+- [x] Owner supplied post-downgrade free-plan usage screenshot showing usage within displayed quotas; not a fresh usage measurement
 
 - [x] Move existing community bot pictures to Lovable Assets without changing their appearance (847 byte-identical copies verified)
 - [x] Route both live catalogs to verified migrated pictures; bot room screenshot confirms original artwork renders, tests pass
-- [ ] Confirm stored files under 1 GB after same-URL compression (~536 MB projected, current ~2.15 GB); do not delete any original until verified replacement succeeds
+- [x] Completed earlier: Supabase storage approximately 193 MB after public-picture migration; original backups preserved outside Supabase
 
 - [x] Diagnose hamburger bot search failure: live catalog returns HTTP 402 hosting quota restriction
 - [x] Add accurate service-unavailable message and working retry to shared header bot directory

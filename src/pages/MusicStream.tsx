@@ -157,11 +157,7 @@ const MusicStream = () => {
         JSON.stringify({ event: "command", func: "addEventListener", args: ["onStateChange"] }),
         "*"
       );
-      // Ensure playback starts unmuted at 1080p
-      iframeRef.current?.contentWindow?.postMessage(
-        JSON.stringify({ event: "command", func: "setPlaybackQuality", args: ["hd1080"] }),
-        "*"
-      );
+      // Let YouTube adapt quality to the connection and device.
       // Theater-loud: crank to 100 and unmute on every load
       iframeRef.current?.contentWindow?.postMessage(
         JSON.stringify({ event: "command", func: "unMute", args: [] }),
@@ -181,7 +177,7 @@ const MusicStream = () => {
   // IMPORTANT: keep mute OUT of the iframe src so toggling mute does NOT
   // reload the iframe (which previously felt like the track was being skipped).
   // We start muted=0 always at load and control mute purely via postMessage.
-  const src = `https://www.youtube.com/embed/${current.id}?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&vq=hd1080`;
+  const src = `https://www.youtube.com/embed/${current.id}?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`;
 
   const toggleMute = useCallback(() => {
     setMuted(prev => {
@@ -204,7 +200,7 @@ const MusicStream = () => {
     <div className="fixed inset-0 bg-black text-white overflow-hidden">
       <Helmet>
         <title>AiWebTools Music Stream — 24/7 MTVai Channel</title>
-        <meta name="description" content="The official AiWebTools.ai MTVai Music Stream — non-stop AI-crafted music videos in cinematic 9:16, autoplay 1080p." />
+        <meta name="description" content="The official AiWebTools.ai MTVai Music Stream — non-stop AI-crafted music videos in cinematic 9:16 with adaptive video quality." />
       </Helmet>
 
       {/* 3D MTV pop-out intro */}
