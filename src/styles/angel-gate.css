@@ -1,0 +1,28 @@
+:root {
+  --gate-edge: 150 20% 48%;
+  --gate-metal: 155 12% 14%;
+  --gate-light: 145 90% 65%;
+  --gate-confetti-accent: 43 95% 65%;
+  --gate-confetti-cool: 185 90% 65%;
+}
+.angel-gate { background: hsl(var(--background)); }
+.pandora-box { perspective: 1000px; width: min(100%, 420px); margin: 72px auto 0; }
+.pandora-lid { position: relative; height: 100px; transform-origin: center top; transform: rotateX(12deg); border: 3px solid hsl(var(--gate-edge)); border-radius: 7px 7px 0 0; overflow: hidden; transition: transform 850ms ease, filter 850ms ease; box-shadow: 0 -5px 30px hsl(var(--primary) / .2); }
+.pandora-lid img { width: 100%; height: 100%; object-fit: cover; }
+.pandora-lid::after { content: ''; position: absolute; inset: 0; box-shadow: inset 0 0 22px hsl(var(--background)); }
+.pandora-body { position: relative; border: 3px solid hsl(var(--gate-edge)); border-top: 8px solid hsl(var(--gate-edge)); border-radius: 0 0 8px 8px; padding: 28px 24px; background: linear-gradient(135deg, hsl(var(--gate-metal)), hsl(var(--background)) 50%, hsl(var(--gate-metal))); box-shadow: 0 18px 0 -8px hsl(var(--gate-metal)), 0 25px 50px hsl(var(--background)), inset 0 0 30px hsl(var(--primary) / .08); }
+.pandora-body::before, .pandora-body::after { content: ''; position: absolute; top: 12px; bottom: 12px; width: 5px; background: hsl(var(--gate-edge)); }
+.pandora-body::before { left: 8px; } .pandora-body::after { right: 8px; }
+.pandora-box.is-opening .pandora-lid { transform: rotateX(105deg); filter: brightness(1.4); }
+.pandora-box.is-opening .pandora-body { box-shadow: 0 -25px 65px hsl(var(--primary) / .45), inset 0 0 45px hsl(var(--primary) / .18); }
+.gate-input { letter-spacing: 0; font-variant-numeric: tabular-nums; }
+.gate-input:focus { box-shadow: 0 0 22px hsl(var(--primary) / .2); }
+.gate-open-button { background: hsl(var(--primary)) !important; color: hsl(var(--primary-foreground)) !important; border-color: hsl(var(--gate-light)) !important; }
+.gate-confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 20; }
+.gate-confetti i { position: absolute; top: 48%; left: 50%; width: 8px; height: 14px; background: hsl(var(--primary)); animation: gate-confetti-burst 1900ms ease-out forwards; }
+.gate-confetti i:nth-child(3n) { background: hsl(var(--gate-confetti-accent)); }
+.gate-confetti i:nth-child(3n + 1) { background: hsl(var(--gate-confetti-cool)); }
+.gate-confetti i:nth-child(4n) { border-radius: 50%; width: 9px; height: 9px; }
+@keyframes gate-confetti-burst { 0% { opacity: 1; transform: translate(0,0) rotate(0); } 65% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--x), var(--y)) rotate(var(--spin)); } }
+@media (max-width: 480px) { .pandora-box { margin-top: 52px; } .pandora-body { padding: 24px 22px; } }
+@media (prefers-reduced-motion: reduce) { .pandora-lid { transition: none; } .gate-confetti { display: none; } }
