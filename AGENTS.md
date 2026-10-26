@@ -7,6 +7,7 @@
 - Use subject metadata, not themes; lazy-load unpublished survival brains only in the existing builder.
 
 - Keep the temporary access gate unlock in React memory only and render its own Matrix backdrop; reloads must ask again and loader cleanup must not remove its background.
+- Play gate narration and effects from one cached website audio clip on the unlock gesture; synchronized replay must not regenerate speech or use browser voices.
 
 - Schedule automatic promotional dialogs through the shared session-wide scheduler so navigation and competing pop-ups cannot bypass the cooldown.
 

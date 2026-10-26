@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Current finish request
+- [x] Refine Pandora gate: slower opening/confetti, cached Gemini elder announcement with local soft clicks/chimes (ElevenLabs exhausted); hosted clip HTTP 200, playback verified with hosted bytes routed into local browser, phone fit/reload and PIN tests pass; actual phone sound remains owner check, preview only
 - [x] Remove remaining forced video quality settings without changing videos or audio controls
 - [x] Verify directory task search and existing bot guidance: live directory A–Z, task shortlist, main/music video controls and 19 instruction/speech tests pass; actual phone audio and new model reply quality remain unverified
 - [ ] Publication requested for aiwebtools.app; deployment completion and the updated live version await hosting confirmation
