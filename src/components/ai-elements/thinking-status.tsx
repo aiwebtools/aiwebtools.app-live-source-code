@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { deviceSpeechAvailable } from "@/utils/deviceSpeech";
 
 const STAGES = ["Reading your message", "Thinking carefully", "Writing your reply"];
 
@@ -33,15 +34,17 @@ export const ThinkingStatus = ({ avatar, name, voice = false }: { avatar: string
 
   // Free device voice only; first line after 1.4s, then a fresh one every ~7s.
   useEffect(() => {
-    if (!voice || typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    if (!voice || !deviceSpeechAvailable()) return;
     const used = new Set<number>();
     let mine: SpeechSynthesisUtterance | null = null;
     const say = () => {
       const synth = window.speechSynthesis;
       if (synth.speaking || synth.pending) return;
-      mine = new SpeechSynthesisUtterance(pick(used));
-      mine.rate = 1.05; mine.volume = 0.85;
-      synth.speak(mine);
+      try {
+        mine = new window.SpeechSynthesisUtterance(pick(used));
+        mine.rate = 1.05; mine.volume = 0.85;
+        synth.speak(mine);
+      } catch { /* Optional waiting speech must not interrupt the reply. */ }
     };
     const first = window.setTimeout(say, 1400);
     const again = window.setInterval(say, 7000);

@@ -3,6 +3,7 @@ import { splitSpeechText } from "@/utils/speechText";
 import { useToast } from "@/hooks/use-toast";
 import { beginSpeechClip, drainStudioQueue, playSpeechClip, stopSpeechPlayback, unlockSpeechPlayback, type SpeechClip } from "@/utils/streamSpeech";
 import type { GptVoiceProfile } from "@/utils/gptVoiceProfiles";
+import { deviceSpeechAvailable, speakDeviceText } from "@/utils/deviceSpeech";
 
 const STORAGE_KEY = "awt-voice-enabled";
 const FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/awt-tts`;
@@ -34,7 +35,7 @@ const clipSpeed = (speed?: number) => Math.min(1.25, Math.max(1.05, (speed ?? 1)
  * Visitors can mute it at any time; the choice is remembered on this device.
  */
 export const useSpeechReader = (profile?: GptVoiceProfile) => {
-  const supported = typeof window !== "undefined" && (Boolean(profile) || "speechSynthesis" in window);
+  const supported = typeof window !== "undefined" && (Boolean(profile) || deviceSpeechAvailable());
   const { toast } = useToast();
   const [enabled, setEnabled] = useState(false);
   const enabledRef = useRef(false);
@@ -54,7 +55,9 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     studioDownRef.current = true;
     if (studioToastShownRef.current) return;
     studioToastShownRef.current = true;
-    toast({ title: "Using your device's free voice", description: "The lifelike studio voice is unavailable right now, so replies are read by your device's built-in voice instead." });
+    toast(deviceSpeechAvailable()
+      ? { title: "Using your device's free voice", description: "The lifelike studio voice is unavailable right now, so replies are read by your device's built-in voice instead." }
+      : { title: "Voice unavailable", description: "This browser has no available device voice. Your complete reply will still appear in the chat." });
   }, [toast]);
 
   useEffect(() => {
@@ -92,6 +95,14 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     [profile],
   );
 
+  const speakChunk = useCallback((chunk: string) => {
+    speakDeviceText(stripForSpeech(chunk), {
+      onStart: () => setSpeaking(true),
+      onEnd: () => setSpeaking(Boolean(window.speechSynthesis?.speaking || window.speechSynthesis?.pending)),
+      onUnavailable: () => setSpeaking(false),
+    });
+  }, []);
+
   /** Speak text in order; every clip is started at once so later sentences arrive early. */
   const speakStudio = useCallback(
     async (text: string) => {
@@ -126,7 +137,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
         }
       }
     },
-    [profile, startClip, toast],
+    [profile, startClip, toast, noteStudioDown, speakChunk],
   );
 
   const enqueue = useCallback(
@@ -157,24 +168,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
         }
       })();
     },
-    [profile, startClip, toast],
-  );
-
-  const speakChunk = useCallback(
-    (chunk: string) => {
-      const clean = stripForSpeech(chunk);
-      if (!clean) return;
-      const utterance = new SpeechSynthesisUtterance(clean);
-      utterance.rate = 1.02;
-      utterance.pitch = 1;
-      utterance.onstart = () => setSpeaking(true);
-      utterance.onend = () => {
-        window.setTimeout(() => setSpeaking(window.speechSynthesis.speaking || window.speechSynthesis.pending), 0);
-      };
-      utterance.onerror = () => setSpeaking(false);
-      window.speechSynthesis.speak(utterance);
-    },
-    [],
+    [profile, startClip, toast, noteStudioDown, speakChunk],
   );
 
   /** Feed the growing reply; only newly completed sentences are spoken. */
@@ -268,17 +262,9 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
         });
         return;
       }
-      const clean = stripForSpeech(text);
-      if (!clean) return;
-      const utterance = new SpeechSynthesisUtterance(clean);
-      utterance.rate = 1.02;
-      utterance.pitch = 1;
-      utterance.onend = () => setSpeaking(false);
-      utterance.onerror = () => setSpeaking(false);
-      setSpeaking(true);
-      window.speechSynthesis.speak(utterance);
+      speakChunk(text);
     },
-    [profile, speakStudio, speaking, stop, supported, toast],
+    [profile, speakStudio, speakChunk, speaking, stop, supported, toast],
   );
 
   useEffect(() => () => {

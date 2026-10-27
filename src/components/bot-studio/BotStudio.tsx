@@ -144,6 +144,15 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
     let usage: ChatUsage | undefined;
     const activities: BotActivity[] = [];
     let serverId = current.serverId;
+    let voiceFailed = false;
+    const optionalSpeech = (action: () => void) => {
+      try { action(); } catch {
+        if (!voiceFailed) {
+          voiceFailed = true;
+          reportFailure("voice_error", "Voice playback failed; text delivery continued.");
+        }
+      }
+    };
     try {
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/run-gpt-app`, {
         method: "POST", signal: controller.signal,
@@ -180,12 +189,12 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
             assistant += delta;
             // Keep streamed state responsive; save the complete turn at the end.
             setThread({ ...base, serverId, messages: [...messages, { role: "assistant", content: assistant, activities: [...activities], usage }] });
-            speech.feed(assistant);
+            optionalSpeech(() => speech.feed(assistant));
           }
         }
         if (done) break;
       }
-      speech.flush();
+      optionalSpeech(() => speech.flush());
       if (assistant.trim() && celebrations && studioRef.current && !controller.signal.aborted) {
         celebrationCleanup.current?.();
         celebrationCleanup.current = celebrateReply(celebrationIndex.current++, celebrationSound, studioRef.current);
