@@ -84,6 +84,39 @@ test("an aborted drain never falls back or replays queued speech", async () => {
   expect(fallback).toEqual([]);
 });
 
+test("fallback waits for each sentence before later streamed text and aborts unused studio clips", async () => {
+  let complete;
+  const heard = [];
+  let aborted = 0;
+  const queue = [{ text: "First.", clip: { abort() { aborted++; } } }, { text: "Second.", clip: { abort() { aborted++; } } }];
+  const draining = drainStudioQueue(queue, {
+    play: async () => { throw new Error("quota"); },
+    isAborted: () => false,
+    onStudioDown() {},
+    playFallback: (text) => {
+      heard.push(text);
+      if (text === "First.") return new Promise((resolve) => { complete = resolve; });
+    },
+  });
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  expect(heard).toEqual(["First."]);
+  queue.push({ text: "Third.", clip: null });
+  complete();
+  await draining;
+  expect(heard).toEqual(["First.", "Second.", "Third."]);
+  expect(aborted).toBeGreaterThanOrEqual(2);
+});
+
+test("stopping during fallback never speaks the next queued sentence", async () => {
+  let cancelled = false;
+  const heard = [];
+  await drainStudioQueue([{ text: "First.", clip: null }, { text: "Second.", clip: null }], {
+    play: async () => {}, isAborted: () => cancelled, onStudioDown() {},
+    playFallback: async (text) => { heard.push(text); cancelled = true; },
+  });
+  expect(heard).toEqual(["First."]);
+});
+
 test("gesture unlock resumes a suspended audio context before playback", async () => {
   const original = globalThis.window;
   let resumes = 0;

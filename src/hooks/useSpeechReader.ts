@@ -4,6 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { beginSpeechClip, drainStudioQueue, playSpeechClip, stopSpeechPlayback, unlockSpeechPlayback, type SpeechClip } from "@/utils/streamSpeech";
 import type { GptVoiceProfile } from "@/utils/gptVoiceProfiles";
 import { deviceSpeechAvailable, speakDeviceText } from "@/utils/deviceSpeech";
+import { stopBotIntro } from "@/utils/botIntroVoice";
 
 const STORAGE_KEY = "awt-voice-enabled";
 const FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/awt-tts`;
@@ -44,7 +45,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const spokenRef = useRef(0);
   const bufferRef = useRef("");
   const requestRef = useRef<AbortController | null>(null);
-  const pendingRef = useRef<Array<{ text: string; clip: SpeechClip }>>([]);
+  const pendingRef = useRef<Array<{ text: string; clip: SpeechClip | null }>>([]);
   const queueBusyRef = useRef(false);
   const generationRef = useRef(0);
   // Set when the lifelike studio voice fails (e.g. AI credits recharging):
@@ -67,6 +68,8 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   }, [supported]);
 
   const stop = useCallback(() => {
+    stopBotIntro();
+    window.dispatchEvent(new Event("awt-response-voice"));
     generationRef.current += 1;
     pendingRef.current = [];
     queueBusyRef.current = false;
@@ -96,10 +99,16 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   );
 
   const speakChunk = useCallback((chunk: string) => {
-    speakDeviceText(stripForSpeech(chunk), {
-      onStart: () => setSpeaking(true),
-      onEnd: () => setSpeaking(Boolean(window.speechSynthesis?.speaking || window.speechSynthesis?.pending)),
-      onUnavailable: () => setSpeaking(false),
+    const signal = requestRef.current?.signal;
+    return new Promise<void>((resolve) => {
+      if (signal?.aborted) { resolve(); return; }
+      const finish = () => { signal?.removeEventListener("abort", finish); resolve(); };
+      signal?.addEventListener("abort", finish, { once: true });
+      speakDeviceText(stripForSpeech(chunk), {
+        onStart: () => setSpeaking(true),
+        onEnd: finish,
+        onUnavailable: finish,
+      });
     });
   }, []);
 
@@ -114,7 +123,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       requestRef.current = controller;
       setSpeaking(true);
       try {
-        const clips = splitSpeechText(clean, 600).filter(speakable).map((chunk) => ({ text: chunk, clip: startClip(chunk, controller.signal) }));
+        const clips = splitSpeechText(clean, 600).filter(speakable).map((chunk) => ({ text: chunk, clip: studioDownRef.current ? null : startClip(chunk, controller.signal) }));
         await drainStudioQueue(clips, {
           play: (clip) => playSpeechClip(clip, clipSpeed(profile.speed)),
           isAborted: () => controller.signal.aborted,
@@ -142,10 +151,12 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
 
   const enqueue = useCallback(
     (text: string) => {
-      if (!stripForSpeech(text) || !profile || !ANON_KEY) return;
+      if (!stripForSpeech(text)) return;
       if (!requestRef.current || requestRef.current.signal.aborted) requestRef.current = new AbortController();
       const controller = requestRef.current;
-      pendingRef.current.push(...splitSpeechText(stripForSpeech(text), 600).filter(speakable).map((chunk) => ({ text: chunk, clip: startClip(chunk, controller.signal) })));
+      window.dispatchEvent(new Event("awt-response-voice"));
+      stopBotIntro();
+      pendingRef.current.push(...splitSpeechText(stripForSpeech(text), 600).filter(speakable).map((chunk) => ({ text: chunk, clip: profile && ANON_KEY && !studioDownRef.current ? startClip(chunk, controller.signal) : null })));
       if (queueBusyRef.current) return;
       queueBusyRef.current = true;
       const generation = generationRef.current;
@@ -153,7 +164,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       void (async () => {
         try {
           await drainStudioQueue(pendingRef.current, {
-            play: (clip) => playSpeechClip(clip, clipSpeed(profile.speed)),
+            play: (clip) => playSpeechClip(clip, clipSpeed(profile?.speed)),
             isAborted: () => generation !== generationRef.current || controller.signal.aborted,
             onStudioDown: noteStudioDown,
             playFallback: speakChunk,
@@ -189,8 +200,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       if (lastBreak < 0) return;
       const ready = pending.slice(0, lastBreak + 1);
       spokenRef.current += ready.length;
-      if (profile && !studioDownRef.current) enqueue(ready);
-      else speakChunk(ready);
+      enqueue(ready);
     },
     [enqueue, profile, speakChunk, supported],
   );
@@ -200,12 +210,13 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     if (!supported || !enabledRef.current || listeningRef.current) return;
     const rest = bufferRef.current.slice(spokenRef.current);
     spokenRef.current = bufferRef.current.length;
-    if (profile && !studioDownRef.current) enqueue(rest);
-    else speakChunk(rest);
+    enqueue(rest);
   }, [enqueue, profile, speakChunk, supported]);
 
   /** Start a fresh reply. */
   const reset = useCallback(() => {
+    stopBotIntro();
+    window.dispatchEvent(new Event("awt-response-voice"));
     generationRef.current += 1;
     pendingRef.current = [];
     queueBusyRef.current = false;
@@ -235,6 +246,8 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
         });
       }
       if (!next) {
+        stopBotIntro();
+        window.dispatchEvent(new Event("awt-response-voice"));
         generationRef.current += 1;
         pendingRef.current = [];
         queueBusyRef.current = false;
@@ -257,17 +270,20 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
         return;
       }
       if (profile) {
+        stop();
         void unlockSpeechPlayback().then(() => speakStudio(text)).catch((error) => {
           toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Tap Play again to enable audio.", variant: "destructive" });
         });
         return;
       }
-      speakChunk(text);
+      reset();
+      enqueue(text);
     },
-    [profile, speakStudio, speakChunk, speaking, stop, supported, toast],
+    [profile, speakStudio, enqueue, reset, speaking, stop, supported, toast],
   );
 
   useEffect(() => () => {
+    stopBotIntro();
     generationRef.current += 1;
     pendingRef.current = [];
     requestRef.current?.abort();
