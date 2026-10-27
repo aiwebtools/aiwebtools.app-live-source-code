@@ -1,3 +1,4 @@
+// @ts-nocheck -- regression tests run with Bun, like the existing speech tests.
 import { expect, test } from "bun:test";
 import { deviceSpeechAvailable, speakDeviceText } from "./deviceSpeech";
 
