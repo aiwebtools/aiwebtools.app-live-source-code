@@ -1,8 +1,8 @@
 # Roadmap
 
 ## Incomplete bot replies
-- [ ] Fix device voice errors that interrupt receiving complete replies; preserve bot instructions and models
-- [ ] Test unavailable/broken phone voices and verify a complete reply is displayed and saved
+- [x] Fix confirmed SpeechSynthesisUtterance errors interrupting complete replies; capability-check optional device voices and isolate speech from text delivery, with instructions/models unchanged
+- [x] Twelve speech tests pass; real guest Ancient Egyptian Proverbs chat with unavailable device voice and simulated studio quota failure displayed/saved all 1,960 characters with zero page errors; build OK, preview only
 
 ## Current finish request
 - [x] Refine Pandora gate: slower opening/confetti, cached Gemini elder announcement with local soft clicks/chimes (ElevenLabs exhausted); hosted clip HTTP 200, playback verified with hosted bytes routed into local browser, phone fit/reload and PIN tests pass; actual phone sound remains owner check, preview only
