@@ -3,7 +3,7 @@ import { Volume2 } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { commercialEmbed, getBotCommercial, hasSeenCommercial, markCommercialSeen } from "@/utils/botCommercials";
-import { playBotIntro } from "@/utils/botIntroVoice";
+import { playBotIntro, stopBotIntro } from "@/utils/botIntroVoice";
 
 /** Once per bot per device: its own video commercial (sound on, auto-closes at the end), then its spoken welcome. */
 
@@ -19,6 +19,17 @@ export default function BotCommercial({ slug, name, toolTitle, userId, voice, cu
   const done = useRef(false);
   const started = useRef<string | null>(null);
   const shown = useRef(false);
+
+  useEffect(() => {
+    const cancel = () => {
+      done.current = true;
+      liveShow.slug = null; liveShow.embed = null;
+      setOpen(false);
+      stopBotIntro();
+    };
+    window.addEventListener("awt-response-voice", cancel);
+    return () => { window.removeEventListener("awt-response-voice", cancel); stopBotIntro(); };
+  }, [slug]);
 
   const finish = useCallback(() => {
     if (done.current) return; done.current = true;
@@ -40,7 +51,7 @@ export default function BotCommercial({ slug, name, toolTitle, userId, voice, cu
     let alive = true;
     const run = custom ? Promise.resolve(null) : getBotCommercial(toolTitle, name);
     void run.then((url) => {
-      if (!alive) return;
+      if (!alive || done.current) return;
       const embed = url ? commercialEmbed(url) : null;
       markCommercialSeen(slug, userId);
       if (!embed) { finish(); return; }
