@@ -133,31 +133,41 @@ export const beginSpeechClip = (url: string, init: RequestInit, outer: AbortSign
  * are preserved and nothing already heard is re-read.
  */
 export const drainStudioQueue = async (
-  queue: Array<{ text: string; clip: SpeechClip }>,
+  queue: Array<{ text: string; clip: SpeechClip | null }>,
   opts: {
     play: (clip: SpeechClip) => Promise<void>;
     isAborted: () => boolean;
     onStudioDown: () => void;
-    playFallback: (text: string) => void;
+    playFallback: (text: string) => void | Promise<void>;
   },
 ): Promise<void> => {
+  let deviceOnly = false;
   while (queue.length) {
-    const next = queue.shift()!;
+    const next = queue.shift();
+    if (!next) return;
     if (opts.isAborted()) return;
+    if (deviceOnly || !next.clip) {
+      next.clip?.abort();
+      await opts.playFallback(next.text);
+      continue;
+    }
     try {
       await opts.play(next.clip);
     } catch {
       if (opts.isAborted()) return;
+      next.clip.abort();
+      stopSpeechPlayback();
       opts.onStudioDown();
-      opts.playFallback(next.text);
-      for (const rest of queue.splice(0)) opts.playFallback(rest.text);
-      return;
+      deviceOnly = true;
+      for (const rest of queue) rest.clip?.abort();
+      await opts.playFallback(next.text);
     }
   }
 };
 
 let context: AudioContext | null = null;
 const liveSources = new Set<AudioBufferSourceNode>();
+let playbackGeneration = 0;
 
 const audioContext = () => {
   const AudioContextClass = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
@@ -175,6 +185,7 @@ export const unlockSpeechPlayback = async () => {
 
 /** Silence anything playing right now — used by stop, mute and new replies. */
 export const stopSpeechPlayback = () => {
+  playbackGeneration += 1;
   for (const source of liveSources) {
     const ended = source.onended;
     source.onended = null;
@@ -189,6 +200,7 @@ export const stopSpeechPlayback = () => {
  * delivered has been heard.
  */
 export const playSpeechClip = async (clip: SpeechClip, speed = 1): Promise<void> => {
+  const generation = playbackGeneration;
   await unlockSpeechPlayback();
   const ctx = audioContext();
   const rate = Math.min(1.6, Math.max(0.5, speed));
@@ -197,6 +209,7 @@ export const playSpeechClip = async (clip: SpeechClip, speed = 1): Promise<void>
   let heardSeconds = 0;
 
   for (;;) {
+    if (generation !== playbackGeneration) { clip.abort(); return; }
     if (clip.maxSeconds && heardSeconds > clip.maxSeconds) { clip.abort(); break; }
     const chunk = clip.next();
     if (!chunk) {

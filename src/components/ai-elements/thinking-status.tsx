@@ -37,12 +37,20 @@ export const ThinkingStatus = ({ avatar, name, voice = false }: { avatar: string
     if (!voice || !deviceSpeechAvailable()) return;
     const used = new Set<number>();
     let mine: SpeechSynthesisUtterance | null = null;
+    let active = false;
+    const silence = () => {
+      if (active) window.speechSynthesis.cancel();
+      active = false;
+    };
+    window.addEventListener("awt-response-voice", silence);
     const say = () => {
       const synth = window.speechSynthesis;
       if (synth.speaking || synth.pending) return;
       try {
         mine = new window.SpeechSynthesisUtterance(pick(used));
         mine.rate = 1.05; mine.volume = 0.85;
+        active = true;
+        mine.onend = mine.onerror = () => { active = false; };
         synth.speak(mine);
       } catch { /* Optional waiting speech must not interrupt the reply. */ }
     };
@@ -50,7 +58,8 @@ export const ThinkingStatus = ({ avatar, name, voice = false }: { avatar: string
     const again = window.setInterval(say, 7000);
     return () => {
       window.clearTimeout(first); window.clearInterval(again);
-      if (mine && window.speechSynthesis.speaking) window.speechSynthesis.cancel();
+      window.removeEventListener("awt-response-voice", silence);
+      silence();
     };
   }, [voice]);
 

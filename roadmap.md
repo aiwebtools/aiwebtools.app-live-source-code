@@ -1,5 +1,9 @@
 # Roadmap
 
+## Response voice reliability
+- [ ] Prevent overlapping welcome, waiting and response voices; serialize studio/device fallback and cancel stale playback
+- [ ] Verify complete auto-read, mute, and successive replies with regression tests and guest chat checks
+
 ## Incomplete bot replies
 - [x] Fix confirmed SpeechSynthesisUtterance errors interrupting complete replies; capability-check optional device voices and isolate speech from text delivery, with instructions/models unchanged
 - [x] Twelve speech tests pass; real guest Ancient Egyptian Proverbs chat with unavailable device voice and simulated studio quota failure displayed/saved all 1,960 characters with zero page errors; build OK, preview only
