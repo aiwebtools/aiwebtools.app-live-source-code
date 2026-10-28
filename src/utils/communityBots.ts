@@ -2,6 +2,7 @@ import { communityBotName, communityBotImage } from "./communityBotIdentity";
 import { supabase } from "@/integrations/supabase/client";
 import { getOffGridBotMetadata } from "./offGridBots";
 import { resolveMigratedBotMedia } from "./migratedBotMedia";
+import { normalizeToolName, isNearToolWord, prioritizeToolNames, nameMatchTier } from "./search/nameMatching";
 
 export interface CommunityBotTool {
   title: string;
@@ -60,11 +61,14 @@ export const getBundledCommunityImage = (slug: string): string | undefined => co
 export function getCommunityBotsSync() { return cache; }
 
 export function matchCommunityBots(bots: CommunityBotTool[] | null, query: string): CommunityBotTool[] {
-  const q = query.trim().toLowerCase();
+  const q = normalizeToolName(query);
   if (!bots || q.length < 2) return [];
   const words = q.split(/\s+/);
-  return bots.filter((b) => {
-    const hay = `${b.title} ${b.description} ${b.tags.join(" ")}`.toLowerCase();
-    return words.every((w) => hay.includes(w));
+  const matches = bots.filter((b) => {
+    if (nameMatchTier(b.title, q) >= 3) return true;
+    const hay = normalizeToolName(`${b.title} ${b.description} ${b.tags.join(" ")}`);
+    const nameWords = normalizeToolName(b.title).split(" ");
+    return words.every((w) => hay.includes(w) || nameWords.some((candidate) => isNearToolWord(candidate, w)));
   });
+  return prioritizeToolNames(matches, q, (b) => b.title);
 }

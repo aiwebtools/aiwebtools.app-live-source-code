@@ -1,11 +1,11 @@
-/* AIWebTools global search worker — v3 (intelligent matching + diagnostics) */
+/* AIWebTools global search worker — v5 (literal name priority + bounded typo matching) */
 const keys = ["title", "category", "tags", "directUrl", "imageUrl", "videoUrl", "emoji", "color", "rating", "totalVotes", "isFree", "description"];
 let indexPromise;
 let indexReady = false;
 let indexSize = 0;
 let indexLoadMs = 0;
 
-const normalize = (value) => String(value || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+const normalize = (value) => String(value || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
 
 // Words that carry no discriminating power in natural-language queries
 const STOP_WORDS = new Set(["a","an","the","i","im","i'm","me","my","we","you","your","to","for","of","on","in","at","is","are","be","can","do","does","how","what","which","with","and","or","want","need","looking","look","find","best","top","good","great","today","now","please","help","some","any","that","this","it","make","get","using","use","app","apps","tool","tools","ai","site","website","online"]);
@@ -55,14 +55,24 @@ const expandWord = (word) => SYNONYMS[word] || [word];
 
 const distance = (a, b) => {
   if (a === b) return 0;
+  if (Math.max(a.length, b.length) > 64) return Infinity;
+  const limit = Math.max(a.length, b.length) >= 8 ? 2 : 1;
+  if (Math.abs(a.length - b.length) > limit) return Infinity;
   const row = Array.from({ length: b.length + 1 }, (_, i) => i);
+  let beforePrevious = row.slice();
   for (let i = 1; i <= a.length; i += 1) {
+    const previousRow = row.slice();
     let previous = row[0]; row[0] = i;
+    let minimum = i;
     for (let j = 1; j <= b.length; j += 1) {
       const saved = row[j];
       row[j] = Math.min(row[j] + 1, row[j - 1] + 1, previous + (a[i - 1] === b[j - 1] ? 0 : 1));
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) row[j] = Math.min(row[j], beforePrevious[j - 2] + 1);
+      minimum = Math.min(minimum, row[j]);
       previous = saved;
     }
+    if (minimum > limit) return Infinity;
+    beforePrevious = previousRow;
   }
   return row[b.length];
 };
@@ -109,7 +119,7 @@ const loadIndex = () => {
   return indexPromise;
 };
 
-const score = (entry, query, terms) => {
+const score = (entry, query, terms, near) => {
   let value = 0;
   const compact = query.replace(/\s+/g, "");
   if (entry.title === query) value += 1000000;
@@ -133,7 +143,7 @@ const score = (entry, query, terms) => {
       else if (entry.tags.includes(word)) hit = 10000;
       else if (entry.category.includes(word)) hit = 8000;
       else if (word.length >= 4 && entry.description.includes(word)) hit = 4200;
-      else if (word.length >= 4 && entry.words.some((candidate) => Math.abs(candidate.length - word.length) <= 2 && distance(candidate, word) <= (word.length >= 5 ? 2 : 1))) hit = 14000;
+      else if (g === 0 && word.length >= 4 && entry.words.some((candidate) => near(candidate, word))) hit = 14000;
       const scaled = hit * weight;
       if (scaled > best) best = scaled;
     }
@@ -167,10 +177,21 @@ self.onmessage = async ({ data }) => {
     const base = meaningful.length > 0 ? meaningful : rawWords;
     const terms = base.map(expandWord);
 
+    const typoCache = new Map();
+    const near = (candidate, word) => {
+      const key = `${candidate}:${word}`;
+      if (typoCache.has(key)) return typoCache.get(key);
+      const match = candidate.length >= 4 && distance(candidate, word) <= (Math.max(candidate.length, word.length) >= 8 ? 2 : 1);
+      typoCache.set(key, match);
+      return match;
+    };
+    const compact = query.replace(/\s/g, "");
+    const tier = (entry) => !query ? 0 : entry.title === query ? 4 : entry.compact === compact ? 3 : entry.title.startsWith(query) ? 2 : entry.title.includes(query) ? 1 : 0;
+
     const index = await loadIndex();
-    const results = index.map((entry) => ({ entry, score: score(entry, query, terms) }))
+    const results = index.map((entry) => ({ entry, tier: tier(entry), score: score(entry, query, terms, near) }))
       .filter((item) => item.score > 0)
-      .sort((a, b) => b.score - a.score || a.entry.order - b.entry.order)
+      .sort((a, b) => b.tier - a.tier || b.score - a.score || a.entry.order - b.entry.order)
       .map((item) => item.entry.tool);
     self.postMessage({
       id,
