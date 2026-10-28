@@ -1,8 +1,8 @@
 # Roadmap
 
 ## Response voice reliability
-- [ ] Prevent overlapping welcome, waiting and response voices; serialize studio/device fallback and cancel stale playback
-- [ ] Verify complete auto-read, mute, and successive replies with regression tests and guest chat checks
+- [x] Prevent overlapping welcome, waiting and response voices; serialize studio/device fallback and cancel stale playback
+- [x] Fourteen speech regressions pass; two real guest Time Machine replies auto-read sequentially with simulated studio quota failure and instrumented device speech, mute stops playback, zero page errors/build OK; actual phone audio remains owner check, preview only
 
 ## Incomplete bot replies
 - [x] Fix confirmed SpeechSynthesisUtterance errors interrupting complete replies; capability-check optional device voices and isolate speech from text delivery, with instructions/models unchanged
