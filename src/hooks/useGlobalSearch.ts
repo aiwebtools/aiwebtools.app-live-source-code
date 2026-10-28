@@ -8,6 +8,7 @@ import { generateToolSlug } from "@/utils/urlGenerator";
 import { getCurrentToolCount } from "@/utils/toolCounter";
 import { recordMetric } from "@/utils/perfTelemetry";
 import { getToolPricing } from "@/utils/pricingClassification";
+import { prioritizeToolNames } from "@/utils/search/nameMatching";
 
 // ==================== LRU CACHE FOR SEARCH RESULTS ====================
 // Caches the last 50 search queries to avoid recomputation on repeated searches
@@ -50,7 +51,7 @@ class LRUCache<K, V> {
 
 // Global search cache (persists across component re-renders)
 // NOTE: versioned to prevent "stale" cached results after search-intelligence updates.
-const SEARCH_CACHE_VERSION = "v55";
+const SEARCH_CACHE_VERSION = "v56";
 const searchCache = new LRUCache<string, any[]>(50);
 
 let perplexityBotsPromise: Promise<any[]> | null = null;
@@ -1716,7 +1717,7 @@ export const useGlobalSearch = () => {
     if (searchWorkerRef.current) return searchWorkerRef.current;
 
     try {
-      const worker = new Worker("/global-search-worker.js?v=4");
+      const worker = new Worker("/global-search-worker.js?v=5");
       worker.onmessage = (event: MessageEvent<WorkerSearchResponse>) => {
         const { id, results = [], type, ready, size, loadMs, meta, error } = event.data || ({} as WorkerSearchResponse);
         if (type === "status") {
@@ -2388,7 +2389,7 @@ export const useGlobalSearch = () => {
     const cappedT = t;
     const normalizedQuery = normalizeSearchText(cappedT);
     const isPerplexityBotQuery =
-      normalizedQuery.includes("perplex") || /(^|\s)bots?($|\s)/.test(normalizedQuery);
+      normalizedQuery.includes("perplex") && /(^|\s)bots?($|\s)/.test(normalizedQuery);
 
     setIsOpen(true);
     const currentId = ++searchIdRef.current;
@@ -2648,7 +2649,7 @@ export const useGlobalSearch = () => {
     const community = searchResults.length || recommendedTools.length || searchTerm.trim()
       ? matchCommunityBots(communityBots, searchTerm).filter((b) => !searchResults.some((r) => r?.title === b.title))
       : [];
-    return [...community, ...searchResults, ...recommendedTools];
+    return prioritizeToolNames([...community, ...searchResults, ...recommendedTools], searchTerm, (tool) => tool?.title || "");
   }, [searchResults, recommendedTools, communityBots, searchTerm]);
 
   // INFINITE SCROLL — keeps revealing the FULL result set in generous batches.
