@@ -2,7 +2,6 @@ import { getOffGridBotMetadata } from "@/utils/offGridBots";
 import type { StudioBot } from "./botCatalog";
 import { botSubjectOverrides } from "./botSubjectOverrides";
 import { getSurvivalDraft } from "@/utils/survivalDrafts";
-import { normalizeToolName, nameMatchTier, isNearToolWord } from "@/utils/search/nameMatching";
 
 export const BOT_SUBJECTS = ["Off Grid Living", "Apocalypse Survival & Nature", "History & Time Travel", "Health & Wellness", "Legal & Government", "Business & Finance", "Science & Research", "Spiritual & Philosophy", "Engineering & Planning", "Creative & Design", "Film, Music & Media", "Education & Learning", "Farming, Food & Outdoors", "Trades & Home", "Security & Safety", "General & Productivity"] as const;
 export type BotSubject = typeof BOT_SUBJECTS[number];
@@ -23,7 +22,7 @@ const RULES: [RegExp, BotSubject][] = [
   [/\b(?:engineer\w*|architect\w*|blueprint|construct\w*|develop\w*|coding|code|program\w*|3d print\w*|binary|solar|algebra\w*|mathemat\w*|planning|planner)\b/, "Engineering & Planning"],
   [/\b(?:home|renovat\w*|car|auto|automobile|automotive|drill|oil|gas|repair|material|handyman|inspect\w*)\b/, "Trades & Home"],
 ];
-const normalize = normalizeToolName;
+const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 export function getBotCategory(bot: SubjectBot): BotSubject {
   // A creator-chosen category saved at publish time always wins.
   if (bot.subject && (BOT_SUBJECTS as readonly string[]).includes(bot.subject)) return bot.subject as BotSubject;
@@ -73,36 +72,24 @@ export function searchStudioBots<T extends SubjectBot>(bots: T[], query: string)
   const terms = core.length ? core : words;
   const expanded = [...new Set(terms.flatMap((w) => (TASK_WORDS[w] || "").split(" ").filter(Boolean)))].filter((w) => !terms.includes(w));
   const taskCategories = new Set(RULES.filter(([re]) => re.test(q)).map(([, s]) => s));
-  const nearCache = new Map<string, boolean>();
-  const near = (a: string, b: string) => {
-    const key = `${a}:${b}`;
-    const cached = nearCache.get(key);
-    if (cached !== undefined) return cached;
-    const result = isNearToolWord(a, b);
-    nearCache.set(key, result);
-    return result;
-  };
   const scored = bots.map((bot) => {
     const name = normalize(bot.display_name);
     const category = getBotCategory(bot);
     const rest = normalize(`${bot.tagline || ""} ${category} ${getOffGridBotMetadata(bot.slug)?.tags.join(" ") || ""}`);
     const nameT = name.split(" "), restT = rest.split(" ");
-    const tier = nameMatchTier(bot.display_name, q);
-    let score = tier * 1000;
+    let score = name === q ? 1000 : name.includes(q) ? 300 : 0;
     let hits = 0;
     for (const w of terms) {
       const s = stem(w);
-      if (has(nameT, s)) { score += 40; hits++; }
-      else if (nameT.some((candidate) => near(candidate, w))) { score += 28; hits++; }
-      else if (has(restT, s)) { score += 12; hits++; }
+      if (has(nameT, s)) { score += 40; hits++; } else if (has(restT, s)) { score += 12; hits++; }
     }
     if (hits === terms.length) score += 60;
     for (const w of expanded) { if (has(nameT, w)) score += 18; else if (has(restT, w)) score += 5; }
     if (score > 0 && taskCategories.has(category)) score += 8;
     else if (score === 0 && taskCategories.has(category)) score = 3;
-    return { bot, score, tier, full: hits === terms.length || tier >= 3 };
+    return { bot, score, full: hits === terms.length };
   }).filter((r) => r.score > 0);
   // Exact matches for every typed word win; otherwise fall back to task-meaning matches.
   const full = scored.filter((r) => r.full);
-  return (full.length ? full : scored).sort((a, b) => b.tier - a.tier || b.score - a.score || a.bot.display_name.localeCompare(b.bot.display_name)).map((r) => r.bot);
+  return (full.length ? full : scored).sort((a, b) => b.score - a.score || a.bot.display_name.localeCompare(b.bot.display_name)).map((r) => r.bot);
 }

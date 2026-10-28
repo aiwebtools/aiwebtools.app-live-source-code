@@ -1,5 +1,4 @@
 import { Tool } from "@/types/tools";
-import { normalizeToolName, nameMatchTier, isNearToolWord } from "./nameMatching";
 
 // Simplified search for better performance
 export const performOptimizedSearch = (tools: Tool[], searchTerm: string): Tool[] => {
@@ -13,18 +12,17 @@ export const performOptimizedSearch = (tools: Tool[], searchTerm: string): Tool[
     return [];
   }
 
-  const lowerSearchTerm = normalizeToolName(trimmed);
+  const lowerSearchTerm = trimmed.toLowerCase();
   const searchWords = lowerSearchTerm.split(/\s+/).filter(word => word.length > 1);
   
-  const scored: { tool: Tool; score: number; tier: number }[] = [];
+  const scored: { tool: Tool; score: number }[] = [];
 
   for (const tool of tools) {
     if (!tool.title) continue;
     
     const lowerTitle = tool.title.toLowerCase();
     // Normalize special characters for better matching (e.g., Míngjiào -> mingjiao)
-    const normalizedTitle = normalizeToolName(lowerTitle);
-    const tier = nameMatchTier(tool.title, trimmed);
+    const normalizedTitle = lowerTitle.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const lowerDescription = (tool.description || "").toLowerCase();
     const normalizedDescription = lowerDescription.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const lowerCategory = (tool.category || "").toLowerCase();
@@ -66,8 +64,6 @@ export const performOptimizedSearch = (tools: Tool[], searchTerm: string): Tool[
         if (word.length >= 2) {
           if (lowerTitle.includes(word) || normalizedTitle.includes(word)) {
             score += 1000;
-          } else if (normalizedTitle.split(" ").some((candidate) => isNearToolWord(candidate, word))) {
-            score += 900;
           }
           if (lowerTags.includes(word)) {
             score += 800;
@@ -79,14 +75,14 @@ export const performOptimizedSearch = (tools: Tool[], searchTerm: string): Tool[
       }
     }
 
-    if (score > 0 || tier > 0) {
-      scored.push({ tool, score, tier });
+    if (score > 0) {
+      scored.push({ tool, score });
     }
   }
 
   // Sort by score and return top results
   return scored
-    .sort((a, b) => b.tier - a.tier || b.score - a.score)
+    .sort((a, b) => b.score - a.score)
     .map(item => item.tool)
     .slice(0, 500); // Limit results for performance
 };

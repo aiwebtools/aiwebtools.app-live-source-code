@@ -9,12 +9,6 @@ test("Time Machine is historical exploration, not science", () => {
   expect(getBotCategory(bot("Time Machine GPT"))).toBe("History & Time Travel");
   expect(getBotCategory(bot("Native American History Time Machine GPT"))).toBe("History & Time Travel");
 });
-test("bot search keeps exact names first across versions and spelling variants", () => {
-  const bots = [bot("Time Machine GPT V2"), bot("Time Machine GPT"), bot("Stellaris Space Explorer GPT")];
-  expect(searchStudioBots(bots, "Time Machine GPT")[0]?.display_name).toBe("Time Machine GPT");
-  expect(searchStudioBots(bots, "timemachinegpt")[0]?.display_name).toBe("Time Machine GPT");
-  expect(searchStudioBots(bots, "stelalris")[0]?.display_name).toBe("Stellaris Space Explorer GPT");
-});
 test("survival and nature families move without unrelated robot bots", () => {
   for (const name of ["Survivalist GPT", "Disable That Robot GPT", "Rouge Robot Disabler GPT", "Robot Identifier and Disabler Survivalist GPT", "Fungus GPT – AI Mushroom Specialist", "BirdWatching GPT"]) {
     expect(getBotCategory(bot(name))).toBe("Apocalypse Survival & Nature");
