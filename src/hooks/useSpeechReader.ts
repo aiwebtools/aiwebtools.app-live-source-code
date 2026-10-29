@@ -99,13 +99,15 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     [profile],
   );
 
-  const speakChunk = useCallback((chunk: string) => {
+  const speakChunk = useCallback(async (chunk: string) => {
     const signal = requestRef.current?.signal;
-    return new Promise<void>((resolve, reject) => {
+    for (const part of splitSpeechText(stripForSpeech(chunk), 220)) {
+      if (signal?.aborted) return;
+      await new Promise<void>((resolve, reject) => {
       if (signal?.aborted) { resolve(); return; }
       const finish = () => { signal?.removeEventListener("abort", finish); resolve(); };
       signal?.addEventListener("abort", finish, { once: true });
-      speakDeviceText(stripForSpeech(chunk), {
+      speakDeviceText(part, {
         onStart: () => setSpeaking(true),
         onEnd: finish,
         onUnavailable: () => {
@@ -118,7 +120,8 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
         rate: profile?.speed,
         feminine: /feminine|mother|shimmer|coral|nova/i.test(`${profile?.voice} ${profile?.instructions}`),
       });
-    });
+      });
+    }
   }, [profile]);
 
   /** Speak text in order; every clip is started at once so later sentences arrive early. */
@@ -132,7 +135,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       requestRef.current = controller;
       setSpeaking(true);
       try {
-        const clips = splitSpeechText(clean, 220).filter(speakable).map((chunk) => ({ text: chunk, clip: studioDownRef.current || !profile || !ANON_KEY ? null : startClip(chunk, controller.signal) }));
+        const clips = splitSpeechText(clean, 600).filter(speakable).map((chunk) => ({ text: chunk, clip: studioDownRef.current || !profile || !ANON_KEY ? null : startClip(chunk, controller.signal) }));
         await drainStudioQueue(clips, {
           play: (clip) => playSpeechClip(clip, clipSpeed(profile?.speed)),
           isAborted: () => controller.signal.aborted,
@@ -165,7 +168,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       const controller = requestRef.current;
       window.dispatchEvent(new Event("awt-response-voice"));
       stopBotIntro();
-      pendingRef.current.push(...splitSpeechText(stripForSpeech(text), 220).filter(speakable).map((chunk) => ({ text: chunk, clip: profile && ANON_KEY && !studioDownRef.current ? startClip(chunk, controller.signal) : null })));
+      pendingRef.current.push(...splitSpeechText(stripForSpeech(text), 600).filter(speakable).map((chunk) => ({ text: chunk, clip: profile && ANON_KEY && !studioDownRef.current ? startClip(chunk, controller.signal) : null })));
       if (queueBusyRef.current) return;
       queueBusyRef.current = true;
       const generation = generationRef.current;
