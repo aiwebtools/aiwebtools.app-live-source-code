@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { deviceSpeechAvailable } from "@/utils/deviceSpeech";
+import { deviceSpeechAvailable, speakDeviceText } from "@/utils/deviceSpeech";
 
 const STAGES = ["Reading your message", "Thinking carefully", "Writing your reply"];
 
@@ -36,7 +36,7 @@ export const ThinkingStatus = ({ avatar, name, voice = false }: { avatar: string
   useEffect(() => {
     if (!voice || !deviceSpeechAvailable()) return;
     const used = new Set<number>();
-    let mine: SpeechSynthesisUtterance | null = null;
+    const controller = new AbortController();
     let active = false;
     const silence = () => {
       if (active) window.speechSynthesis.cancel();
@@ -47,17 +47,16 @@ export const ThinkingStatus = ({ avatar, name, voice = false }: { avatar: string
       const synth = window.speechSynthesis;
       if (synth.speaking || synth.pending) return;
       try {
-        mine = new window.SpeechSynthesisUtterance(pick(used));
-        mine.rate = 1.05; mine.volume = 0.85;
         active = true;
-        mine.onend = mine.onerror = () => { active = false; };
-        synth.speak(mine);
+        speakDeviceText(pick(used), { rate: 1, signal: controller.signal,
+          onEnd: () => { active = false; }, onUnavailable: () => { active = false; } });
       } catch { /* Optional waiting speech must not interrupt the reply. */ }
     };
     const first = window.setTimeout(say, 1400);
     const again = window.setInterval(say, 7000);
     return () => {
       window.clearTimeout(first); window.clearInterval(again);
+      controller.abort();
       window.removeEventListener("awt-response-voice", silence);
       silence();
     };

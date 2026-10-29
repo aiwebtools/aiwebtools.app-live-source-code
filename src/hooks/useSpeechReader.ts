@@ -3,7 +3,7 @@ import { splitSpeechText } from "@/utils/speechText";
 import { useToast } from "@/hooks/use-toast";
 import { beginSpeechClip, drainStudioQueue, playSpeechClip, stopSpeechPlayback, unlockSpeechPlayback, type SpeechClip } from "@/utils/streamSpeech";
 import type { GptVoiceProfile } from "@/utils/gptVoiceProfiles";
-import { deviceSpeechAvailable, speakDeviceText } from "@/utils/deviceSpeech";
+import { deviceSpeechAvailable, speakDeviceText, unlockDeviceSpeech } from "@/utils/deviceSpeech";
 import { stopBotIntro } from "@/utils/botIntroVoice";
 
 const STORAGE_KEY = "awt-voice-enabled";
@@ -42,6 +42,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const enabledRef = useRef(false);
   const listeningRef = useRef(false);
   const [speaking, setSpeaking] = useState(false);
+  const [voiceError, setVoiceError] = useState("");
   const spokenRef = useRef(0);
   const bufferRef = useRef("");
   const requestRef = useRef<AbortController | null>(null);
@@ -98,34 +99,45 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     [profile],
   );
 
-  const speakChunk = useCallback((chunk: string) => {
+  const speakChunk = useCallback(async (chunk: string) => {
     const signal = requestRef.current?.signal;
-    return new Promise<void>((resolve) => {
+    for (const part of splitSpeechText(stripForSpeech(chunk), 220)) {
+      if (signal?.aborted) return;
+      await new Promise<void>((resolve, reject) => {
       if (signal?.aborted) { resolve(); return; }
       const finish = () => { signal?.removeEventListener("abort", finish); resolve(); };
       signal?.addEventListener("abort", finish, { once: true });
-      speakDeviceText(stripForSpeech(chunk), {
+      speakDeviceText(part, {
         onStart: () => setSpeaking(true),
         onEnd: finish,
-        onUnavailable: finish,
+        onUnavailable: () => {
+          signal?.removeEventListener("abort", finish);
+          const message = "Your browser could not start its voice. Tap Play reply to try again; check your media volume.";
+          setVoiceError(message);
+          reject(new Error(message));
+        },
+        signal,
+        rate: profile?.speed,
+        feminine: /feminine|mother|shimmer|coral|nova/i.test(`${profile?.voice} ${profile?.instructions}`),
       });
-    });
-  }, []);
+      });
+    }
+  }, [profile]);
 
   /** Speak text in order; every clip is started at once so later sentences arrive early. */
   const speakStudio = useCallback(
     async (text: string) => {
       const clean = stripForSpeech(text);
-      if (!clean || !profile || !ANON_KEY) return false;
+      if (!clean) return false;
       requestRef.current?.abort();
       stopSpeechPlayback();
       const controller = new AbortController();
       requestRef.current = controller;
       setSpeaking(true);
       try {
-        const clips = splitSpeechText(clean, 600).filter(speakable).map((chunk) => ({ text: chunk, clip: studioDownRef.current ? null : startClip(chunk, controller.signal) }));
+        const clips = splitSpeechText(clean, 600).filter(speakable).map((chunk) => ({ text: chunk, clip: studioDownRef.current || !profile || !ANON_KEY ? null : startClip(chunk, controller.signal) }));
         await drainStudioQueue(clips, {
-          play: (clip) => playSpeechClip(clip, clipSpeed(profile.speed)),
+          play: (clip) => playSpeechClip(clip, clipSpeed(profile?.speed)),
           isAborted: () => controller.signal.aborted,
           onStudioDown: noteStudioDown,
           playFallback: speakChunk,
@@ -226,11 +238,13 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     bufferRef.current = "";
     if (supported) window.speechSynthesis?.cancel();
     setSpeaking(false);
+    setVoiceError("");
     // Reset is called from submit, before fetching the reply. Unlock while the
     // browser still has the visitor's click/keypress gesture (especially iOS).
+    if (enabledRef.current) unlockDeviceSpeech();
     if (profile && enabledRef.current) {
       void unlockSpeechPlayback().catch((error) => {
-        toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Tap Play to enable audio.", variant: "destructive" });
+        if (!deviceSpeechAvailable()) setVoiceError(error instanceof Error ? error.message : "Tap Play to enable audio.");
       });
     }
   }, [profile, supported, toast]);
@@ -240,9 +254,10 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       enabledRef.current = next;
       setEnabled(next);
       localStorage.setItem(STORAGE_KEY, next ? "on" : "off");
+      if (next) { setVoiceError(""); unlockDeviceSpeech(); }
       if (next && profile) {
         void unlockSpeechPlayback().catch((error) => {
-          toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Tap Play to enable audio.", variant: "destructive" });
+          if (!deviceSpeechAvailable()) setVoiceError(error instanceof Error ? error.message : "Tap Play to enable audio.");
         });
       }
       if (!next) {
@@ -269,15 +284,12 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
         stop();
         return;
       }
-      if (profile) {
-        stop();
-        void unlockSpeechPlayback().then(() => speakStudio(text)).catch((error) => {
-          toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Tap Play again to enable audio.", variant: "destructive" });
-        });
-        return;
-      }
-      reset();
-      enqueue(text);
+      stop();
+      setVoiceError("");
+      unlockDeviceSpeech();
+      // Web Audio failure must not prevent the independent free device fallback.
+      void unlockSpeechPlayback().catch(() => undefined);
+      void speakStudio(text);
     },
     [profile, speakStudio, enqueue, reset, speaking, stop, supported, toast],
   );
@@ -293,7 +305,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
 
   const pauseForMicrophone = useCallback(() => { listeningRef.current = true; stop(); }, [stop]);
   const resumeAfterMicrophone = useCallback(() => { listeningRef.current = false; }, []);
-  return { supported, enabled, toggle, feed, flush, reset, stop, speakNow, speaking, pauseForMicrophone, resumeAfterMicrophone };
+  return { supported, enabled, toggle, feed, flush, reset, stop, speakNow, speaking, voiceError, pauseForMicrophone, resumeAfterMicrophone };
 };
 
 export default useSpeechReader;
