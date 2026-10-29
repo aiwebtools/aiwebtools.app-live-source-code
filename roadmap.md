@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Response voice reliability
+- [ ] Fix silent phone fallback: unlock device speech on submit/play, select natural voices, surface playback failures and verify quota fallback
 - [x] Prevent overlapping welcome, waiting and response voices; serialize studio/device fallback and cancel stale playback
 - [x] Fourteen speech regressions pass; two real guest Time Machine replies auto-read sequentially with simulated studio quota failure and instrumented device speech, mute stops playback, zero page errors/build OK; actual phone audio remains owner check, preview only
 
