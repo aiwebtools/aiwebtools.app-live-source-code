@@ -74,7 +74,8 @@ export function speakDeviceText(text: string, options: {
       finish(true);
       window.speechSynthesis.cancel();
     }, 8000);
-    window.speechSynthesis.speak(utterance);
+    try { window.speechSynthesis.speak(utterance); }
+    catch { finish(true); return false; }
     return true;
   } catch {
     options.onUnavailable?.();
