@@ -278,7 +278,7 @@ const MobileMenu = () => {
           <DropdownMenuContent 
             ref={dropdownRef}
             forceMount={menuWarm || isMenuOpen ? true : undefined}
-            className="data-[state=closed]:hidden w-[95vw] max-w-[400px] bg-black border-2 border-cyan-500/50 max-h-[68vh] overflow-visible z-[110]"
+            className="data-[state=closed]:hidden w-[calc(100vw-1rem)] max-w-[400px] bg-black border-2 border-cyan-500/50 max-h-[calc(100dvh-7rem)] overflow-visible z-[110]"
             align="end"
             side="bottom"
             alignOffset={0}
@@ -310,7 +310,7 @@ const MobileMenu = () => {
               </Button>
             </div>
             
-            <div className="p-4 pt-0 overflow-y-scroll max-h-[64vh]" style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-y', overscrollBehavior: 'contain', transform: 'translateZ(0)' }}>
+            <div className="p-3 sm:p-4 pt-0 overflow-y-scroll max-h-[calc(100dvh-10rem)]" style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-y', overscrollBehavior: 'contain', transform: 'translateZ(0)' }}>
               {/* Redesigned Header Section */}
               <div className="relative mb-5">
                 {/* Glowing header background */}

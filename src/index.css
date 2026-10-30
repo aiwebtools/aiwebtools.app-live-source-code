@@ -116,3 +116,8 @@
   .btn-3d.btn-flat { box-shadow: none; text-shadow: none; transform: none; }
   @media (prefers-reduced-motion: reduce) { .btn-3d.btn-3d, .btn-3d.btn-3d:hover, .btn-3d.btn-3d:active { transform: none; } }
 }
+
+/* Phone fit: hide the floating clone bubble while a menu/popover is open so it never covers menu content */
+body:has([data-radix-popper-content-wrapper] [data-state="open"]) .awt-floating-overlay {
+  display: none !important;
+}
