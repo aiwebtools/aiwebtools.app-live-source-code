@@ -405,7 +405,7 @@ const DisclaimerGate: React.FC = () => {
           </div>
           {/* Rotating creative message */}
           <p 
-            className="text-cyan-200 text-sm font-medium h-6 transition-opacity duration-300"
+            className="text-cyan-200 text-sm font-medium min-h-6 transition-opacity duration-300"
             style={{ textShadow: '0 0 10px rgba(34, 211, 238, 0.5)' }}
           >
             {welcomeMessages[messageIndex]}
