@@ -382,7 +382,7 @@ const DisclaimerGate: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex items-center justify-center px-4">
+    <div className="min-h-[100dvh] bg-background text-foreground flex items-center justify-center px-3 py-4 sm:px-4">
       <ImprovedSEOHead pageType="homepage" />
       <Helmet>
         <title>AI Web Tools — 4,000+ Best Free AI Tools Directory</title>
@@ -397,7 +397,7 @@ const DisclaimerGate: React.FC = () => {
         <link rel="canonical" href="https://aiwebtools.app/" />
       </Helmet>
 
-      <div className="max-w-md w-full bg-gray-900 border-2 border-cyan-500 rounded-2xl p-6 shadow-2xl shadow-cyan-500/30 animate-fade-in">
+      <div className="max-w-md w-full max-h-[calc(100dvh-2rem)] overflow-y-auto bg-gray-900 border-2 border-cyan-500 rounded-2xl p-4 sm:p-6 shadow-2xl shadow-cyan-500/30 animate-fade-in">
         <div className="text-center mb-6">
           <div className="flex items-center justify-center gap-3 mb-3">
             <Sparkles className="w-6 h-6 text-cyan-400 animate-pulse" />
@@ -445,7 +445,7 @@ const DisclaimerGate: React.FC = () => {
 
           <div className="bg-gray-800 rounded-lg p-3 border border-emerald-500/30">
             <div className="flex items-center gap-3">
-              <Shield className="w-6 h-6 text-emerald-400" />
+              <Shield className="w-6 h-6 shrink-0 text-emerald-400" />
               <div>
                 <h2 className="text-emerald-300 font-semibold text-sm">Connecticut AI Disclosure</h2>
                 <p className="text-gray-300 text-xs">
@@ -461,11 +461,11 @@ const DisclaimerGate: React.FC = () => {
 
         <Button
           onClick={handleAccept}
-          className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-bold py-4 text-base"
+          className="w-full h-auto min-h-12 whitespace-normal leading-tight bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-bold px-3 py-3 text-sm sm:text-base"
         >
-          <Check className="w-5 h-5 mr-2" />
-          I Understand & Enter Portal
-          <Sparkles className="w-4 h-4 ml-2" />
+          <Check className="w-5 h-5 mr-2 shrink-0" />
+          <span>I Understand &amp; Enter Portal</span>
+          <Sparkles className="w-4 h-4 ml-2 shrink-0" />
         </Button>
       </div>
     </div>
