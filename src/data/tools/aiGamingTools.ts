@@ -14,6 +14,13 @@ import unityHero from "@/assets/tools/unity-hero.jpg";
 import unrealEngineHero from "@/assets/tools/unreal-engine-hero.jpg";
 import godotHero from "@/assets/tools/godot-hero.jpg";
 
+import gearzeroAiHero from "@/assets/tools/gearzero-ai-hero.jpg";
+import astrocadeHero from "@/assets/tools/astrocade-hero.jpg";
+import existsAiHero from "@/assets/tools/exists-ai-hero.jpg";
+import layerAiHero from "@/assets/tools/layer-ai-hero.jpg";
+import jabaliAiHero from "@/assets/tools/jabali-ai-hero.jpg";
+import bitmagicHero from "@/assets/tools/bitmagic-hero.jpg";
+
 export const aiGamingTools: Tool[] = [
   {
     icon: Gamepad2,
@@ -183,5 +190,83 @@ export const aiGamingTools: Tool[] = [
     category: "AI Gaming & Game Development",
     rating: 4.6,
     totalVotes: 28900
+  },
+  {
+    icon: Gamepad2,
+    title: "GearZero",
+    description: "AI video game maker that turns your ideas into playable games: describe the world, characters and rules, and GearZero builds it with AI so anyone can create and share games without coding. The zero point where imagination becomes gameplay.",
+    emoji: "⚙️",
+    color: "from-orange-500 to-emerald-600",
+    directUrl: "https://gearzero.ai/?via=aiwebtools",
+    imageUrl: gearzeroAiHero,
+    tags: ["GearZero", "gearzero.ai", "Gear Zero", "video game", "video game generator", "ai to make video games", "make video games", "create video games", "AI game maker", "game development", "no-code games", "Game Development", "Freemium", "free tier"],
+    category: "AI Gaming & Game Development",
+    rating: 4.6,
+    totalVotes: 500
+  },
+  {
+    icon: Gamepad2,
+    title: "Astrocade",
+    description: "AI game creation platform where you type an idea and get a playable mini-game in minutes, then remix and share games with a community of creators.",
+    emoji: "🕹️",
+    color: "from-fuchsia-500 to-cyan-500",
+    directUrl: "https://www.astrocade.com/?via=aiwebtools",
+    imageUrl: astrocadeHero,
+    tags: ["Astrocade", "astrocade.com", "arcade", "video game", "video game generator", "ai to make video games", "make video games", "create video games", "AI game maker", "game development", "no-code games", "Game Development", "Freemium", "free tier"],
+    category: "AI Gaming & Game Development",
+    rating: 4.6,
+    totalVotes: 500
+  },
+  {
+    icon: Gamepad2,
+    title: "Exists",
+    description: "Generative AI platform that turns text prompts into playable 3D multiplayer games, building worlds, characters and gameplay without code.",
+    emoji: "🌍",
+    color: "from-blue-500 to-sky-600",
+    directUrl: "https://www.exists.ai/?via=aiwebtools",
+    imageUrl: existsAiHero,
+    tags: ["Exists", "Exists AI", "exists.ai", "3D games", "multiplayer", "text to 3D game", "video game", "video game generator", "ai to make video games", "make video games", "create video games", "AI game maker", "game development", "no-code games", "Game Development", "Freemium", "free tier"],
+    category: "AI Gaming & Game Development",
+    rating: 4.6,
+    totalVotes: 500
+  },
+  {
+    icon: Gamepad2,
+    title: "Layer AI",
+    description: "AI game art platform for studios that generates on-style characters, items and environments at scale, trained on your game's art direction.",
+    emoji: "🧱",
+    color: "from-teal-500 to-amber-500",
+    directUrl: "https://www.layer.ai/?via=aiwebtools",
+    imageUrl: layerAiHero,
+    tags: ["Layer AI", "layer.ai", "game art", "game assets", "art direction", "video game", "video game generator", "ai to make video games", "make video games", "create video games", "AI game maker", "game development", "no-code games", "Game Development", "Freemium", "free tier"],
+    category: "AI Gaming & Game Development",
+    rating: 4.6,
+    totalVotes: 500
+  },
+  {
+    icon: Gamepad2,
+    title: "Jabali AI",
+    description: "AI game studio with agents that help you design, build and playtest games from a prompt, generating levels, sprites and code so solo creators can ship faster.",
+    emoji: "🤖",
+    color: "from-amber-500 to-green-600",
+    directUrl: "https://jabali.ai/?via=aiwebtools",
+    imageUrl: jabaliAiHero,
+    tags: ["Jabali", "Jabali AI", "jabali.ai", "AI game agents", "game prototyping", "video game", "video game generator", "ai to make video games", "make video games", "create video games", "AI game maker", "game development", "no-code games", "Game Development", "Freemium", "free tier"],
+    category: "AI Gaming & Game Development",
+    rating: 4.6,
+    totalVotes: 500
+  },
+  {
+    icon: Gamepad2,
+    title: "BitMagic",
+    description: "Create games with words: BitMagic uses generative AI to build playable game worlds from natural-language prompts, no programming needed.",
+    emoji: "🪄",
+    color: "from-purple-500 to-lime-500",
+    directUrl: "https://www.bitmagic.ai/?via=aiwebtools",
+    imageUrl: bitmagicHero,
+    tags: ["BitMagic", "bitmagic.ai", "Bit Magic", "text to game", "video game", "video game generator", "ai to make video games", "make video games", "create video games", "AI game maker", "game development", "no-code games", "Game Development", "Freemium", "free tier"],
+    category: "AI Gaming & Game Development",
+    rating: 4.6,
+    totalVotes: 500
   }
 ];
