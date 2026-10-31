@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { createFallbackChat, LOVABLE_FALLBACK_MODEL, RESTING_MESSAGE } from "./chat-fallback";
+import { createFallbackChat, createLovableFirstChat, LOVABLE_FALLBACK_MODEL, RESTING_MESSAGE } from "./chat-fallback";
 import { isPaused, type ProviderState, type ProviderStore } from "../_shared/chat-provider-state";
 
 function setup(status: number, marker?: string) {
@@ -11,6 +11,46 @@ function setup(status: number, marker?: string) {
   return { route, states, calls, count: () => bionicCalls };
 }
 const payload = { model: "bionic/glm-5.3-flash", messages: [{ role: "system", content: "Authored brain" }, { role: "tool", tool_call_id: "1", content: "Actual result" }], tools: [{ type: "function" }], stream: true };
+
+function primarySetup(status: number) {
+  const states = new Map<string, ProviderState>();
+  const calls: string[] = [];
+  const store: ProviderStore = { get: async p => states.get(p) || null, set: async s => { states.set(s.provider, s); } };
+  const route = createLovableFirstChat(store,
+    async p => { calls.push(String(p.model)); return new Response("data: [DONE]\n\n"); },
+    async p => { calls.push(String(p.model)); return new Response("{}", { status }); }, new AbortController().signal);
+  return { route, calls, states };
+}
+test("site-paid chat uses working Lovable before Bionic", async () => {
+  const s = primarySetup(200);
+  await s.route.call(payload);
+  expect(s.calls).toEqual(["openai/gpt-6-luna"]);
+  expect(s.route.getModel()).toBe("openai/gpt-6-luna");
+});
+test("Lovable exhausted credits use Bionic and retain it through tool continuations", async () => {
+  const s = primarySetup(402);
+  await s.route.call(payload);
+  s.route.markStarted();
+  await s.route.call(payload);
+  expect(s.calls).toEqual(["openai/gpt-6-luna", "bionic/glm-5.3-flash", "bionic/glm-5.3-flash"]);
+  expect(s.states.get("lovable_chat")?.status).toBe("credits");
+});
+for (const status of [400,401,403,404,429]) test(`Lovable ${status} never bypasses terminal failures via Bionic`, async () => {
+  const s = primarySetup(status);
+  expect((await s.route.call(payload)).status).toBe(status);
+  expect(s.calls).toEqual(["openai/gpt-6-luna"]);
+});
+test("Lovable successful empty/refusal stream is never replayed", async () => {
+  const s = primarySetup(200);
+  await s.route.call(payload);
+  expect(s.calls).toHaveLength(1);
+});
+test("Lovable credit failure after stream starts never replays on Bionic", async () => {
+  const s = primarySetup(402);
+  s.route.markStarted();
+  expect((await s.route.call(payload)).status).toBe(402);
+  expect(s.calls).toEqual(["openai/gpt-6-luna"]);
+});
 
 test("Bionic exhausted credits automatically use previous Lovable model with intact tools/history", async () => {
   const s = setup(402);
