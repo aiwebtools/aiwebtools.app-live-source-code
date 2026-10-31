@@ -42,6 +42,6 @@
 - Pre-mount large header menus during idle (forceMount + hidden when closed) so the first tap only reveals them.
 - Community apps are listed from `community_apps` and only inserted by the AI-reviewing `submit-community-app` function; keeps unverified links out of the menu.
 - Keep personal keys in owner-bound page memory and authenticated chat requests, never storage/tracking/logs; explicit activation cannot silently fall back to paid default AI.
-- Select builder-paid chat transport server-side behind the existing tool loop, retaining personal-provider precedence and separate image/search/speech services; persist outage/credit/denial states shared with the watchdog so authorized fallback never bypasses refusals or exposes credentials.
+- Select builder-paid chat transport server-side behind the existing tool loop with Lovable first and pre-stream Bionic backup, retaining personal-provider precedence and separate image/search/speech services; persistent circuit states prevent denial/refusal bypass.
 - Run background helper text jobs (Care Bot, weekly digest, community-app review) through `_shared/glm-helper.ts` first, keeping their existing Lovable AI call as fallback; search tool matching and ethics review stay on gateway models for speed/strictness.
 - Let YouTube select playback quality automatically in every player; forced HD and background pause/play loops cause buffering and competing-video interruptions.

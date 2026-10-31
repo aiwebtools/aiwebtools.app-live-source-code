@@ -3,7 +3,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import { selectBotModel, selectTurnModel } from "./model-selection.ts";
 import { callBionic, isBionicModel } from "./bionic-provider.ts";
-import { createFallbackChat } from "./chat-fallback.ts";
+import { createLovableFirstChat } from "./chat-fallback.ts";
 import { readTokenUsage } from "../_shared/chat-usage.ts";
 import type { ProviderState, ProviderStore } from "../_shared/chat-provider-state.ts";
 import { appendInstructionFidelity, resolveOperationalInstructions } from "./instruction-fidelity.ts";
@@ -393,7 +393,7 @@ Deno.serve(async (req) => {
       if (error) throw new Error("Provider safety state could not be saved.");
     },
   };
-  const routedChat = createFallbackChat(providerStore,
+  const routedChat = createLovableFirstChat(providerStore,
     (payload) => callBionic(BIONIC_API_KEY, payload, req.signal),
     (payload) => gateway.fetch(CHAT_URL, {
       method: "POST",
@@ -405,7 +405,7 @@ Deno.serve(async (req) => {
     return routedChat.call(payload);
   };
 
-  // Bionic is the default; advanced work uses DeepSeek. Explicit personal/manual choices stay fixed.
+  // Lovable is tried first for site defaults; Bionic selection determines the safe backup.
   const turnModel = selectTurnModel(app.model || selectedModel, body.model, lastUser?.content?.split("USER DATA ATTACHMENT")[0] || "", basePrompt, personalAi?.model);
   if (!turnModel) return json({ error: "That model is not supported by this assistant." }, 400);
   const usingBionic = !personalAi && isBionicModel(turnModel);
