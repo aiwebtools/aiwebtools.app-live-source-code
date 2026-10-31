@@ -28,6 +28,9 @@ export const getYouTubeThumbnail = (videoUrl?: string): string | undefined => {
 export const getResolvedAssetUrl = (url: string | null | undefined): string => {
   if (!url) return "";
   if (url.startsWith("/src/assets/")) {
+    // ES module image imports have this URL in Vite development. Rewriting
+    // them relative to /src/utils points at /assets and breaks valid images.
+    if (import.meta.env?.DEV) return url;
     const filename = url.replace("/src/assets/", "");
     // This handles Vite asset resolution in most cases where relative paths are expected
     try {
