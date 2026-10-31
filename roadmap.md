@@ -1,5 +1,13 @@
 # Roadmap
 
+## Muse and game tools finish
+- [x] All seven individual pages render their custom artwork; all seven names present in four search catalogs and sitemap; GearZero phone page has no horizontal overflow
+- [x] Correct referral-copy failure state, preserve exact PI0DS6 code and add affiliate tracking to Muse
+- [x] Keep access-code gate disabled and update its regression test
+- [x] Seven gate/referral/image/promotion regressions pass; current build OK; publication requested for https://aiwebtools.app
+- [ ] Automatic referral popup timing/copy flow remains unverified in the browser; accelerated test could not open it under the shared cooldown
+- [ ] Confirm deployment serves the updated version; hosting completion remains unconfirmed
+
 ## Response voice reliability
 - [x] Fix silent phone fallback: separately prime device speech on submit/play, prefer natural English voices, retain/chunk utterances, surface/log speaker failures; 17 speech tests pass and real guest Time Machine reply auto-read/replay verified with simulated quota failure and instrumented Samantha Enhanced, zero page errors/build OK; physical phone sound and paid voice availability remain unverified, preview only
 - [x] Prevent overlapping welcome, waiting and response voices; serialize studio/device fallback and cancel stale playback

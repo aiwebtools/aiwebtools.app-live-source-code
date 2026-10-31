@@ -157,6 +157,12 @@
   <url><loc>https://aiwebtools.app/obs-studio</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/rpg-maker</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/vrchat</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aiwebtools.app/gearzero</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aiwebtools.app/astrocade</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aiwebtools.app/exists</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aiwebtools.app/layer-ai</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aiwebtools.app/jabali-ai</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aiwebtools.app/bitmagic</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/riversidefm</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/auphonic</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/anchor-spotify-for-podcasters</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
@@ -1126,6 +1132,7 @@
   <url><loc>https://aiwebtools.app/cotester</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/adobe-ai-agents</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/zo-computer-agent</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aiwebtools.app/muse</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/wordfare-ai</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/lessie-ai</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/convergence-ai</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
@@ -1993,11 +2000,4 @@
   <url><loc>https://aiwebtools.app/cleric-ai</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/microsoft-copilot-studio</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/dropbox-dash</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://aiwebtools.app/nanobrowser</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://aiwebtools.app/praisonai</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://aiwebtools.app/resolve-ai</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://aiwebtools.app/sana-ai</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://aiwebtools.app/sindarin</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://aiwebtools.app/solver-ai</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://aiwebtools.app/bolt-diy</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
 </urlset>

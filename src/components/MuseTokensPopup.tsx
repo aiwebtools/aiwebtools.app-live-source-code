@@ -6,7 +6,7 @@ import { createTimePortalEffect } from "@/utils/timeEffects";
 import museBanner from "@/assets/tools/muse-ai-agent-hero.jpg";
 import { schedulePromotion, PROMOTION_INTERVAL_MS } from "@/utils/promotionalPopups";
 
-export const MUSE_JOIN_URL = "https://muse.ai/join";
+export const MUSE_JOIN_URL = "https://muse.ai/join?via=aiwebtools";
 export const MUSE_CODE = "PI0DS6";
 const GEARZERO_URL = "https://gearzero.ai/?via=aiwebtools";
 const STORAGE_KEY = "museTokensShown";
@@ -15,6 +15,7 @@ const STORAGE_KEY = "museTokensShown";
 const MuseTokensPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
   const dismiss = useRef<() => void>(() => {});
   const close = () => { dismiss.current(); setIsOpen(false); };
 
@@ -29,9 +30,15 @@ const MuseTokensPopup = () => {
   }, []);
 
   const copyCode = async () => {
-    try { await navigator.clipboard.writeText(MUSE_CODE); } catch { /* still show code */ }
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2500);
+    try {
+      await navigator.clipboard.writeText(MUSE_CODE);
+      setCopied(true);
+      setCopyFailed(false);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      setCopied(false);
+      setCopyFailed(true);
+    }
   };
 
   const open = (url: string, label: string) => { close(); createTimePortalEffect(url, label); };
@@ -47,23 +54,26 @@ const MuseTokensPopup = () => {
               Join Muse, your personal AI agent, then redeem this code in <b className="text-foreground">Settings</b> within 48 hours of joining.
             </DialogDescription>
           </DialogHeader>
-          <button
+          <Button
             type="button"
+            variant="outline"
             onClick={copyCode}
             aria-label={`Copy code ${MUSE_CODE}`}
-            className="mt-4 w-full flex items-center justify-between gap-3 rounded-lg border-2 border-dashed border-primary bg-primary/10 px-4 py-3 font-mono text-2xl tracking-[0.3em] text-primary hover:bg-primary/20 transition-colors"
+            className="mt-4 h-auto w-full flex flex-wrap items-center justify-between gap-3 rounded-lg border-2 border-dashed border-primary bg-primary/10 px-4 py-3 font-mono text-2xl text-primary hover:bg-primary/20 transition-colors"
           >
             {MUSE_CODE}
             <span className="flex items-center gap-1 text-xs font-sans tracking-normal">
               {copied ? <><Check className="w-4 h-4" />Copied</> : <><Copy className="w-4 h-4" />Tap to copy</>}
             </span>
-          </button>
+          </Button>
+          {copyFailed && <p role="status" className="mt-2 text-sm text-muted-foreground">Copy unavailable. Your code is {MUSE_CODE}.</p>}
+          <p className="mt-2 text-xs text-muted-foreground">Offer eligibility and availability are determined by Muse. Both members receive tokens for an eligible referral.</p>
           <div className="flex flex-col gap-2 pt-4">
-            <Button onClick={() => { copyCode(); open(MUSE_JOIN_URL, "Muse"); }} className="w-full font-semibold">
+            <Button onClick={() => { void copyCode(); open(MUSE_JOIN_URL, "Muse"); }} className="h-auto min-h-10 w-full whitespace-normal font-semibold">
               Copy Code &amp; Join Muse <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
-            <Button onClick={() => open(GEARZERO_URL, "GearZero")} variant="outline" className="w-full">
-              <Gamepad2 className="w-4 h-4 mr-2" /> Also try GearZero – AI video game maker
+            <Button onClick={() => open(GEARZERO_URL, "GearZero")} variant="outline" className="h-auto min-h-10 w-full whitespace-normal">
+              <Gamepad2 className="w-4 h-4 mr-2 shrink-0" /> Also try GearZero – AI video game maker
             </Button>
             <Button onClick={close} variant="ghost" className="w-full text-muted-foreground">Not now</Button>
           </div>
