@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://aiwebtools.app/nanobrowser</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aiwebtools.app/praisonai</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aiwebtools.app/resolve-ai</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aiwebtools.app/sana-ai</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aiwebtools.app/sindarin</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aiwebtools.app/solver-ai</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aiwebtools.app/bolt-diy</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/devstral</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/tinytroupe</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/mistral-code</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
