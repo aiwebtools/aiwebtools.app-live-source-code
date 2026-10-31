@@ -1,5 +1,12 @@
 # Roadmap
 
+## Lovable-first chat, voices and mobile readiness
+- [ ] Prefer existing Lovable chat model for site-paid requests, retain personal-key precedence and safe Bionic fallback only before streaming
+- [ ] Verify paid reply voices and natural device fallback without replacing saved recordings
+- [ ] Audit operational instructions against available tools; preserve originals and add honest capability boundaries
+- [ ] Check phone chat, builder, menus and dialogs; fix confirmed fit/performance issues and run regressions
+- [ ] Verify real chat/voice flow and report provider or device limitations honestly
+
 ## Muse and game tools finish
 - [x] All seven individual pages render their custom artwork; all seven names present in four search catalogs and sitemap; GearZero phone page has no horizontal overflow
 - [x] Correct referral-copy failure state, preserve exact PI0DS6 code and add affiliate tracking to Muse
