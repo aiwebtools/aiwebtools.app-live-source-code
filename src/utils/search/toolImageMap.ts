@@ -7,6 +7,7 @@ let pending: Promise<Map<string, string>> | null = null;
 const listeners = new Set<(map: Map<string, string>) => void>();
 
 const isUsable = (url?: string) => typeof url === "string" && url.length > 0;
+const isDisplayable = (url?: string) => isUsable(url) && (!url?.startsWith("/src/") || import.meta.env?.DEV);
 
 const getYouTubeThumbnail = (videoUrl?: string): string | undefined => {
   if (!videoUrl) return undefined;
@@ -17,7 +18,7 @@ const getYouTubeThumbnail = (videoUrl?: string): string | undefined => {
 };
 
 const getMediaImage = (tool: { imageUrl?: string; videoUrl?: string }): string | undefined =>
-  (isUsable(tool.imageUrl) && !tool.imageUrl?.startsWith("/src/") ? tool.imageUrl : undefined) ??
+  (isDisplayable(tool.imageUrl) ? tool.imageUrl : undefined) ??
   getYouTubeThumbnail(tool.videoUrl);
 
 export const getToolImageMapSync = () => cache;
@@ -114,6 +115,6 @@ export const getToolImage = (
 ): string | undefined => {
   if (!tool) return undefined;
   const fromMap = map && tool.title ? map.get(tool.title.trim().toLowerCase()) : undefined;
-  if (isUsable(tool.imageUrl) && !tool.imageUrl?.startsWith("/src/")) return tool.imageUrl as string;
+  if (isDisplayable(tool.imageUrl)) return tool.imageUrl;
   return fromMap ?? getMediaImage(tool);
 };
