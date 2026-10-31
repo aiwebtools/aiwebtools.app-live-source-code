@@ -238,7 +238,7 @@ export const aiGamingTools: Tool[] = [
     color: "from-teal-500 to-amber-500",
     directUrl: "https://www.layer.ai/?via=aiwebtools",
     imageUrl: layerAiHero,
-    tags: ["Layer AI", "layer.ai", "game art", "game assets", "art direction", "video game", "video game generator", "ai to make video games", "make video games", "create video games", "AI game maker", "game development", "no-code games", "Game Development", "Freemium", "free tier"],
+    tags: ["Layer AI", "layer.ai", "game art", "game assets", "art direction", "video game", "game development", "Game Asset Generator", "character design", "environment art", "AI art"],
     category: "AI Gaming & Game Development",
     rating: 4.6,
     totalVotes: 500

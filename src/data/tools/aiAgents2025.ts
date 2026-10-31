@@ -543,7 +543,7 @@ export const aiAgents2025: Tool[] = [
     description: "Muse is your personal AI agent — a tireless creative companion that plans, writes, researches and completes everyday tasks for you. New members who redeem code PI0DS6 in Settings within 48 hours of joining receive 1 billion free Muse tokens. Like the muses of old, it whispers the next idea before you knew you needed it.",
     emoji: "✨",
     color: "from-violet-500 to-emerald-600",
-    directUrl: "https://muse.ai/join",
+    directUrl: "https://muse.ai/join?via=aiwebtools",
     imageUrl: museAiAgentHero,
     tags: ["AI Agents", "personal AI agent", "AI assistant", "Muse", "Muse AI", "muse.ai", "task automation", "productivity", "free tokens", "1 billion tokens", "referral code", "PI0DS6", "Freemium", "free tier"],
     category: "AI Agents",
