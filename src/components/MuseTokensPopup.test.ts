@@ -1,3 +1,4 @@
+// @ts-ignore -- Bun test runtime
 import { expect, test } from "bun:test";
 import { MUSE_CODE, MUSE_JOIN_URL } from "./MuseTokensPopup";
 

@@ -1,3 +1,4 @@
+// @ts-ignore -- Bun test runtime
 import { expect, test } from "bun:test";
 import { getResolvedAssetUrl } from "./imageUtils";
 
