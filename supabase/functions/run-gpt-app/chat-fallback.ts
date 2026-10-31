@@ -7,6 +7,52 @@ type Transport = (payload: Payload) => Promise<Response>;
 const pausedResponse = (provider: string, status?: number | null) => new Response(JSON.stringify({ error: `${provider} is paused. The site owner needs to restore access or credits and resume it.` }), { status: status || 503 });
 export const RESTING_MESSAGE = "Our bots are resting — both Bionic and Lovable chat credits have run out. Please check back after credits are replenished.";
 
+/** Site-paid default: Lovable first, with one safe pre-stream Bionic backup. */
+export function createLovableFirstChat(store: ProviderStore, bionic: Transport, lovable: Transport, signal: AbortSignal) {
+  const backup = createFallbackChat(store, bionic, lovable, signal);
+  let model = LOVABLE_FALLBACK_MODEL;
+  let reason: string | null = null;
+  let switched = false;
+  let started = false;
+  return {
+    getModel: () => switched ? backup.getModel() : model,
+    getReason: () => reason,
+    markStarted: () => { started = true; backup.markStarted(); },
+    call: async (payload: Payload): Promise<Response> => {
+      // Explicit site model selections retain their existing behavior.
+      if (!isBionicModel(payload.model)) {
+        switched = true;
+        return backup.call(payload);
+      }
+      if (switched) return backup.call(payload);
+      model = LOVABLE_FALLBACK_MODEL;
+      const state = await store.get("lovable_chat");
+      let response: Response;
+      if (isPaused(state)) {
+        if (state?.status !== "credits" && state?.status !== "outage") return pausedResponse("Lovable chat", state?.http_status);
+        response = pausedResponse("Lovable chat", state?.http_status);
+        reason = state.status;
+      } else {
+        response = await lovable({ ...payload, model, reasoning_effort: "none" });
+        if (signal.aborted) return response;
+        await recordProviderFailure(store, "lovable_chat", response.status);
+        if (response.ok) {
+          if (state?.status === "outage") await store.set({ provider: "lovable_chat", status: "ready", http_status: null, retry_at: null });
+          return response;
+        }
+        if (response.status !== 402 && !(response.status >= 500 && response.status <= 599)) return response;
+        reason = response.status === 402 ? "credits" : "outage";
+      }
+      if (started) return response;
+      await response.body?.cancel();
+      if (reason === "outage") await new Promise(resolve => setTimeout(resolve, 1200));
+      if (signal.aborted) return new Response(JSON.stringify({ error: "Reply stopped." }), { status: 499 });
+      switched = true;
+      return backup.call(payload);
+    },
+  };
+}
+
 /** One authorized provider switch before receiving a stream, never on refusals or partial replies. */
 export function createFallbackChat(store: ProviderStore, bionic: Transport, lovable: Transport, signal: AbortSignal) {
   let fallback = false;
