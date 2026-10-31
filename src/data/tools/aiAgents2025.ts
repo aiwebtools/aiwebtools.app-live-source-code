@@ -1,5 +1,6 @@
 import { Bot, Globe, Code, Zap, Brain, Rocket, Settings, Users, Sparkles, Video, Mic, Shield, Search, Briefcase, FileText, MessageSquare } from "lucide-react";
 import { Tool } from "@/types/tools";
+import museAiAgentHero from "@/assets/tools/muse-ai-agent-hero.jpg";
 
 export const aiAgents2025: Tool[] = [
   {
@@ -535,5 +536,19 @@ export const aiAgents2025: Tool[] = [
     rating: 4.8,
     totalVotes: 920,
     tagline: "Your AI employee that works 24/7 building apps and clearing your inbox"
+  },
+  {
+    icon: Sparkles,
+    title: "Muse",
+    description: "Muse is your personal AI agent — a tireless creative companion that plans, writes, researches and completes everyday tasks for you. New members who redeem code PI0DS6 in Settings within 48 hours of joining receive 1 billion free Muse tokens. Like the muses of old, it whispers the next idea before you knew you needed it.",
+    emoji: "✨",
+    color: "from-violet-500 to-emerald-600",
+    directUrl: "https://muse.ai/join",
+    imageUrl: museAiAgentHero,
+    tags: ["AI Agents", "personal AI agent", "AI assistant", "Muse", "Muse AI", "muse.ai", "task automation", "productivity", "free tokens", "1 billion tokens", "referral code", "PI0DS6", "Freemium", "free tier"],
+    category: "AI Agents",
+    rating: 4.7,
+    totalVotes: 640,
+    tagline: "Your personal AI agent — redeem code PI0DS6 for 1 billion free tokens"
   }
 ];
