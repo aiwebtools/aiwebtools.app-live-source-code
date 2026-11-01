@@ -1,5 +1,10 @@
 # Roadmap
 
+## Latest MTV AI uploads and branding
+- [ ] Recheck fresh YouTube Videos and Shorts, add only missing uploads to the shared list without removing existing media
+- [ ] Add complementary MTVAI.live / Presented by aiwebtools.app branding to website header/footer and main, pinned and book music areas
+- [ ] Run playlist tests and verify new entries, playback, branding and phone fit in the browser
+
 ## Bot commercial usability
 - [x] Scope YouTube events to the commercial iframe, raise video above embedded rooms and drawers, stop audio before close, and release failed embeds after 15 seconds
 - [x] Three playback regressions pass; real Time Machine footage visibly plays with close X, unrelated end messages do not dismiss it, close removes iframe and a real guest reply succeeds afterward; build OK. Original reported bot/device and embedded-room playback not directly reproduced
