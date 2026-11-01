@@ -54,7 +54,7 @@ export const botVersionNumber = (slug: string) => Number(slug.match(/-v(\d+)$/)?
 
 // Verified Bionic IDs; default resolves server-side and manual picks remain explicit.
 export const STUDIO_MODELS = [
-  { id: "default", label: "Auto · GLM / DeepSeek" },
+  { id: "default", label: "Auto · Lovable / Bionic backup" },
   { id: "bionic/glm-5.3-flash", label: "GLM 5.3 Flash · Economy" },
   { id: "bionic/deepseek-v4.1-flash", label: "DeepSeek V4.1 Flash · Reasoning / Code" },
   { id: "openai/gpt-6-luna", label: "GPT-6 Luna · Lovable" },

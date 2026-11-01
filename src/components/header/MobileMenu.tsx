@@ -278,7 +278,7 @@ const MobileMenu = () => {
           <DropdownMenuContent 
             ref={dropdownRef}
             forceMount={menuWarm || isMenuOpen ? true : undefined}
-            className="data-[state=closed]:hidden w-[calc(100vw-1rem)] max-w-[400px] bg-black border-2 border-cyan-500/50 max-h-[calc(100dvh-7rem)] overflow-visible z-[110]"
+            className="data-[state=closed]:hidden w-[calc(100vw-1rem)] max-w-[400px] bg-black border-2 border-cyan-500/50 max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain z-[110]"
             align="end"
             side="bottom"
             alignOffset={0}

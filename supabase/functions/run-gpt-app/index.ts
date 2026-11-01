@@ -399,7 +399,7 @@ Deno.serve(async (req) => {
       method: "POST",
       headers: { "Content-Type": "application/json", "Lovable-API-Key": LOVABLE_API_KEY || "", "X-Lovable-AIG-SDK": "fetch" },
       signal: req.signal, body: JSON.stringify(payload),
-    }), req.signal);
+    }), req.signal, !body.model || body.model === "default");
   const callGateway = (payload: Record<string, unknown>) => {
     if (personalAi && personalAdapter) return personalAdapter(personalAi, payload, req.signal, personalRun);
     return routedChat.call(payload);

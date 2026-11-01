@@ -62,7 +62,7 @@ export default function BotBuilder({ open, onOpenChange, onSaved }: { open: bool
   };
   const field = "w-full rounded-md border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary";
   return <Dialog open={open} onOpenChange={onOpenChange}>
-    <DialogContent className="max-h-[92vh] overflow-y-auto border-primary/40 sm:max-w-xl">
+    <DialogContent className="w-[calc(100vw-1.5rem)] max-w-xl max-h-[92dvh] overflow-y-auto overflow-x-hidden overscroll-contain border-primary/40">
       <DialogHeader>
         <DialogTitle className="gpt-room-accent tracking-wide">CREATE YOUR OWN CUSTOM MODEL</DialogTitle>
         <DialogDescription>Saved on this device. Web search, image creation, voice, long memory and every studio ability are switched on automatically.</DialogDescription>
