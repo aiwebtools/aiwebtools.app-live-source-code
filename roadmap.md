@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Recent MTV AI uploads
+- [ ] Recheck channel Videos and Shorts for newer uploads requested November 1 at 01:44 UTC; add only verified missing IDs to the shared three-player list and test
 - [x] Verified 26 missing uploads (15 videos, 11 Shorts) in October 18–November 1 window; excluded three older uploads using metadata dates, not titles
 - [x] Added shared exact titles/URLs/dates/runtime/format metadata to pinned gallery and book-promo reels; main MTV AI page reuses gallery; no existing videos removed
 - [x] Two date/ID regressions pass; main MTV AI Next control reaches all 26 additions, zero runtime errors; latest build OK
