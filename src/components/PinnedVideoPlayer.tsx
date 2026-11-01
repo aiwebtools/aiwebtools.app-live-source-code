@@ -6,6 +6,7 @@ import type { Tool } from "@/types/tools";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import { RECENT_MTVAI_UPLOADS } from "@/data/recentMtvaiUploads";
+import MtvaiBrand from "@/components/MtvaiBrand";
 
 const YT_EMBED_ORIGIN = "https://www.youtube-nocookie.com";
 const YT_API_ORIGIN_FALLBACK = "https://www.youtube.com";
@@ -1331,6 +1332,7 @@ const PinnedVideoPlayer = memo(() => {
         </div>
 
         {/* Video Container - stable iframe that doesn't remount on navigation */}
+        {(isMusicMode || mode === 'idle') && <div className="flex justify-center bg-background py-1"><MtvaiBrand compact /></div>}
         <div
           className="group relative bg-black"
           style={{

@@ -1,5 +1,11 @@
 # Roadmap
 
+## Latest MTV AI uploads and branding
+- [x] Fresh browser channel check covers 180 Videos and expanded Shorts: added 30 new full-length-tab uploads, no new Shorts, preserved all previous entries; exact titles/IDs/runtimes verified, timestamps/aspects left unknown
+- [x] Added shared original MTVAI.live / Presented by aiwebtools.app mark to website header/footer and main, pinned and book music areas; preserved directory identity, existing logos and footage; theater metadata and route icon updated
+- [x] Five tests pass (205 assertions); all 30 reachable through theater Next among 337 unique videos; newest Event Horizon Choir footage plays with advancing time/readyState 4, normal playback zero page errors, header/footer/theater screenshots checked and 360px fit verified; title moved clear of transport controls; build OK
+- [ ] Pinned/book visual playback awaits successful deferred homepage mounting in browser; those sections did not mount during this check. Shared playlist wiring is preserved. Stress navigation surfaced an external YouTube getDuration error; normal playback rerun had zero errors
+
 ## Bot commercial usability
 - [x] Scope YouTube events to the commercial iframe, raise video above embedded rooms and drawers, stop audio before close, and release failed embeds after 15 seconds
 - [x] Three playback regressions pass; real Time Machine footage visibly plays with close X, unrelated end messages do not dismiss it, close removes iframe and a real guest reply succeeds afterward; build OK. Original reported bot/device and embedded-room playback not directly reproduced

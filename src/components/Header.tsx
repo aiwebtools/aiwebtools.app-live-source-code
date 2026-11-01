@@ -8,6 +8,8 @@ import MobileMenu from "./header/MobileMenu";
 import DesktopMenu from "./header/DesktopMenu";
 import TabletMenu from "./header/TabletMenu";
 import JoinEmailListButton from "./JoinEmailListButton";
+import MtvaiBrand from "./MtvaiBrand";
+import { Link } from "react-router-dom";
 
 const getViewportMenu = () => {
   if (typeof window === "undefined") return "desktop";
@@ -45,6 +47,7 @@ const Header = () => {
           <span className="mx-8 inline-block">
             Believe In Yourself....Never Give Up....Love-Truth-Life
           </span>
+          <Link to="/music-stream" className="mx-8 inline-block font-bold">MTVAI.live · Presented by aiwebtools.app</Link>
         </div>
       </div>
       <div className="container mx-auto px-3 md:px-4 py-3 md:py-4">
@@ -52,6 +55,9 @@ const Header = () => {
           {/* Logo - smaller on mobile */}
           <div className="flex-shrink min-w-0 overflow-hidden">
             <Logo />
+            <Link to="/music-stream" aria-label="Watch MTVAI.live, presented by aiwebtools.app" className="block w-fit mt-1">
+              <MtvaiBrand compact />
+            </Link>
           </div>
           
           {/* Menu buttons - always visible */}

@@ -12,6 +12,7 @@ import { playMtvFlash } from "@/utils/mtvFlash";
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import { buildMusicVideoOrder } from "@/components/PinnedVideoPlayer";
 import { RECENT_MTVAI_UPLOADS } from "@/data/recentMtvaiUploads";
+import MtvaiBrand from "@/components/MtvaiBrand";
 
 // Utility function to shuffle array
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -1349,6 +1350,7 @@ const BookPromotionCard = () => {
             <div className="flex flex-col lg:flex-row items-center">
               {/* Book Visual - YouTube Videos */}
                 <div className="lg:w-1/2 p-3 md:p-5 overflow-visible">
+                <div className="flex justify-center mb-4"><MtvaiBrand /></div>
                 {/* Desktop: Carousel showing 3 videos at a time */}
                 <div className="hidden md:block relative overflow-visible">
                   <div className="flex items-center justify-center gap-3">
@@ -1621,18 +1623,11 @@ const BookPromotionCard = () => {
                     <Button
                       size="sm"
                       onClick={() => { playMtvFlash().then(() => navigate('/music-stream')); }}
-                      className="bg-gradient-to-r from-fuchsia-600 via-purple-600 to-cyan-600 hover:from-fuchsia-500 hover:via-purple-500 hover:to-cyan-500 text-white font-bold px-4 py-2 rounded-lg text-sm shadow-lg hover:shadow-fuchsia-500/40 transition-all duration-300 transform hover:scale-105 border border-fuchsia-400/40"
+                      className="mtvai-channel-link btn-flat h-auto border px-4 py-3"
                       title="Open MTVai Theater — 24/7 AI music videos"
                       aria-label="Open MTVai Theater"
                     >
-                      <img
-                        src={mtvAiWebToolsLogo}
-                        alt=""
-                        aria-hidden
-                        draggable={false}
-                        className="mr-1.5 w-4 h-4 drop-shadow-[0_0_6px_rgba(168,85,247,0.9)]"
-                      />
-                      WATCH 🎬 MTVai.live - AWT Creative Music Television
+                      <MtvaiBrand />
                     </Button>
 
                         <Button
