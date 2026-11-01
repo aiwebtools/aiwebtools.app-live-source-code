@@ -27,6 +27,13 @@ test("site-paid chat uses working Lovable before Bionic", async () => {
   expect(s.calls).toEqual(["openai/gpt-6-luna"]);
   expect(s.route.getModel()).toBe("openai/gpt-6-luna");
 });
+test("explicit Bionic model selection stays on Bionic", async () => {
+  const calls: string[] = [];
+  const store: ProviderStore = { get: async () => null, set: async () => {} };
+  const route = createLovableFirstChat(store, async p => { calls.push(String(p.model)); return new Response(); }, async () => { throw new Error("must not call Lovable"); }, new AbortController().signal, false);
+  await route.call(payload);
+  expect(calls).toEqual(["bionic/glm-5.3-flash"]);
+});
 test("Lovable exhausted credits use Bionic and retain it through tool continuations", async () => {
   const s = primarySetup(402);
   await s.route.call(payload);
