@@ -727,6 +727,11 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
   .studio-brand { font-size: 12px; letter-spacing: 0; min-width: 0; flex: 1; }
   .studio .studio-refresh { width: 40px; padding: 0; }
   .studio .studio-refresh span { display: none; }
+  .studio .studio-bot-menu { width: 40px; padding: 0; }
+  .studio .studio-bot-menu span { display: none; }
+  .studio .studio-topbar { padding-inline: 8px; gap: 6px; }
+  .studio .studio-topbar > div { gap: 4px; }
+  .studio .studio-brand { flex: 1 0 110px; }
   .studio-topbar > div { gap: 8px; }
   .studio-nav-control { width: 40px; height: 40px; }
   .studio-grid { height: calc(100% - 64px); padding: 6px 8px 8px; }
