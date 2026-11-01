@@ -1,5 +1,10 @@
 # Roadmap
 
+## Recent MTV AI uploads
+- [ ] Gather verified channel uploads from October 18–November 1, 2026 and compare YouTube IDs against existing reels
+- [ ] Add missing verified music videos/vertical clips to pinned MTV AI, main music page and book-promo reels without removing existing videos
+- [ ] Verify playlist membership, deduplication and existing playback controls
+
 ## Lovable-first chat, voices and mobile readiness
 - [x] Lovable-first site-paid chat deployed and live-verified on GPT-6 Luna; restored stale credit pause after successful live call; explicit models/personal keys and terminal safeguards preserved
 - [x] Existing lifelike Lovable speech returns real WAV audio; phone guest chat auto-read state verified; 53 routing/voice/instruction regressions pass and saved recordings preserved
