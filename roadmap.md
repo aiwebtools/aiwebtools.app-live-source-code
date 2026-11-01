@@ -5,6 +5,7 @@
 - [x] Three playback regressions pass; real Time Machine footage visibly plays with close X, unrelated end messages do not dismiss it, close removes iframe and a real guest reply succeeds afterward; build OK. Original reported bot/device and embedded-room playback not directly reproduced
 
 ## Recent MTV AI uploads
+- [ ] November 1 07:28 UTC request: freshly check Videos and Shorts, add only verified missing uploads to the shared list, and verify playlist access/playback without removing existing videos
 - [x] Fresh November 1 recheck: 30 Videos + 48 Shorts cover the two-week boundary; all missing listed IDs predate October 18, so no further additions needed. Newest public Short MKrXzgLxGrY (01:26 UTC) already included; two tests pass and all 26 additions reachable among 296 unique theater entries
 - [x] Verified 26 missing uploads (15 videos, 11 Shorts) in October 18–November 1 window; excluded three older uploads using metadata dates, not titles
 - [x] Added shared exact titles/URLs/dates/runtime/format metadata to pinned gallery and book-promo reels; main MTV AI page reuses gallery; no existing videos removed
