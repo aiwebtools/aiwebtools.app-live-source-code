@@ -43,6 +43,16 @@ test("verbatim instructions remain the exact prefix including whitespace", () =>
   expect(result.slice(0, original.length)).toBe(original);
   expect(result.length).toBeGreaterThan(original.length);
 });
+test("all bot instruction sources receive real-world evidence boundaries without losing originals", () => {
+  for (const slug of ["disable-that-robot-gpt", "stellaris", "custom-my-guide", "community-my-guide"]) {
+    const original = "Original authored instructions\r\n  Preserve me.";
+    const result = appendInstructionFidelity(original, slug, "Guide");
+    expect(result.slice(0, original.length)).toBe(original);
+    expect(result).toContain("REAL-WORLD CAPABILITY BOUNDARY:");
+    expect(result).toContain("never invent equipment controls or recommend bypassing safety systems");
+    expect(result).toContain("overrides conflicting mission-mode suggestions");
+  }
+});
 test("theory delivery supplement applies across bots without rewriting any original", () => {
   const original = "  Original instructions\r\nRequired opening and workflow.  ";
   for (const slug of ["aether-guide", "community-mind-exploration", "custom-theory-guide", "time-machine-gpt"]) {
