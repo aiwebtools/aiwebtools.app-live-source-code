@@ -16,6 +16,15 @@ export function commercialEmbed(url: string): string | null {
     return id && /^[\w-]{11}$/.test(id) ? `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=0&playsinline=1&rel=0&enablejsapi=1` : null;
   } catch { return null; }
 }
+/** Ignore other site players: only this commercial can end or unblock itself. */
+export function commercialPlayerEvent(event: Pick<MessageEvent, "source" | "origin" | "data">, player: MessageEventSource | null): { state?: number; error?: number } | null {
+  if (!player || event.source !== player || !/^https:\/\/(www\.)?youtube(?:-nocookie)?\.com$/.test(event.origin)) return null;
+  try {
+    const data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+    if (!data || typeof data !== "object") return null;
+    return { state: data.event === "onStateChange" ? data.info : data.info?.playerState, error: data.event === "onError" ? data.info : undefined };
+  } catch { return null; }
+}
 export async function getBotCommercial(toolTitle: string | null, name: string): Promise<string | null> {
   const { allTools } = await import("@/data/toolsData");
   const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
@@ -25,7 +34,7 @@ export async function getBotCommercial(toolTitle: string | null, name: string): 
   const targets = [family, toolTitle, name].filter(Boolean).map((s) => norm(s as string));
   for (const target of targets) {
     const exact = own.find((t) => norm(t.title) === target);
-    if (exact) return exact.videoUrl!;
+    if (exact?.videoUrl) return exact.videoUrl;
   }
   const n = norm(name);
   const partial = own.filter((t) => norm(t.title).length >= 10 && n.includes(norm(t.title))).sort((a, b) => b.title.length - a.title.length)[0];

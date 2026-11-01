@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Volume2 } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { commercialEmbed, getBotCommercial, hasSeenCommercial, markCommercialSeen } from "@/utils/botCommercials";
+import { commercialEmbed, commercialPlayerEvent, getBotCommercial, hasSeenCommercial, markCommercialSeen } from "@/utils/botCommercials";
 import { playBotIntro, stopBotIntro } from "@/utils/botIntroVoice";
 
 /** Once per bot per device: its own video commercial (sound on, auto-closes at the end), then its spoken welcome. */
@@ -19,24 +19,28 @@ export default function BotCommercial({ slug, name, toolTitle, userId, voice, cu
   const done = useRef(false);
   const started = useRef<string | null>(null);
   const shown = useRef(false);
+  const command = useCallback((func: string, args: unknown[] = []) => frame.current?.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args }), "https://www.youtube-nocookie.com"), []);
+  const stopVideo = useCallback(() => { command("mute"); command("stopVideo"); }, [command]);
 
   useEffect(() => {
     const cancel = () => {
       done.current = true;
+      stopVideo();
       liveShow.slug = null; liveShow.embed = null;
-      setOpen(false);
+      setOpen(false); setSrc(null);
       stopBotIntro();
     };
     window.addEventListener("awt-response-voice", cancel);
-    return () => { window.removeEventListener("awt-response-voice", cancel); stopBotIntro(); };
-  }, [slug]);
+    return () => { window.removeEventListener("awt-response-voice", cancel); stopVideo(); stopBotIntro(); };
+  }, [slug, stopVideo]);
 
   const finish = useCallback(() => {
     if (done.current) return; done.current = true;
+    stopVideo();
     liveShow.slug = null; liveShow.embed = null;
-    setOpen(false);
+    setOpen(false); setSrc(null);
     void playBotIntro({ slug, name, voice, userId, custom });
-  }, [slug, name, voice, userId, custom]);
+  }, [slug, name, voice, userId, custom, stopVideo]);
 
   useEffect(() => {
     // StrictMode remounts and async session changes re-run this effect for the same bot;
@@ -68,24 +72,24 @@ export default function BotCommercial({ slug, name, toolTitle, userId, voice, cu
     if (!open) return;
     let playing = false;
     const onMsg = (e: MessageEvent) => {
-      if (!/youtube/.test(e.origin) || typeof e.data !== "string") return;
-      try {
-        const d = JSON.parse(e.data);
-        const state = d.event === "onStateChange" ? d.info : d.info?.playerState;
-        if (state === 1) { playing = true; setNeedsTap(false); }
-        if (state === 0) finish();
-      } catch { /* not a player message */ }
+      const event = commercialPlayerEvent(e, frame.current?.contentWindow || null);
+      if (!event) return;
+      if (event.state === 1) { playing = true; setNeedsTap(false); }
+      if (event.state === 0 || event.error) finish();
     };
     window.addEventListener("message", onMsg);
-    const listen = window.setInterval(() => frame.current?.contentWindow?.postMessage(JSON.stringify({ event: "listening", id: slug }), "*"), 500);
-    const blocked = window.setTimeout(() => { if (!playing) { command("mute"); command("playVideo"); setNeedsTap(true); } }, 2500);
-    return () => { window.removeEventListener("message", onMsg); clearInterval(listen); clearTimeout(blocked); };
-  }, [open, finish, slug]);
-
-  const command = (func: string) => frame.current?.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args: [] }), "*");
+    const listen = window.setInterval(() => {
+      frame.current?.contentWindow?.postMessage(JSON.stringify({ event: "listening", id: slug }), "https://www.youtube-nocookie.com");
+      command("addEventListener", ["onStateChange"]); command("addEventListener", ["onError"]);
+    }, 500);
+    const blocked = window.setTimeout(() => { if (!playing) setNeedsTap(true); }, 2500);
+    // A failed embed must never trap a visitor behind an empty commercial.
+    const unavailable = window.setTimeout(() => { if (!playing) finish(); }, 15000);
+    return () => { window.removeEventListener("message", onMsg); clearInterval(listen); clearTimeout(blocked); clearTimeout(unavailable); };
+  }, [open, finish, slug, command]);
 
   return <Dialog open={open} onOpenChange={(value) => { if (!value) finish(); }}>
-    <DialogContent className="w-[calc(100%-1.5rem)] max-w-3xl overflow-hidden border-primary/40 p-0 pt-12">
+    <DialogContent overlayClassName="z-[200] bg-background/80" className="z-[210] w-[calc(100%-1.5rem)] max-w-3xl max-h-[90dvh] overflow-hidden border-primary/40 bg-background p-0 pt-12">
       <DialogTitle className="sr-only">{name} commercial</DialogTitle>
       <DialogDescription className="sr-only">Introduction video for {name}</DialogDescription>
       {open && src && <div className="relative">

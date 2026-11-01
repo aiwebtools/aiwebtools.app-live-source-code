@@ -20,6 +20,7 @@
 - Prime device speech separately in submit/play gestures, retain utterances until completion, and select natural language-matched voices; Web Audio failures must not suppress free fallback and device failures must be visible and logged.
 - Share one-utterance microphone input across bot surfaces and pause speaker audio while listening to prevent feedback into the conversation.
 - Render hosted bot rooms through `BotStudio` in both embedded and full-page placements so voice, streaming, downloads, branding and guest history cannot diverge.
+- Scope commercial events to their own iframe, layer them above studio dialogs, and stop playback before dismissal; unrelated players must never hide a sounding commercial or block chat.
 - Keep studio drawers above embedded dialogs and close their parent dialog before route changes; phone bot switching must never remain hidden behind the previous room.
 - Apply offscreen paint containment only to individual tool cards, never all nested grids; homepage sections and studio controls must stay visible across browsers.
 - Store device conversations separately by bot and thread, with dedicated `/app/:slug/chat/:threadId` URLs so reloads restore the exact conversation.
