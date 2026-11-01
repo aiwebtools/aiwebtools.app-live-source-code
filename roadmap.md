@@ -1,10 +1,12 @@
 # Roadmap
 
 ## Recent MTV AI uploads
+- [x] Fresh November 1 recheck: 30 Videos + 48 Shorts cover the two-week boundary; all missing listed IDs predate October 18, so no further additions needed. Newest public Short MKrXzgLxGrY (01:26 UTC) already included; two tests pass and all 26 additions reachable among 296 unique theater entries
 - [x] Verified 26 missing uploads (15 videos, 11 Shorts) in October 18–November 1 window; excluded three older uploads using metadata dates, not titles
 - [x] Added shared exact titles/URLs/dates/runtime/format metadata to pinned gallery and book-promo reels; main MTV AI page reuses gallery; no existing videos removed
 - [x] Two date/ID regressions pass; main MTV AI Next control reaches all 26 additions, zero runtime errors; latest build OK
-- [ ] Actual YouTube embed playback and book/pinned visual playback remain unverified; theater screenshots showed no loaded video frames, and isolated book test was invalid without app contexts
+- [x] Newest Short plays in the theater with real video time advancing and readyState 4; screenshot confirms footage. Rapid full-queue navigation surfaced a third-party YouTube getDuration error, not an app stack
+- [ ] Book/pinned visual playback remains unverified; prior isolated book test was invalid without app contexts
 
 ## Lovable-first chat, voices and mobile readiness
 - [x] Lovable-first site-paid chat deployed and live-verified on GPT-6 Luna; restored stale credit pause after successful live call; explicit models/personal keys and terminal safeguards preserved
