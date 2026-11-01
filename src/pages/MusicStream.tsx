@@ -354,11 +354,11 @@ const MusicStream = () => {
             className="pointer-events-none absolute bottom-4 left-4 w-16 h-16 md:w-20 md:h-20 opacity-70 drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
           />
           {/* Title strap */}
-          <div className="pointer-events-none absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/85 to-transparent">
-            <p className="font-mono text-sm md:text-base font-bold text-fuchsia-200" style={{ textShadow: "0 0 8px #a855f7" }}>
+          <div className="pointer-events-none absolute bottom-28 inset-x-0 p-4 bg-background/80">
+            <p className="font-mono text-sm md:text-base font-bold text-primary line-clamp-3 break-words">
               ♪ {current.title}
             </p>
-            <p className="font-mono text-[10px] text-cyan-300/80 tracking-widest uppercase mt-0.5">
+            <p className="font-mono text-[10px] text-muted-foreground uppercase mt-0.5">
               Track {idx + 1} / {playlist.length} · MTVAI.live
             </p>
           </div>

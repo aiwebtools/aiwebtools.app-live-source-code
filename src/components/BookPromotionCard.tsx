@@ -1350,6 +1350,7 @@ const BookPromotionCard = () => {
             <div className="flex flex-col lg:flex-row items-center">
               {/* Book Visual - YouTube Videos */}
                 <div className="lg:w-1/2 p-3 md:p-5 overflow-visible">
+                <div className="flex justify-center mb-4"><MtvaiBrand /></div>
                 {/* Desktop: Carousel showing 3 videos at a time */}
                 <div className="hidden md:block relative overflow-visible">
                   <div className="flex items-center justify-center gap-3">
