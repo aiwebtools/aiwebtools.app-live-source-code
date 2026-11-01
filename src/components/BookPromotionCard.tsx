@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { playMtvFlash } from "@/utils/mtvFlash";
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import { buildMusicVideoOrder } from "@/components/PinnedVideoPlayer";
+import { RECENT_MTVAI_UPLOADS } from "@/data/recentMtvaiUploads";
 
 // Utility function to shuffle array
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -260,6 +261,7 @@ const BookPromotionCard = () => {
   
   // First video is always pinned, rest are shuffled
   const originalVideos = [
+    ...RECENT_MTVAI_UPLOADS.map((video) => ({ ...video, gradient: "from-emerald-500/20 to-cyan-500/20" })),
     // ── NEWEST DROP (Sept 2026) ──
     { id: "p6gPljLI5xM", title: "Our First Movie Trailer | Official AI Movie Trailer | AIWebTools.ai", gradient: "from-amber-500/20 to-rose-500/20" },
     { id: "Ag0bWNnStTY", title: "September Drop I | Official AI Music Video | AIWebTools.ai", gradient: "from-cyan-500/20 to-emerald-500/20" },
@@ -885,6 +887,7 @@ const BookPromotionCard = () => {
     // Build a fresh randomized queue per visit while systematically spacing
     // shorts after every two long-form videos.
     const verticalMusicVideoIds = [
+      ...RECENT_MTVAI_UPLOADS.filter((video) => video.format !== "landscape" && video.kind !== "lyric").map((video) => video.id),
       "v9a0cOxhY78",
       "X-0Cl058cTk",
       "-uUlUdFR08Q",
