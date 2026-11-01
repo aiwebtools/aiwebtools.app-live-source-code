@@ -2,6 +2,25 @@
 // Preserve exact YouTube titles and IDs; landscape footage stays uncropped inside vertical players.
 export const RECENT_MTVAI_UPLOADS = [
   {
+    "id": "BhI5E2-cMT4",
+    "title": "October 31, 2026",
+    "url": "https://www.youtube.com/watch?v=BhI5E2-cMT4",
+    // Channel listing and oEmbed verified; YouTube rate-limited exact date/runtime.
+    "publishedAt": null,
+    "durationSeconds": null,
+    "format": "shorts",
+    "kind": "short"
+  },
+  {
+    "id": "G5cvt2PrS14",
+    "title": "October 31, 2026",
+    "url": "https://www.youtube.com/watch?v=G5cvt2PrS14",
+    "publishedAt": null,
+    "durationSeconds": null,
+    "format": "shorts",
+    "kind": "short"
+  },
+  {
     "id": "MKrXzgLxGrY",
     "title": "October 31, 2026",
     "url": "https://www.youtube.com/watch?v=MKrXzgLxGrY",
