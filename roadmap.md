@@ -1,5 +1,11 @@
 # Roadmap
 
+## Recent MTV AI uploads
+- [x] Verified 26 missing uploads (15 videos, 11 Shorts) in October 18–November 1 window; excluded three older uploads using metadata dates, not titles
+- [x] Added shared exact titles/URLs/dates/runtime/format metadata to pinned gallery and book-promo reels; main MTV AI page reuses gallery; no existing videos removed
+- [x] Two date/ID regressions pass; main MTV AI Next control reaches all 26 additions, zero runtime errors; latest build OK
+- [ ] Actual YouTube embed playback and book/pinned visual playback remain unverified; theater screenshots showed no loaded video frames, and isolated book test was invalid without app contexts
+
 ## Lovable-first chat, voices and mobile readiness
 - [x] Lovable-first site-paid chat deployed and live-verified on GPT-6 Luna; restored stale credit pause after successful live call; explicit models/personal keys and terminal safeguards preserved
 - [x] Existing lifelike Lovable speech returns real WAV audio; phone guest chat auto-read state verified; 53 routing/voice/instruction regressions pass and saved recordings preserved

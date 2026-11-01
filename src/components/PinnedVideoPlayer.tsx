@@ -5,6 +5,7 @@ import { Play, Pause, X, SkipForward, SkipBack, Volume2, VolumeX } from "lucide-
 import type { Tool } from "@/types/tools";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
+import { RECENT_MTVAI_UPLOADS } from "@/data/recentMtvaiUploads";
 
 const YT_EMBED_ORIGIN = "https://www.youtube-nocookie.com";
 const YT_API_ORIGIN_FALLBACK = "https://www.youtube.com";
@@ -22,6 +23,7 @@ const MODE_SESSION_KEY = "pinned-video-mode"; // 'idle' | 'tools' | 'music'
 // Suno-style lyric/audio tracks (just lyrics on screen) play LAST, so the reel
 // always leads with the most eye-catching content.
 export const MUSIC_VIDEO_GALLERY: Array<{ id: string; title: string }> = [
+  ...RECENT_MTVAI_UPLOADS,
   // ── LATEST FROM @AIWEBTOOLS-MTVai (Oct 2026) ──
   { id: "YdKmIP2BhSk", title: "October 9, 2026 Drop 1 | AIWebTools.ai MTVai" },
   { id: "p9Z-XOROC9U", title: "October 9, 2026 Drop 2 | AIWebTools.ai MTVai" },
@@ -354,7 +356,7 @@ export const buildMusicVideoOrder = <T extends { id: string; title: string }>(ga
     seen.add(video.id);
     return true;
   });
-  const isShort = (video: T) => /\b(short|interlude|commercial)\b/i.test(video.title);
+  const isShort = (video: T) => RECENT_MTVAI_UPLOADS.some((upload) => upload.id === video.id && upload.kind === "short") || /\b(short|interlude|commercial)\b/i.test(video.title);
   const shorts = shuffleArray(unique.filter(isShort));
   const longVideos = shuffleArray(unique.filter((video) => !isShort(video)));
   const ordered: T[] = [];
