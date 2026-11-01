@@ -1,5 +1,9 @@
 # Roadmap
 
+## Bot commercial usability
+- [x] Scope YouTube events to the commercial iframe, raise video above embedded rooms and drawers, stop audio before close, and release failed embeds after 15 seconds
+- [x] Three playback regressions pass; real Time Machine footage visibly plays with close X, unrelated end messages do not dismiss it, close removes iframe and a real guest reply succeeds afterward; build OK. Original reported bot/device and embedded-room playback not directly reproduced
+
 ## Recent MTV AI uploads
 - [x] Fresh November 1 recheck: 30 Videos + 48 Shorts cover the two-week boundary; all missing listed IDs predate October 18, so no further additions needed. Newest public Short MKrXzgLxGrY (01:26 UTC) already included; two tests pass and all 26 additions reachable among 296 unique theater entries
 - [x] Verified 26 missing uploads (15 videos, 11 Shorts) in October 18–November 1 window; excluded three older uploads using metadata dates, not titles
