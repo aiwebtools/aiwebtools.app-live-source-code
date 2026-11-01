@@ -12,6 +12,8 @@ import GlobalSearchBar from "./LazyGlobalSearchBar";
 import { Download, Gift } from "lucide-react";
 import JoinEmailListButton from "./JoinEmailListButton";
 import SubmitToolModal from "./SubmitToolModal";
+import MtvaiBrand from "./MtvaiBrand";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const [submitOpen, setSubmitOpen] = useState(false);
@@ -154,6 +156,11 @@ Best regards,
         </div>
         
         <Separator className="bg-green-500/30 mb-8" />
+        <div className="flex justify-center mb-8">
+          <Link to="/music-stream" aria-label="Watch MTVAI.live, presented by aiwebtools.app" className="mtvai-channel-link inline-flex items-center gap-4 border-y py-4 px-6">
+            <MtvaiBrand />
+          </Link>
+        </div>
         
         <FooterBottom handleExternalLink={handleExternalLink} />
 

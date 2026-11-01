@@ -47,3 +47,4 @@
 - Run background helper text jobs (Care Bot, weekly digest, community-app review) through `_shared/glm-helper.ts` first, keeping their existing Lovable AI call as fallback; search tool matching and ethics review stay on gateway models for speed/strictness.
 - Let YouTube select playback quality automatically in every player; forced HD and background pause/play loops cause buffering and competing-video interruptions.
 - Share verified recent MTV AI upload metadata between pinned and book reels; the main music page consumes the pinned gallery so new IDs cannot drift across players.
+- Render the music-channel signature through MtvaiBrand across header, footer and players; shared attribution prevents branding drift while preserving the main directory identity.

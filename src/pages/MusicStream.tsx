@@ -6,6 +6,7 @@ import { buildMusicVideoOrder, MUSIC_VIDEO_GALLERY } from "@/components/PinnedVi
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import GlobalSearchBar from "@/components/LazyGlobalSearchBar";
 import DownloadLibraryButton from "@/components/DownloadLibraryButton";
+import MtvaiBrand from "@/components/MtvaiBrand";
 
 const shuffle = <T,>(a: T[]): T[] => {
   const s = [...a];
@@ -199,8 +200,13 @@ const MusicStream = () => {
   return (
     <div className="fixed inset-0 bg-black text-white overflow-hidden">
       <Helmet>
-        <title>AiWebTools Music Stream — 24/7 MTVai Channel</title>
-        <meta name="description" content="The official AiWebTools.ai MTVai Music Stream — non-stop AI-crafted music videos in cinematic 9:16 with adaptive video quality." />
+        <title>MTVAI.live — Presented by aiwebtools.app</title>
+        <meta name="description" content="Watch original AI music videos on MTVAI.live, presented by aiwebtools.app. Explore the latest AIWebTools music productions and Shorts." />
+        <meta property="og:title" content="MTVAI.live — Presented by aiwebtools.app" />
+        <meta property="og:description" content="Original AIWebTools music videos and Shorts on MTVAI.live." />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="icon" type="image/png" href="/mtvai-favicon.png" />
       </Helmet>
 
       {/* 3D MTV pop-out intro */}
@@ -263,10 +269,7 @@ const MusicStream = () => {
           </button>
         </div>
         <div className="flex items-center gap-2 min-w-0">
-          <img src={mtvAiWebToolsLogo} alt="MTV AiWebTools" className="w-6 h-6 sm:w-7 sm:h-7 drop-shadow-[0_0_8px_rgba(168,85,247,0.7)] shrink-0" draggable={false} />
-          <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-fuchsia-300 truncate" style={{ textShadow: "0 0 8px #a855f7" }}>
-            AiWebTools Music · LIVE
-          </span>
+          <MtvaiBrand compact />
         </div>
         <button
           onClick={toggleMute}
@@ -356,7 +359,7 @@ const MusicStream = () => {
               ♪ {current.title}
             </p>
             <p className="font-mono text-[10px] text-cyan-300/80 tracking-widest uppercase mt-0.5">
-              Track {idx + 1} / {playlist.length} · AiWebTools.ai MTVai Channel
+              Track {idx + 1} / {playlist.length} · MTVAI.live
             </p>
           </div>
         </div>
