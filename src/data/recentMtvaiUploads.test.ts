@@ -1,3 +1,4 @@
+// @ts-ignore -- Bun executes these regression tests.
 import { expect, test } from "bun:test";
 import { RECENT_MTVAI_UPLOADS } from "./recentMtvaiUploads";
 
@@ -9,8 +10,9 @@ test("recent MTV AI additions are unique uploads inside the requested two-week w
     expect(Date.parse(video.publishedAt)).toBeLessThan(Date.parse("2026-11-02T00:00:00Z"));
     expect(video.url).toBe(`https://www.youtube.com/watch?v=${video.id}`);
   }
-  expect(RECENT_MTVAI_UPLOADS.some(v => v.id === "DuyXt9mJ2uk")).toBe(false);
-  expect(RECENT_MTVAI_UPLOADS.some(v => v.id === "BBhxfWS2BQA")).toBe(false);
+  const ids: string[] = RECENT_MTVAI_UPLOADS.map(v => v.id);
+  expect(ids.includes("DuyXt9mJ2uk")).toBe(false);
+  expect(ids.includes("BBhxfWS2BQA")).toBe(false);
 });
 
 test("Destiny and recent dated Shorts retain real IDs and recorded format", () => {
