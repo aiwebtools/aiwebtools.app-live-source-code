@@ -1,6 +1,34 @@
 // Verified public @AIWEBTOOLS-MTVai uploads, October 18–November 1, 2026 UTC.
 // Preserve exact YouTube titles and IDs; landscape footage stays uncropped inside vertical players.
 export const RECENT_MTVAI_UPLOADS = [
+  { id: "r6k11I_mCwU", title: "House of cards music video by ai web tools", url: "https://www.youtube.com/watch?v=r6k11I_mCwU", publishedAt: null, durationSeconds: null, format: "unverified", kind: "music" },
+  { id: "LJhwxXlfggw", title: " 🦎 Problem", url: "https://www.youtube.com/watch?v=LJhwxXlfggw", publishedAt: null, durationSeconds: null, format: "unverified", kind: "music" },
+  { id: "BoUVP0amhvQ", title: "Sovereignty or something", url: "https://www.youtube.com/watch?v=BoUVP0amhvQ", publishedAt: null, durationSeconds: null, format: "unverified", kind: "music" },
+  { id: "jD2lLLZZZC0", title: "As so in Rome death metal AI generated music video", url: "https://www.youtube.com/watch?v=jD2lLLZZZC0", publishedAt: null, durationSeconds: null, format: "unverified", kind: "music" },
+  { id: "gYeAvU8ePy4", title: "Hey Father — Father Sky | Official AI Music Video", url: "https://www.youtube.com/watch?v=gYeAvU8ePy4", publishedAt: null, durationSeconds: null, format: "unverified", kind: "music" },
+  { id: "ma4TLC6Biyo", title: "Cosmic Dream - by AWT", url: "https://www.youtube.com/watch?v=ma4TLC6Biyo", publishedAt: null, durationSeconds: null, format: "unverified", kind: "music" },
+  { id: "9TaRBLnJD8U", title: "Multi-dimensional ", url: "https://www.youtube.com/watch?v=9TaRBLnJD8U", publishedAt: null, durationSeconds: null, format: "unverified", kind: "music" },
+  { id: "q1FKFka0M4s", title: "Whatever syllables you want to call it", url: "https://www.youtube.com/watch?v=q1FKFka0M4s", publishedAt: null, durationSeconds: null, format: "unverified", kind: "music" },
+  { id: "lo0kUVtY9L4", title: "Orange", url: "https://www.youtube.com/watch?v=lo0kUVtY9L4", publishedAt: null, durationSeconds: null, format: "unverified", kind: "music" },
+  {
+    "id": "BhI5E2-cMT4",
+    "title": "October 31, 2026",
+    "url": "https://www.youtube.com/watch?v=BhI5E2-cMT4",
+    // Channel listing and oEmbed verified; YouTube rate-limited exact date/runtime.
+    "publishedAt": null,
+    "durationSeconds": null,
+    "format": "shorts",
+    "kind": "short"
+  },
+  {
+    "id": "G5cvt2PrS14",
+    "title": "October 31, 2026",
+    "url": "https://www.youtube.com/watch?v=G5cvt2PrS14",
+    "publishedAt": null,
+    "durationSeconds": null,
+    "format": "shorts",
+    "kind": "short"
+  },
   {
     "id": "MKrXzgLxGrY",
     "title": "October 31, 2026",
