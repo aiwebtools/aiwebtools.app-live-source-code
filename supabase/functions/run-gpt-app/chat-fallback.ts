@@ -8,7 +8,7 @@ const pausedResponse = (provider: string, status?: number | null) => new Respons
 export const RESTING_MESSAGE = "Our bots are resting — both Bionic and Lovable chat credits have run out. Please check back after credits are replenished.";
 
 /** Site-paid default: Lovable first, with one safe pre-stream Bionic backup. */
-export function createLovableFirstChat(store: ProviderStore, bionic: Transport, lovable: Transport, signal: AbortSignal) {
+export function createLovableFirstChat(store: ProviderStore, bionic: Transport, lovable: Transport, signal: AbortSignal, preferLovable = true) {
   const backup = createFallbackChat(store, bionic, lovable, signal);
   let model = LOVABLE_FALLBACK_MODEL;
   let reason: string | null = null;
@@ -20,7 +20,7 @@ export function createLovableFirstChat(store: ProviderStore, bionic: Transport, 
     markStarted: () => { started = true; backup.markStarted(); },
     call: async (payload: Payload): Promise<Response> => {
       // Explicit site model selections retain their existing behavior.
-      if (!isBionicModel(payload.model)) {
+      if (!preferLovable || !isBionicModel(payload.model)) {
         switched = true;
         return backup.call(payload);
       }
