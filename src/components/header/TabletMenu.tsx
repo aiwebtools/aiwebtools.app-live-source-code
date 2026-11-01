@@ -129,7 +129,7 @@ const TabletMenu = () => {
               <Menu className="w-4 h-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-[400px] bg-black/95 shadow-xl border border-cyan-500/30 backdrop-blur-md max-h-[80vh] overflow-y-scroll" style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-y', overscrollBehavior: 'contain' }}>
+          <DropdownMenuContent className="w-[calc(100vw-1rem)] max-w-[400px] bg-black/95 shadow-xl border border-cyan-500/30 backdrop-blur-md max-h-[80dvh] overflow-y-scroll" style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-y', overscrollBehavior: 'contain' }}>
             <div className="p-4">
               {/* Header with Logo */}
               <div className="text-center mb-4 border-b border-cyan-500/30 pb-4">
