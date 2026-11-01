@@ -1,11 +1,12 @@
 # Roadmap
 
 ## Lovable-first chat, voices and mobile readiness
-- [ ] Prefer existing Lovable chat model for site-paid requests, retain personal-key precedence and safe Bionic fallback only before streaming
-- [ ] Verify paid reply voices and natural device fallback without replacing saved recordings
-- [ ] Audit operational instructions against available tools; preserve originals and add honest capability boundaries
-- [ ] Check phone chat, builder, menus and dialogs; fix confirmed fit/performance issues and run regressions
-- [ ] Verify real chat/voice flow and report provider or device limitations honestly
+- [x] Lovable-first site-paid chat deployed and live-verified on GPT-6 Luna; restored stale credit pause after successful live call; explicit models/personal keys and terminal safeguards preserved
+- [x] Existing lifelike Lovable speech returns real WAV audio; phone guest chat auto-read state verified; 53 routing/voice/instruction regressions pass and saved recordings preserved
+- [x] Audited 422 local instruction records against available capabilities; all 1,542 active live bots have prompts (184–793,826 characters); appended honest execution and real-world safety boundaries without changing originals
+- [x] Fixed phone header/title overlap, constrained builder/tablet widths and mobile menu scrolling; phone home/directory/chat and bot drawer checked with zero page errors; current build OK
+- [ ] ElevenLabs new speech awaits credits: subscription has used 40,000 of 40,000; saved recordings remain usable
+- [ ] Physical phone sound quality and every bot's domain-specific real-world outcomes cannot be certified through automated checks; full-book retrieval remains unavailable for the existing guarded book bot
 
 ## Muse and game tools finish
 - [x] All seven individual pages render their custom artwork; all seven names present in four search catalogs and sitemap; GearZero phone page has no horizontal overflow

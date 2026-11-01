@@ -727,7 +727,7 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
   .studio-brand { font-size: 12px; letter-spacing: 0; min-width: 0; flex: 1; }
   .studio .studio-refresh { width: 40px; padding: 0; }
   .studio .studio-refresh span { display: none; }
-  .studio .studio-bot-menu { width: 40px; padding: 0; }
+  .studio .studio-bot-menu { width: 40px; min-width: 40px; flex: 0 0 40px; padding: 0; }
   .studio .studio-bot-menu span { display: none; }
   .studio .studio-topbar { padding-inline: 8px; gap: 6px; }
   .studio .studio-topbar > div { gap: 4px; }
