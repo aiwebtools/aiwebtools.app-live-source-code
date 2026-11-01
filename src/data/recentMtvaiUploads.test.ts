@@ -3,8 +3,8 @@ import { expect, test } from "bun:test";
 import { RECENT_MTVAI_UPLOADS } from "./recentMtvaiUploads";
 
 test("recent MTV AI additions are unique uploads inside the requested two-week window", () => {
-  expect(RECENT_MTVAI_UPLOADS).toHaveLength(28);
-  expect(new Set(RECENT_MTVAI_UPLOADS.map(v => v.id)).size).toBe(28);
+  expect(RECENT_MTVAI_UPLOADS).toHaveLength(37);
+  expect(new Set(RECENT_MTVAI_UPLOADS.map(v => v.id)).size).toBe(37);
   for (const video of RECENT_MTVAI_UPLOADS) {
     if (video.publishedAt !== null) {
       expect(Date.parse(video.publishedAt)).toBeGreaterThanOrEqual(Date.parse("2026-10-18T00:00:00Z"));
@@ -31,4 +31,10 @@ test("Destiny and recent dated Shorts retain real IDs and recorded format", () =
   expect(RECENT_MTVAI_UPLOADS.find(v => v.id === "a4BmHSG2tGk")?.durationSeconds).toBe(394);
   expect(RECENT_MTVAI_UPLOADS.find(v => v.id === "a4BmHSG2tGk")?.format).toBe("landscape");
   expect(RECENT_MTVAI_UPLOADS.find(v => v.id === "uZIg-pUiE-k")?.kind).toBe("short");
+});
+
+test("nine new full-length channel uploads retain separate real identities", () => {
+  for (const id of ["r6k11I_mCwU", "LJhwxXlfggw", "BoUVP0amhvQ", "jD2lLLZZZC0", "gYeAvU8ePy4", "ma4TLC6Biyo", "9TaRBLnJD8U", "q1FKFka0M4s", "lo0kUVtY9L4"]) {
+    expect(RECENT_MTVAI_UPLOADS.find(v => v.id === id)?.kind).toBe("music");
+  }
 });
