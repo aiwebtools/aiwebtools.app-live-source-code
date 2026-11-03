@@ -3,8 +3,8 @@ import { expect, test } from "bun:test";
 import { RECENT_MTVAI_UPLOADS } from "./recentMtvaiUploads";
 
 test("recent MTV AI additions are unique uploads inside the requested two-week window", () => {
-  expect(RECENT_MTVAI_UPLOADS).toHaveLength(88);
-  expect(new Set(RECENT_MTVAI_UPLOADS.map(v => v.id)).size).toBe(88);
+  expect(RECENT_MTVAI_UPLOADS).toHaveLength(529);
+  expect(new Set(RECENT_MTVAI_UPLOADS.map(v => v.id)).size).toBe(529);
   for (const video of RECENT_MTVAI_UPLOADS) {
     if (video.publishedAt !== null) {
       expect(Date.parse(video.publishedAt)).toBeGreaterThanOrEqual(Date.parse("2026-10-18T00:00:00Z"));
@@ -48,4 +48,10 @@ test("November 1 evening batch preserves all thirty distinct channel uploads", (
   }
   expect(RECENT_MTVAI_UPLOADS.find(v => v.id === "BwFj_TkhhHo")?.durationSeconds).toBe(444);
   expect(RECENT_MTVAI_UPLOADS.find(v => v.id === "ciGy96PWTS4")?.durationSeconds).toBe(402);
+});
+
+test("full portfolio keeps audiobooks and Shorts alongside music videos", () => {
+  expect(RECENT_MTVAI_UPLOADS.find(v => v.id === "IKrEvLSewAQ")?.kind).toBe("audiobook");
+  expect(RECENT_MTVAI_UPLOADS.find(v => v.id === "IKrEvLSewAQ")?.durationSeconds).toBe(6090);
+  expect(RECENT_MTVAI_UPLOADS.find(v => v.id === "kUEuwdDBfH4")?.kind).toBe("music");
 });
