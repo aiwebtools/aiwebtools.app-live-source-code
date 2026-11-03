@@ -8,6 +8,7 @@ import { readTokenUsage } from "../_shared/chat-usage.ts";
 import type { ProviderState, ProviderStore } from "../_shared/chat-provider-state.ts";
 import { appendInstructionFidelity, resolveOperationalInstructions } from "./instruction-fidelity.ts";
 import { readChatStreamEvent, ChatStreamFailure } from "./stream-events.ts";
+import { createScreenplayIntakeFilter } from "./screenplay-reply.ts";
 import { recordProviderFailure } from "../_shared/chat-provider-state.ts";
 import { normalizeMessage, toModelMessage, requiresFirstSearch, type IncomingMessage } from "./input-context.ts";
 import { createLovableAiGatewayRunIdFetch, getLovableAiGatewayResponseHeaders } from "../_shared/run-id.ts";
@@ -546,6 +547,12 @@ Deno.serve(async (req) => {
     let stepUsage: ReturnType<typeof readTokenUsage> = null;
     const reader = res.body.getReader();
     const calls: { name: string; args: string; id: string }[] = [];
+    const intakeFilter = createScreenplayIntakeFilter(/movie[\s-]+script[\s-]+writer/i.test(`${slug} ${app.display_name}`));
+    const emitText = (text: string) => {
+      if (!text) return;
+      assistant += text;
+      controller.enqueue(frame(text));
+    };
     let buffer = "";
     while (true) {
       const { done, value } = await reader.read();
@@ -564,8 +571,7 @@ Deno.serve(async (req) => {
           if (reported) stepUsage = reported;
           const delta = readChatStreamEvent(payload);
           if (typeof delta?.content === "string" && delta.content) {
-            assistant += delta.content;
-            controller.enqueue(frame(delta.content));
+            emitText(intakeFilter.push(delta.content));
           }
           if (Array.isArray(delta?.tool_calls)) {
             for (const tc of delta.tool_calls) {
@@ -580,6 +586,7 @@ Deno.serve(async (req) => {
       }
       if (done) break;
     }
+    emitText(intakeFilter.flush());
     if (stepUsage) {
       inputTokens += stepUsage.inputTokens;
       outputTokens += stepUsage.outputTokens;
