@@ -2,8 +2,8 @@
 
 ## Current bot reply review
 - [x] Review recent stored replies and reproduce screenplay intake repetition in a real guest chat
-- [ ] Add scoped screenplay/story delivery guidance without rewriting authored instructions or changing models
-- [ ] Run instruction regressions, deploy the existing chat function and verify fresh replies through the chat window
+- [x] Add scoped screenplay/story delivery guidance and bounded exact-intake deduplication without rewriting authored instructions or changing models
+- [x] Deployed existing chat function; final live guest intake has no repeated questions, supplied 3-scene/1-segment brief produces its outline, Time Machine gives exactly two sentences without a question or image request; screenshots checked, 22 focused tests and 422 original-source checks pass, build OK. Paraphrased repeats and every bot's output quality are not certified; image-failure behavior beyond this text-only turn remains unverified
 
 ## Latest MTV AI uploads and branding
 - [x] Fresh browser channel check covers 180 Videos and expanded Shorts: added 30 new full-length-tab uploads, no new Shorts, preserved all previous entries; exact titles/IDs/runtimes verified, timestamps/aspects left unknown
