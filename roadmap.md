@@ -1,5 +1,10 @@
 # Roadmap
 
+## Current bot reply review
+- [x] Review recent stored replies and reproduce screenplay intake repetition in a real guest chat
+- [ ] Add scoped screenplay/story delivery guidance without rewriting authored instructions or changing models
+- [ ] Run instruction regressions, deploy the existing chat function and verify fresh replies through the chat window
+
 ## Latest MTV AI uploads and branding
 - [x] Fresh browser channel check covers 180 Videos and expanded Shorts: added 30 new full-length-tab uploads, no new Shorts, preserved all previous entries; exact titles/IDs/runtimes verified, timestamps/aspects left unknown
 - [x] Added shared original MTVAI.live / Presented by aiwebtools.app mark to website header/footer and main, pinned and book music areas; preserved directory identity, existing logos and footage; theater metadata and route icon updated

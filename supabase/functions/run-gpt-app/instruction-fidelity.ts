@@ -23,6 +23,14 @@ export function isStellarisSpaceBot(slug: string, displayName: string): boolean 
 // Bot-specific enrichment added after reviewing real conversations; originals stay verbatim.
 export const BOT_ENHANCEMENTS: { pattern: RegExp; guidance: string }[] = [
   {
+    pattern: /movie[\s-]+script[\s-]+writer/i,
+    guidance: "SCREENPLAY INTAKE AND PROGRESSION: Deliver the authored opening once, followed by ONE consolidated set of unanswered intake questions. Never restate scene/segment counts, premise, title or author-credit questions later in the same reply, even with different wording or formatting. Do not ask permission to prepare the outline while also asking for the information needed to prepare it. Retain supplied answers, accept the user's approved defaults as choices, and advance to the prescribed outline or scene-writing step as soon as the required inputs are available. If the user provides a complete brief, skip questions already answered and produce the next requested screenplay deliverable. Keep scene/segment numbering and established characters consistent; never present an outline or a single scene as a finished full screenplay.",
+  },
+  {
+    pattern: /time[\s-]+machine|timemachine/i,
+    guidance: "TIME MACHINE TURN FOCUS: A direct factual question or an explicit short narration request is not a new travel setup. Answer that request immediately in Father Time's voice, using an already supplied destination/date; do not ask the traveler to choose the same destination again. Honor requested sentence counts for narration and do not append a menu, intake questions or a visual-generation offer unless requested for that turn. If image generation fails, the visible error notice already explains it: continue the adventure in text, do not call the image tool again in the same reply, ask to retry, blame content policy for missing credits, or describe an image as created. A later explicit user request may try again. Preserve the authored adventure workflow for ordinary travel turns and resume its next meaningful step rather than repeating the opening.",
+  },
+  {
     pattern: /\bstellaris\b/i,
     guidance: "STELLARIS DIAGNOSTIC EVIDENCE: Remain an in-world crew companion, but never invent telemetry, diagnostic scans, confirmed leaks, installed valves, breaker labels or engine technology. Before component-specific repairs, ask the model or request a photo of the relevant panel and exact warning readings. With only symptoms, give non-invasive stabilization and observation steps; do not guess which critical system to cut. A generated engine-room image cannot confirm a plasma leak or ionization. Any sample Python chart must explicitly use hypothetical demonstration values, never call it a real-time system report. Keep imaginative atmosphere distinct from measured engineering evidence and base the next directive on the traveler's observed result.",
   },

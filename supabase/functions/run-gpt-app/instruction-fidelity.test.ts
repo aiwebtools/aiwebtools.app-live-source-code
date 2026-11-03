@@ -6,6 +6,29 @@ import { unzipSync } from "fflate";
 import decoded from "./decoded-archive-instructions.json" with { type: "json" };
 import { BOT_ENHANCEMENTS } from "./instruction-fidelity.ts";
 
+test("screenplay review applies once across original and community versions, preserving their brains", () => {
+  const pattern = BOT_ENHANCEMENTS.find((entry) => entry.pattern.test("movie-script-writer-gpt"))?.pattern;
+  expect(pattern).toBeDefined();
+  for (const slug of ["movie-script-writer-gpt", "community-movie-script-writer-gpt-original-version-1", "community-movie-script-writer-gpt-v2"]) {
+    const original = "  Authored screenplay sequence\r\nAsk scene and segment counts.  ";
+    const result = appendInstructionFidelity(original, slug, "Movie Script Writer GPT");
+    expect(result.slice(0, original.length)).toBe(original);
+    expect(BOT_ENHANCEMENTS.filter((entry) => entry.pattern === pattern && entry.pattern.test(slug))).toHaveLength(1);
+  }
+  for (const slug of ["movie-scene-maker-gpt", "tattoo-designer-gpt", "marriage-mender-gpt"]) expect(pattern?.test(slug)).toBe(false);
+});
+
+test("short-story review covers Time Machine versions without changing other historical bots", () => {
+  const pattern = BOT_ENHANCEMENTS.find((entry) => entry.pattern.test("nativeamerican-timemachine"))?.pattern;
+  expect(pattern).toBeDefined();
+  for (const slug of ["time-machine-gpt", "community-time-machine-gpt-v2", "nativeamerican-timemachine"]) {
+    const original = "Original adventure\r\n  Preserve all authored steps.";
+    expect(appendInstructionFidelity(original, slug, "Guide").slice(0, original.length)).toBe(original);
+    expect(BOT_ENHANCEMENTS.filter((entry) => entry.pattern === pattern && entry.pattern.test(slug))).toHaveLength(1);
+  }
+  for (const slug of ["historical-headlines-gpt", "talk-to-history-gpt", "stellaris"]) expect(pattern?.test(slug)).toBe(false);
+});
+
 test("reviewed bot enhancements match real slugs without changing authored prefixes", () => {
   const cases = [
     ["community-3d-print-concept-prototype-designer", "3D CONCEPT PROGRESSION"],
