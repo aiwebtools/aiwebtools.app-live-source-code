@@ -3,12 +3,16 @@ export function createScreenplayIntakeFilter(enabled: boolean) {
   let pending = "";
   const seen = new Set<string>();
   const accept = (paragraph: string) => {
-    const key = paragraph.replace(/[*_#]/g, "").replace(/\s+/g, " ").trim().toLowerCase();
-    const intake = /\?/.test(key) && /\b(?:how many scenes|how many segments|premise|genre|tone|title|screenwriter credit|author name)\b/.test(key);
-    if (!intake) return paragraph;
-    if (seen.has(key)) return "";
-    seen.add(key);
-    return paragraph;
+    // Providers sometimes concatenate the last question and a repeated opening.
+    return (paragraph.match(/[^?]+\?(?:\*\*)?|[^?]+$/g) || []).map((part) => {
+      const key = part.replace(/[*_#]/g, "").replace(/\s+/g, " ").trim().toLowerCase().replace(/[.!]+$/, "");
+      const opening = /^i create movies and put creativity into/.test(key);
+      const intake = /\?/.test(key) && /\b(?:how many scenes|how many segments|premise|genre|tone|title|screenwriter credit|writer credit|author name|target length|must-have characters)\b/.test(key);
+      if (!opening && !intake) return part;
+      if (seen.has(key)) return "";
+      seen.add(key);
+      return part;
+    }).join("");
   };
   return {
     push(text: string): string {

@@ -20,6 +20,13 @@ test("dialogue, scene text and different follow-up questions stay unchanged", ()
   const filter = createScreenplayIntakeFilter(true);
   expect(filter.push(raw) + filter.flush()).toBe(raw);
 });
+test("concatenated repeated opening and final intake question are removed", () => {
+  const opening = "I Create Movies and Put Creativity into the Hollywood Script writing processes, Now lets create a masterpiece.";
+  const question = "**What target length or format do you prefer, and are there any must-have characters?**";
+  const raw = `${opening}\n\n${question} ${opening}\n\n${question}`;
+  const filter = createScreenplayIntakeFilter(true);
+  expect((filter.push(raw) + filter.flush()).trim()).toBe(`${opening}\n\n${question}`);
+});
 test("unrelated bots retain byte-identical output immediately", () => {
   const filter = createScreenplayIntakeFilter(false);
   const raw = "How many scenes?\n\nHow many scenes?";
