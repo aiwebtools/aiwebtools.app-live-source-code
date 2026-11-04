@@ -222,7 +222,7 @@ const CareBotWidget = () => {
 
       {/* Chat panel */}
       {open && (
-        <div className="fixed inset-x-2 bottom-16 sm:inset-x-auto sm:right-4 sm:bottom-4 z-[9999] w-auto sm:w-[380px] max-h-[72vh] sm:max-h-[80vh] flex flex-col rounded-2xl border border-green-500/40 bg-black/95 shadow-2xl"
+        <div className="fixed inset-x-2 bottom-16 sm:inset-x-auto sm:right-4 sm:bottom-4 z-[9999] w-auto sm:w-[380px] h-[72dvh] sm:h-[min(80vh,620px)] flex flex-col rounded-2xl border border-green-500/40 bg-black/95 shadow-2xl"
           style={{ boxShadow: "0 0 40px rgba(0, 255, 0, 0.35)" }}
         >
           {/* Header */}
