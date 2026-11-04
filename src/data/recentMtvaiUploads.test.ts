@@ -3,8 +3,8 @@ import { expect, test } from "bun:test";
 import { RECENT_MTVAI_UPLOADS } from "./recentMtvaiUploads";
 
 test("recent MTV AI additions are unique uploads inside the requested two-week window", () => {
-  expect(RECENT_MTVAI_UPLOADS).toHaveLength(529);
-  expect(new Set(RECENT_MTVAI_UPLOADS.map(v => v.id)).size).toBe(529);
+  expect(RECENT_MTVAI_UPLOADS).toHaveLength(534);
+  expect(new Set(RECENT_MTVAI_UPLOADS.map(v => v.id)).size).toBe(534);
   for (const video of RECENT_MTVAI_UPLOADS) {
     if (video.publishedAt !== null) {
       expect(Date.parse(video.publishedAt)).toBeGreaterThanOrEqual(Date.parse("2026-10-18T00:00:00Z"));
@@ -54,4 +54,8 @@ test("full portfolio keeps audiobooks and Shorts alongside music videos", () => 
   expect(RECENT_MTVAI_UPLOADS.find(v => v.id === "IKrEvLSewAQ")?.kind).toBe("audiobook");
   expect(RECENT_MTVAI_UPLOADS.find(v => v.id === "IKrEvLSewAQ")?.durationSeconds).toBe(6090);
   expect(RECENT_MTVAI_UPLOADS.find(v => v.id === "kUEuwdDBfH4")?.kind).toBe("music");
+});
+
+test("November 4 music previews lead the shared MTVAI list newest first", () => {
+  expect(RECENT_MTVAI_UPLOADS.slice(0, 5).map(v => v.id)).toEqual(["i4drVaJpcAc", "UfITZmvLie4", "RSxzkhEkkxY", "mSeE2dOegFk", "BaOR4VjNvhM"]);
 });

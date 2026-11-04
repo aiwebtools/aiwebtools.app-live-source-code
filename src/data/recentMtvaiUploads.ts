@@ -1,6 +1,12 @@
 // Verified public @AIWEBTOOLS-MTVai uploads: the MTVAI digital art portfolio (music videos, Shorts and audiobooks).
 // Preserve exact YouTube titles and IDs; landscape footage stays uncropped inside vertical players.
 export const RECENT_MTVAI_UPLOADS = [
+  // Fresh YouTube listing November 4 2026; newest music video previews.
+  {"id": "i4drVaJpcAc", "title": "Heaven Walks In Barefoot — The Abdicated | Official AI Music Video (Preview)", "url": "https://www.youtube.com/watch?v=i4drVaJpcAc", "publishedAt": null, "durationSeconds": 31, "format": "unverified", "kind": "music"},
+  {"id": "UfITZmvLie4", "title": "Reap What You See — The Iron Wake | Official AI Music Video (Preview)", "url": "https://www.youtube.com/watch?v=UfITZmvLie4", "publishedAt": null, "durationSeconds": 31, "format": "unverified", "kind": "music"},
+  {"id": "RSxzkhEkkxY", "title": "All the Fire Away — The Sunken Meridian | Official AI Music Video (Preview)", "url": "https://www.youtube.com/watch?v=RSxzkhEkkxY", "publishedAt": null, "durationSeconds": 31, "format": "unverified", "kind": "music"},
+  {"id": "mSeE2dOegFk", "title": "The Painting You Gave — The Gilded Canvas | Official AI Music Video (Preview)", "url": "https://www.youtube.com/watch?v=mSeE2dOegFk", "publishedAt": null, "durationSeconds": 31, "format": "unverified", "kind": "music"},
+  {"id": "BaOR4VjNvhM", "title": "Didn't Wanna Know — The Long Walk Off | Official AI Music Video (Preview)", "url": "https://www.youtube.com/watch?v=BaOR4VjNvhM", "publishedAt": null, "durationSeconds": 31, "format": "unverified", "kind": "music"},
   // Fresh YouTube listing November 3 2026; music videos only (audiobooks excluded).
   {"id": "QYOfdHtX-O4", "title": "A Universe Inside My Heart — The Million Pieces | Official AI Music Video (Preview)", "url": "https://www.youtube.com/watch?v=QYOfdHtX-O4", "publishedAt": null, "durationSeconds": 31, "format": "unverified", "kind": "music"},
   {"id": "_hQTUmaXgq8", "title": "Still Here — The Midnight Frequency | Official AI Music Video (Preview)", "url": "https://www.youtube.com/watch?v=_hQTUmaXgq8", "publishedAt": null, "durationSeconds": 31, "format": "unverified", "kind": "music"},
