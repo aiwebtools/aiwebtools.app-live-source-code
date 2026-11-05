@@ -3,8 +3,8 @@ import { expect, test } from "bun:test";
 import { RECENT_MTVAI_UPLOADS } from "./recentMtvaiUploads";
 
 test("recent MTV AI additions are unique uploads inside the requested two-week window", () => {
-  expect(RECENT_MTVAI_UPLOADS).toHaveLength(534);
-  expect(new Set(RECENT_MTVAI_UPLOADS.map(v => v.id)).size).toBe(534);
+  expect(RECENT_MTVAI_UPLOADS).toHaveLength(564);
+  expect(new Set(RECENT_MTVAI_UPLOADS.map(v => v.id)).size).toBe(564);
   for (const video of RECENT_MTVAI_UPLOADS) {
     if (video.publishedAt !== null) {
       expect(Date.parse(video.publishedAt)).toBeGreaterThanOrEqual(Date.parse("2026-10-18T00:00:00Z"));
@@ -13,8 +13,8 @@ test("recent MTV AI additions are unique uploads inside the requested two-week w
     expect(video.url).toBe(`https://www.youtube.com/watch?v=${video.id}`);
   }
   const ids: string[] = RECENT_MTVAI_UPLOADS.map(v => v.id);
-  expect(ids.includes("DuyXt9mJ2uk")).toBe(false);
-  expect(ids.includes("BBhxfWS2BQA")).toBe(false);
+  expect(ids.includes("DuyXt9mJ2uk")).toBe(true);
+  expect(ids.includes("BBhxfWS2BQA")).toBe(true);
 });
 
 test("new public channel Shorts are included without invented timing metadata", () => {
@@ -57,5 +57,5 @@ test("full portfolio keeps audiobooks and Shorts alongside music videos", () => 
 });
 
 test("November 4 music previews lead the shared MTVAI list newest first", () => {
-  expect(RECENT_MTVAI_UPLOADS.slice(0, 5).map(v => v.id)).toEqual(["i4drVaJpcAc", "UfITZmvLie4", "RSxzkhEkkxY", "mSeE2dOegFk", "BaOR4VjNvhM"]);
+  expect(RECENT_MTVAI_UPLOADS.slice(16, 21).map(v => v.id)).toEqual(["i4drVaJpcAc", "UfITZmvLie4", "RSxzkhEkkxY", "mSeE2dOegFk", "BaOR4VjNvhM"]);
 });
