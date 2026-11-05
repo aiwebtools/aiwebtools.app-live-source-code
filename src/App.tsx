@@ -15,6 +15,7 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import MatrixCursorEffect from "@/components/effects/MatrixCursorEffect";
 import "@/styles/loading-cube.css";
 import ScrollProgressIndicator from "@/components/ScrollProgressIndicator";
+import { getDisplayedCategory } from "@/utils/toolCategoryDisplay";
 import {
   canPlayWeeklyWelcomeAudio,
   getConsentAccepted,
@@ -203,7 +204,7 @@ const InstantToolFallback = ({ tool }: { tool?: any }) => {
           Loading tool details
         </div>
         <h1 className="text-2xl font-bold text-cyan-100">{displayTitle}</h1>
-        {tool?.category ? <p className="mt-2 text-sm text-cyan-300/80">{tool.category}</p> : null}
+        {tool?.category ? <p className="mt-2 text-sm text-cyan-300/80">{getDisplayedCategory(tool)}</p> : null}
         {tool?.description ? (
           <p className="mt-4 line-clamp-4 text-sm leading-relaxed text-cyan-100/75">{tool.description}</p>
         ) : (
