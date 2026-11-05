@@ -47,6 +47,7 @@
 - Run background helper text jobs (Care Bot, weekly digest, community-app review) through `_shared/glm-helper.ts` first, keeping their existing Lovable AI call as fallback; search tool matching and ethics review stay on gateway models for speed/strictness.
 - Let YouTube select playback quality automatically in every player; forced HD and background pause/play loops cause buffering and competing-video interruptions.
 - Share verified recent MTV AI upload metadata between pinned and book reels; the main music page consumes the pinned gallery so new IDs cannot drift across players.
+- Lead every MTVAI music queue with the shared channel upload order rather than randomizing new additions; preserve legacy identities and keep chronological metadata unknown when unverifiable.
 - Render the music-channel signature through MtvaiBrand across header, footer and players; shared attribution prevents branding drift while preserving the main directory identity.
 - Reuse the lazy MTVAI audiobook collection across theater, pinned and book entry points; verified channel IDs and catalog union preserve recordings, and opening it suspends competing playback.
 - Scope exact intake-paragraph deduplication to screenplay-writer streams, preserving other prose and bot output; repeated model questions must not duplicate displayed or saved intake.

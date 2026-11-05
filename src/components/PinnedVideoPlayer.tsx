@@ -6,6 +6,7 @@ import type { Tool } from "@/types/tools";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import { RECENT_MTVAI_UPLOADS } from "@/data/recentMtvaiUploads";
+import { buildMtvaiMusicOrder } from "@/data/mtvaiMusicOrder";
 import MtvaiBrand from "@/components/MtvaiBrand";
 import MtvaiAudiobooksButton from "@/components/MtvaiAudiobooksButton";
 
@@ -348,36 +349,7 @@ const shuffleArray = <T,>(array: T[]): T[] => {
   return shuffled;
 };
 
-// Build a randomized music-video order that ALWAYS leads with real cinematic
-// music videos and pushes Suno-style lyric tracks to the back of the line.
-// Within each group we shuffle so playback still feels fresh on every round.
-export const buildMusicVideoOrder = <T extends { id: string; title: string }>(gallery: T[]): T[] => {
-  const seen = new Set<string>();
-  const unique = gallery.filter((video) => {
-    if (seen.has(video.id)) return false;
-    seen.add(video.id);
-    return true;
-  });
-  const isShort = (video: T) => RECENT_MTVAI_UPLOADS.some((upload) => upload.id === video.id && upload.kind === "short") || /\b(short|interlude|commercial)\b/i.test(video.title);
-  const shorts = shuffleArray(unique.filter(isShort));
-  const longVideos = shuffleArray(unique.filter((video) => !isShort(video)));
-  const ordered: T[] = [];
-  let longIndex = 0;
-  let shortIndex = 0;
-
-  while (longIndex < longVideos.length || shortIndex < shorts.length) {
-    for (let count = 0; count < 2 && longIndex < longVideos.length; count += 1) {
-      ordered.push(longVideos[longIndex]);
-      longIndex += 1;
-    }
-    if (shortIndex < shorts.length) {
-      ordered.push(shorts[shortIndex]);
-      shortIndex += 1;
-    }
-  }
-
-  return ordered;
-};
+export const buildMusicVideoOrder = buildMtvaiMusicOrder;
 
 const buildMusicOrder = (): typeof MUSIC_VIDEO_GALLERY => buildMusicVideoOrder(MUSIC_VIDEO_GALLERY);
 
