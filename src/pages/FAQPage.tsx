@@ -172,7 +172,7 @@ const FAQPage = () => {
           {/* Quick Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 max-w-4xl mx-auto">
             {[
-              { icon: Search, label: "AI Tools", value: "4,000+" },
+              { icon: Search, label: "AI Tools", value: "5,500+" },
               { icon: Star, label: "Curated", value: "Daily" },
               { icon: Zap, label: "Categories", value: "15+" },
               { icon: Users, label: "Built For", value: "Everyone" }

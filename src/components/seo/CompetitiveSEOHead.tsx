@@ -22,8 +22,8 @@ const CompetitiveSEOHead = ({ tool, toolIndex, category, isHomepage }: Competiti
     return (
       <Helmet>
         {/* Ultra-competitive homepage targeting */}
-        <title>AI Web Tools — 4,000+ AI Tools Directory 2026</title>
-        <meta name="description" content="Curated directory of 4,000+ AI tools with reviews, comparisons, and category filtering. Discover ChatGPT alternatives and the latest AI tools for 2026." />
+        <title>AI Web Tools — 5,500+ AI Tools Directory 2026</title>
+        <meta name="description" content="Curated directory of 5,500+ AI tools with reviews, comparisons, and category filtering. Discover ChatGPT alternatives and the latest AI tools for 2026." />
         
         {/* Competitive keyword targeting */}
         <meta name="keywords" content="AI Web Tools, AI tools directory 2026, ChatGPT alternatives, AI tools comparison, AI tools for business, curated AI tools, best AI tools" />
@@ -39,8 +39,8 @@ const CompetitiveSEOHead = ({ tool, toolIndex, category, isHomepage }: Competiti
         <meta property="og:type" content="website" />
         <meta property="og:url" content={buildCanonicalUrl('/')} />
         <meta property="og:site_name" content="AI WEB TOOLS" />
-        <meta property="og:title" content="AI Web Tools — 4,000+ AI Tools Directory 2026" />
-        <meta property="og:description" content="Curated directory of 4,000+ AI tools with reviews, comparisons, and category filtering." />
+        <meta property="og:title" content="AI Web Tools — 5,500+ AI Tools Directory 2026" />
+        <meta property="og:description" content="Curated directory of 5,500+ AI tools with reviews, comparisons, and category filtering." />
         <meta property="og:image" content="https://aiwebtools.app/og-image-homepage.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -51,7 +51,7 @@ const CompetitiveSEOHead = ({ tool, toolIndex, category, isHomepage }: Competiti
         <meta name="twitter:site" content="@AIWebTools" />
         <meta name="twitter:creator" content="@AIWebTools" />
         <meta name="twitter:title" content="AI Web Tools — AI Tools Directory 2026" />
-        <meta name="twitter:description" content="4,000+ curated AI tools with reviews and category filtering." />
+        <meta name="twitter:description" content="5,500+ curated AI tools with reviews and category filtering." />
         <meta name="twitter:image" content="https://aiwebtools.app/og-image-homepage.jpg" />
         
         {/* Mobile optimization */}

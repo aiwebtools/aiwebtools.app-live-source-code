@@ -1,10 +1,10 @@
 # AI Web Tools - AIWEBTOOLS.AI
 # AI Web Tools Directory
 
-> **AI Web Tools** (AIWEBTOOLS.AI) is a curated AI web tools directory with 4,000+ AI tools, custom GPTs, and intelligent assistants across many industries.
+> **AI Web Tools** (AIWEBTOOLS.AI) is a curated AI web tools directory with 5,500+ AI tools, custom GPTs, and intelligent assistants across many industries.
 
 ## Pages
-- [Home](/): 4,000+ AI tools directory, search, and featured custom GPTs.
+- [Home](/): 5,500+ AI tools directory, search, and featured custom GPTs.
 - [AI Tools Hub](/ai-tools-hub): Curated hub of AI tools, agents, and ChatGPT alternatives.
 - [AI Agents Directory](/ai-agents-directory): Autonomous agents and intelligent assistants.
 - [ChatGPT Alternatives](/chatgpt-alternatives): Top alternatives to ChatGPT.
@@ -34,7 +34,7 @@
 **AI Web Tools** is a comprehensive AI tools directory helping users discover, compare, and access the best AI-powered web tools across all categories. We feature productivity tools, creative AI, business automation, education, healthcare, spiritual exploration, and much more.
 
 ### Why Choose AI Web Tools?
-- **4,000+ AI Tools** cataloged and searchable
+- **5,500+ AI Tools** cataloged and searchable
 - **100+ Custom GPT collection** with original AI assistants
 - **Category-based browsing** (Video, Image, Writing, Business, Education, etc.)
 - **Detailed tool pages** with descriptions, videos, and direct access

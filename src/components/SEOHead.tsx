@@ -31,7 +31,7 @@ const SEOHead = ({
   category,
   toolData
 }: SEOHeadProps) => {
-  const fullTitle = title ? `${title} | AI Web Tools` : "AI Web Tools — 4,000+ Best Free AI Tools 2026";
+  const fullTitle = title ? `${title} | AI Web Tools` : "AI Web Tools — 5,500+ Best Free AI Tools 2026";
   const canonical = buildCanonicalUrl(url);
   const fullImage = buildAbsoluteAssetUrl(image);
 
