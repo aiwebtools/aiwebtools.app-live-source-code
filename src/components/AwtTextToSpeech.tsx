@@ -60,6 +60,7 @@ const AwtTextToSpeech: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [previewing, setPreviewing] = useState<string | null>(null);
+  const [clipType, setClipType] = useState("audio/mpeg");
   const audio = useGeneratedAudio();
   const { clipUrl, playing } = audio;
   const previewCache = useRef<Map<string, Blob>>(new Map());
@@ -90,8 +91,18 @@ const AwtTextToSpeech: React.FC = () => {
     try {
       await audio.unlock();
       const instructions = [language ? `Speak entirely in ${language}.` : "", style ? `Delivery: ${style}.` : "Warm, natural conversational delivery."].join(" ");
-      const blob = await requestAudio("awt-tts", { text: text.trim(), voice, speed, instructions }, controller.signal);
-      if (!controller.signal.aborted) await audio.load(blob);
+      let blob: Blob;
+      try {
+        blob = await requestAudio("awt-tts", { text: text.trim(), voice, speed, instructions }, controller.signal);
+      } catch (primaryError) {
+        if (controller.signal.aborted) throw primaryError;
+        try {
+          blob = await requestAudio("awt-tts", { engine: "gemini", text: text.trim(), voice, speed, instructions }, controller.signal);
+        } catch (backupError) {
+          throw new Error(`Speech is unavailable. ${primaryError instanceof Error ? primaryError.message : "The selected voice failed."} Backup: ${backupError instanceof Error ? backupError.message : "unavailable"}`);
+        }
+      }
+      if (!controller.signal.aborted) { setClipType(blob.type); await audio.load(blob); }
     } catch (e) { if (!controller.signal.aborted) setError(e instanceof Error ? e.message : "Voice generation failed."); }
     finally { setLoading(false); request.current = null; }
   };
@@ -100,7 +111,7 @@ const AwtTextToSpeech: React.FC = () => {
   const download = () => {
     if (!clipUrl) return;
     const link = document.createElement("a");
-    link.href = clipUrl; link.download = `aiwebtools-voice-${voice}.mp3`;
+    link.href = clipUrl; link.download = `aiwebtools-voice-${voice}.${clipType.includes("wav") ? "wav" : "mp3"}`;
     document.body.appendChild(link); link.click(); link.remove();
   };
 
@@ -301,7 +312,7 @@ const AwtTextToSpeech: React.FC = () => {
               className="op-gold-btn inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold uppercase tracking-wide disabled:opacity-40"
             >
               <Download className="h-4 w-4" aria-hidden="true" />
-              Download MP3
+              Download {clipType.includes("wav") ? "WAV" : "MP3"}
             </Button>
           </div>
 

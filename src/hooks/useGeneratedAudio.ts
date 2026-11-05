@@ -76,5 +76,7 @@ export async function requestAudio(name: string, body: object, signal?: AbortSig
     const data = await res.json().catch(() => ({}));
     throw new Error(typeof data.error === "string" ? data.error : data.message || (res.ok ? "The service returned no playable audio." : `Audio generation failed (${res.status}).`));
   }
-  return res.blob();
+  const blob = await res.blob();
+  if (!blob.size) throw new Error("The voice service returned an empty recording. Please try again; no audio was played.");
+  return blob;
 }

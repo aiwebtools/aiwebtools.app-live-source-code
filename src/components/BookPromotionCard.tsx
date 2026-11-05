@@ -14,6 +14,8 @@ import { buildMusicVideoOrder } from "@/components/PinnedVideoPlayer";
 import { RECENT_MTVAI_UPLOADS } from "@/data/recentMtvaiUploads";
 import MtvaiBrand from "@/components/MtvaiBrand";
 import MtvaiAudiobooksButton from "@/components/MtvaiAudiobooksButton";
+import BookPreview, { BOOK_TITLE } from "@/components/BookPreview";
+import { MTVAI_CATALOG } from "@/data/mtvaiCatalog";
 
 // Utility function to shuffle array
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -1101,7 +1103,7 @@ const BookPromotionCard = () => {
 
     const middle = uniqueVideos.filter(v => !verticalSet.has(v.id) && !sunoLyricIds.has(v.id));
     const tail   = uniqueVideos.filter(v => sunoLyricIds.has(v.id));
-    return buildMusicVideoOrder([...verticals, ...middle, ...tail]);
+    return MTVAI_CATALOG.map(video => ({ ...video, gradient: uniqueVideos.find(v => v.id === video.id)?.gradient || "from-primary/20 to-primary/10" }));
   }, []);
 
   const videosPerPage = 3;
@@ -1543,7 +1545,7 @@ const BookPromotionCard = () => {
                 <div className="text-center lg:text-left">
                   <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
-                      The Book Of Deployable ChatBot Prompts
+                      {BOOK_TITLE}
                     </span>
                   </h2>
                   
@@ -1599,18 +1601,12 @@ const BookPromotionCard = () => {
                           👁️ View Preview of Amazon Book
                         </Button>
                       </DialogTrigger>
-                      <DialogContent className="max-w-4xl h-[80vh]">
+                      <DialogContent className="max-w-4xl h-[85dvh] flex flex-col overflow-hidden">
                         <DialogHeader>
-                          <DialogTitle>The Book Of Deployable Robot Prompts - Preview</DialogTitle>
+                          <DialogTitle>{BOOK_TITLE} — Preview</DialogTitle>
                         </DialogHeader>
-                        <div className="w-full h-full flex flex-col items-center justify-center gap-4">
-                          <iframe 
-                            src="https://drive.google.com/file/d/18LHLsPXIjjtZgIAaXry5IktOGm9lacTq/preview" 
-                            className="w-full flex-1 rounded-lg pointer-events-auto select-text"
-                            allow="autoplay"
-                            title="The Book Of Deployable Robot Prompts Preview"
-                            style={{ userSelect: 'text' }}
-                          />
+                        <div className="w-full min-h-0 flex-1 flex flex-col gap-4">
+                          <BookPreview />
                           <DialogClose asChild>
                             <Button
                               variant="outline"
@@ -1647,7 +1643,7 @@ const BookPromotionCard = () => {
                           className="bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 text-black font-bold px-4 py-2 rounded-lg text-sm shadow-lg hover:shadow-yellow-500/25 transition-all duration-300 transform hover:scale-105 border border-yellow-400/40"
                         >
                           <Download className="mr-1.5" size={16} />
-                          📊 Download List of All 5556+ AI Tools on this app (CSV)
+                          📊 Download All {allTools.length.toLocaleString()} AI Tools (CSV)
                         </Button>
 
                         <Button

@@ -9,6 +9,7 @@ import { RECENT_MTVAI_UPLOADS } from "@/data/recentMtvaiUploads";
 import { buildMtvaiMusicOrder } from "@/data/mtvaiMusicOrder";
 import MtvaiBrand from "@/components/MtvaiBrand";
 import MtvaiAudiobooksButton from "@/components/MtvaiAudiobooksButton";
+import { MTVAI_CATALOG } from "@/data/mtvaiCatalog";
 
 const YT_EMBED_ORIGIN = "https://www.youtube-nocookie.com";
 const YT_API_ORIGIN_FALLBACK = "https://www.youtube.com";
@@ -351,7 +352,7 @@ const shuffleArray = <T,>(array: T[]): T[] => {
 
 export const buildMusicVideoOrder = buildMtvaiMusicOrder;
 
-const buildMusicOrder = (): typeof MUSIC_VIDEO_GALLERY => buildMusicVideoOrder(MUSIC_VIDEO_GALLERY);
+const buildMusicOrder = (): typeof MUSIC_VIDEO_GALLERY => MTVAI_CATALOG;
 
 // Priority "wow factor" tools that blow minds - these play FIRST
 const WOW_FACTOR_TOOLS = new Set([
