@@ -1,5 +1,10 @@
 # Roadmap
 
+## Complete current MTVAI music lineups
+- [x] Expanded public channel to stable end: 627 Videos and 404 Shorts; added 30 explicitly identified music uploads, all exact titles/owner confirmed by YouTube oEmbed. Remaining missing titles identify tutorials, promos, commentary or already collected audiobooks, not music; unnamed clips cannot be independently classified from titles
+- [x] Shared queue leads with newest Shorts listing and newest Videos listing, then yesterday's unchanged additions; older recovered music appended. Cross-tab exact timestamps unavailable, source order preserved within each tab, no fabricated dates. All 765 original catalog lines retained verbatim
+- [x] Main and pinned newest recording plays (time advancing, readyState 4), all 30 reachable via main Next; book newest recording plays, phone book/main have no horizontal overflow, screenshots reviewed. 14 tests/753 assertions pass and build OK. Existing TikTok iframe throws external 'prod' error on homepage, outside changed music players; no app error in main/pinned checks. Preview updated, not published
+
 ## MTVAI audiobook collection
 - [x] Fresh public Videos/Shorts check identified 12 audiobook/read-aloud recordings, including six absent from the audiobook catalog; preserve all original portfolio entries and exact titles, no fabricated dates
 - [x] Add one lazy shared searchable audiobook window from MTVAI main, pinned and book-promo areas; opening suspends competing playback and closing removes the audiobook iframe
