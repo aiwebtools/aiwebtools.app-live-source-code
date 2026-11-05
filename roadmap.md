@@ -1,11 +1,11 @@
 # Roadmap
 
 ## Remaining live retest fixes — do not publish
-- [ ] Remove homepage content mount/import gates; verify real sections on first load
-- [ ] Correct loader and pre-app fallback counts to 5,563
-- [ ] Exercise Speak It, book pages 1–2/buttons, desktop Care/Clone, and first music frame/count
-- [ ] Check homepage, music and touch chat scrolling at 320/360/390px
-- [ ] Preserve approved sharing, TikTok link, 12 audiobooks and all music; run focused regressions
+- [x] Homepage real content loads through its lazy route rather than independent deferred gates; reproduced four/three placeholders before, zero afterward with all 13 main sections present
+- [x] Initial/final loader and syncing count are 5,563; homepage static generator uses authoritative total instead of slug-deduplicated listing count; no stale 4,571/4,217/5,439 totals in display sources
+- [x] Real welcome speech decoded and played (6.65s, running audio context, nonzero samples, no alerts); book pages 1 and 2/643 readable, exact homepage title already correct and retained; Amazon/DOCX/Clone button destination dispatch verified without external checkout/download; desktop Care/Clone nonoverlap verified
+- [x] Browser-emulated 320/360/390px homepage/music have no horizontal overflow; real Care replies then touch-event swipes advance conversation 135px while page stays fixed; raised open chat above pinned overlay and reserved phone transport space beside Care launcher
+- [x] Share image hash unchanged, share title/description untouched, TikTok profile link/no embed preserved; all 866 music entries and 12 audiobooks preserved; first theater video plays with readyState 4/time 6.28s, homepage /866; 17 focused tests/910 assertions and build OK; not published
 
 ## November 5 live audit — one-pass repairs (do not publish)
 - [ ] Unify catalog counts, Blog, CSV and sharing metadata against actual directory
