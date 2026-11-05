@@ -1,6 +1,7 @@
 
 import { CardDescription } from "@/components/ui/card";
 import { Tool } from "@/types/tools";
+import { getDisplayedCategory } from "@/utils/toolCategoryDisplay";
 
 interface ToolDescriptionProps {
   tool: Tool;
@@ -15,7 +16,7 @@ const ToolDescription = ({ tool }: ToolDescriptionProps) => {
       
       // Add category-specific benefits
       if (tool.category) {
-        enhancedDescription += ` This cutting-edge ${tool.category.toLowerCase()} AI tool revolutionizes workflows by automating complex tasks and providing intelligent insights that would typically require hours of manual work.`;
+        enhancedDescription += ` This cutting-edge ${getDisplayedCategory(tool) === "AI Agents" ? "AI Agents" : tool.category.toLowerCase()} AI tool revolutionizes workflows by automating complex tasks and providing intelligent insights that would typically require hours of manual work.`;
       }
       
       // Add tag-based features

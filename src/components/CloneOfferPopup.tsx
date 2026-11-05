@@ -72,8 +72,8 @@ const CloneOfferPopup = () => {
     const shownCount = parseInt(sessionStorage.getItem('cloneOfferShowCount') || '0');
     setShowCount(shownCount);
 
-    // If already shown 9 times (indices 0-8), don't show again
-    if (shownCount >= 9) {
+    // Show at most once per browser session
+    if (shownCount >= 1) {
       return;
     }
 

@@ -44,7 +44,7 @@ const ROOMS: Record<string, RoomBlueprint> = {
 const SLUG_RULES: Array<[RegExp, keyof typeof ROOMS]> = [
   [/doctor|medic|health|pharma|rx|vet|pet-care|dental|nurse|therap|wellness|mental|medicus|nutrition|genome|marriage/, "clinic"],
   [/law|legal|defender|attorney|contract|legislat|testimony|court|criminolog|insurance|policy|politic/, "chambers"],
-  [/tax|trade|credit|finance|money|invest|budget|business|startup|saas|grant|resume|job|valuation|appraisal|property|real-estate/, "ledger"],
+  [/tax|trade|credit|retail|price|pricing|career|autobiz|finance|money|invest|budget|business|startup|saas|grant|resume|job|valuation|appraisal|property|real-estate/, "ledger"],
   [/time-machine|history|historical|titanic|resurrect|ancient|apothecary|alchem|native-american|archaeolog|antique|interpretis/, "time-machine"],
   [/space|stellar|astro|tesla|einstein|physic|probabil|science|scientist|quantum|data|research|analysis|fact-check/, "observatory"],
   [/oracul|god|dream|fortune|spirit|magdalene|sophia|prophe|tarot|mystic|matrix|alan-watts|angel|bible|meditat/, "oracle"],
@@ -54,7 +54,7 @@ const SLUG_RULES: Array<[RegExp, keyof typeof ROOMS]> = [
   [/art|design|image|draw|sketch|logo|graphic|coloring|tattoo|photo|poster|restyle|book|writer|blog|article|menu/, "studio"],
   [/learn|course|school|teach|degree|college|study|quiz|training|tutor|education|skill|language/, "academy"],
   [/farm|agron|fish|chef|food|recipe|mixolog|cannabis|hemp|fungus|mushroom|garden|plant|animal|nature/, "field"],
-  [/home|renovat|car|auto|automobile|drill|oil|gas|repair|tool|material|handyman|inspect/, "forge"],
+  [/home|renovat|\bcars?\b|automobile|auto-repair|mechanic|drill|\boil\b|\bgas\b|repair|handyman|inspect/, "forge"],
 ];
 
 const CATEGORY_RULES: Array<[RegExp, keyof typeof ROOMS]> = [
