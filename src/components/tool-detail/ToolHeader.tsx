@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { isFreeTool } from "@/utils/freeToolDetection";
 import { getToolPricing, getPricingLabel } from "@/utils/pricingClassification";
 import { createTimePortalEffect } from "@/utils/timeEffects";
+import { getDisplayedCategory } from "@/utils/toolCategoryDisplay";
 
 interface ToolHeaderProps {
   tool: Tool;
@@ -36,6 +37,8 @@ const ToolHeader = ({ tool, defaultRating, defaultVotes, toolIndex }: ToolHeader
   const isFreeCustomGPT = isFreeTool(tool);
   const pricing = getToolPricing(tool);
   const pricingLabel = getPricingLabel(pricing);
+  // Page-level label only; the catalog category behind filtering is unchanged.
+  const displayedCategory = getDisplayedCategory(tool);
 
   return (
     <div className="text-center pb-6 bg-gradient-to-r from-gray-900/50 to-gray-800/30 relative">
@@ -60,7 +63,7 @@ const ToolHeader = ({ tool, defaultRating, defaultVotes, toolIndex }: ToolHeader
       <div className="space-y-4">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent cyber-glow">
           {tool.title}
-          <span className="sr-only"> — {tool.category || 'AI Tool'} Review & Free Access</span>
+          <span className="sr-only"> — {displayedCategory || 'AI Tool'} Review & Free Access</span>
         </h1>
         {tool.category && (
           <Badge 
@@ -68,7 +71,7 @@ const ToolHeader = ({ tool, defaultRating, defaultVotes, toolIndex }: ToolHeader
             className="text-sm border-cyan-400 text-cyan-400 bg-cyan-400/10 px-4 py-2 glow-effect cursor-pointer hover:bg-cyan-400/20 hover:border-cyan-300 transition-all duration-200 transform hover:scale-105"
             onClick={handleCategoryClick}
           >
-            {tool.category}
+            {displayedCategory}
           </Badge>
         )}
         

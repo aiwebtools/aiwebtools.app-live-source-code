@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { generateToolSlug } from '@/utils/urlGenerator';
 import { buildAbsoluteAssetUrl, buildCanonicalUrl } from '@/utils/seo';
+import { getDisplayedCategory } from '@/utils/toolCategoryDisplay';
 
 interface ImprovedSEOHeadProps {
   pageType?: 'homepage' | 'category' | 'tool' | 'search';
@@ -21,7 +22,7 @@ const ImprovedSEOHead: React.FC<ImprovedSEOHeadProps> = ({
       case 'tool': {
         const t = tool?.title || 'AI Tool';
         const access = tool?.isFree ? 'Free ' : '';
-        const full = `${t} — ${access}${tool?.category || 'AI'} Tool | AI Web Tools`;
+        const full = `${t} — ${access}${getDisplayedCategory(tool) || 'AI'} Tool | AI Web Tools`;
         return full.length > 60 ? `${t} | AI Web Tools` : full;
       }
       case 'category':
