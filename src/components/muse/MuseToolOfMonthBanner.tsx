@@ -24,6 +24,14 @@ const MuseToolOfMonthBanner = () => {
 
   useEffect(() => () => stopAll(), []);
 
+  // Keep floating players from covering the popup and silence them while it speaks.
+  useEffect(() => {
+    if (!open) return;
+    document.body.classList.add("awt-promo-open");
+    window.dispatchEvent(new CustomEvent("toolVideoPlaying"));
+    return () => document.body.classList.remove("awt-promo-open");
+  }, [open]);
+
   const activate = () => {
     void copyMuseCode().then((ok) => setCopied(ok));
     // Play the cached recording inside the click gesture so phones allow sound.
