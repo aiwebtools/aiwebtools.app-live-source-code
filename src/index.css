@@ -22,6 +22,15 @@
 .mtvai-channel-link { color: hsl(var(--foreground)); background: hsl(var(--background) / 0.85); border-color: hsl(var(--primary) / 0.4); }
 .mtvai-channel-link:hover { background: hsl(var(--primary) / 0.12); }
 
+/* Reserve a separate lane for cloning while the conversation is open. */
+html[data-care-bot-open] .awt-clone-control { right: 408px !important; top: auto !important; bottom: 16px; }
+.awt-care-panel [role="log"] { -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+@media (max-width: 639px) {
+  html[data-care-bot-open] .awt-clone-control { right: 12px !important; bottom: 4px; }
+  .awt-care-panel { max-height: calc(100dvh - 90px); }
+  footer button, #book-promotion button { white-space: normal; overflow-wrap: anywhere; }
+}
+
 /* Matrix rain loading animation - must be in global CSS for cross-browser */
 @keyframes matrixFall {
   0% { 

@@ -6,7 +6,8 @@ import GlobalSearchBar from "./GlobalSearchBar";
 import { useDeferredAnimation } from "@/hooks/useReducedMotion";
 import DeferredMount from "./DeferredMount";
 
-const HERO_TOOL_STATS = { total: 4571, marketing: "5,500+", categories: 21 };
+import { TOTAL_TOOLS, MARKETING_TOOL_COUNT, TOTAL_CATEGORIES } from "@/data/generated/toolCount";
+const HERO_TOOL_STATS = { total: TOTAL_TOOLS, marketing: MARKETING_TOOL_COUNT, categories: TOTAL_CATEGORIES };
 
 const HeroSection = () => {
   const navigate = useNavigate();
