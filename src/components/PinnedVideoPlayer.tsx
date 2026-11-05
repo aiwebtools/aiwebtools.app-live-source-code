@@ -668,7 +668,12 @@ const PinnedVideoPlayer = memo(() => {
       setAudiobooksOpen(true);
     };
     window.addEventListener("mtvai-audiobooks-open", pauseForAudiobooks);
-    return () => window.removeEventListener("mtvai-audiobooks-open", pauseForAudiobooks);
+    const closeAudiobooks = () => setAudiobooksOpen(false);
+    window.addEventListener("mtvai-audiobooks-close", closeAudiobooks);
+    return () => {
+      window.removeEventListener("mtvai-audiobooks-open", pauseForAudiobooks);
+      window.removeEventListener("mtvai-audiobooks-close", closeAudiobooks);
+    };
   }, []);
   
   // Shuffled tools - kept in state so we can reshuffle on round wrap

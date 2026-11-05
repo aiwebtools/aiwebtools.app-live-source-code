@@ -10,7 +10,7 @@ export default function MtvaiAudiobooksButton({ className = "", onOpenChange }: 
   const changeOpen = (next: boolean) => {
     setOpen(next);
     onOpenChange?.(next);
-    if (next) window.dispatchEvent(new CustomEvent("mtvai-audiobooks-open"));
+    window.dispatchEvent(new CustomEvent(next ? "mtvai-audiobooks-open" : "mtvai-audiobooks-close"));
   };
   return <Dialog open={open} onOpenChange={changeOpen}>
     <Button variant="outline" size="sm" onClick={() => changeOpen(true)} className={`btn-flat border-primary/40 bg-background text-primary hover:bg-accent hover:text-accent-foreground ${className}`} title="Open MTVAI audiobooks"><Headphones />Audiobooks</Button>
