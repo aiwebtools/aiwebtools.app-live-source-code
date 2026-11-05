@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { Calendar, Clock, ArrowRight, TrendingUp, Users, Sparkles, Grid3X3, Copy, BookOpen, Home, HelpCircle } from 'lucide-react';
 import { blogPosts } from '@/data/blogPostContent';
+import { TOTAL_TOOLS, MARKETING_TOOL_COUNT } from '@/data/generated/toolCount';
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -38,18 +39,18 @@ export default function BlogPage() {
     <>
       <Helmet>
         <title>AI Tools Blog | GPT-5 News, AI Reviews & Tutorials | AI Web Tools</title>
-        <meta name="description" content="Latest AI news including GPT-5, Claude 4, Sora 2 & more. Expert tutorials, reviews, and guides on 2000+ AI tools. Stay ahead with trending AI developments." />
+        <meta name="description" content={`AI news, tutorials and reviews from AIWEBTOOLS — explore our directory of ${MARKETING_TOOL_COUNT} AI tools.`} />
         <meta name="keywords" content="GPT-5, GPT-5 news, AI tools blog, AI tutorials, Claude 4, Sora 2, best AI tools, AI tool directory, Gemini 2.5, AI reviews, ChatGPT alternatives, DeepSeek, AI agents" />
         <link rel="canonical" href="https://aiwebtools.app/blog" />
         
         <meta property="og:title" content="AI Tools Blog | Expert Reviews & Tutorials" />
-        <meta property="og:description" content="Expert insights, tutorials, and reviews on 2195+ AI tools. Learn how AI can transform your business and creativity." />
+        <meta property="og:description" content={`AI insights and tutorials from a directory of ${MARKETING_TOOL_COUNT} AI tools.`} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://aiwebtools.app/blog" />
         
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="AI Tools Blog | Expert Reviews & Tutorials" />
-        <meta name="twitter:description" content="Expert insights, tutorials, and reviews on 2195+ AI tools." />
+        <meta name="twitter:description" content={`AI insights and tutorials from a directory of ${MARKETING_TOOL_COUNT} AI tools.`} />
         
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
@@ -66,7 +67,7 @@ export default function BlogPage() {
               <span className="text-cyan-400">AI Tools</span> Blog & Tutorials
             </h1>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-6">
-              Expert insights, reviews, and guides on 2000+ AI tools. Stay ahead with the latest AI trends including GPT-5, Claude 4, and more.
+              Expert insights, reviews, and guides from our directory of {TOTAL_TOOLS.toLocaleString()} AI tools.
             </p>
 
             {/* Navigation Buttons */}
@@ -116,8 +117,8 @@ export default function BlogPage() {
               <div className="text-xs text-gray-500">Articles</div>
             </div>
             <div className="text-center p-4 bg-slate-900/50 rounded-lg border border-cyan-500/20">
-              <div className="text-2xl font-bold text-cyan-400">2195+</div>
-              <div className="text-xs text-gray-500">Tools Covered</div>
+              <div className="text-2xl font-bold text-cyan-400">{TOTAL_TOOLS.toLocaleString()}</div>
+              <div className="text-xs text-gray-500">Tools in Directory</div>
             </div>
             <div className="text-center p-4 bg-slate-900/50 rounded-lg border border-cyan-500/20">
               <div className="text-2xl font-bold text-cyan-400">Daily</div>
@@ -177,7 +178,7 @@ export default function BlogPage() {
           {/* CTA */}
           <div className="mt-12 text-center p-8 bg-gradient-to-r from-cyan-900/20 to-purple-900/20 rounded-xl border border-cyan-500/20">
             <h2 className="text-2xl font-bold text-white mb-3">Ready to Explore AI Tools?</h2>
-            <p className="text-gray-400 mb-6">Discover 2195+ AI tools for every need in our comprehensive directory.</p>
+            <p className="text-gray-400 mb-6">Discover {TOTAL_TOOLS.toLocaleString()} AI tools for every need in our comprehensive directory.</p>
             <Button asChild size="lg" className="bg-cyan-600 hover:bg-cyan-700">
               <Link to="/">
                 Browse AI Tools Directory

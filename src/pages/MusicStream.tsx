@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowLeft, SkipForward, SkipBack, Volume2, VolumeX, Home, Search, X } from "lucide-react";
-import { buildMusicVideoOrder, MUSIC_VIDEO_GALLERY } from "@/components/PinnedVideoPlayer";
+import { MTVAI_CATALOG } from "@/data/mtvaiCatalog";
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import GlobalSearchBar from "@/components/LazyGlobalSearchBar";
 import DownloadLibraryButton from "@/components/DownloadLibraryButton";
@@ -38,6 +38,7 @@ const MusicStream = () => {
   const [showIntro, setShowIntro] = useState(true);
   const [searchOpen, setSearchOpen] = useState(false);
   const [audiobooksOpen, setAudiobooksOpen] = useState(false);
+  const [frameReady, setFrameReady] = useState(false);
 
   // Truly random playback order every time the user enters the theater.
   // The session token guarantees a fresh shuffle per visit (not just first mount).
@@ -46,7 +47,7 @@ const MusicStream = () => {
   // meant the same shuffled-position-0 video felt biased toward "first".
   const playlist = useMemo(() => {
     void newSessionShuffleToken();
-    return buildMusicVideoOrder(MUSIC_VIDEO_GALLERY);
+    return MTVAI_CATALOG;
   }, []);
 
   // The queue itself is freshly randomized; begin at its first item so the
@@ -62,6 +63,7 @@ const MusicStream = () => {
   const detectedDurationRef = useRef<number | null>(null);
 
   useEffect(() => {
+    setFrameReady(false);
     videoStartRef.current = Date.now();
     advancedForRef.current = null;
     detectedDurationRef.current = null;
@@ -118,6 +120,7 @@ const MusicStream = () => {
         // embeds on the page (pinned player, etc.) also post state changes
         // and were able to trigger spurious advances.
         if (!iframeRef.current || e.source !== iframeRef.current.contentWindow) return;
+        if (data?.event === "onReady" || data?.info?.playerState === 1 || data?.info?.playerState === 5 || (data?.event === "onStateChange" && data?.info === 1)) setFrameReady(true);
 
         // Capture duration so we can require ~90% playback before honoring "ended".
         if (data?.info?.duration && data.info.duration > 0 && !detectedDurationRef.current) {
@@ -334,15 +337,15 @@ const MusicStream = () => {
       {/* Theater player — giant 9:16 center stage */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div
-          className="relative h-full"
-          style={{ aspectRatio: "9 / 16", maxWidth: "100vw", maxHeight: "100vh" }}
+          className="relative h-[100dvh] max-w-full aspect-[9/16]"
         >
+          {!frameReady && !audiobooksOpen && <img src={`https://i.ytimg.com/vi/${current.id}/hqdefault.jpg`} alt={current.title} className="absolute inset-0 w-full h-full object-contain pointer-events-none" />}
           {!audiobooksOpen && <iframe
             ref={iframeRef}
             key={current.id}
             src={src}
             title={current.title}
-            className="w-full h-full"
+            className={`relative w-full h-full transition-opacity ${frameReady ? "opacity-100" : "opacity-0"}`}
             onLoad={handleIframeLoad}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
             allowFullScreen

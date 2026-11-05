@@ -46,6 +46,22 @@ const InspirationCarousel = lazy(() => import("@/components/InspirationCarousel"
 const TikTokFeedSection = lazy(() => import("@/components/social/TikTokFeedSection"));
 const AwtTextToSpeech = lazy(() => import("@/components/AwtTextToSpeech"));
 
+// Fetch below-fold chunks together; mounting remains staggered to avoid a
+// single heavy React commit. Nested suspense must not serialize downloads.
+if (typeof window !== "undefined") {
+  window.setTimeout(() => {
+    void Promise.allSettled([
+      import("@/components/LazySearchPortal"),
+      import("@/components/EthicalAIQuoteSection"),
+      import("@/components/InspirationCarousel"),
+      import("@/components/BookPromotionCard"),
+      import("@/components/seo/AIWebToolsSEOSection"),
+      import("@/components/AwtTextToSpeech"),
+      import("@/components/social/TikTokFeedSection"),
+    ]);
+  }, 100);
+}
+
 
 
 // Removed loading spinner - causes perceived slowness on refresh
@@ -175,7 +191,7 @@ const Index = () => {
         </DeferredMount>
 
         {/* Free AWT text-to-speech generator: lightweight, browser-voice powered. */}
-        <DeferredMount delay={1600} fallback={<SectionLoading />}>
+        <DeferredMount delay={100} fallback={<SectionLoading />}>
           <Suspense fallback={<SectionLoading />}>
             <AwtTextToSpeech />
           </Suspense>
@@ -187,7 +203,7 @@ const Index = () => {
           <CategoryPageSelection />
         </div>
         
-        <DeferredMount delay={2400} fallback={<SectionLoading />}>
+        <DeferredMount delay={200} fallback={<SectionLoading />}>
           <Suspense fallback={<SectionLoading />}>
             <AIWebToolsSEOSection />
           </Suspense>
@@ -199,20 +215,20 @@ const Index = () => {
           </Suspense>
         </DeferredMount>
 
-        <DeferredMount delay={2000} fallback={<SectionLoading />}>
+        <DeferredMount delay={300} fallback={<SectionLoading />}>
           <Suspense fallback={<SectionLoading />}>
             <BookPromotionCard />
           </Suspense>
         </DeferredMount>
 
-        <DeferredMount delay={2600} fallback={<SectionLoading />}>
+        <DeferredMount delay={400} fallback={<SectionLoading />}>
           <Suspense fallback={<SectionLoading />}>
             <TikTokFeedSection />
           </Suspense>
         </DeferredMount>
 
         
-        <DeferredMount delay={2800} fallback={<SectionLoading />}>
+        <DeferredMount delay={500} fallback={<SectionLoading />}>
           <Suspense fallback={<SectionLoading />}>
             <section className="py-16 relative" style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #001a00 50%, #0a0a0a 100%)' }}>
               <div className="container mx-auto px-4">
@@ -231,13 +247,13 @@ const Index = () => {
           </Suspense>
         </DeferredMount>
         
-        <DeferredMount delay={isMobile ? 3200 : 860} fallback={<SectionLoading />}>
+        <DeferredMount delay={600} fallback={<SectionLoading />}>
           <Suspense fallback={<SectionLoading />}>
             <EthicalAIQuoteSection />
           </Suspense>
         </DeferredMount>
         
-        <DeferredMount delay={isMobile ? 3600 : 920} fallback={<SectionLoading />}>
+        <DeferredMount delay={700} fallback={<SectionLoading />}>
           <Suspense fallback={<SectionLoading />}>
             <InspirationCarousel />
           </Suspense>

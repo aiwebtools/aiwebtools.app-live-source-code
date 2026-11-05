@@ -1,4 +1,5 @@
 import React from 'react';
+import { TOTAL_TOOLS } from '@/data/generated/toolCount';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
@@ -251,7 +252,7 @@ export default function BlogPostPage() {
 
           {/* CTA */}
           <div className="text-center p-8 bg-gradient-to-r from-cyan-900/20 to-purple-900/20 rounded-xl border border-cyan-500/20">
-            <h2 className="text-2xl font-bold text-white mb-3">Explore 2195+ AI Tools</h2>
+            <h2 className="text-2xl font-bold text-white mb-3">Explore {TOTAL_TOOLS.toLocaleString()} AI Tools</h2>
             <p className="text-gray-400 mb-6">Find the perfect AI tool for any task in our comprehensive directory.</p>
             <div className="flex flex-wrap justify-center gap-3">
               <Button asChild size="lg" className="bg-cyan-600 hover:bg-cyan-700">

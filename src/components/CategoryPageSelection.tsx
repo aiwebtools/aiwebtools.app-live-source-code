@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { mainCategories } from "@/utils/mainCategoryMapping";
 
-const FAST_TOOL_TOTAL = 4571;
+import { TOTAL_TOOLS as FAST_TOOL_TOTAL } from "@/data/generated/toolCount";
 
 const CategoryPageSelection = memo(() => {
   const navigate = useNavigate();

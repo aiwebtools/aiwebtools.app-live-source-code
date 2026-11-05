@@ -70,11 +70,13 @@ export async function requestAudio(name: string, body: object, signal?: AbortSig
   const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
   const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${name}`, {
     method: "POST", headers: { "Content-Type": "application/json", apikey: key, Authorization: `Bearer ${key}` },
-    body: JSON.stringify(body), signal,
+    body: JSON.stringify(body), signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(45000)]) : AbortSignal.timeout(45000),
   });
   if (!res.ok || !(res.headers.get("Content-Type") || "").startsWith("audio/")) {
     const data = await res.json().catch(() => ({}));
     throw new Error(typeof data.error === "string" ? data.error : data.message || (res.ok ? "The service returned no playable audio." : `Audio generation failed (${res.status}).`));
   }
-  return res.blob();
+  const blob = await res.blob();
+  if (!blob.size) throw new Error("The voice service returned an empty recording. Please try again; no audio was played.");
+  return blob;
 }

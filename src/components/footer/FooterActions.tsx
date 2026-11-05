@@ -5,7 +5,7 @@ import { downloadToolsCSV } from "@/utils/csvExport";
 import { createConfettiCelebration } from "@/utils/effects/audioEffects";
 import LocalModelsAccordion from "@/components/LocalModelsAccordion";
 
-const TOOL_COUNT = 5000;
+import { TOTAL_TOOLS } from "@/data/generated/toolCount";
 
 interface FooterActionsProps {
   handleExternalLink: (url: string, e: React.MouseEvent) => void;
@@ -56,7 +56,7 @@ const FooterActions = ({ handleExternalLink, handleSubmitTool, handleRequestTool
           className="w-full sm:w-auto px-6 py-3 h-auto min-h-[3rem] whitespace-nowrap text-sm md:text-base font-bold tracking-wide"
         >
           <Download className="mr-2 h-5 w-5 animate-bounce flex-shrink-0" />
-          DOWNLOAD {TOOL_COUNT}+ AI TOOLS (CSV)
+          DOWNLOAD {TOTAL_TOOLS.toLocaleString()} AI TOOLS (CSV)
         </Button>
         
         <Button
