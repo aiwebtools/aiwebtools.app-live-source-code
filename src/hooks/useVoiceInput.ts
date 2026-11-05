@@ -15,7 +15,7 @@ interface Recognition {
 type RecognitionConstructor = new () => Recognition;
 
 /** One utterance per turn prevents the bot's speaker audio becoming user input. */
-export function useVoiceInput(onTranscript: (text: string) => void, onStart: () => void, onEnd: () => void) {
+export function useVoiceInput(onTranscript: (text: string, final: boolean) => void, onStart: () => void, onEnd: () => void) {
   const { toast } = useToast();
   const [listening, setListening] = useState(false);
   const callbackRef = useRef(onTranscript);
@@ -40,16 +40,19 @@ export function useVoiceInput(onTranscript: (text: string) => void, onStart: () 
     recognitionRef.current = recognition;
     recognition.lang = navigator.language || "en-US";
     recognition.continuous = false;
-    recognition.interimResults = false;
+    recognition.interimResults = true;
     recognition.onresult = (event) => {
+      // Show words in the input as they are heard; the visitor reviews and sends.
       let text = "";
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        if (event.results[i].isFinal) text += event.results[i][0].transcript;
+      let final = true;
+      for (let i = 0; i < event.results.length; i++) {
+        text += event.results[i][0].transcript;
+        if (!event.results[i].isFinal) final = false;
       }
-      if (text.trim()) { onEnd(); callbackRef.current(text.trim()); }
+      if (text.trim()) callbackRef.current(text.trim(), final);
     };
     recognition.onerror = ({ error }) => {
-      if (error !== "aborted") toast({ title: "Microphone paused", description: error === "not-allowed" ? "Allow microphone access to speak with this bot." : "Your voice could not be heard. Tap the microphone to try again." });
+      if (error !== "aborted") toast({ title: "Microphone paused", description: error === "not-allowed" || error === "service-not-allowed" ? "Allow microphone access in your browser settings to speak with this bot." : error === "no-speech" ? "No speech was heard. Tap Speak and talk after the listening light appears." : "Your voice could not be heard. Tap the microphone to try again." });
       setListening(false);
       onEnd();
     };
