@@ -109,3 +109,8 @@
 - [x] TTS fallback: free device voice reads the remainder when the lifelike engine fails (tested)
 - [x] GLM lag reviewed: streaming and thinking indicator already live; lag is provider-side, no model change
 - [x] Recent bot responses reviewed in gpt_chat_logs (62 ok / 12 failures in 48h; image-credit and pre-fix errors only)
+
+## November 5 studio/directory work order (21 items) — do not publish
+- [x] 6 token total = in+out; 8 Retail header; 9 CCSBA rename+greeting; 11 placeholders; 16 popup once/session; 18 About Muse; 19 pinch zoom
+- [ ] 1 seven missing GPTs — blocked: no instructions exist in project, database or uploads; need Master's originals
+- [ ] 2–5, 6 (own row), 7 (taglines stored truncated), 10, 12–15, 17, 20 — open
