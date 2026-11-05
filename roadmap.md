@@ -1,5 +1,11 @@
 # Roadmap
 
+## MTVAI audiobook collection
+- [x] Fresh public Videos/Shorts check identified 12 audiobook/read-aloud recordings, including six absent from the audiobook catalog; preserve all original portfolio entries and exact titles, no fabricated dates
+- [x] Add one lazy shared searchable audiobook window from MTVAI main, pinned and book-promo areas; opening suspends competing playback and closing removes the audiobook iframe
+- [x] Phone 408×832 and desktop 1280×1800 collection fit, search, Carl Sagan playback, list scroll and close verified with screenshots and zero page errors; 11 tests pass, current build OK
+- [ ] Pinned/book visual entry checks remain unverified: deferred homepage sections did not mount during browser check; shared entry points are wired, main-page collection verified
+
 ## Current bot reply review
 - [x] Review recent stored replies and reproduce screenplay intake repetition in a real guest chat
 - [x] Add scoped screenplay/story delivery guidance and bounded exact-intake deduplication without rewriting authored instructions or changing models

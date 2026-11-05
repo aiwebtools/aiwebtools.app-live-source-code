@@ -7,6 +7,7 @@ import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import { RECENT_MTVAI_UPLOADS } from "@/data/recentMtvaiUploads";
 import MtvaiBrand from "@/components/MtvaiBrand";
+import MtvaiAudiobooksButton from "@/components/MtvaiAudiobooksButton";
 
 const YT_EMBED_ORIGIN = "https://www.youtube-nocookie.com";
 const YT_API_ORIGIN_FALLBACK = "https://www.youtube.com";
@@ -659,6 +660,21 @@ const PinnedVideoPlayer = memo(() => {
   const [isMuted, setIsMuted] = useState(false);
   const initialMuteEnforcedRef = useRef(false);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [audiobooksOpen, setAudiobooksOpen] = useState(false);
+  useEffect(() => {
+    const pauseForAudiobooks = () => {
+      userPausedRef.current = true;
+      setIsPlaying(false);
+      setAudiobooksOpen(true);
+    };
+    window.addEventListener("mtvai-audiobooks-open", pauseForAudiobooks);
+    const closeAudiobooks = () => setAudiobooksOpen(false);
+    window.addEventListener("mtvai-audiobooks-close", closeAudiobooks);
+    return () => {
+      window.removeEventListener("mtvai-audiobooks-open", pauseForAudiobooks);
+      window.removeEventListener("mtvai-audiobooks-close", closeAudiobooks);
+    };
+  }, []);
   
   // Shuffled tools - kept in state so we can reshuffle on round wrap
   // (so every video plays once before any repeat)
@@ -1332,7 +1348,7 @@ const PinnedVideoPlayer = memo(() => {
         </div>
 
         {/* Video Container - stable iframe that doesn't remount on navigation */}
-        {(isMusicMode || mode === 'idle') && <div className="flex justify-center bg-background py-1"><MtvaiBrand compact /></div>}
+        {(isMusicMode || mode === 'idle') && <div className="flex flex-col items-center gap-1 bg-background py-1"><MtvaiBrand compact /><MtvaiAudiobooksButton className="h-7 text-[10px]" onOpenChange={setAudiobooksOpen} /></div>}
         <div
           className="group relative bg-black"
           style={{
@@ -1410,7 +1426,7 @@ const PinnedVideoPlayer = memo(() => {
             </div>
           ) : (
             <>
-              <iframe
+              {!audiobooksOpen && <iframe
                 ref={iframeRef}
                 src={videoSrc}
                 className="w-full h-full"
@@ -1419,7 +1435,7 @@ const PinnedVideoPlayer = memo(() => {
                 title={currentTitle}
                 style={{ minHeight: '70px' }}
                 onLoad={handleIframeLoad}
-              />
+              />}
               <button
                 type="button"
                 onClick={handleTogglePlay}

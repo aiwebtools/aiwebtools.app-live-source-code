@@ -13,6 +13,7 @@ import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import { buildMusicVideoOrder } from "@/components/PinnedVideoPlayer";
 import { RECENT_MTVAI_UPLOADS } from "@/data/recentMtvaiUploads";
 import MtvaiBrand from "@/components/MtvaiBrand";
+import MtvaiAudiobooksButton from "@/components/MtvaiAudiobooksButton";
 
 // Utility function to shuffle array
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -1120,7 +1121,11 @@ const BookPromotionCard = () => {
     };
 
     window.addEventListener('pinnedPlayerPlaying', handlePinnedPlayerStarting);
-    return () => window.removeEventListener('pinnedPlayerPlaying', handlePinnedPlayerStarting);
+    window.addEventListener('mtvai-audiobooks-open', handlePinnedPlayerStarting);
+    return () => {
+      window.removeEventListener('pinnedPlayerPlaying', handlePinnedPlayerStarting);
+      window.removeEventListener('mtvai-audiobooks-open', handlePinnedPlayerStarting);
+    };
   }, [stopAllBookVideos]);
 
   // Handle video end - ALWAYS auto advance to next video and autoplay it (unmuted)
@@ -1350,7 +1355,7 @@ const BookPromotionCard = () => {
             <div className="flex flex-col lg:flex-row items-center">
               {/* Book Visual - YouTube Videos */}
                 <div className="lg:w-1/2 p-3 md:p-5 overflow-visible">
-                <div className="flex justify-center mb-4"><MtvaiBrand /></div>
+                <div className="flex flex-wrap items-center justify-center gap-3 mb-4"><MtvaiBrand /><MtvaiAudiobooksButton /></div>
                 {/* Desktop: Carousel showing 3 videos at a time */}
                 <div className="hidden md:block relative overflow-visible">
                   <div className="flex items-center justify-center gap-3">
