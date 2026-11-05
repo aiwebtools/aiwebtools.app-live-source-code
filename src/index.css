@@ -139,3 +139,6 @@ html[data-care-bot-open] .awt-floating-overlay:not(.awt-clone-control) { z-index
 body:has([data-radix-popper-content-wrapper] [data-state="open"]) .awt-floating-overlay {
   display: none !important;
 }
+
+/* Floating players/buttons step aside while a promotional video dialog is open. */
+body.awt-promo-open .awt-floating-overlay { visibility: hidden !important; pointer-events: none !important; }

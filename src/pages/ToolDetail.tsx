@@ -16,6 +16,7 @@ import PerplexityBotGuide from "@/components/tool-detail/PerplexityBotGuide";
 import InSiteGptRunner from "@/components/tool-detail/InSiteGptRunner";
 import ToolMedia from "@/components/tool-detail/ToolMedia";
 import ToolTags from "@/components/tool-detail/ToolTags";
+import MuseCodeCopy from "@/components/muse/MuseCodeCopy";
 import ToolActions from "@/components/tool-detail/ToolActions";
 import ToolAIExplainer from "@/components/ai/ToolAIExplainer";
 import ToolPromptHelper from "@/components/ai/ToolPromptHelper";
@@ -198,6 +199,13 @@ const ToolDetail = () => {
               <CardContent className="p-8 bg-gray-900/50">
                 <ToolMedia tool={tool} toolIndex={toolIndex} />
                 <ToolActions tool={tool} />
+                {tool.title === "Muse" && (
+                  <div className="my-6 rounded-xl border border-primary/50 bg-primary/5 p-4">
+                    <p className="mb-2 font-bold text-foreground">🏆 AI Tool of the Month — 1 billion free Muse tokens</p>
+                    <p className="mb-3 text-sm text-muted-foreground">Copy our code, join Muse, then paste it in Settings within 48 hours of joining.</p>
+                    <MuseCodeCopy />
+                  </div>
+                )}
                 <InSiteGptRunner tool={tool} />
                 <ToolDescription tool={tool} />
                 {isPerplexityBot && <PerplexityBotGuide tool={tool} />}

@@ -545,7 +545,7 @@ export const aiAgents2025: Tool[] = [
     color: "from-violet-500 to-emerald-600",
     directUrl: "https://muse.ai/join?via=aiwebtools",
     imageUrl: museAiAgentHero,
-    tags: ["AI Agents", "personal AI agent", "AI assistant", "Muse", "Muse AI", "muse.ai", "task automation", "productivity", "free tokens", "1 billion tokens", "referral code", "PI0DS6", "Freemium", "free tier"],
+    tags: ["AI Agents", "personal AI agent", "AI assistant", "Muse", "Muse AI", "muse.ai", "task automation", "productivity", "free tokens", "1 billion tokens", "referral code", "PI0DS6", "AI Tool of the Month", "Muse AI Agent", "meta agent", "Freemium", "free tier"],
     category: "AI Agents",
     rating: 4.7,
     totalVotes: 640,
