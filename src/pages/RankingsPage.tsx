@@ -93,7 +93,7 @@ const RankingsPage = () => {
         <title>Most Popular AI Tools 2026 — Live Category Rankings | AI Web Tools</title>
         <meta
           name="description"
-          content="See which AI tools people actually open. Live popularity rankings by category across 4,000+ AI Tools, updated from real visitor activity on AIWEBTOOLS.AI."
+          content="See which AI tools people actually open. Live popularity rankings by category across 5,500+ AI Tools, updated from real visitor activity on AIWEBTOOLS.AI."
         />
         <meta
           name="keywords"
@@ -103,7 +103,7 @@ const RankingsPage = () => {
         <meta property="og:title" content="Most Popular AI Tools 2026 — Live Category Rankings" />
         <meta
           property="og:description"
-          content="Live popularity rankings by category across 4,000+ AI Tools, driven by real visitor activity."
+          content="Live popularity rankings by category across 5,500+ AI Tools, driven by real visitor activity."
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={buildCanonicalUrl("/rankings")} />
@@ -123,7 +123,7 @@ const RankingsPage = () => {
             </h1>
             <p className="mt-4 text-gray-400">
               These rankings are not opinions. They are drawn from what visitors actually
-              view and open across the 4,000+ AI Tools directory, category by category.
+              view and open across the 5,500+ AI Tools directory, category by category.
             </p>
           </header>
 

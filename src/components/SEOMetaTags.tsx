@@ -13,7 +13,7 @@ interface SEOMetaTagsProps {
 }
 
 const SEOMetaTags: React.FC<SEOMetaTagsProps> = ({
-  title = "AI Web Tools — 4,000+ AI Tools Directory 2026",
+  title = "AI Web Tools — 5,500+ AI Tools Directory 2026",
   description = "Discover the world's largest directory of AI tools for productivity, creativity, and business. Find the perfect AI tool for any task with our comprehensive collection of 1300+ AI tools.",
   keywords = ['ai tools', 'artificial intelligence', 'productivity tools', 'ai directory', 'ai web tools'],
   url = '/',

@@ -22,7 +22,7 @@ const ToolSubmission = () => {
     <div className="min-h-screen bg-black relative">
       <SEOHead
         title="Submit Your AI Tool · Free Listing — AIWebTools.ai"
-        description="Submit your AI tool to AIWebTools.ai with a name, description, link and custom image. Safe submissions publish instantly to our community directory of 4,000+ AI tools."
+        description="Submit your AI tool to AIWebTools.ai with a name, description, link and custom image. Safe submissions publish instantly to our community directory of 5,500+ AI tools."
       />
       <AnimatedBackground />
       <div className="relative z-10 cyber-grid">

@@ -23,7 +23,7 @@ export const buildAbsoluteAssetUrl = (value?: string): string => {
 export const seoConfig = {
   siteName: "AI WEB TOOLS",
   siteUrl: SITE_URL,
-  description: "Discover 4,000+ free AI tools: ChatGPT alternatives, custom GPTs, AI agents, image, writing & business AI. Updated daily.",
+  description: "Discover 5,500+ free AI tools: ChatGPT alternatives, custom GPTs, AI agents, image, writing & business AI. Updated daily.",
   keywords: [
     "AI WEB TOOLS",
     "free ai tools",
@@ -71,7 +71,7 @@ export const generateStructuredData = (page: string = "homepage") => {
     "mainEntity": {
       "@type": "ItemList",
       "name": "Best AI Tools Directory 2026",
-      "description": "Comprehensive collection of 4,000+ AI tools",
+      "description": "Comprehensive collection of 5,500+ AI tools",
       "numberOfItems": 4000
     },
     "sameAs": [

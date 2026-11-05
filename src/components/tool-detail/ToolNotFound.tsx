@@ -15,7 +15,7 @@ const ToolNotFound = ({ requestedSlug, totalTools }: ToolNotFoundProps) => {
     <div className="min-h-screen bg-black relative">
       <SEOHead
         title="Tool Not Found"
-        description="The requested AI tool could not be found. Browse our collection of 4,000+ AI tools."
+        description="The requested AI tool could not be found. Browse our collection of 5,500+ AI tools."
         noIndex={true}
       />
       <AnimatedBackground />
@@ -27,7 +27,7 @@ const ToolNotFound = ({ requestedSlug, totalTools }: ToolNotFoundProps) => {
           <Link to="/">
             <Button variant="outline" className="border-cyan-500/30 bg-gray-900/80 text-cyan-100 hover:bg-cyan-500/20 interactive-button">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Browse 4,000+ AI Tools
+              Browse 5,500+ AI Tools
             </Button>
           </Link>
         </div>
