@@ -1,5 +1,10 @@
 # Roadmap
 
+## Complete current MTVAI music lineups
+- [ ] Compare public Videos and Shorts with existing music catalogs; add verified missing music only without changing original entries
+- [ ] Keep new additions and yesterday's update first in every shared lineup, preserving existing players and media
+- [ ] Verify pinned, book, vertical and main music playback and report exact additions and coverage
+
 ## MTVAI audiobook collection
 - [x] Fresh public Videos/Shorts check identified 12 audiobook/read-aloud recordings, including six absent from the audiobook catalog; preserve all original portfolio entries and exact titles, no fabricated dates
 - [x] Add one lazy shared searchable audiobook window from MTVAI main, pinned and book-promo areas; opening suspends competing playback and closing removes the audiobook iframe
