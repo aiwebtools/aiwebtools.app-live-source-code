@@ -446,7 +446,7 @@
             const latency = document.getElementById('aiwt-stat-latency');
             const seconds = document.getElementById('progress-sec');
             if (label) label.textContent = 'WELCOME NEO';
-            if (tools) tools.textContent = '4,571';
+            if (tools) tools.textContent = '5,563';
             if (nodes) nodes.textContent = '180';
             if (latency) latency.textContent = '3 ms';
             if (seconds) seconds.textContent = '0s';
@@ -795,7 +795,7 @@
           { pct:5,  label:'INITIALIZING NEURAL CORE',  html:'<span class="aiwt-prompt">▶</span> <span class="aiwt-dim">AIWEBTOOLS.AI NEURAL BOOT v2026.1</span>' },
           { pct:14, label:'ESTABLISHING CONNECTION',   html:'<span class="aiwt-prompt">▶</span> Establishing encrypted connection...' },
           { pct:24, label:'LOADING AI INDEX',          html:'<span class="aiwt-prompt">▶</span> Loading AI index manifest... <span class="aiwt-ok">[OK]</span>' },
-          { pct:35, label:'SYNCING TOOL DATABASE',     html:'<span class="aiwt-prompt">▶</span> Syncing <span class="aiwt-data">4,571</span> verified AI tools...' },
+          { pct:35, label:'SYNCING TOOL DATABASE',     html:'<span class="aiwt-prompt">▶</span> Syncing <span class="aiwt-data">5,563</span> verified AI tools...' },
           { pct:46, label:'COUNTING TOOLS',            html:'<span class="aiwt-prompt">▶</span> Counting every tool in the directory...' },
           { pct:58, label:'INDEXING SEARCH',           html:'<span class="aiwt-prompt">▶</span> Preparing instant search results...' },
           { pct:70, label:'WARMING PORTAL',            html:'<span class="aiwt-prompt">▶</span> Warming the AIWebTools portal...' },
@@ -939,7 +939,7 @@
         var statsInt = setInterval(function(){
           if(overlay.classList.contains('fade-out')){clearInterval(statsInt);return;}
           var elapsed=performance.now()-startedAt, ratio=Math.min(1,elapsed/TARGET_MS);
-          statTools.textContent = Math.min(4217,Math.floor(4217*Math.pow(ratio,.72))).toLocaleString();
+          statTools.textContent = '5,563';
           statNodes.textContent = Math.min(180,Math.floor(180*Math.pow(ratio,.86))).toLocaleString();
           statLatency.textContent = Math.floor(Math.random()*10+3)+' ms';
           coordA.textContent = (Math.sin(cubeAngle)*.5+.5).toFixed(3);

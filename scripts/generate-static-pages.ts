@@ -27,6 +27,7 @@ import { isExpiredHost, getYouTubeThumbnail } from "../src/utils/imageUtils";
 import { blogPosts } from "../src/data/blogPostContent";
 import { mainCategories } from "../src/utils/mainCategoryMapping";
 import { OP_INSTRUCTION_DOCS } from "../src/data/opInstructionDocs";
+import { TOTAL_TOOLS } from "../src/data/generated/toolCount";
 
 const BASE_URL = "https://aiwebtools.app";
 const DIST = path.resolve(process.cwd(), "dist");
@@ -744,7 +745,7 @@ hub(
   `
     ${siteNav}
     <h1>AI Web Tools — 5,500+ AI Tools, And You Can Try Them Right Here</h1>
-    <p>AI Web Tools is a directory of real, working AI tools — ${toolEntries.length} indexed listings across ${byCategory.size} categories — and the custom GPTs AIWebTools.ai builds run free inside this site, no install and no account needed for a daily allowance.</p>
+    <p>AI Web Tools is a directory of real, working AI tools — ${TOTAL_TOOLS.toLocaleString("en-US")} tools across ${byCategory.size} categories — and the custom GPTs AIWebTools.ai builds run free inside this site, no install and no account needed for a daily allowance.</p>
     <h2>Flagship custom GPTs — read the story, then try the tool</h2>
     <ul>${features
       .map(

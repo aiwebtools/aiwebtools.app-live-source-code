@@ -1,5 +1,12 @@
 # Roadmap
 
+## Remaining live retest fixes — do not publish
+- [ ] Remove homepage content mount/import gates; verify real sections on first load
+- [ ] Correct loader and pre-app fallback counts to 5,563
+- [ ] Exercise Speak It, book pages 1–2/buttons, desktop Care/Clone, and first music frame/count
+- [ ] Check homepage, music and touch chat scrolling at 320/360/390px
+- [ ] Preserve approved sharing, TikTok link, 12 audiobooks and all music; run focused regressions
+
 ## November 5 live audit — one-pass repairs (do not publish)
 - [ ] Unify catalog counts, Blog, CSV and sharing metadata against actual directory
 - [ ] Reproduce and repair homepage speech or show actionable service errors

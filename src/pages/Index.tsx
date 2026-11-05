@@ -6,61 +6,28 @@ import ImprovedSEOHead from "@/components/ImprovedSEOHead";
 import GoogleRankingBooster from "@/components/seo/GoogleRankingBooster";
 import { Button } from "../components/ui/button";
 import DeferredMount from "@/components/DeferredMount";
-import SectionLoading from "@/components/SectionLoading";
 import { lazyWithRetry as lazy } from "@/utils/lazyWithRetry";
 import { useMobile } from "@/hooks/useMobile";
 import CategoryPageSelection from "@/components/CategoryPageSelection";
-
-const loadSpecialServices = () => import("@/components/SpecialServices");
-const loadFeaturedTools = () => import("@/components/LazyFeaturedTools");
-// Warm the featured GPT cards immediately. The full tool directory is a large
-// one-time parse, so only warm it once the visitor pauses (no scroll/tap for
-// 1.2s) — never in the middle of their first scroll or click.
-if (typeof window !== "undefined") {
-  void loadSpecialServices().catch(() => {});
-  let lastInput = performance.now();
-  const mark = () => { lastInput = performance.now(); };
-  const opts = { passive: true, capture: true } as const;
-  ["scroll", "wheel", "touchstart", "touchmove", "pointerdown", "keydown"].forEach((e) => window.addEventListener(e, mark, opts));
-  const tryWarm = () => {
-    if (performance.now() - lastInput < 1200) { window.setTimeout(tryWarm, 400); return; }
-    ["scroll", "wheel", "touchstart", "touchmove", "pointerdown", "keydown"].forEach((e) => window.removeEventListener(e, mark, opts));
-    void loadFeaturedTools().catch(() => {});
-  };
-  window.setTimeout(tryWarm, 2500);
-}
-const SpecialServices = lazy(loadSpecialServices);
-const Footer = lazy(() => import("@/components/Footer"));
+// The homepage is already a lazy route. Load its visible content as route
+// dependencies so route-ready means every section exists, not queued skeletons.
+// Media and interactive dialogs retain their own on-demand loading behavior.
+import SpecialServices from "@/components/SpecialServices";
+import Footer from "@/components/Footer";
+import BookPromotionCard from "@/components/BookPromotionCard";
+import LazyFeaturedTools from "@/components/LazyFeaturedTools";
+import LazySearchPortal from "@/components/LazySearchPortal";
+import AIWebToolsSEOSection from "@/components/seo/AIWebToolsSEOSection";
+import EthicalAIQuoteSection from "@/components/EthicalAIQuoteSection";
+import InspirationCarousel from "@/components/InspirationCarousel";
+import TikTokFeedSection from "@/components/social/TikTokFeedSection";
+import AwtTextToSpeech from "@/components/AwtTextToSpeech";
 const ScrollToTop = lazy(() => import("@/components/ui/scroll-to-top"));
-const BookPromotionCard = lazy(() => import("@/components/BookPromotionCard"));
-const LazyFeaturedTools = lazy(loadFeaturedTools);
-const LazySearchPortal = lazy(() => import("@/components/LazySearchPortal"));
 const InteractiveMatrixBackground = lazy(() => import("@/components/InteractiveMatrixBackground"));
 const AnimatedBackground = lazy(() => import("@/components/AnimatedBackground"));
 const CloneOfferPopup = lazy(() => import("@/components/CloneOfferPopup"));
 const LovableInvitePopup = lazy(() => import("@/components/LovableInvitePopup"));
 const MuseTokensPopup = lazy(() => import("@/components/MuseTokensPopup"));
-const AIWebToolsSEOSection = lazy(() => import("@/components/seo/AIWebToolsSEOSection"));
-const EthicalAIQuoteSection = lazy(() => import("@/components/EthicalAIQuoteSection"));
-const InspirationCarousel = lazy(() => import("@/components/InspirationCarousel"));
-const TikTokFeedSection = lazy(() => import("@/components/social/TikTokFeedSection"));
-const AwtTextToSpeech = lazy(() => import("@/components/AwtTextToSpeech"));
-
-// Fetch below-fold chunks together; mounting remains staggered to avoid a
-// single heavy React commit. Nested suspense must not serialize downloads.
-if (typeof window !== "undefined") {
-  window.setTimeout(() => {
-    void Promise.allSettled([
-      import("@/components/LazySearchPortal"),
-      import("@/components/EthicalAIQuoteSection"),
-      import("@/components/InspirationCarousel"),
-      import("@/components/BookPromotionCard"),
-      import("@/components/seo/AIWebToolsSEOSection"),
-      import("@/components/AwtTextToSpeech"),
-      import("@/components/social/TikTokFeedSection"),
-    ]);
-  }, 100);
-}
 
 
 
@@ -184,18 +151,10 @@ const Index = () => {
         </section>
         
         {/* Featured Custom GPT collection sits directly under the main video. */}
-        <DeferredMount delay={0} fallback={<SectionLoading />}>
-          <Suspense fallback={<SectionLoading />}>
-            <SpecialServices />
-          </Suspense>
-        </DeferredMount>
+        <SpecialServices />
 
         {/* Free AWT text-to-speech generator: lightweight, browser-voice powered. */}
-        <DeferredMount delay={100} fallback={<SectionLoading />}>
-          <Suspense fallback={<SectionLoading />}>
-            <AwtTextToSpeech />
-          </Suspense>
-        </DeferredMount>
+        <AwtTextToSpeech />
 
         {/* Lightweight and immediately available: this is the first content a
             visitor reaches, so never compile/mount it during their first scroll. */}
@@ -203,33 +162,15 @@ const Index = () => {
           <CategoryPageSelection />
         </div>
         
-        <DeferredMount delay={200} fallback={<SectionLoading />}>
-          <Suspense fallback={<SectionLoading />}>
-            <AIWebToolsSEOSection />
-          </Suspense>
-        </DeferredMount>
+        <AIWebToolsSEOSection />
    
-        <DeferredMount delay={0} fallback={<SectionLoading />}>
-          <Suspense fallback={<SectionLoading />}>
-            <LazyFeaturedTools onToolsLoaded={(count) => {}} />
-          </Suspense>
-        </DeferredMount>
+        <LazyFeaturedTools />
 
-        <DeferredMount delay={300} fallback={<SectionLoading />}>
-          <Suspense fallback={<SectionLoading />}>
-            <BookPromotionCard />
-          </Suspense>
-        </DeferredMount>
+        <BookPromotionCard />
 
-        <DeferredMount delay={400} fallback={<SectionLoading />}>
-          <Suspense fallback={<SectionLoading />}>
-            <TikTokFeedSection />
-          </Suspense>
-        </DeferredMount>
+        <TikTokFeedSection />
 
         
-        <DeferredMount delay={500} fallback={<SectionLoading />}>
-          <Suspense fallback={<SectionLoading />}>
             <section className="py-16 relative" style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #001a00 50%, #0a0a0a 100%)' }}>
               <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
@@ -244,25 +185,15 @@ const Index = () => {
                 <LazySearchPortal />
               </div>
             </section>
-          </Suspense>
-        </DeferredMount>
         
-        <DeferredMount delay={600} fallback={<SectionLoading />}>
-          <Suspense fallback={<SectionLoading />}>
-            <EthicalAIQuoteSection />
-          </Suspense>
-        </DeferredMount>
+        <EthicalAIQuoteSection />
         
-        <DeferredMount delay={700} fallback={<SectionLoading />}>
-          <Suspense fallback={<SectionLoading />}>
-            <InspirationCarousel />
-          </Suspense>
-        </DeferredMount>
+        <InspirationCarousel />
 
         <Suspense fallback={null}>
           <ScrollToTop />
-          <Footer />
         </Suspense>
+        <Footer />
       </main>
       
       <Suspense fallback={null}>
