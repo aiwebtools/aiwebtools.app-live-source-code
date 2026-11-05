@@ -7,6 +7,7 @@ import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import GlobalSearchBar from "@/components/LazyGlobalSearchBar";
 import DownloadLibraryButton from "@/components/DownloadLibraryButton";
 import MtvaiBrand from "@/components/MtvaiBrand";
+import MtvaiAudiobooksButton from "@/components/MtvaiAudiobooksButton";
 
 const shuffle = <T,>(a: T[]): T[] => {
   const s = [...a];
@@ -36,6 +37,7 @@ const MusicStream = () => {
   const [volume, setVolume] = useState(100);
   const [showIntro, setShowIntro] = useState(true);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [audiobooksOpen, setAudiobooksOpen] = useState(false);
 
   // Truly random playback order every time the user enters the theater.
   // The session token guarantees a fresh shuffle per visit (not just first mount).
@@ -335,7 +337,7 @@ const MusicStream = () => {
           className="relative h-full"
           style={{ aspectRatio: "9 / 16", maxWidth: "100vw", maxHeight: "100vh" }}
         >
-          <iframe
+          {!audiobooksOpen && <iframe
             ref={iframeRef}
             key={current.id}
             src={src}
@@ -344,7 +346,7 @@ const MusicStream = () => {
             onLoad={handleIframeLoad}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
             allowFullScreen
-          />
+          />}
           {/* MTV bug overlay (bottom-left) */}
           <img
             src={mtvAiWebToolsLogo}
@@ -367,6 +369,7 @@ const MusicStream = () => {
 
       {/* Footer transport */}
       <div className="fixed bottom-0 inset-x-0 z-40 flex items-center justify-center gap-2 p-3 bg-gradient-to-t from-black/90 to-transparent">
+        <MtvaiAudiobooksButton onOpenChange={setAudiobooksOpen} />
         <button
           onClick={() => setIdx(i => (i - 1 + playlist.length) % playlist.length)}
           className="h-9 w-12 flex items-center justify-center rounded bg-black/70 border border-cyan-500/40 text-cyan-200 hover:bg-cyan-500/15"
