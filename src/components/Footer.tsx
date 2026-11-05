@@ -13,6 +13,7 @@ import { Download, Gift } from "lucide-react";
 import JoinEmailListButton from "./JoinEmailListButton";
 import SubmitToolModal from "./SubmitToolModal";
 import MtvaiBrand from "./MtvaiBrand";
+import brandVideo from "@/assets/videos/aiwebtools_awakening_brand.mp4.asset.json";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -156,6 +157,14 @@ Best regards,
         </div>
         
         <Separator className="bg-green-500/30 mb-8" />
+        <div className="mx-auto mb-8 max-w-3xl overflow-hidden rounded-2xl border border-primary/40">
+          <video
+            src={brandVideo.url}
+            autoPlay muted loop playsInline preload="none"
+            aria-label="AIWebTools awakening — angels of light and flame with galaxies within"
+            className="block aspect-video w-full object-cover"
+          />
+        </div>
         <div className="flex justify-center mb-8">
           <Link to="/music-stream" aria-label="Watch MTVAI.live, presented by aiwebtools.app" className="mtvai-channel-link inline-flex items-center gap-4 border-y py-4 px-6">
             <MtvaiBrand />

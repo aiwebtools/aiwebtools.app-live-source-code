@@ -201,7 +201,7 @@ const ToolDetail = () => {
                 <ToolActions tool={tool} />
                 {tool.title === "Muse" && (
                   <div className="my-6 rounded-xl border border-primary/50 bg-primary/5 p-4">
-                    <p className="mb-2 font-bold text-foreground">🏆 AI Tool of the Month — 1 billion free Muse tokens</p>
+                    <p className="mb-2 font-bold text-foreground">🏆 AI Tool of the Month — Muse AI Agent: 1 billion free tokens</p>
                     <p className="mb-3 text-sm text-muted-foreground">Copy our code, join Muse, then paste it in Settings within 48 hours of joining.</p>
                     <MuseCodeCopy />
                   </div>

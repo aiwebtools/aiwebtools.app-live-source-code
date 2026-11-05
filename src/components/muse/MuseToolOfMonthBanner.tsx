@@ -5,7 +5,7 @@ import { ArrowRight, Trophy, Copy } from "lucide-react";
 import MuseCodeCopy from "@/components/muse/MuseCodeCopy";
 import { MUSE_CODE, MUSE_JOIN_URL, copyMuseCode } from "@/components/muse/museOffer";
 import { createTimePortalEffect } from "@/utils/timeEffects";
-import offerVoice from "@/assets/audio/muse-offer.mp3.asset.json";
+import offerVoice from "@/assets/audio/muse-offer-line.mp3.asset.json";
 import presenterVideo from "@/assets/videos/muse_code_presenter.mp4.asset.json";
 import brandVideo from "@/assets/videos/aiwebtools_awakening_brand.mp4.asset.json";
 import presenterPoster from "@/assets/muse-presenter-poster.jpg";
@@ -68,10 +68,10 @@ const MuseToolOfMonthBanner = () => {
               <Trophy className="h-3.5 w-3.5" /> AI Tool of the Month
             </span>
             <span className="mt-2 block text-xl font-extrabold text-foreground sm:text-3xl">
-              Muse AI Agent — 1 Billion Free Tokens
+              Muse AI Agent
             </span>
             <span className="mt-1 block text-sm text-muted-foreground sm:text-base">
-              Limited codes. Tap to copy our code and hear the offer.
+              There are only a limited number of codes available — don't miss out on trying this exclusive Meta agent with a free 1 billion tokens on us!
             </span>
           </span>
           <span className="flex shrink-0 items-center justify-between gap-3 rounded-lg border-2 border-dashed border-primary bg-background/80 px-4 py-2">
@@ -95,18 +95,19 @@ const MuseToolOfMonthBanner = () => {
           />
           <div className="px-5 pb-5 pt-3">
             <DialogHeader>
-              <DialogTitle className="text-xl font-bold text-foreground sm:text-2xl">1 Billion Muse Tokens On Us</DialogTitle>
+              <DialogTitle className="text-xl font-bold text-foreground sm:text-2xl">Muse AI Agent — 1 Billion Tokens On Us</DialogTitle>
               <DialogDescription className="pt-1 text-muted-foreground">
                 {copied ? "Code copied! " : ""}Join Muse, then paste this code in <b className="text-foreground">Settings</b> within 48 hours of joining.
               </DialogDescription>
             </DialogHeader>
             <MuseCodeCopy className="mt-4" />
-            <p className="mt-2 text-xs text-muted-foreground">Limited codes. Offer eligibility and availability are set by Muse.</p>
+            <p className="mt-3 text-sm font-semibold text-foreground">There are only a limited number of codes available — don't miss out on trying this exclusive Meta agent with a free 1 billion tokens on us!</p>
+            <p className="mt-1 text-xs text-muted-foreground">Offer eligibility and availability are set by Muse.</p>
             <Button
               onClick={() => { void copyMuseCode(); close(); createTimePortalEffect(MUSE_JOIN_URL, "Muse"); }}
               className="mt-4 h-auto min-h-10 w-full whitespace-normal font-semibold"
             >
-              Copy Code &amp; Join Muse <ArrowRight className="ml-2 h-4 w-4" />
+              Copy Code &amp; Join Muse AI Agent <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             <Button onClick={close} variant="ghost" className="mt-1 w-full text-muted-foreground">Close</Button>
           </div>
