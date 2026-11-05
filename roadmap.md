@@ -1,5 +1,10 @@
 # Roadmap
 
+## MTVAI audiobook collection
+- [ ] Recheck public channel audiobook uploads and preserve existing portfolio entries
+- [ ] Add one shared searchable audiobook window from MTVAI main, pinned and book-promo areas; pause other players while listening
+- [ ] Verify phone/desktop fit, selection, playback and close behavior; run catalog regressions
+
 ## Current bot reply review
 - [x] Review recent stored replies and reproduce screenplay intake repetition in a real guest chat
 - [x] Add scoped screenplay/story delivery guidance and bounded exact-intake deduplication without rewriting authored instructions or changing models
