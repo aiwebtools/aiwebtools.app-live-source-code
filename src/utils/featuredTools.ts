@@ -54,8 +54,13 @@ export const createFeaturedTools = (allTools: Tool[]): Tool[] => {
   console.log(`🚀 Top Legendary GPTs:`, legendaryGPTsFound.slice(0, 10).map(t => t.title));
   
   // Ensure we have ALL AI Web Tools GPTs
+  // Match by title or the same live app address: duplicates merge under the
+  // catalog's spelling (e.g. "Trivia Night GPT"), which is still featured.
+  const appKey = (u?: string) => (u || '').toLowerCase().replace(/^https?:\/\/(www\.)?/, '').split(/[/?#]/)[0];
+  const featuredKeys = new Set(aiWebToolsGPTsInMain.map(t => appKey(t.directUrl)));
   const missingFromFeatured = aiWebToolsGPTs.filter(gpt => 
     !aiWebToolsGPTsInMain.some(tool => tool.title === gpt.title) &&
+    !(gpt.directUrl && featuredKeys.has(appKey(gpt.directUrl))) &&
     !isExcludedFromFeatured(gpt)
   );
   

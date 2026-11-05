@@ -207,8 +207,11 @@ export const verifyFeaturedToolsContent = (featuredTools: Tool[]) => {
   console.log(`🚀 AI Web Tools GPTs in featured: ${aiWebToolsInFeatured.length} of ${aiWebToolsGPTs.length}`);
   console.log(`📋 Featured AI Web Tools GPT titles:`, aiWebToolsInFeatured.slice(0, 20).map(t => t.title));
   
+  const appKey = (u?: string) => (u || '').toLowerCase().replace(/^https?:\/\/(www\.)?/, '').split(/[/?#]/)[0];
+  const featuredKeys = new Set(featuredTools.map(t => appKey(t.directUrl)));
   const missingFromFeatured = aiWebToolsGPTs.filter(gpt => 
-    !featuredTools.some(featured => featured.title === gpt.title)
+    !featuredTools.some(featured => featured.title === gpt.title) &&
+    !(gpt.directUrl && featuredKeys.has(appKey(gpt.directUrl)))
   );
   
   if (missingFromFeatured.length > 0) {
