@@ -46,6 +46,22 @@ const InspirationCarousel = lazy(() => import("@/components/InspirationCarousel"
 const TikTokFeedSection = lazy(() => import("@/components/social/TikTokFeedSection"));
 const AwtTextToSpeech = lazy(() => import("@/components/AwtTextToSpeech"));
 
+// Fetch below-fold chunks together; mounting remains staggered to avoid a
+// single heavy React commit. Nested suspense must not serialize downloads.
+if (typeof window !== "undefined") {
+  window.setTimeout(() => {
+    void Promise.allSettled([
+      import("@/components/LazySearchPortal"),
+      import("@/components/EthicalAIQuoteSection"),
+      import("@/components/InspirationCarousel"),
+      import("@/components/BookPromotionCard"),
+      import("@/components/seo/AIWebToolsSEOSection"),
+      import("@/components/AwtTextToSpeech"),
+      import("@/components/social/TikTokFeedSection"),
+    ]);
+  }, 100);
+}
+
 
 
 // Removed loading spinner - causes perceived slowness on refresh

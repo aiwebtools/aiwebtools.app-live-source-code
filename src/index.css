@@ -23,7 +23,7 @@
 .mtvai-channel-link:hover { background: hsl(var(--primary) / 0.12); }
 
 /* Reserve a separate lane for cloning while the conversation is open. */
-html[data-care-bot-open] .awt-clone-control { right: 408px !important; top: auto !important; bottom: 16px; }
+html[data-care-bot-open] .awt-clone-control { right: 408px !important; top: auto !important; bottom: 16px; transition: none !important; animation: none !important; }
 .awt-care-panel [role="log"] { -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
 @media (max-width: 639px) {
   html[data-care-bot-open] .awt-clone-control { right: 12px !important; bottom: 4px; }
