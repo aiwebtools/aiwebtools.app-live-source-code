@@ -579,14 +579,14 @@ const GlobalOverlays: React.FC = () => {
       const lightDelay = isTouchPhone ? 2500 : 1200;
       // Pinned media and the care bot import substantial code. Never mount
       // them in the desktop opening/first-scroll window.
-      const heavyDelay = isInAppBrowser ? 45000 : isTouchPhone ? 18000 : 10000;
+      const heavyDelay = 1800;
 
       lightTimeoutId = window.setTimeout(() => {
         lightIdleId = scheduleIdle(() => setOverlaysReady(true), isTouchPhone ? 2500 : 1200);
       }, lightDelay);
 
       heavyTimeoutId = window.setTimeout(() => {
-        heavyIdleId = scheduleIdle(() => setHeavyOverlaysReady(true), isTouchPhone ? 5000 : 1500);
+        heavyIdleId = scheduleIdle(() => setHeavyOverlaysReady(true), 500);
       }, heavyDelay);
     };
 

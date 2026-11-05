@@ -107,6 +107,19 @@ const CareBotWidget = () => {
     if (open && inputRef.current) inputRef.current.focus();
   }, [open]);
 
+  useEffect(() => {
+    document.documentElement.toggleAttribute("data-care-bot-open", open);
+    if (!open) return;
+    const root = document.documentElement;
+    const previousOverflow = root.style.overflow;
+    const phone = window.matchMedia("(max-width: 639px)").matches;
+    if (phone) root.style.overflow = "hidden";
+    return () => {
+      root.removeAttribute("data-care-bot-open");
+      if (phone) root.style.overflow = previousOverflow;
+    };
+  }, [open]);
+
   const send = useCallback(async (text: string) => {
     const trimmed = text.trim();
     if (!trimmed || loading) return;
@@ -222,11 +235,11 @@ const CareBotWidget = () => {
 
       {/* Chat panel */}
       {open && (
-        <div className="fixed inset-x-2 bottom-16 sm:inset-x-auto sm:right-4 sm:bottom-4 z-[9999] w-auto sm:w-[380px] h-[72dvh] sm:h-[min(80vh,620px)] flex flex-col rounded-2xl border border-green-500/40 bg-black/95 shadow-2xl"
+        <div role="dialog" aria-label="AIWebTools Care Bot" className="awt-care-panel fixed inset-x-2 bottom-16 sm:inset-x-auto sm:right-4 sm:bottom-4 z-[9999] w-auto sm:w-[380px] h-[72dvh] max-h-[calc(100dvh-90px)] sm:h-[min(80dvh,620px)] flex flex-col overflow-hidden rounded-2xl border border-green-500/40 bg-black/95 shadow-2xl"
           style={{ boxShadow: "0 0 40px rgba(0, 255, 0, 0.35)" }}
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-green-500/30 bg-gradient-to-r from-green-900/40 to-emerald-900/40 rounded-t-2xl">
+          <div className="shrink-0 flex items-center justify-between px-3 py-3 border-b border-green-500/30 bg-gradient-to-r from-green-900/40 to-emerald-900/40 rounded-t-2xl">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center">
                 <Sparkles className="w-4 h-4 text-black" />
@@ -264,9 +277,9 @@ const CareBotWidget = () => {
           </div>
 
           {/* Messages — living Matrix code rain behind the conversation */}
-          <div className="relative flex-1 min-h-[280px] overflow-hidden">
+          <div className="relative flex-1 min-h-0 overflow-hidden">
           <MatrixRainBackdrop className="opacity-[0.34]" intensity={0.55} />
-          <div ref={scrollRef} className="absolute inset-0 z-10 overflow-y-auto overscroll-contain touch-pan-y px-3 py-3 space-y-3">
+          <div ref={scrollRef} role="log" aria-label="Care Bot conversation" className="absolute inset-0 z-10 overflow-y-auto overscroll-contain touch-pan-y px-3 py-3 space-y-3 break-words [overflow-wrap:anywhere]">
             {messages.length === 0 ? (
               <div className="space-y-3">
                 <div className="text-green-200 text-sm leading-relaxed">
@@ -379,7 +392,7 @@ const CareBotWidget = () => {
           {/* Input */}
           <form
             onSubmit={(e) => { e.preventDefault(); send(input); }}
-            className="border-t border-green-500/30 p-3 flex items-end gap-2"
+            className="shrink-0 border-t border-green-500/30 p-3 flex items-end gap-2"
           >
             <textarea
               ref={inputRef}
@@ -393,7 +406,7 @@ const CareBotWidget = () => {
               }}
               placeholder="Ask about any AI tool…"
               rows={1}
-              className="flex-1 resize-none bg-black/60 border border-green-500/30 rounded-lg px-3 py-2 text-sm text-green-100 placeholder:text-green-700 focus:outline-none focus:border-green-400 max-h-32"
+              className="flex-1 min-w-0 resize-none bg-black/60 border border-green-500/30 rounded-lg px-3 py-2 text-sm text-green-100 placeholder:text-green-700 focus:outline-none focus:border-green-400 max-h-32"
             />
             <button
               type="submit"

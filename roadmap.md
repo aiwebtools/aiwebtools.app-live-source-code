@@ -1,5 +1,15 @@
 # Roadmap
 
+## November 5 live audit — one-pass repairs (do not publish)
+- [ ] Unify catalog counts, Blog, CSV and sharing metadata against actual directory
+- [ ] Reproduce and repair homepage speech or show actionable service errors
+- [ ] Replace failed TikTok embed with working profile link
+- [ ] Render verified book content with consistent source title
+- [ ] Bound homepage loading delays without blocking first interactions
+- [ ] Separate Care Bot and Clone controls; verify contained phone chat scrolling
+- [ ] Unify MTVAI queues/counts and verify first-track frame/playback
+- [ ] Verify homepage and music layouts at phone widths and desktop; run regressions
+
 ## Complete current MTVAI music lineups
 - [x] Expanded public channel to stable end: 627 Videos and 404 Shorts; added 30 explicitly identified music uploads, all exact titles/owner confirmed by YouTube oEmbed. Remaining missing titles identify tutorials, promos, commentary or already collected audiobooks, not music; unnamed clips cannot be independently classified from titles
 - [x] Shared queue leads with newest Shorts listing and newest Videos listing, then yesterday's unchanged additions; older recovered music appended. Cross-tab exact timestamps unavailable, source order preserved within each tab, no fabricated dates. All 765 original catalog lines retained verbatim
