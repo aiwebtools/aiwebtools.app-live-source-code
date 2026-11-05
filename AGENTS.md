@@ -4,6 +4,7 @@
 - Resolve verified compressed community portraits through `migratedBotMedia` in both live catalogs, retaining byte-identical originals as backups; exact source matching preserves new uploads and reduces picture transfer size.
 - Subdirectories may have their own `AGENTS.md`; read it before changing files there.
 - Queue deferred mounts cancellably with lazy fallbacks to prevent loading gaps.
+- Load homepage content as dependencies of its existing lazy route, never through deferred mount queues; route-ready must represent real sections, while decorative effects stay deferred.
 - Share companion links across device menus to keep destinations consistent.
 - Use subject metadata, not themes; lazy-load unpublished survival brains only in the existing builder.
 

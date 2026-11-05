@@ -25,6 +25,10 @@
 /* Reserve a separate lane for cloning while the conversation is open. */
 html[data-care-bot-open] .awt-clone-control { right: 408px !important; top: auto !important; bottom: 16px; transition: none !important; animation: none !important; }
 .awt-care-panel [role="log"] { -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+/* Keep the existing playing widget below the open conversation, not over its
+   touch target. No player is unmounted or paused by this stacking rule. */
+html[data-care-bot-open] .awt-care-panel { z-index: 2147483647; }
+html[data-care-bot-open] .awt-floating-overlay:not(.awt-clone-control) { z-index: 2147483645 !important; }
 @media (max-width: 639px) {
   html[data-care-bot-open] .awt-clone-control { right: 12px !important; bottom: 4px; }
   .awt-care-panel { max-height: calc(100dvh - 90px); }

@@ -371,7 +371,7 @@ const MusicStream = () => {
       </div>
 
       {/* Footer transport */}
-      <div className="fixed bottom-0 inset-x-0 z-40 flex items-center justify-center gap-2 p-3 bg-gradient-to-t from-black/90 to-transparent">
+      <div className="fixed bottom-0 inset-x-0 z-40 flex items-center justify-center gap-1 sm:gap-2 p-3 pr-16 sm:pr-3 bg-gradient-to-t from-black/90 to-transparent">
         <MtvaiAudiobooksButton onOpenChange={setAudiobooksOpen} />
         <button
           onClick={() => setIdx(i => (i - 1 + playlist.length) % playlist.length)}
