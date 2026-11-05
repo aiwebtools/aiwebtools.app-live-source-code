@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { Copy, Check } from "lucide-react";
-import { MUSE_CODE } from "@/components/muse/museOffer";
-import { copyMuseCode } from "@/components/muse/museOffer";
+import { MUSE_CODE, copyMuseCode } from "@/components/muse/museOffer";
 
 /** Big tap-to-copy Muse code; the code text stays selectable when clipboard access is blocked. */
 const MuseCodeCopy = ({ className = "" }: { className?: string }) => {

@@ -27,6 +27,7 @@ const InteractiveMatrixBackground = lazy(() => import("@/components/InteractiveM
 const AnimatedBackground = lazy(() => import("@/components/AnimatedBackground"));
 const CloneOfferPopup = lazy(() => import("@/components/CloneOfferPopup"));
 const LovableInvitePopup = lazy(() => import("@/components/LovableInvitePopup"));
+import MuseToolOfMonthBanner from "@/components/muse/MuseToolOfMonthBanner";
 const MuseTokensPopup = lazy(() => import("@/components/MuseTokensPopup"));
 
 
@@ -85,6 +86,7 @@ const Index = () => {
       
       <main className="relative z-10 pt-[70px] md:pt-[85px]">
         <HeroSection />
+        <MuseToolOfMonthBanner />
         
         {/* Featured Video Section: lite YouTube embed so mobile scroll never waits on iframe boot. */}
         <section className="py-12 md:py-16 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #001a00 50%, #0a0a0a 100%)' }}>
