@@ -1222,14 +1222,14 @@ const BookPromotionCard = () => {
     e.preventDefault();
     e.stopPropagation();
     console.log('🌀 Book purchase clicked - triggering time warp');
-    createTimePortalEffect("https://www.amazon.com/Gospel-Deployable-Robots-Instructions-www-AiWebTools-Ai-ebook/dp/B0DT419F2W?dplnkId=21c79e26-79fa-4837-9c84-4aebe9053749", "The Book Of Deployable Robot Prompts");
+    createTimePortalEffect("https://www.amazon.com/Gospel-Deployable-Robots-Instructions-www-AiWebTools-Ai-ebook/dp/B0DT419F2W?dplnkId=21c79e26-79fa-4837-9c84-4aebe9053749", BOOK_TITLE);
   };
 
   const handleDownloadBook = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     console.log('📥 Free book download clicked');
-    createTimePortalEffect("https://docs.google.com/document/d/18LHLsPXIjjtZgIAaXry5IktOGm9lacTq/edit?usp=sharing&ouid=116187507271950139405&rtpof=true&sd=true", "Free The Book Of Deployable Robot Prompts Download");
+    createTimePortalEffect("https://docs.google.com/document/d/18LHLsPXIjjtZgIAaXry5IktOGm9lacTq/edit?usp=sharing&ouid=116187507271950139405&rtpof=true&sd=true", `Free ${BOOK_TITLE} Download`);
   };
 
   const nextVideo = () => {
