@@ -26,6 +26,7 @@ const DENIED = "Microphone access is off. Allow the microphone for this site in 
 export function useVoiceInput(onTranscript: (text: string, final: boolean) => void, onStart: () => void, onEnd: () => void) {
   const { toast } = useToast();
   const [listening, setListening] = useState(false);
+  const [message, setMessage] = useState("");
   // Refs keep callbacks stable so re-renders never abort an active recognition.
   const callbackRef = useRef(onTranscript);
   const startRef = useRef(onStart);
@@ -37,7 +38,7 @@ export function useVoiceInput(onTranscript: (text: string, final: boolean) => vo
   const startingRef = useRef(false);
   const Constructor = getConstructor();
 
-  const notify = useCallback((title: string, description: string) => toast({ title, description }), [toast]);
+  const notify = useCallback((title: string, description: string) => { setMessage(description); toast({ title, description }); }, [toast]);
 
   const stop = useCallback(() => {
     const active = recognitionRef.current;
@@ -55,6 +56,7 @@ export function useVoiceInput(onTranscript: (text: string, final: boolean) => vo
       notify("Voice input unavailable", "This browser doesn't support speech typing. Try Chrome, Edge or Safari, or type your message.");
       return;
     }
+    setMessage("");
     startingRef.current = true;
     setListening(true);
     // Trigger the browser's normal microphone permission prompt first.
@@ -103,5 +105,5 @@ export function useVoiceInput(onTranscript: (text: string, final: boolean) => vo
   }, [notify, stop]);
 
   useEffect(() => () => { const active = recognitionRef.current; recognitionRef.current = null; try { active?.abort(); } catch { /* noop */ } }, []);
-  return { listening, toggle: () => { void toggle(); }, stop, supported: Boolean(Constructor) };
+  return { listening, message, clearMessage: () => setMessage(""), toggle: () => { void toggle(); }, stop, supported: Boolean(Constructor) };
 }
