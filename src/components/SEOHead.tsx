@@ -197,7 +197,7 @@ const SEOHead = ({
       {/* Security and Performance Headers */}
       <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
       <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-      <meta httpEquiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+      <meta httpEquiv="Permissions-Policy" content="camera=(), microphone=(self), geolocation=()" />
       <meta httpEquiv="Content-Language" content="en" />
       <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       

@@ -6,7 +6,8 @@ import type { GptVoiceProfile } from "@/utils/gptVoiceProfiles";
 import { deviceSpeechAvailable, speakDeviceText, unlockDeviceSpeech } from "@/utils/deviceSpeech";
 import { stopBotIntro } from "@/utils/botIntroVoice";
 
-const STORAGE_KEY = "awt-voice-enabled";
+// v2: read-aloud is ON by default for every visitor; older "off" values came from a muted default.
+const STORAGE_KEY = "awt-voice-enabled-v2";
 const FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/awt-tts`;
 const ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
@@ -38,8 +39,8 @@ const clipSpeed = (speed?: number) => Math.min(1.25, Math.max(1.05, (speed ?? 1)
 export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const supported = typeof window !== "undefined" && (Boolean(profile) || deviceSpeechAvailable());
   const { toast } = useToast();
-  const [enabled, setEnabled] = useState(false);
-  const enabledRef = useRef(false);
+  const [enabled, setEnabled] = useState(true);
+  const enabledRef = useRef(true);
   const listeningRef = useRef(false);
   const [speaking, setSpeaking] = useState(false);
   const [voiceError, setVoiceError] = useState("");

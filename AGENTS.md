@@ -56,3 +56,4 @@
 - Reuse the lazy MTVAI audiobook collection across theater, pinned and book entry points; verified channel IDs and catalog union preserve recordings, and opening it suspends competing playback.
 - Scope exact intake-paragraph deduplication to screenplay-writer streams, preserving other prose and bot output; repeated model questions must not duplicate displayed or saved intake.
 - Keep Muse offer code, join link and copy fallback in `components/muse/museOffer.ts`; banner, popup and tool page share it so the code cannot drift, and the offer voice plays from one cached recording.
+- Request microphone permission via getUserMedia before starting speech recognition, keep voice-input callbacks in refs, and allow `microphone=(self)` in Permissions-Policy; blocked policy or unstable callbacks silently kill dictation.
