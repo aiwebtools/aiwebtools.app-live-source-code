@@ -6,5 +6,5 @@ export function readTokenUsage(value: unknown): Omit<ChatUsage, "model" | "compl
   const inputTokens = count(u.prompt_tokens ?? u.input_tokens ?? u.inputTokens);
   const outputTokens = count(u.completion_tokens ?? u.output_tokens ?? u.outputTokens);
   if (inputTokens === null || outputTokens === null) return null;
-  return { inputTokens, outputTokens, totalTokens: count(u.total_tokens ?? u.totalTokens) ?? inputTokens + outputTokens };
+  return { inputTokens, outputTokens, totalTokens: inputTokens + outputTokens };
 }
