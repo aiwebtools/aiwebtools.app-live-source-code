@@ -9,7 +9,7 @@ export interface OfficialSocialAccount {
 
 // Owner-confirmed identities. Unknown audience counts must not imply zero.
 export const OFFICIAL_SOCIAL_ACCOUNTS: OfficialSocialAccount[] = [
-  { platform: "YouTube", handle: "@AIWEBTOOLS-MTVai", url: "https://www.youtube.com/@AIWEBTOOLS-MTVai", followers: null },
+  { platform: "YouTube", handle: "@AIWEBTOOLS-MTVai", url: "https://www.youtube.com/@AIWEBTOOLS-MTVai", followers: 341, audienceSource: "https://www.youtube.com/@AIWEBTOOLS-MTVai/videos", checkedAt: "2026-11-07" },
   { platform: "TikTok", handle: "@kennethbastian869", url: "https://www.tiktok.com/@kennethbastian869", followers: 1, audienceSource: "https://www.tiktok.com/@kennethbastian869", checkedAt: "2026-11-07" },
   { platform: "Instagram", handle: "@ai.web.tools", url: "https://www.instagram.com/ai.web.tools/", followers: 466, audienceSource: "https://www.instagram.com/ai.web.tools/", checkedAt: "2026-11-07" },
   { platform: "Facebook", handle: "MTVai Page", url: null, followers: null },
