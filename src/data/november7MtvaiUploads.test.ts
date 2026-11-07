@@ -15,7 +15,7 @@ test("all 204 live-verified missing uploads reach the shared players once", () =
 
 test("requested music and the live replacement Break the Frame are available", () => {
   for (const id of ["mbKvl-4qMng", "SDGvO8bdgSI", "URPozyEIN1Q"]) {
-    expect(MTVAI_CATALOG.some(v => v.id === id && v.kind === "music")).toBe(true);
+    expect(MTVAI_CATALOG.some(v => v.id === id && "kind" in v && v.kind === "music")).toBe(true);
   }
 });
 
