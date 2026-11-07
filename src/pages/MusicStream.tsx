@@ -139,7 +139,7 @@ const MusicStream = () => {
         // so a buffering hiccup or seek can't masquerade as "ended".
         const elapsed = Date.now() - videoStartRef.current;
         const detected = detectedDurationRef.current;
-        const minMs = detected ? Math.max(9000, detected * 1000 * 0.9) : 9000;
+        const minMs = 0;
         if (elapsed < minMs) return;
 
         advancedForRef.current = current.id;

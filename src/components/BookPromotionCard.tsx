@@ -16,6 +16,7 @@ import MtvaiBrand from "@/components/MtvaiBrand";
 import MtvaiAudiobooksButton from "@/components/MtvaiAudiobooksButton";
 import BookPreview, { BOOK_TITLE } from "@/components/BookPreview";
 import { MTVAI_CATALOG } from "@/data/mtvaiCatalog";
+import { createVideoCompletionGate } from "@/utils/mtvaiPlayback";
 
 // Utility function to shuffle array
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -157,7 +158,7 @@ const LazyBookVideo = ({
   useEffect(() => {
     if (!isLoaded) return;
     let cancelled = false;
-    let safetyTimer: ReturnType<typeof setTimeout> | null = null;
+    const completion = createVideoCompletionGate();
 
     loadYouTubeAPI().then((YT) => {
       if (cancelled) return;
@@ -172,19 +173,11 @@ const LazyBookVideo = ({
               try {
                 e.target.unMute?.();
                 e.target.playVideo?.();
-                // Safety: schedule fallback advance based on duration
-                const dur = e.target.getDuration?.();
-                if (dur && dur > 0 && onEndRef.current) {
-                  if (safetyTimer) clearTimeout(safetyTimer);
-                  safetyTimer = setTimeout(() => {
-                    onEndRef.current?.();
-                  }, (dur + 1.5) * 1000);
-                }
               } catch {}
             },
             onStateChange: (e: any) => {
               // 0 = ended
-              if (e.data === 0) {
+              if (!cancelled && completion.observe(e.data)) {
                 onEndRef.current?.();
               }
             },
@@ -195,7 +188,6 @@ const LazyBookVideo = ({
 
     return () => {
       cancelled = true;
-      if (safetyTimer) clearTimeout(safetyTimer);
       if (playerRef.current) {
         // Same as above — do NOT destroy(); let React unmount the iframe.
         try { playerRef.current.stopVideo?.(); } catch {}
