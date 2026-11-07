@@ -1,11 +1,13 @@
 # Roadmap
 
 ## November 7 combined services and reliability order — do not publish
-- [ ] Verify requested audiobooks/music placement and fresh channel additions; repair continuous auto-next across shared MTVAI players without duplicates
-- [ ] Disable unavailable Lovable models in studio selections; investigate and connect only verified image fallback capabilities
-- [ ] Research Digital Dreamworks and Social Media Made Simple offerings/prices; create matching Our Services page with header/footer links
-- [ ] Deliver forms to contact@ai-webtools.com and kgmasterbic@gmail.com; connect Google Calendar/Meet, appointments/reminders and verified deposit/receipt flow where integrations permit
-- [ ] Test real flows, preserve existing content and Muse, report any integration blockers honestly
+- [x] Preserved 1,070 unique shared recordings / 29 audiobooks including requested parts. Fresh channel heads match audit; no newly missing IDs verified. Reproduced rejected completed-playback signal, same check passes after fix; pinned repeated-playing reset removed and book duration timer removed/one-shot endings added
+- [x] Deployed persisted credit-state eligibility; live dropdown disables all three Lovable models while Bionic remains enabled. Anonymous Pollinations returned real watermarked 512px tree; added validated private-storage backup only on 402 image exhaustion (Bionic/DeepSeek image creation unsupported/unverified)
+- [x] /services combines both branches and published packages, preserves distinct $997 managed social vs $149/$299/$549 plans; header menus/footer link added; phone 360/539px no overflow
+- [x] Real browser form stored and Gmail sent to both requested recipients (SENT metadata confirmed); real 15-minute Google Meet booking/invitations/reminders created and verified; test event and rows cleaned up after verification
+- [ ] Deposits/paid receipts blocked: no payment processor or payment links configured; external Supabase cannot use Lovable managed payments. No fake checkout; page explicitly says no payment collected, agreement/payment link required
+- [x] 22 client/media tests and 2 intake tests pass; isolated image test passes (whole run-gpt suite blocked by pre-existing missing SDK package). Preview build OK; Muse/banner/code/media and bot prompts preserved; not published
+- [ ] Every physical phone/audio audition, every video end, anonymous image fallback through a real bot turn, Gmail inbox receipt/reminder timing and concurrent calendar reservations remain unverified; calendar free-busy check is not an atomic booking lock
 
 ## November 7 videos and Socials only — do not publish
 - [x] Fully expanded 644 Videos and 427 Shorts; added 204 missing owner/oEmbed-verified uploads (41 recent, 163 recovered) without removing existing entries. All requested songs, live Break the Frame replacement and eight audiobook parts included; 1,070 shared tracks / 29 audiobooks. Newest source order preserved per tab; cross-tab publication times rate-limited and left unknown

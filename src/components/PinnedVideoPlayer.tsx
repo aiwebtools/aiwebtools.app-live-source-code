@@ -1045,19 +1045,12 @@ const PinnedVideoPlayer = memo(() => {
           }
         }
         
-        // Only advance if video has been playing for at least 8 seconds
-        // This prevents false "ended" signals during loading
-        const timeSinceStart = Date.now() - videoStartTimeRef.current;
-        // For music mode: require ~90% of the detected duration before
-        // treating an "ended" signal as real. This prevents long music
-        // videos from skipping early due to spurious state changes.
-        const detected = detectedDurationRef.current;
-        const MIN_PLAY_TIME = 0;
+        // Playing updates arrive continuously; completion must not use a resetting wall clock.
         
         // Check for video ended state (state 0 = ended)
         if (data?.event === "onStateChange" && data?.info === 0) {
           if (advancedVideoRef.current === currentVideoId) return;
-          if (hasReceivedPlayStateRef.current && timeSinceStart > MIN_PLAY_TIME) {
+          if (hasReceivedPlayStateRef.current) {
             advancedVideoRef.current = currentVideoId;
             advanceToNextVideo();
           } else {
@@ -1068,7 +1061,7 @@ const PinnedVideoPlayer = memo(() => {
         // Also check for infoDelivery with playerState (0 = ended)
         if (data?.info?.playerState === 0) {
           if (advancedVideoRef.current === currentVideoId) return;
-          if (hasReceivedPlayStateRef.current && timeSinceStart > MIN_PLAY_TIME) {
+          if (hasReceivedPlayStateRef.current) {
             advancedVideoRef.current = currentVideoId;
             advanceToNextVideo();
           }
