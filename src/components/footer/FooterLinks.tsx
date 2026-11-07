@@ -2,6 +2,8 @@
 import FooterWeb3Domains from "./FooterWeb3Domains";
 import { createTimePortalEffect } from "@/utils/timeEffects";
 import DownloadLibraryButton from "@/components/DownloadLibraryButton";
+import {Button} from '@/components/ui/button';
+import {Link} from 'react-router-dom';
 
 const FooterLinks = () => {
   const handleExternalLink = (url: string, e: React.MouseEvent) => {
@@ -27,6 +29,7 @@ const FooterLinks = () => {
           >
             📖 Our Story
           </a>
+          <Button asChild variant="link" className="justify-start p-0 text-primary"><Link to="/services">Our Services</Link></Button>
           <button
             onClick={(e) => handleExternalLink("https://aiwebtools.lovable.app/hire-us-to-build-your-ai-1?via=aiwebtools", e)}
             className="block text-green-200 hover:text-green-400 transition-colors text-left"

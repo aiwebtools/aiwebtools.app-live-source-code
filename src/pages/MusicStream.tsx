@@ -135,13 +135,7 @@ const MusicStream = () => {
         // De-dupe: never advance twice for the same video id.
         if (advancedForRef.current === current.id) return;
 
-        // Require minimum play time — 90% of detected duration, or 9s fallback —
-        // so a buffering hiccup or seek can't masquerade as "ended".
-        const elapsed = Date.now() - videoStartRef.current;
-        const detected = detectedDurationRef.current;
-        const minMs = detected ? Math.max(9000, detected * 1000 * 0.9) : 9000;
-        if (elapsed < minMs) return;
-
+        // Real active-frame ended events must not be rejected by elapsed-time guesses.
         advancedForRef.current = current.id;
         setIdx(i => (i + 1) % playlist.length);
       } catch {}

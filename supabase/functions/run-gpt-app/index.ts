@@ -14,6 +14,7 @@ import { normalizeMessage, toModelMessage, requiresFirstSearch, type IncomingMes
 import { createLovableAiGatewayRunIdFetch, getLovableAiGatewayResponseHeaders } from "../_shared/run-id.ts";
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 import { parsePersonalAi, personalProviderError, type PersonalAi } from "../_shared/personal-provider-policy.ts";
+import { generateFreeImage } from './free-image.ts';
 
 const MAX_HISTORY = 120;
 const MAX_CLIENT_HISTORY = 500;
@@ -512,21 +513,23 @@ Deno.serve(async (req) => {
       await new Promise((resolve) => setTimeout(resolve, Math.max(1, retryAfter) * 1000));
       res = await requestImage();
     }
-    if (!res.ok) {
+    let fallbackBytes:Uint8Array | null=null;
+    if(res.status===402) fallbackBytes=await generateFreeImage(prompt);
+    if (!res.ok && !fallbackBytes) {
       const detail = await res.text().catch(() => "");
       console.error("image error", res.status, detail.slice(0, 300));
       if (res.status === 402) throw new Error("Picture credits are temporarily unavailable.");
       if (res.status === 429) throw new Error("Picture generation is busy. Please try again shortly.");
       throw new Error("The picture could not be created this time.");
     }
-    const payload = await res.json().catch(() => null);
+    const payload = fallbackBytes ? null : await res.json().catch(() => null);
     const b64: string = payload?.data?.[0]?.b64_json || "";
-    if (!b64) throw new Error("Picture generation ended before the final image was ready.");
-    const bytes = decodeBase64(b64);
-    const path = `${userId ?? `guest-${guestKey.slice(0, 16)}`}/${slug}/${crypto.randomUUID()}.png`;
+    if (!b64 && !fallbackBytes) throw new Error("Picture generation ended before the final image was ready.");
+    const bytes = fallbackBytes || decodeBase64(b64);
+    const path = `${userId ?? `guest-${guestKey.slice(0, 16)}`}/${slug}/${crypto.randomUUID()}.${fallbackBytes?'jpg':'png'}`;
     const { error: upErr } = await admin.storage
       .from("gpt-images")
-      .upload(path, bytes, { contentType: "image/png", upsert: false });
+      .upload(path, bytes, { contentType: fallbackBytes?'image/jpeg':"image/png", upsert: false });
     if (upErr) {
       console.error("image upload failed", upErr.message);
       throw new Error("The picture could not be saved this time.");

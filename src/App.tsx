@@ -93,6 +93,7 @@ const AdminChatQuality = lazyWithRetry(() => import("./pages/AdminChatQuality"))
 const PrivacyPolicy = lazyWithRetry(() => import("./pages/PrivacyPolicy"));
 const MusicStream = lazyWithRetry(() => import("./pages/MusicStream"));
 const SocialsPage = lazyWithRetry(() => import("./pages/SocialsPage"));
+const ServicesPage = lazyWithRetry(() => import('./pages/ServicesPage'));
 const UserSubmittedToolsPage = lazyWithRetry(() => import("./pages/UserSubmittedToolsPage"));
 const UserSubmittedToolDetail = lazyWithRetry(() => import("./pages/UserSubmittedToolDetail"));
 const AllToolsFastPage = lazyWithRetry(() => import("./pages/AllToolsFastPage"));
@@ -382,6 +383,7 @@ const AnimatedRoutes = () => {
         <Route path="/admin/chat-quality" element={<RouteReadySignal><AdminChatQuality /></RouteReadySignal>} />
         <Route path="/music-stream" element={<Suspense fallback={null}><RouteReadySignal><MusicStream /></RouteReadySignal></Suspense>} />
         <Route path="/socials" element={<RouteReadySignal><SocialsPage /></RouteReadySignal>} />
+        <Route path="/services" element={<RouteReadySignal><ServicesPage /></RouteReadySignal>} />
         <Route path="/user-submitted" element={<RouteReadySignal><UserSubmittedToolsPage /></RouteReadySignal>} />
         <Route path="/user-submitted/:slug" element={<RouteReadySignal><UserSubmittedToolDetail /></RouteReadySignal>} />
         <Route path="/category/user-submitted" element={<Navigate to="/user-submitted" replace />} />

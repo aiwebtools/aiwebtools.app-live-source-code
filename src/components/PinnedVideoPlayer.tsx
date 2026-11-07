@@ -967,6 +967,7 @@ const PinnedVideoPlayer = memo(() => {
   // Track when video started to prevent premature skipping
   const videoStartTimeRef = useRef<number>(Date.now());
   const hasReceivedPlayStateRef = useRef(false);
+  const advancedVideoRef = useRef<string | null>(null);
   // Dynamic duration detection from YouTube iframe API
   const detectedDurationRef = useRef<number | null>(null);
   
@@ -974,6 +975,7 @@ const PinnedVideoPlayer = memo(() => {
   useEffect(() => {
     videoStartTimeRef.current = Date.now();
     hasReceivedPlayStateRef.current = false;
+    advancedVideoRef.current = null;
     detectedDurationRef.current = null; // Reset so we pick up new video's duration
     // New video = fresh play intent
     userPausedRef.current = false;
@@ -983,8 +985,6 @@ const PinnedVideoPlayer = memo(() => {
   useEffect(() => {
     if (mode === 'idle') return;
     if (!isVisible || !hasScrolledEnough || activeLength === 0) return;
-
-    let didAdvanceForVideo = false;
 
     const handleMessage = (event: MessageEvent) => {
       // YouTube sends messages when video state changes
@@ -1007,8 +1007,6 @@ const PinnedVideoPlayer = memo(() => {
         // Track when we receive a "playing" state (state 1)
         if (data?.event === "onStateChange" && data?.info === 1) {
           hasReceivedPlayStateRef.current = true;
-          videoStartTimeRef.current = Date.now();
-          didAdvanceForVideo = false;
           // If the user just paused, immediately re-pause so retry timers
           // or YouTube's own autoplay don't override the pause intent.
           if (userPausedRef.current) {
@@ -1019,8 +1017,6 @@ const PinnedVideoPlayer = memo(() => {
         }
         if (data?.info?.playerState === 1) {
           hasReceivedPlayStateRef.current = true;
-          videoStartTimeRef.current = Date.now();
-          didAdvanceForVideo = false;
           if (userPausedRef.current) {
             sendYTCommand('pauseVideo');
           } else {
@@ -1049,22 +1045,13 @@ const PinnedVideoPlayer = memo(() => {
           }
         }
         
-        // Only advance if video has been playing for at least 8 seconds
-        // This prevents false "ended" signals during loading
-        const timeSinceStart = Date.now() - videoStartTimeRef.current;
-        // For music mode: require ~90% of the detected duration before
-        // treating an "ended" signal as real. This prevents long music
-        // videos from skipping early due to spurious state changes.
-        const detected = detectedDurationRef.current;
-        const MIN_PLAY_TIME = isMusicMode && detected
-          ? Math.max(9000, detected * 1000 * 0.9)
-          : 9000;
+        // Playing updates arrive continuously; completion must not use a resetting wall clock.
         
         // Check for video ended state (state 0 = ended)
         if (data?.event === "onStateChange" && data?.info === 0) {
-          if (didAdvanceForVideo) return;
-          if (hasReceivedPlayStateRef.current && timeSinceStart > MIN_PLAY_TIME) {
-            didAdvanceForVideo = true;
+          if (advancedVideoRef.current === currentVideoId) return;
+          if (hasReceivedPlayStateRef.current) {
+            advancedVideoRef.current = currentVideoId;
             advanceToNextVideo();
           } else {
           }
@@ -1073,9 +1060,9 @@ const PinnedVideoPlayer = memo(() => {
         
         // Also check for infoDelivery with playerState (0 = ended)
         if (data?.info?.playerState === 0) {
-          if (didAdvanceForVideo) return;
-          if (hasReceivedPlayStateRef.current && timeSinceStart > MIN_PLAY_TIME) {
-            didAdvanceForVideo = true;
+          if (advancedVideoRef.current === currentVideoId) return;
+          if (hasReceivedPlayStateRef.current) {
+            advancedVideoRef.current = currentVideoId;
             advanceToNextVideo();
           }
           return;
