@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Users } from "lucide-react";
+import BotPortrait from '@/components/bot-studio/BotPortrait';
+import { getGptRoomTheme } from '@/components/tool-detail/gptRoomThemes';
+import { Button } from '@/components/ui/button';
 import { loadCommunityBots, getCommunityBotsSync, type CommunityBotTool } from "@/utils/communityBots";
 
 /** Ethics-approved community GPTs, shown in the main directories. Renders nothing until some exist. */
@@ -16,18 +19,18 @@ const CommunityGptStrip = () => {
       </h2>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {bots.slice(0, shown).map((b) => (
-          <Link key={b.categoryPath} to={b.categoryPath} className="group overflow-hidden rounded-xl border border-green-500/30 bg-black/70 hover:border-green-400">
-            <div className="aspect-video bg-green-950/40">
-              {b.imageUrl && <img src={b.imageUrl} alt={`${b.title} — community AI GPT on AIWebTools`} loading="lazy" decoding="async" className="h-full w-full object-cover" />}
+          <Link key={b.categoryPath} to={b.categoryPath} className="group min-w-0 overflow-hidden rounded-lg border border-border bg-card hover:border-primary">
+            <div className="aspect-video bg-muted">
+              <BotPortrait src={b.imageUrl || ''} name={b.title} themeKey={getGptRoomTheme(b.categoryPath.split('/').pop() || '',b.description,b.title).key} emblem="" className="h-full w-full" />
             </div>
             <div className="p-3">
-              <h3 className="font-mono text-sm font-bold text-green-200 group-hover:text-green-100">{b.title}</h3>
+              <h3 className="break-words font-mono text-sm font-bold text-foreground group-hover:text-primary">{b.title}</h3>
               <p className="mt-1 line-clamp-2 text-xs text-green-300/70">{b.description}</p>
             </div>
           </Link>
         ))}
       </div>
-      {shown < bots.length && <button type="button" onClick={() => setShown((n) => n + 24)} className="mt-4 w-full rounded-lg border border-green-500/40 py-2 font-mono text-sm text-green-300 hover:border-green-400">Show more community GPTs ({bots.length - shown} more)</button>}
+      {shown < bots.length && <Button variant="outline" onClick={() => setShown((n) => n + 24)} className="mt-4 w-full font-mono text-sm">Show more community GPTs ({bots.length - shown} more)</Button>}
     </section>
   );
 };
