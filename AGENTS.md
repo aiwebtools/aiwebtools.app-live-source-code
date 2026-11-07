@@ -6,6 +6,7 @@
 - Queue deferred mounts cancellably with lazy fallbacks to prevent loading gaps.
 - Load homepage content as dependencies of its existing lazy route, never through deferred mount queues; route-ready must represent real sections, while decorative effects stay deferred.
 - Share companion links across device menus to keep destinations consistent.
+- Keep official social identities and verified audience snapshots in one catalog; share the Socials destination across device menus and leave unavailable counts unknown.
 - Use subject metadata, not themes; lazy-load unpublished survival brains only in the existing builder.
 
 - Keep the temporary access gate unlock in React memory only and render its own Matrix backdrop; reloads must ask again and loader cleanup must not remove its background.

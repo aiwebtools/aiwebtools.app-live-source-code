@@ -27,6 +27,7 @@ import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import DownloadLibraryButton from "@/components/DownloadLibraryButton";
 import LocalModelsAccordion from "@/components/LocalModelsAccordion";
 import BotSuiteMenuSection from "./BotSuiteMenuSection";
+import SocialsMenuItem from "./SocialsMenuItem";
 
 
 const DesktopMenu = () => {
@@ -197,6 +198,7 @@ const DesktopMenu = () => {
                 </span>
               </button>
 
+              <SocialsMenuItem onNavigate={closeMenu} />
               <DeferredMount delay={80}>
               {/* Quick Navigation Row */}
               <div className="flex gap-2 mb-4">

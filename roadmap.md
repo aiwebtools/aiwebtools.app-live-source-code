@@ -1,5 +1,10 @@
 # Roadmap
 
+## November 7 videos and Socials only — do not publish
+- [ ] Verify all published channel uploads against preserved shared catalogs; add missing videos and requested audiobooks newest first
+- [ ] Verify held social URLs/audience counts and add Socials navigation/page, no X/Twitter
+- [ ] Test shared playlists, audiobook entries, social links and desktop/phone fit; preserve Muse and all bot instructions
+
 ## Remaining live retest fixes — do not publish
 - [x] Homepage real content loads through its lazy route rather than independent deferred gates; reproduced four/three placeholders before, zero afterward with all 13 main sections present
 - [x] Initial/final loader and syncing count are 5,563; homepage static generator uses authoritative total instead of slug-deduplicated listing count; no stale 4,571/4,217/5,439 totals in display sources
