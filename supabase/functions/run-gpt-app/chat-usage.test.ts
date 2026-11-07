@@ -9,3 +9,6 @@ test("missing or invalid usage never becomes a fabricated zero token count", () 
   expect(readTokenUsage({ prompt_tokens: -1, completion_tokens: 5 })).toBeNull();
   expect(readTokenUsage({ total_tokens: 50 })).toBeNull();
 });
+test("token total always equals input plus output even if provider total disagrees", () => {
+  expect(readTokenUsage({ prompt_tokens: 120, completion_tokens: 45, total_tokens: 999 })?.totalTokens).toBe(165);
+});

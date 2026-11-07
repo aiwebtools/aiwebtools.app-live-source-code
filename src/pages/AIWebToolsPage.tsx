@@ -360,7 +360,7 @@ const AIWebToolsPage = () => {
                 { name: "Business AI Web Tools", link: "/main-category/BUSINESS%20%26%20PRODUCTIVITY%20AI%20TOOLS", count: "250+" },
                 { name: "Education AI Web Tools", link: "/main-category/EDUCATION%20%26%20LEARNING%20AI%20TOOLS", count: "80+" },
                 { name: "AI Agents", link: "/ai-agents-directory", count: "100+" },
-                { name: "Custom GPTs", link: "/", count: "100+" }
+                { name: "Custom GPTs", link: "/gpts", count: botCount?.toLocaleString() || "" }
               ].map((cat) => (
                 <Link 
                   key={cat.name}
@@ -368,7 +368,7 @@ const AIWebToolsPage = () => {
                   className="bg-card hover:bg-accent/20 border border-border/50 rounded-xl p-5 text-center transition-all hover:scale-105 hover:border-primary/50 hover:shadow-lg"
                 >
                   <p className="font-semibold text-lg mb-1">{cat.name}</p>
-                  <p className="text-sm text-muted-foreground">{cat.count} tools</p>
+                  <p className="text-sm text-muted-foreground">{cat.name === 'Custom GPTs' ? `${cat.count} in-site assistants · including versions` : `${cat.count} tools in this category`}</p>
                 </Link>
               ))}
             </div>
@@ -416,7 +416,7 @@ const AIWebToolsPage = () => {
               <div className="bg-card border border-border/50 rounded-xl p-6 hover:border-primary/30 transition-all">
                 <h3 className="text-xl font-semibold mb-3">Are the AI web tools on AIWEBTOOLS free?</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Many <strong>AI web tools</strong> in our directory are free or offer free tiers. Our own custom GPT collection (100+ tools) is completely free to use. 
+                  Many <strong>AI web tools</strong> in our directory are free or offer free tiers. Our own custom GPT collection is free to use.
                   We clearly indicate pricing for each <strong>AI web tool</strong> so you can find options that fit your budget. Browsing our entire directory is always 100% free.
                 </p>
               </div>

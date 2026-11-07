@@ -1,10 +1,13 @@
 # Roadmap
 
 ## November 7 administrator notifications and completion — publish requested
-- [ ] Route existing administrator notifications to all three owner inboxes using official branded emails; verify real submission and sent recipient evidence
-- [ ] Verify all Socials destinations, locate exact Facebook MTVai Page without guessing, and check desktop/phone links
-- [ ] Finish counts, card artwork/title fit, GPT search Enter and studio token row; run focused tests and phone checks
-- [ ] Preserve every music/audiobook entry and Muse; security check and request publication after verification
+- [x] Shared branded Gmail notifications deployed for services/bookings, tool submissions, community apps, watchdog and link-health alerts to kgmasterbic@gmail.com, awtkgb@gmail.com and contact@ai-webtools.com. Real browser form saved/sent in 3.09s; Gmail SENT To header confirms all three; only test row removed. Individual remote inbox receipt and timed reminders not verified
+- [x] Desktop/phone Socials tested; real clicks open Instagram, YouTube, TikTok and Bluesky live matching profiles. Odysee loads shell only; Gab blocks this test browser. Six real links retained, no X
+- [ ] Exact Facebook MTVai Page remains blocked: no verified canonical URL in project/public evidence; need Master's exact Page URL, never guess
+- [x] Homepage /gpts/studio agree on 1,542 in-site assistants including versions; 546 featured entries labeled separately, 5,563 tool total preserved. Fixed featured asset resolver, readable three-column names and community portrait fallback. Exact Enter opens Time Machine, partial searches stay typed. Separate model/token row real reply 4,346=4,343+3; shared total normalization tested
+- [x] Loaded homepage, Socials, music, services and studio have no horizontal overflow at 320/360/390px. Real populated Care reply scrolls 400px without moving site; Clone below panel. Studio composer/token row fit. 25 Bun regressions and 3 Deno intake tests pass; build OK. Some existing Bun tests cannot run in Deno, Vite-dependent tests cannot run directly in Bun
+- [x] Preserved every music/audiobook entry (1,070/29), Muse and instructions; 21 shared-catalog/search regressions pass. Music first frame readyState 4; autoplay paused in fresh phone browser pending gesture, full playback not certified
+- [x] Publishing scheduled for https://aiwebtools.app; completion/reachability not yet verified. Tool notes some scan results stale; recommend fresh scan before broad sharing
 
 ## November 7 combined services and reliability order — do not publish
 - [x] Preserved 1,070 unique shared recordings / 29 audiobooks including requested parts. Fresh channel heads match audit; no newly missing IDs verified. Reproduced rejected completed-playback signal, same check passes after fix; pinned repeated-playing reset removed and book duration timer removed/one-shot endings added
