@@ -47,11 +47,21 @@ import PersonalAiSettings from "./PersonalAiSettings";
 import { usePersonalAi } from "@/utils/personalAiSession";
 import { PERSONAL_PROVIDERS } from "../../../supabase/functions/_shared/personal-provider-policy";
 import type { ChatUsage } from "../../../supabase/functions/_shared/chat-usage";
+import { supabase } from '@/integrations/supabase/client';
+import { modelIsAvailable } from '@/utils/studioModelAvailability';
 
 export default function BotStudio({ app, threadId, embedded = false, onExit }: { app: StudioBot; threadId?: string; embedded?: boolean; onExit?: () => void }) {
   const navigate = useNavigate();
   const { session } = useAuthSession();
   const personalAi = usePersonalAi(session?.user.id);
+  const [availability, setAvailability] = useState<{lovable:boolean;bionic:boolean}|null>(null);
+  useEffect(() => {
+    let active=true;
+    const refresh=()=>{ void supabase.functions.invoke('studio-availability').then(({data,error})=>{if(active) setAvailability(error?null:data);}); };
+    refresh(); const timer=window.setInterval(refresh,60000);
+    window.addEventListener('focus',refresh);
+    return ()=>{active=false;window.clearInterval(timer);window.removeEventListener('focus',refresh);};
+  }, [streaming]);
   const [thread, setThread] = useState(() => openBotConversation(app.slug, threadId));
   const [threads, setThreads] = useState(readBotConversations);
   const [bots, setBots] = useState<StudioBot[]>([]);
