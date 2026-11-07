@@ -1,5 +1,12 @@
 # Roadmap
 
+## November 7 combined services and reliability order — do not publish
+- [ ] Verify requested audiobooks/music placement and fresh channel additions; repair continuous auto-next across shared MTVAI players without duplicates
+- [ ] Disable unavailable Lovable models in studio selections; investigate and connect only verified image fallback capabilities
+- [ ] Research Digital Dreamworks and Social Media Made Simple offerings/prices; create matching Our Services page with header/footer links
+- [ ] Deliver forms to contact@ai-webtools.com and kgmasterbic@gmail.com; connect Google Calendar/Meet, appointments/reminders and verified deposit/receipt flow where integrations permit
+- [ ] Test real flows, preserve existing content and Muse, report any integration blockers honestly
+
 ## November 7 videos and Socials only — do not publish
 - [x] Fully expanded 644 Videos and 427 Shorts; added 204 missing owner/oEmbed-verified uploads (41 recent, 163 recovered) without removing existing entries. All requested songs, live Break the Frame replacement and eight audiobook parts included; 1,070 shared tracks / 29 audiobooks. Newest source order preserved per tab; cross-tab publication times rate-limited and left unknown
 - [x] Socials page and existing desktop/tablet/phone entries connected; official snapshots Instagram 466, YouTube 341, TikTok 1, Bluesky 0 ranked descending, Odysee/Gab unknown; no X/Twitter
