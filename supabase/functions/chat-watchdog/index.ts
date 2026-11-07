@@ -6,6 +6,7 @@
 // POST { windowMinutes?: number, force?: boolean }
 // Auth: x-cron-secret (DIGEST_CRON_SECRET) or an admin Bearer token.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+import { sendAdminEmail } from "../_shared/admin-email.ts";
 import { isReplyFailure } from "./failure-status.ts";
 import { isPaused, type ProviderState } from "../_shared/chat-provider-state.ts";
 
@@ -170,15 +171,7 @@ Deno.serve(async (req) => {
     });
   }
 
-  const admins = [
-    Deno.env.get("ADMIN_EMAIL_PRIMARY"),
-    Deno.env.get("ADMIN_EMAIL_SECONDARY"),
-  ].filter((e): e is string => !!e && EMAIL_RE.test(e));
-
-  const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-  const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-
-  if (admins.length && RESEND_API_KEY) {
+  {
     const rowsHtml = troubled.slice(0, 40).map((r) => `
       <tr>
         <td style="padding:4px 8px;">${escapeHtml(r.slug)}</td>
@@ -190,15 +183,7 @@ Deno.serve(async (req) => {
         <td style="padding:4px 8px;font-size:11px;">${escapeHtml(r.lastError || "—")}</td>
       </tr>`).join("");
 
-    const sendEmail = async (url: string, headers: Record<string, string>, to: string[] = admins) =>
-      await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", ...headers },
-        body: JSON.stringify({
-          from: "AIWebTools Chat Watchdog <onboarding@resend.dev>",
-          to,
-          subject: `🤖 Chat watchdog: ${troubled.length} room(s), ${pausedProviders.length} provider pause(s)`,
-          html: `
+    const html = `
             <div style="background:#000;color:#00ff41;font-family:'Courier New',monospace;padding:24px;">
               <h2 style="color:#00ff41;">Chat Room Watchdog</h2>
               <p>${pausedProviders.map((state) => `${escapeHtml(state.provider)}: ${escapeHtml(state.status)}; restore access/credits and explicitly resume. No automatic top-ups.`).join("<br>")}</p>
@@ -213,34 +198,11 @@ Deno.serve(async (req) => {
                 ${rowsHtml}
               </table>
               <p style="margin-top:16px;font-size:12px;">Full detail: /admin/chat-quality on aiwebtools.app</p>
-            </div>`,
-        }),
-      });
-
+            </div>`;
     try {
-      const direct = { Authorization: `Bearer ${RESEND_API_KEY}` };
-      let res = await sendEmail("https://api.resend.com/emails", direct);
-      if (!res.ok) {
-        // Unverified Resend accounts may only email the account owner; retry there.
-        const detail = await res.text();
-        const allowed = detail.match(/own email address \(([^)]+)\)/)?.[1];
-        console.warn("direct resend failed", res.status, detail);
-        if (allowed && EMAIL_RE.test(allowed)) {
-          res = await sendEmail("https://api.resend.com/emails", direct, [allowed]);
-        } else if (LOVABLE_API_KEY) {
-          res = await sendEmail(`${GATEWAY_URL}/emails`, {
-            Authorization: `Bearer ${LOVABLE_API_KEY}`,
-            "X-Connection-Api-Key": RESEND_API_KEY,
-          });
-        }
-      }
-      summary.emailed = res.ok;
-      if (!res.ok) console.error("watchdog email failed", res.status, await res.text());
-    } catch (e) {
-      console.error("watchdog email error", e);
-    }
-  } else {
-    console.warn("chat-watchdog: email not configured (admins/keys missing)");
+      await sendAdminEmail(`Chat watchdog: ${troubled.length} rooms, ${pausedProviders.length} provider pauses`, html);
+      summary.emailed = true;
+    } catch (e) { console.error("watchdog email error", e); }
   }
 
   return new Response(JSON.stringify({ ...summary, ok: true, troubled: troubled.slice(0, 40) }), {
