@@ -2,7 +2,8 @@ import { createClient } from 'npm:@supabase/supabase-js@2';
 import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors';
 import { IntakeSchema,validAppointment } from './validation.ts';
 import { SERVICE_PACKAGES } from '../_shared/servicesCatalog.ts';
-const owners=['contact@ai-webtools.com','kgmasterbic@gmail.com'];
+import { ADMIN_RECIPIENTS, brandedEmail, escapeEmailHtml, sendBrandedEmail, sendAdminEmail } from '../_shared/admin-email.ts';
+const owners=ADMIN_RECIPIENTS;
 const headers={...corsHeaders,'Content-Type':'application/json'};
 const reply=(body:unknown,status=200)=>new Response(JSON.stringify(body),{status,headers});
 async function google(service:'google_mail'|'google_calendar',path:string,body?:unknown) {
@@ -12,11 +13,6 @@ async function google(service:'google_mail'|'google_calendar',path:string,body?:
  const response=await fetch(`https://connector-gateway.lovable.dev/${service}/${path}`,{method:body?'POST':'GET',headers:{Authorization:`Bearer ${auth}`,'X-Connection-Api-Key':key,'Content-Type':'application/json'},...(body?{body:JSON.stringify(body)}:{})});
  if(!response.ok){const text=await response.text();console.error('Service provider error',service,response.status,text.slice(0,600));throw new Error(`The ${service==='google_mail'?'email':'calendar'} service is unavailable (${response.status}). Your request is saved; contact our team for help.`);}
  return await response.json();
-}
-function rawEmail(to:string[],subject:string,text:string) {
- const bytes=new TextEncoder().encode(['To: '+to.join(', '),'Subject: '+subject,'MIME-Version: 1.0','Content-Type: text/plain; charset=UTF-8','',''+text].join('\r\n'));
- let binary=''; for(const byte of bytes)binary+=String.fromCharCode(byte);
- return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 }
 Deno.serve(async req=>{
  if(req.method==='OPTIONS')return new Response('ok',{headers:corsHeaders});
@@ -53,9 +49,9 @@ Deno.serve(async req=>{
    await db.from('service_requests').update({calendar_event_id:row.calendar_event_id,meet_url:row.meet_url}).eq('id',row.id);
   }
   const summary=`Request: ${row.id}\nName: ${x.name}\nEmail: ${x.email}\nPhone: ${x.phone||'Not supplied'}\nService: ${pack?.branch} - ${pack?.name}\n${pack?.price}\n\n${x.details}\n\n${x.appointmentStart?`Google Meet consultation: ${x.appointmentStart}\n${row.meet_url||'Meet link is being prepared.'}`:'No appointment requested.'}\nPayment: not collected; project agreement and payment link required.`;
-  await google('google_mail','gmail/v1/users/me/messages/send',{raw:rawEmail(owners,'AIWebTools service request',summary)});
+  await sendAdminEmail(x.appointmentStart?'New Google Meet booking & project request':'New project request',`<p>A visitor has reached out to the AIWebTools team.</p><div style="white-space:pre-wrap">${escapeEmailHtml(summary)}</div><p><a href="mailto:${escapeEmailHtml(x.email)}">Reply to ${escapeEmailHtml(x.name)}</a></p>`,x.email);
   await db.from('service_requests').update({notification_status:'sent'}).eq('id',row.id);
-  try{await google('google_mail','gmail/v1/users/me/messages/send',{raw:rawEmail([x.email],'Your AIWebTools project request',`Thank you, ${x.name}. Your ${pack?.name} request has reached our team.\nReference: ${row.id}\n${x.appointmentStart?`Appointment: ${x.appointmentStart}\nGoogle Meet: ${row.meet_url||'See your calendar invitation.'}`:'Our team will contact you about your project.'}\nNo payment has been taken. Deposits are arranged with your project agreement.`)});}catch(e){console.error('Visitor confirmation unavailable',String(e));}
+  try{await sendBrandedEmail([x.email],'Your AIWebTools project request',brandedEmail('Your vision starts here',`<p>Thank you, ${escapeEmailHtml(x.name)}. Your ${escapeEmailHtml(pack?.name)} request has reached our team.</p><p>Reference: ${escapeEmailHtml(row.id)}</p>${x.appointmentStart?`<p>Appointment: ${escapeEmailHtml(x.appointmentStart)}<br>Google Meet: ${escapeEmailHtml(row.meet_url||'See your calendar invitation.')}</p>`:'<p>Our team will contact you about your project.</p>'}<p>No payment has been taken. Deposits are arranged with your project agreement.</p>`));}catch(e){console.error('Visitor confirmation unavailable',String(e));}
   return reply({id:row.id,meetUrl:row.meet_url,booked:Boolean(row.calendar_event_id),notified:true});
  }catch(error){return reply({error:error instanceof Error?error.message:'The service is temporarily unavailable.'},503);}
 });
