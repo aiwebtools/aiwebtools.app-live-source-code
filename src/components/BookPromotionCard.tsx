@@ -1154,7 +1154,7 @@ const BookPromotionCard = () => {
 
   const handleVideoPlay = useCallback((videoIndex?: number) => {
     setIsPaused(true);
-    setIsAutoPlaying(false);
+    setIsAutoPlaying(true);
     hasEverPlayedRef.current = true;
     setHasUserInteracted(true);
     if (typeof videoIndex === 'number') {

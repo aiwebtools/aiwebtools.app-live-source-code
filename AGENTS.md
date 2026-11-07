@@ -1,4 +1,8 @@
 # Architecture Rules
+- Keep service packages shared between intake and the services page; save requests before Gmail/Calendar delivery and show payment collection as unavailable until a real checkout is configured.
+- Read persisted provider circuit state for studio model eligibility; unavailable manual selections must remain disabled without silently changing personal providers.
+- Use the anonymous, validated Pollinations picture backup only after image credit exhaustion; retain private image storage and never bypass denials/refusals.
+- Handle active-frame music completion once per video after playing; never infer completion from resetting wall clocks or advance paused book clips with duration timers.
 - Preserve Vite development URLs returned by ES image imports in the shared image resolver; rewriting them hides valid card and page art.
 - Resolve existing active-bot intro recordings through website asset pointers before invoking Supabase; preserves voices in clones without regenerating audio, while private chat pictures stay in access-controlled storage.
 - Resolve verified compressed community portraits through `migratedBotMedia` in both live catalogs, retaining byte-identical originals as backups; exact source matching preserves new uploads and reduces picture transfer size.
