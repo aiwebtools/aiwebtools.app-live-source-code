@@ -1,4 +1,6 @@
 # Architecture Rules
+- Send administrator notifications through the linked Gmail account using one shared recipient list and branded HTML frame; never silently reduce owner recipients or claim unsent mail succeeded.
+- Submit Enter searches only to an exact normalized name; otherwise retain the typed query and its results instead of opening unrelated suggestions.
 - Keep service packages shared between intake and the services page; save requests before Gmail/Calendar delivery and show payment collection as unavailable until a real checkout is configured.
 - Read persisted provider circuit state for studio model eligibility; unavailable manual selections must remain disabled without silently changing personal providers.
 - Use the anonymous, validated Pollinations picture backup only after image credit exhaustion; retain private image storage and never bypass denials/refusals.
