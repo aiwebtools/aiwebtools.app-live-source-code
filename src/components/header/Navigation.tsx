@@ -9,6 +9,7 @@ import { useFavorites } from "@/hooks/useFavorites";
 import { prefetchNow } from "@/hooks/usePrefetch";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -116,6 +117,7 @@ const Navigation = () => {
 
   return (
     <nav className="hidden md:flex items-center space-x-1 min-w-0">
+      <Button variant="ghost" size="sm" className="h-8 px-2 text-xs text-primary" onClick={() => navigate('/socials')}>Socials</Button>
       <button 
         onClick={() => navigate('/favorites')}
         onMouseEnter={() => prefetchNow('/favorites')}
