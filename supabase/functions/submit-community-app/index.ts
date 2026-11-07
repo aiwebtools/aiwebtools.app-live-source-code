@@ -1,3 +1,4 @@
+import { sendAdminEmail, escapeEmailHtml } from "../_shared/admin-email.ts";
 import { callGlmHelper, parseLooseJson } from "../_shared/glm-helper.ts";
 // Community app submissions: fetches the submitted page (SSRF-guarded), asks
 // AI whether the title/description truly match the live page and look legit,
@@ -83,7 +84,9 @@ Deno.serve(async (req) => {
 
   const lower = `${title} ${url} ${description}`.toLowerCase();
   const record = async (status: string, reason: string, score: number | null) => {
-    await db.from("community_apps").insert({ title, url, description, status, ai_reason: reason.slice(0, 500), ai_score: score, submitter_hash: submitter });
+    const { error } = await db.from("community_apps").insert({ title, url, description, status, ai_reason: reason.slice(0, 500), ai_score: score, submitter_hash: submitter });
+    if (error) throw new Error("Your app submission could not be saved.");
+    try { await sendAdminEmail(`Community app submission: ${title}`, `<p>Status: ${escapeEmailHtml(status)}</p><p>${escapeEmailHtml(title)}<br>${escapeEmailHtml(url)}</p><p>${escapeEmailHtml(description)}</p><p>Review: ${escapeEmailHtml(reason)}</p>`); } catch (error) { console.error("Community app administrator notification failed", error); }
   };
   if (BLOCK_WORDS.some((w) => lower.includes(w))) { await record("rejected", "Blocked content keyword", 0); return json({ status: "rejected", message: "This app can't be listed because it doesn't meet our community safety rules." }); }
 

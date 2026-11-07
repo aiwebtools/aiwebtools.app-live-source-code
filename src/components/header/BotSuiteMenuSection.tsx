@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { groupBotsByCategory } from "@/components/bot-studio/botCategories";
 import CommunityAppsMenuSection from "./CommunityAppsMenuSection";
 import { searchStudioBots } from "@/components/bot-studio/botSubjects";
+import { normalizeSearchName } from '@/utils/search/enterTarget';
 
 /** Header fast-track into every in-site bot room plus the community bot builder. */
 export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false, fullPage = false }: { onNavigate?: () => void; gptsOnly?: boolean; fullPage?: boolean }) {
@@ -76,9 +77,10 @@ export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false, full
         <div className="rounded-lg border border-primary/30 bg-background/95 p-2">
           <label className="flex items-center gap-2 rounded-md border border-primary/30 px-2">
             <Search className="h-4 w-4 text-primary" />
-            <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Find a bot or describe your task…" aria-label="Find a bot in the AWT bot suite"
+            <input value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(event) => { if (event.key === 'Enter') { event.preventDefault(); event.stopPropagation(); const exact = bots?.find(bot => normalizeSearchName(bot.display_name) === normalizeSearchName(query)); if (exact) go(`/app/${exact.slug}`); } }} placeholder="Find a bot or describe your task…" aria-label="Find a bot in the AWT bot suite"
               className="h-9 w-full bg-transparent text-sm text-foreground outline-none" />
           </label>
+          {bots && <p className="mt-2 text-[11px] text-muted-foreground">{bots.length.toLocaleString()} in-site assistants · including versions</p>}
           <div className={fullPage ? "mt-2" : "mt-2 max-h-80 overflow-y-auto overscroll-contain"}>
             {error && <div role="status" className="grid gap-2 p-2">
               <p className="text-xs text-destructive">{error}</p>

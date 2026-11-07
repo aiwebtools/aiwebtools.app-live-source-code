@@ -17,6 +17,8 @@ import { civicTransparencyBatch2026 } from "@/data/tools/civicTransparencyBatch2
 import { perplexityBotsBatch2026 } from "@/data/tools/perplexityBotsBatch2026";
 import { toFeatureLabels } from "@/utils/search/featuredCardHelpers";
 import cannabisInspectorHero from "@/assets/cannabis-inspector-hero.jpg";
+import { useResolvedToolImage } from '@/utils/assetResolver';
+import { loadStudioBots } from '@/components/bot-studio/botCatalog';
 
 // Weighted shuffle - keeps high-quality tools near the top but adds randomness
 // PRIORITY: Dream-conquering practical tools FIRST, then spirituality/awakening
@@ -235,17 +237,8 @@ const HeroImage = ({
   color: string; 
 }) => {
   const [hasError, setHasError] = useState(false);
-  
-  // Convert /src/assets/ path to proper import URL for Vite
-  const getResolvedImageUrl = (url: string): string => {
-    if (url.startsWith('/src/assets/')) {
-      // For Vite, we need to use the assets directly from the build
-      // Convert to relative path that Vite can resolve
-      const filename = url.replace('/src/assets/', '');
-      return new URL(`../assets/${filename}`, import.meta.url).href;
-    }
-    return url;
-  };
+  const resolvedImage = useResolvedToolImage(imageUrl);
+  useEffect(() => setHasError(false), [resolvedImage]);
   
   if (hasError) {
     // Fallback to emoji display
@@ -258,11 +251,11 @@ const HeroImage = ({
   
   return (
     <img 
-      src={getResolvedImageUrl(imageUrl)} 
+      src={resolvedImage}
       alt={`${title} - ${description?.slice(0, 100) || 'AI Tool'}...`}
       title={`${title} AI Tool - ${badge}`}
       className="w-full h-full object-cover"
-      loading="eager"
+      loading="lazy"
       decoding="async"
       itemProp="image"
       onError={() => setHasError(true)}
@@ -4027,6 +4020,8 @@ const FEATURED_PAGE_ALIASES: Record<string, string> = {
 const SpecialServices = () => {
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
+  const [studioCount, setStudioCount] = useState<number | null>(null);
+  useEffect(() => { let active=true; void loadStudioBots().then(bots=>{if(active)setStudioCount(bots.length);}).catch(()=>{}); return ()=>{active=false;}; }, []);
   
   // Use useMemo to create initial shuffled order once per page load
   const initialShuffledGPTs = useMemo(() => placeHumanBillOfRightsNearBottom(weightedShuffle(categorizedGPTs)), []);
@@ -4132,8 +4127,8 @@ const SpecialServices = () => {
              ⭐ Our Exclusive 1 of a kind Custom GPT & GEM Collection ⭐
           </h2>
           <p className="text-sm md:text-lg text-muted-foreground px-2">
-             500+ Premium GPTs, Gems, and Perplexity Bots were creatively crafted by AWT - AiWebTools.Ai -
-              &nbsp;All tools below were made by AI WEB TOOLS LLC and are completely FREE to use and were made with good intentions.&nbsp;{"\n"}Tools are for research, information, and self educational purposes only.&nbsp;
+             {categorizedGPTs.length.toLocaleString()} featured GPTs, Gems and Perplexity Bots{studioCount !== null ? ` · ${studioCount.toLocaleString()} in-site assistants including versions` : ''} — creatively crafted by AWT - AiWebTools.Ai -
+              &nbsp;All tools below were made by AI WEB TOOLS and are completely FREE to use and were made with good intentions.&nbsp;{"\n"}Tools are for research, information, and self educational purposes only.&nbsp;
              WARNING: Please use all Ai Tools offered on this site ethically per our user agreement.
           </p>
           <div className="mt-4 max-w-2xl mx-auto">
@@ -4239,7 +4234,7 @@ const SpecialServices = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3 md:gap-4">
           {visibleGPTs.map((gpt, index) => {
             const isHumanRightsCard = isHumanBillOfRightsCard(gpt.title);
             return (
@@ -4261,12 +4256,7 @@ const SpecialServices = () => {
                   <div className="flex items-start gap-1.5 flex-1 min-w-0">
                     <span className="text-lg md:text-xl flex-shrink-0 mt-0.5">{gpt.emoji}</span>
                     <CardTitle 
-                      className="font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-cyan-300 group-hover:from-yellow-200 group-hover:via-cyan-200 group-hover:to-yellow-200 transition-all uppercase tracking-wide break-words hyphens-auto"
-                      style={{
-                        fontFamily: "'Orbitron', sans-serif",
-                        textShadow: '0 0 15px rgba(34, 211, 238, 0.5), 0 0 30px rgba(34, 211, 238, 0.2)',
-                        wordBreak: 'break-word'
-                      }}
+                      className="min-w-0 font-mono font-black text-foreground group-hover:text-primary transition-colors uppercase break-words [overflow-wrap:anywhere]"
                     >
                       <AutoScaleTitle title={gpt.title} baseSize="md" />
                     </CardTitle>

@@ -8,6 +8,7 @@
 //                                                                report on failures
 //
 // This job NEVER deletes or edits a tool. It only records health and reports.
+import { sendAdminEmail } from "../_shared/admin-email.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 const corsHeaders = {
@@ -175,12 +176,7 @@ Deno.serve(async (req) => {
 
   // ── REPORT ───────────────────────────────────────────────────────────────
   let emailed = false;
-  const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-  const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-  const admins = [Deno.env.get("ADMIN_EMAIL_PRIMARY"), Deno.env.get("ADMIN_EMAIL_SECONDARY")]
-    .map((v) => (v ?? "").trim()).filter((v) => EMAIL_RE.test(v));
-
-  if (newlyFlagged.length > 0 && LOVABLE_API_KEY && RESEND_API_KEY && admins.length > 0) {
+  if (newlyFlagged.length > 0) {
     const rowsHtml = newlyFlagged.slice(0, 200).map((f) => `
       <tr>
         <td style="padding:6px 10px;border-bottom:1px solid #003b12;">${escapeHtml(f.title)}</td>
@@ -189,18 +185,7 @@ Deno.serve(async (req) => {
         <td style="padding:6px 10px;border-bottom:1px solid #003b12;">${f.failures}</td>
       </tr>`).join("");
     try {
-      const r = await fetch(`${GATEWAY_URL}/emails`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${LOVABLE_API_KEY}`,
-          "X-Connection-Api-Key": RESEND_API_KEY,
-        },
-        body: JSON.stringify({
-          from: "AIWebTools Link Health <onboarding@resend.dev>",
-          to: admins,
-          subject: `🔗 Link health: ${newlyFlagged.length} tool link(s) need review`,
-          html: `
+      await sendAdminEmail(`Link health: ${newlyFlagged.length} tool links need review`, `
             <div style="background:#000;color:#00ff41;font-family:'Courier New',monospace;padding:24px;">
               <h2 style="color:#00ff41;">Link Health Sweep</h2>
               <p>Checked <strong>${checked}</strong> links — <strong>${failures}</strong> failed this pass.</p>
@@ -209,11 +194,8 @@ Deno.serve(async (req) => {
                 <tr><th align="left">Tool</th><th align="left">URL</th><th align="left">Status</th><th align="left">Fails</th></tr>
                 ${rowsHtml}
               </table>
-            </div>`,
-        }),
-      });
-      emailed = r.ok;
-      if (!r.ok) console.error("report email failed", r.status, await r.text());
+            </div>`);
+      emailed = true;
     } catch (e) {
       console.error("report email error", e);
     }

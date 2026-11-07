@@ -8,6 +8,7 @@ import { generateToolSlug } from "@/utils/urlGenerator";
 import { getCurrentToolCount } from "@/utils/toolCounter";
 import { recordMetric } from "@/utils/perfTelemetry";
 import { getToolPricing } from "@/utils/pricingClassification";
+import { exactEnterTarget } from '@/utils/search/enterTarget';
 
 // ==================== LRU CACHE FOR SEARCH RESULTS ====================
 // Caches the last 50 search queries to avoid recomputation on repeated searches
@@ -2601,29 +2602,6 @@ export const useGlobalSearch = () => {
     setDisplayedCount(50);
   }, []);
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      if (quickRef.current) clearTimeout(quickRef.current);
-      if (fullRef.current) clearTimeout(fullRef.current);
-      setIsOpen(false);
-      setSearchResults([]);
-      setSearchTermInternal("");
-      setDisplayedCount(50);
-    } else if (e.key === 'Enter' && searchTerm.trim()) {
-      if (searchResults.length > 0) {
-        const topResult = searchResults[0];
-        // Cancel pending searches
-        if (quickRef.current) clearTimeout(quickRef.current);
-        if (fullRef.current) clearTimeout(fullRef.current);
-        // Navigate using slug directly - no O(n) findIndex
-        navigate(topResult.categoryPath || `/${generateToolSlug(topResult.title)}`, { state: { instantTool: toInstantToolState(topResult) } });
-        setIsOpen(false);
-        setSearchResults([]);
-        setSearchTermInternal("");
-      }
-    }
-  }, [searchTerm, searchResults, navigate]);
-
   // Track how many direct matches exist vs total shown (including recommendations)
   const [directMatchCount, setDirectMatchCount] = useState(0);
   const [recommendedTools, setRecommendedTools] = useState<any[]>([]);
@@ -2650,6 +2628,16 @@ export const useGlobalSearch = () => {
       : [];
     return [...community, ...searchResults, ...recommendedTools];
   }, [searchResults, recommendedTools, communityBots, searchTerm]);
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') clearSearch();
+    else if (e.key === 'Enter' && searchTerm.trim()) {
+      e.preventDefault();
+      const exact = exactEnterTarget(searchTerm, combinedResults);
+      if (exact) handleToolClick(exact);
+      else { setIsOpen(true); setSearchTerm(searchTerm.trim()); }
+    }
+  }, [searchTerm, combinedResults, clearSearch, handleToolClick, setSearchTerm]);
 
   // INFINITE SCROLL — keeps revealing the FULL result set in generous batches.
   // Uses a ref guard (not state) so fast momentum scrolling never drops a page.

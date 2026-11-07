@@ -1,8 +1,8 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
+import { sendAdminEmail } from "../_shared/admin-email.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -213,17 +213,9 @@ serve(async (req: Request) => {
     const safeVideoUrl = submission.videoUrl ? safeUrl(submission.videoUrl) : "";
     const safeImageUrl = finalImageUrl ? safeUrl(finalImageUrl) : "";
 
-    const adminRecipients = [Deno.env.get("ADMIN_EMAIL_PRIMARY"), Deno.env.get("ADMIN_EMAIL_SECONDARY")]
-      .map((v) => (v ?? "").trim()).filter((v) => EMAIL_RE.test(v));
-    if (adminRecipients.length === 0) adminRecipients.push("contact@ai-webtools.com");
-
+    let notified = false;
     try {
-      await resend.emails.send({
-        from: "AI Web Tools <onboarding@resend.dev>",
-        to: adminRecipients,
-        reply_to: submission.submitterEmail,
-        subject: `[${status.toUpperCase()}] Tool Submission: ${submission.name.slice(0, 200)}`,
-        html: `
+      await sendAdminEmail(`[${status.toUpperCase()}] Tool Submission: ${submission.name.slice(0, 200)}`, `
           <h1>New Tool Submission</h1>
           <p><strong>Auto status:</strong> ${escapeHtml(status)} — verdict ${escapeHtml(verdict)} (score ${safetyScore})</p>
           <p><strong>AI reason:</strong> ${escapeHtml(safetyReason)}</p>
@@ -240,12 +232,13 @@ serve(async (req: Request) => {
           ${safeVideoUrl ? `<p><strong>Video:</strong> <a href="${safeVideoUrl}">${safeVideoUrl}</a></p>` : ""}
           ${safeImageUrl ? `<p><strong>Image:</strong> <a href="${safeImageUrl}">${safeImageUrl}</a></p>` : ""}
           <hr><p><em>Submission ID: ${escapeHtml(inserted.id)}</em></p>
-        `,
-      });
+        `, submission.submitterEmail);
+      notified = true;
     } catch (mailErr) { console.error("admin mail failed", mailErr); }
 
     return new Response(JSON.stringify({
       success: true,
+      notified,
       status,
       verdict,
       score: safetyScore,
