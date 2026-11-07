@@ -1,9 +1,10 @@
 # Roadmap
 
 ## November 7 videos and Socials only — do not publish
-- [ ] Verify all published channel uploads against preserved shared catalogs; add missing videos and requested audiobooks newest first
-- [ ] Verify held social URLs/audience counts and add Socials navigation/page, no X/Twitter
-- [ ] Test shared playlists, audiobook entries, social links and desktop/phone fit; preserve Muse and all bot instructions
+- [x] Fully expanded 644 Videos and 427 Shorts; added 204 missing owner/oEmbed-verified uploads (41 recent, 163 recovered) without removing existing entries. All requested songs, live Break the Frame replacement and eight audiobook parts included; 1,070 shared tracks / 29 audiobooks. Newest source order preserved per tab; cross-tab publication times rate-limited and left unknown
+- [x] Socials page and existing desktop/tablet/phone entries connected; official snapshots Instagram 466, YouTube 341, TikTok 1, Bluesky 0 ranked descending, Odysee/Gab unknown; no X/Twitter
+- [ ] Facebook MTVai Page link remains blocked: no verified distinct Page URL, wrong facebook.com/mtvai excluded; owner must supply exact Page link. Listed transparently without fabricated destination/count
+- [x] Main first-video and Shakespeare Part 1 playback advance with readyState 4; pinned selects new first embed; book/vertical thumbnails and /1070 verified; Socials six links correct; browser-emulated 360/390px have no horizontal overflow. 21 tests / 2,472 assertions pass; no page errors; Muse and all bot instructions unchanged; not published
 
 ## Remaining live retest fixes — do not publish
 - [x] Homepage real content loads through its lazy route rather than independent deferred gates; reproduced four/three placeholders before, zero afterward with all 13 main sections present

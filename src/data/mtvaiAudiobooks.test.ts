@@ -15,8 +15,8 @@ test("verified audiobook uploads remain in newest-first channel order", () => {
 });
 
 test("search locates audiobooks with multiple words regardless of punctuation", () => {
-  expect(findMtvaiAudiobooks("carl sagan").map(v => v.id)).toEqual(["mxFKRIWF2Ok"]);
-  expect(findMtvaiAudiobooks("marie curie").map(v => v.id)).toEqual(["FMAstSXaVVM"]);
+  expect(findMtvaiAudiobooks("carl sagan").map(v => v.id)).toEqual(["5W5pFFUqvSk", "1paVZJmXL3w", "mxFKRIWF2Ok"]);
+  expect(findMtvaiAudiobooks("marie curie").map(v => v.id)).toEqual(["P0tmDN4AEfU", "1iwXFUrn1CM", "FMAstSXaVVM"]);
   expect(findMtvaiAudiobooks("not a real book")).toHaveLength(0);
 });
 

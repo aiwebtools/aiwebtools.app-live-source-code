@@ -18,6 +18,7 @@ const BASE_URL = "https://aiwebtools.app";
 const staticRoutes: Array<{ path: string; priority: string; changefreq: string }> = [
   { path: "/", priority: "1.0", changefreq: "daily" },
   { path: "/mtvai", priority: "0.9", changefreq: "weekly" },
+  { path: "/socials", priority: "0.7", changefreq: "weekly" },
   { path: "/ai-tools", priority: "0.9", changefreq: "daily" },
   { path: "/ai-tools-hub", priority: "0.9", changefreq: "weekly" },
   { path: "/ai-agents-directory", priority: "0.9", changefreq: "weekly" },

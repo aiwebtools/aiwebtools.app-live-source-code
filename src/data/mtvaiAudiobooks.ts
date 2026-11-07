@@ -16,8 +16,8 @@ export const VERIFIED_MTVAI_AUDIOBOOKS = [
   { id: "k1aYXaaAkho", title: "Galactic Gambit The Bet Of The Ages. - Free Full Audiobook written by aiwebtools.ai" },
 ];
 
-export const MTVAI_AUDIOBOOKS = [...VERIFIED_MTVAI_AUDIOBOOKS,
-  ...RECENT_MTVAI_UPLOADS.filter(v => v.kind === "audiobook")
+export const MTVAI_AUDIOBOOKS = [...RECENT_MTVAI_UPLOADS.filter(v => v.kind === "audiobook"),
+  ...VERIFIED_MTVAI_AUDIOBOOKS
 ].filter((v, i, all) => all.findIndex(item => item.id === v.id) === i);
 
 export function findMtvaiAudiobooks(query: string) {

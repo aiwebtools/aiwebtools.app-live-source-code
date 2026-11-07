@@ -1,6 +1,8 @@
 // Verified public @AIWEBTOOLS-MTVai uploads: the MTVAI digital art portfolio (music videos, Shorts and audiobooks).
 // Preserve exact YouTube titles and IDs; landscape footage stays uncropped inside vertical players.
+import { NOVEMBER_7_MTVAI_UPLOADS, RECOVERED_MTVAI_UPLOADS } from "./november7MtvaiUploads";
 export const RECENT_MTVAI_UPLOADS = [
+  ...NOVEMBER_7_MTVAI_UPLOADS,
   // Verified November 5 channel additions; source order within Videos and Shorts, exact dates unavailable.
   {"id": "NG7PbOalxUM", "title": "Every Step a Choice — The Void Choir | Official AI Music Video (Preview)", "url": "https://www.youtube.com/watch?v=NG7PbOalxUM", "publishedAt": null, "durationSeconds": 31, "format": "shorts", "kind": "music"},
   {"id": "HRGQu4C0nlw", "title": "Where the Old Worlds End — The Kingdom Builders | Official AI Music Video (Preview)", "url": "https://www.youtube.com/watch?v=HRGQu4C0nlw", "publishedAt": null, "durationSeconds": 31, "format": "shorts", "kind": "music"},
@@ -797,4 +799,5 @@ export const RECENT_MTVAI_UPLOADS = [
   {"id": "rBQTUrvHcR8", "title": "Sign on the x : An Ai Generated Music Video created by AiWebTools.Ai", "url": "https://www.youtube.com/watch?v=rBQTUrvHcR8", "publishedAt": null, "durationSeconds": null, "format": "unverified", "kind": "music"},
   {"id": "zdKfwsQwOLE", "title": "Alan Watts GPT Ai Generated Music Video www.AiWebTools.Ai", "url": "https://www.youtube.com/watch?v=zdKfwsQwOLE", "publishedAt": null, "durationSeconds": null, "format": "unverified", "kind": "music"},
   {"id": "DuyXt9mJ2uk", "title": "unite unite a #aiwebtools music video aiwebtools.ai", "url": "https://www.youtube.com/watch?v=DuyXt9mJ2uk", "publishedAt": null, "durationSeconds": null, "format": "shorts", "kind": "music"},
+  ...RECOVERED_MTVAI_UPLOADS,
 ] as const;
