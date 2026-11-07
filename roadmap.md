@@ -1,5 +1,11 @@
 # Roadmap
 
+## November 7 administrator notifications and completion — publish requested
+- [ ] Route existing administrator notifications to all three owner inboxes using official branded emails; verify real submission and sent recipient evidence
+- [ ] Verify all Socials destinations, locate exact Facebook MTVai Page without guessing, and check desktop/phone links
+- [ ] Finish counts, card artwork/title fit, GPT search Enter and studio token row; run focused tests and phone checks
+- [ ] Preserve every music/audiobook entry and Muse; security check and request publication after verification
+
 ## November 7 combined services and reliability order — do not publish
 - [x] Preserved 1,070 unique shared recordings / 29 audiobooks including requested parts. Fresh channel heads match audit; no newly missing IDs verified. Reproduced rejected completed-playback signal, same check passes after fix; pinned repeated-playing reset removed and book duration timer removed/one-shot endings added
 - [x] Deployed persisted credit-state eligibility; live dropdown disables all three Lovable models while Bionic remains enabled. Anonymous Pollinations returned real watermarked 512px tree; added validated private-storage backup only on 402 image exhaustion (Bionic/DeepSeek image creation unsupported/unverified)
