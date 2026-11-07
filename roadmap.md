@@ -7,7 +7,7 @@
 - [x] Homepage /gpts/studio agree on 1,542 in-site assistants including versions; 546 featured entries labeled separately, 5,563 tool total preserved. Fixed featured asset resolver, readable three-column names and community portrait fallback. Exact Enter opens Time Machine, partial searches stay typed. Separate model/token row real reply 4,346=4,343+3; shared total normalization tested
 - [x] Loaded homepage, Socials, music, services and studio have no horizontal overflow at 320/360/390px. Real populated Care reply scrolls 400px without moving site; Clone below panel. Studio composer/token row fit. 25 Bun regressions and 3 Deno intake tests pass; build OK. Some existing Bun tests cannot run in Deno, Vite-dependent tests cannot run directly in Bun
 - [x] Preserved every music/audiobook entry (1,070/29), Muse and instructions; 21 shared-catalog/search regressions pass. Music first frame readyState 4; autoplay paused in fresh phone browser pending gesture, full playback not certified
-- [ ] Publication requested by Master; final publish call follows verified build/security check (no critical findings; existing warnings remain)
+- [x] Publishing scheduled for https://aiwebtools.app; completion/reachability not yet verified. Tool notes some scan results stale; recommend fresh scan before broad sharing
 
 ## November 7 combined services and reliability order — do not publish
 - [x] Preserved 1,070 unique shared recordings / 29 audiobooks including requested parts. Fresh channel heads match audit; no newly missing IDs verified. Reproduced rejected completed-playback signal, same check passes after fix; pinned repeated-playing reset removed and book duration timer removed/one-shot endings added
