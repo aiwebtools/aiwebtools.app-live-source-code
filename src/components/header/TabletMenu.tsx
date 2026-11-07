@@ -24,6 +24,7 @@ import DownloadLibraryButton from "@/components/DownloadLibraryButton";
 import LocalModelsAccordion from "@/components/LocalModelsAccordion";
 import BotSuiteMenuSection from "./BotSuiteMenuSection";
 import SocialsMenuItem from "./SocialsMenuItem";
+import ServicesMenuItem from './ServicesMenuItem';
 
 
 const TabletMenu = () => {
@@ -160,6 +161,7 @@ const TabletMenu = () => {
                 📺 AiWebTools Music Stream
               </DropdownMenuItem>
               <SocialsMenuItem onNavigate={() => setIsMenuOpen(false)} />
+              <ServicesMenuItem onNavigate={() => setIsMenuOpen(false)} />
               <DropdownMenuSeparator className="border-gray-700 mb-2" />
               
               {/* Browse Categories */}

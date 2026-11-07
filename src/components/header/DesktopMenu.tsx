@@ -28,6 +28,7 @@ import DownloadLibraryButton from "@/components/DownloadLibraryButton";
 import LocalModelsAccordion from "@/components/LocalModelsAccordion";
 import BotSuiteMenuSection from "./BotSuiteMenuSection";
 import SocialsMenuItem from "./SocialsMenuItem";
+import ServicesMenuItem from './ServicesMenuItem';
 
 
 const DesktopMenu = () => {
@@ -199,6 +200,7 @@ const DesktopMenu = () => {
               </button>
 
               <SocialsMenuItem onNavigate={closeMenu} />
+              <ServicesMenuItem onNavigate={closeMenu} />
               <DeferredMount delay={80}>
               {/* Quick Navigation Row */}
               <div className="flex gap-2 mb-4">

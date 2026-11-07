@@ -24,6 +24,7 @@ import DownloadLibraryButton from "@/components/DownloadLibraryButton";
 import LocalModelsAccordion from "@/components/LocalModelsAccordion";
 import BotSuiteMenuSection from "./BotSuiteMenuSection";
 import SocialsMenuItem from "./SocialsMenuItem";
+import ServicesMenuItem from './ServicesMenuItem';
 
 
 import { useRecentlyVisitedTools } from "@/hooks/useRecentlyVisitedTools";
@@ -390,6 +391,7 @@ const MobileMenu = () => {
 
               {/* Navigation Section */}
               <SocialsMenuItem onNavigate={closeMenu} />
+              <ServicesMenuItem onNavigate={closeMenu} />
               <DropdownMenuItem onClick={() => go('/')} className="text-cyan-100 hover:bg-cyan-500/20 mb-3 rounded-lg h-12 text-sm font-medium px-3">
                 <span className="mr-3 text-lg">🏠</span> Home
               </DropdownMenuItem>
