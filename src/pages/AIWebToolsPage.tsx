@@ -3,6 +3,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SpecialServices from "@/components/SpecialServices";
 import { allTools } from "@/data/toolsData";
+import { useEffect, useState } from 'react';
+import { loadStudioBots } from '@/components/bot-studio/botCatalog';
 import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles, Zap, Shield, Globe, Star, CheckCircle, Users, Award, Lightbulb, Target } from "lucide-react";
 
@@ -13,6 +15,9 @@ import { ArrowRight, Sparkles, Zap, Shield, Globe, Star, CheckCircle, Users, Awa
  */
 const AIWebToolsPage = () => {
   const toolCount = allTools.length;
+  const [botCount,setBotCount]=useState<number|null>(null);
+  useEffect(()=>{let active=true;void loadStudioBots().then(bots=>{if(active)setBotCount(bots.length);}).catch(()=>{});return()=>{active=false;};},[]);
+  const botLabel=botCount===null?'In-Site AI Assistants':`${botCount.toLocaleString()} In-Site Assistants (including versions)`;
   const currentYear = new Date().getFullYear();
   
   // Ultra-comprehensive structured data for AI Web Tools
@@ -121,7 +126,7 @@ const AIWebToolsPage = () => {
         "name": "Are the AI web tools on AIWEBTOOLS free?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Many AI web tools in our directory are free or offer free tiers. Our own custom GPT collection (100+ tools) is completely free to use. We clearly indicate pricing for each AI web tool so you can find options that fit your budget."
+          "text": "Many AI web tools in our directory are free or offer free tiers. Our own custom GPT collection is free to use. We clearly indicate pricing for each AI web tool so you can find options that fit your budget."
         }
       },
       {
@@ -145,7 +150,7 @@ const AIWebToolsPage = () => {
         "name": "What makes AI Web Tools different from other AI tool directories?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": `AI Web Tools (AIWEBTOOLS.AI) stands out with ${toolCount}+ verified tools, 100+ original custom GPTs, detailed video demonstrations, and intelligent search that understands natural language. We're updated daily. `
+          "text": `AI Web Tools (AIWEBTOOLS.AI) stands out with ${toolCount} verified tools, ${botLabel}, detailed video demonstrations, and intelligent search that understands natural language.`
         }
       }
     ]
@@ -241,7 +246,7 @@ const AIWebToolsPage = () => {
               </div>
               <div className="flex items-center gap-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 text-blue-400 px-5 py-3 rounded-full border border-blue-500/30 shadow-lg shadow-blue-500/10">
                 <Star className="w-5 h-5" />
-                <span className="font-bold">100+ Custom GPTs</span>
+                <span className="font-bold">{botLabel}</span>
               </div>
               <div className="flex items-center gap-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 text-purple-400 px-5 py-3 rounded-full border border-purple-500/30 shadow-lg shadow-purple-500/10">
                 <Users className="w-5 h-5" />
@@ -312,7 +317,7 @@ const AIWebToolsPage = () => {
                 },
                 {
                   icon: Lightbulb,
-                  title: "100+ Original GPTs",
+                  title: botLabel,
                   description: "Exclusive custom GPTs created by our team - unique AI web tools you won't find anywhere else."
                 },
                 {
@@ -323,7 +328,7 @@ const AIWebToolsPage = () => {
                 {
                   icon: Globe,
                   title: "Trusted Worldwide",
-                  description: "Over 100,000 professionals trust AIWEBTOOLS.AI to discover the best AI web tools for their needs."
+                  description: "Discover tools for creativity, research and self-empowerment, wherever you are."
                 }
               ].map((feature, index) => (
                 <div key={index} className="bg-card border border-border/50 rounded-xl p-6 hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/10">
