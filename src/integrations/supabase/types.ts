@@ -624,6 +624,57 @@ export type Database = {
         }
         Relationships: []
       }
+      service_requests: {
+        Row: {
+          appointment_start: string | null
+          calendar_event_id: string | null
+          created_at: string
+          details: string
+          email: string
+          id: string
+          meet_url: string | null
+          name: string
+          notification_status: string
+          payment_status: string
+          phone: string | null
+          request_key: string
+          service_id: string
+          updated_at: string
+        }
+        Insert: {
+          appointment_start?: string | null
+          calendar_event_id?: string | null
+          created_at?: string
+          details: string
+          email: string
+          id?: string
+          meet_url?: string | null
+          name: string
+          notification_status?: string
+          payment_status?: string
+          phone?: string | null
+          request_key: string
+          service_id: string
+          updated_at?: string
+        }
+        Update: {
+          appointment_start?: string | null
+          calendar_event_id?: string | null
+          created_at?: string
+          details?: string
+          email?: string
+          id?: string
+          meet_url?: string | null
+          name?: string
+          notification_status?: string
+          payment_status?: string
+          phone?: string | null
+          request_key?: string
+          service_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       site_events: {
         Row: {
           bot_slug: string | null
