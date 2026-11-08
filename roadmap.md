@@ -1,5 +1,10 @@
 # Roadmap
 
+## November 8 requested music, audiobooks and exact Socials only
+- [x] All four requested music clips and eight audiobook parts already present exactly once; fresh YouTube oEmbed confirms all twelve public titles/AIWEBTOOLS ownership. Preserved 1,070 shared recordings / 29 audiobooks and newest source order, no redundant additions
+- [x] Existing /socials and new footer social section carry exactly eight owner-supplied URLs including both TikTok/Instagram accounts and Truth Is Scary; no Gab, X, Lemon8 or other Facebook links
+- [x] 21 catalog/social regressions (2,471 assertions) pass, build OK. Browser verifies exact eight links on desktop/360px emulation without overflow, four music clips reachable, actual Love Wins playback time 4.59s/readyState 4, all eight audiobook parts selectable; screenshots reviewed and zero page errors. Physical phone/external social sign-in availability not certified. Muse, bot instructions and project URL unchanged; not published
+
 ## November 7 administrator notifications and completion — publish requested
 - [x] Shared branded Gmail notifications deployed for services/bookings, tool submissions, community apps, watchdog and link-health alerts to kgmasterbic@gmail.com, awtkgb@gmail.com and contact@ai-webtools.com. Real browser form saved/sent in 3.09s; Gmail SENT To header confirms all three; only test row removed. Individual remote inbox receipt and timed reminders not verified
 - [x] Desktop/phone Socials tested; real clicks open Instagram, YouTube, TikTok and Bluesky live matching profiles. Odysee loads shell only; Gab blocks this test browser. Six real links retained, no X
