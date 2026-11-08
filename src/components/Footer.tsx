@@ -15,6 +15,8 @@ import SubmitToolModal from "./SubmitToolModal";
 import MtvaiBrand from "./MtvaiBrand";
 import brandVideo from "@/assets/videos/aiwebtools_awakening_brand.mp4.asset.json";
 import { Link } from "react-router-dom";
+import { OFFICIAL_SOCIAL_ACCOUNTS, orderSocialAccounts } from "@/data/officialSocialAccounts";
+import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   const [submitOpen, setSubmitOpen] = useState(false);
@@ -171,6 +173,16 @@ Best regards,
           </Link>
         </div>
         
+        <section aria-label="Official social channels" className="mb-8 border-y border-border py-6">
+          <h3 className="mb-4 text-center text-lg font-semibold text-primary"><Link to="/socials">Official Socials</Link></h3>
+          <div className="flex flex-wrap justify-center gap-3">
+            {orderSocialAccounts(OFFICIAL_SOCIAL_ACCOUNTS).map(account => account.url && (
+              <Button asChild key={account.url} variant="outline" className="h-auto max-w-full whitespace-normal text-center">
+                <a href={account.url} target="_blank" rel="noopener noreferrer">{account.platform} · {account.purpose ?? account.handle}</a>
+              </Button>
+            ))}
+          </div>
+        </section>
         <FooterBottom handleExternalLink={handleExternalLink} />
 
         {/* ⚡ Use AI For Good — Human Bill of Rights call-to-conscience ⚡ */}
