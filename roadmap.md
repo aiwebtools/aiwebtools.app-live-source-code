@@ -1,5 +1,10 @@
 # Roadmap
 
+## November 8 requested music, audiobooks and exact Socials only
+- [ ] Verify four requested music videos and eight audiobook parts in shared players; add only missing verified recordings, retaining titles/thumbnails and newest source order
+- [ ] Update existing /socials and footer social section to exactly eight owner-supplied URLs; exclude all other accounts
+- [ ] Test catalog uniqueness, audiobook placement, desktop/phone Socials and music playback; preserve Muse, bot instructions and project URL; no publishing requested
+
 ## November 7 administrator notifications and completion — publish requested
 - [x] Shared branded Gmail notifications deployed for services/bookings, tool submissions, community apps, watchdog and link-health alerts to kgmasterbic@gmail.com, awtkgb@gmail.com and contact@ai-webtools.com. Real browser form saved/sent in 3.09s; Gmail SENT To header confirms all three; only test row removed. Individual remote inbox receipt and timed reminders not verified
 - [x] Desktop/phone Socials tested; real clicks open Instagram, YouTube, TikTok and Bluesky live matching profiles. Odysee loads shell only; Gab blocks this test browser. Six real links retained, no X
