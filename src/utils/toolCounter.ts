@@ -1,4 +1,3 @@
-import { mainCategories } from '@/utils/mainCategoryMapping';
 import { TOTAL_TOOLS, TOTAL_TOOL_CATEGORIES, MARKETING_TOOL_COUNT } from '@/data/generated/toolCount';
 
 // Keep the first paint path tiny. Importing the full tool database and all
