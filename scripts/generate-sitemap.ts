@@ -138,8 +138,8 @@ for (const w of written) console.log(`   • ${w.file}: ${w.count}`);
 // ---------------------------------------------------------------------------
 const countOutPath = path.resolve(process.cwd(), "src/data/generated/toolCount.ts");
 const totalTools = allTools.length;
-// Branding rule: the public count is always "5,500+" regardless of the raw total.
-const marketingTotal = "5,500+";
+// Rounded headline is a lower bound, never a separate collection total.
+const marketingTotal = `${(Math.floor(totalTools / 100) * 100).toLocaleString("en-US")}+`;
 const categorySet = new Set(
   allTools.map((t) => (t.category || "").trim()).filter(Boolean)
 );
@@ -152,3 +152,9 @@ fs.writeFileSync(
   "utf-8"
 );
 console.log(`✅ toolCount.ts written: ${totalTools} tools / ${categorySet.size} categories (${marketingTotal})`);
+
+// Keep first-paint directory schema synchronized with the same catalog.
+const htmlPath = path.resolve(process.cwd(), "index.html");
+const sourceHtml = fs.readFileSync(htmlPath, "utf-8");
+const countedHtml = sourceHtml.replace(/("numberOfItems"\s*:\s*)\d+/g, `$1${totalTools}`);
+if (countedHtml !== sourceHtml) fs.writeFileSync(htmlPath, countedHtml, "utf-8");

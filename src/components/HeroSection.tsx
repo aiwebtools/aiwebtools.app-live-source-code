@@ -64,7 +64,7 @@ const HeroSection = () => {
         {/* SEO + accessibility — visible H1 (small, unobtrusive) so screen readers
             and crawlers see a real visual heading, not display:none text. */}
         <h1 className="text-center text-[11px] md:text-xs font-mono uppercase tracking-[0.25em] text-cyan-300/80 mb-2">
-          AI WEB TOOLS — 5,500+ AI WEB TOOLS DIRECTORY FOR 2026 AND BEYOND
+          AI WEB TOOLS — {toolStats.marketing} AI WEB TOOLS DIRECTORY FOR 2026 AND BEYOND
         </h1>
         
         {/* Main heading with stabilized layout */}
@@ -131,7 +131,7 @@ const HeroSection = () => {
           >
             <span className="flex items-center space-x-3">
               <Search className="w-7 h-7" />
-              <span>Browse All {toolStats.marketing} AI Tools</span>
+              <span>Browse All {toolStats.total.toLocaleString()} AI Tools</span>
               <Sparkles className="w-7 h-7 group-hover:animate-spin" />
             </span>
           </button>
@@ -147,7 +147,7 @@ const HeroSection = () => {
         {/* Stats - updated with new verbiage */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
           <div className="text-center">
-            <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent" style={{ textShadow: '0 0 15px rgba(0, 255, 0, 0.3)' }}>{toolStats.marketing}</div>
+            <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent" style={{ textShadow: '0 0 15px rgba(0, 255, 0, 0.3)' }}>{toolStats.total.toLocaleString()}</div>
             <div className="text-green-200 text-sm">AI WEB TOOLS</div>
           </div>
           <div className="text-center">

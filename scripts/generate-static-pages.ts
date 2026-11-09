@@ -162,14 +162,14 @@ for (const tool of allTools) {
 
 const byCategory = new Map<string, Array<{ slug: string; title: string }>>();
 for (const { slug, tool } of toolEntries) {
-  const category = clean(getDisplayedCategory(tool)) || "AI Tools";
+  const category = clean(tool.category) || "AI Tools";
   if (!byCategory.has(category)) byCategory.set(category, []);
   byCategory.get(category)!.push({ slug, title: tool.title });
 }
 
 let count = 0;
 for (const { slug, tool } of toolEntries) {
-  const category = clean(tool.category) || "AI Tools";
+  const category = clean(getDisplayedCategory(tool)) || "AI Tools";
   const description = clean(tool.description) || `${tool.title} on the AI Web Tools directory.`;
   const siblings = (byCategory.get(category) || []).filter((s) => s.slug !== slug).slice(0, 12);
   const tags = (tool.tags || []).slice(0, 12);

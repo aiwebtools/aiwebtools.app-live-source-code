@@ -1,6 +1,7 @@
 // @ts-ignore -- Bun test runtime import
 import { expect, test } from "bun:test";
-import { groupBotFamilies } from "./botCategories";
+import { countCategoryAssistants, groupBotFamilies, groupBotsByCategory } from "./botCategories";
+import catalog from "@/data/generated/botCatalogFallback.json";
 import type { StudioBot } from "./botCatalog";
 
 const bot = (slug: string, display_name: string) => ({ slug, display_name, tool_title: null, tagline: null, greeting: null, starter_prompts: [], supports_images: true, model: "default" }) as StudioBot;
@@ -26,4 +27,17 @@ test("all twenty book instruction versions remain in their family", () => {
   const [family] = groupBotFamilies(versions.reverse());
   expect(family.versions).toHaveLength(20);
   expect(family.versions[19].slug).toBe("community-book-writer-v20");
+});
+
+test("category counts include every assistant version instead of counting only families", () => {
+  const bots = [bot("time-machine-gpt", "Time Machine GPT"), bot("community-time-machine-gpt-v2", "Time Machine GPT (V2)"), bot("automobile-gpt", "Automobile GPT")];
+  const groups = groupBotsByCategory(bots);
+  expect(groups.map(([, families]) => countCategoryAssistants(families)).reduce((a, b) => a + b, 0)).toBe(3);
+  expect(countCategoryAssistants(groupBotFamilies(bots.slice(0, 2)))).toBe(2);
+});
+
+test("complete bundled assistant category counts sum to all 1542 rooms", () => {
+  const groups = groupBotsByCategory(catalog as StudioBot[]);
+  expect(catalog.length).toBe(1542);
+  expect(groups.reduce((total, [, families]) => total + countCategoryAssistants(families), 0)).toBe(1542);
 });
