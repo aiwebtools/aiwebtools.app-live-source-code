@@ -1,5 +1,10 @@
 # Roadmap
 
+## November 9 latest MTVAI uploads — no unrelated changes
+- [ ] Audit live channel Videos and Shorts against the preserved shared catalog; verify missing titles and ownership
+- [ ] Add verified missing uploads newest-first to the shared main, pinned and book-promo lineup, without duplicate IDs or removals
+- [ ] Run catalog regressions and check the new videos in all three player placements on desktop and emulated phone
+
 ## November 9 pinpointed counts and Muse metadata — do not publish
 - [ ] Derive collection counters from their actual data; include archived versions in studio category totals and label remaining/featured subsets explicitly
 - [ ] Match Muse first-paint and rendered metadata to AI Agents; replace only the specified About sentence
