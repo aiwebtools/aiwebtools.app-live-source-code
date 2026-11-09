@@ -2,8 +2,8 @@
  * Display-only category label for individual tool pages.
  *
  * The catalog category (filtering, category pages, interleaving, keywords and
- * structured data) is never changed here — this only decides what a visitor
- * reads on the tool's own page.
+ * keywords) is never changed here — this decides the label on the tool's own
+ * page and its matching first-paint/social/structured metadata.
  *
  * Muse's page presents its category as "AI Agents" instead of the consolidated
  * catalog category it inherits.

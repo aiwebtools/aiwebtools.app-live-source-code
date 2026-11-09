@@ -24,7 +24,7 @@ const ShowMoreFeaturedButton = ({
         ✨ Show More Featured AI Web Tools GPTs
       </Button>
       <div className="mt-4 text-purple-300 text-sm">
-        Discover {toolsCount - initialDisplayCount} more amazing AI tools from our collection
+        Browse all {toolsCount.toLocaleString()} AI tools · {Math.min(initialDisplayCount, toolsCount)} shown · {Math.max(0, toolsCount - initialDisplayCount).toLocaleString()} remaining
       </div>
     </div>
   );

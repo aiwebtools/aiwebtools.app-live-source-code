@@ -1,5 +1,10 @@
 # Roadmap
 
+## November 9 pinpointed counts and Muse metadata — do not publish
+- [ ] Derive collection counters from their actual data; include archived versions in studio category totals and label remaining/featured subsets explicitly
+- [ ] Match Muse first-paint and rendered metadata to AI Agents; replace only the specified About sentence
+- [ ] Run focused regressions and desktop/phone browser checks; preserve all catalogs, Muse offer/media, Socials, bot instructions and URLs
+
 ## November 8 requested music, audiobooks and exact Socials only
 - [x] All four requested music clips and eight audiobook parts already present exactly once; fresh YouTube oEmbed confirms all twelve public titles/AIWEBTOOLS ownership. Preserved 1,070 shared recordings / 29 audiobooks and newest source order, no redundant additions
 - [x] Existing /socials and new footer social section carry exactly eight owner-supplied URLs including both TikTok/Instagram accounts and Truth Is Scary; no Gab, X, Lemon8 or other Facebook links

@@ -6,6 +6,10 @@ const byName = (a: string, b: string) => a.localeCompare(b, "en", { sensitivity:
 /** A bot plus every archived version of its operational instructions, V1 first. */
 export type BotFamily = { key: string; base: StudioBot; versions: StudioBot[] };
 
+/** Count rooms, including versions, just like the shared studio catalog total. */
+export const countCategoryAssistants = (families: BotFamily[]): number =>
+  families.reduce((total, family) => total + family.versions.length, 0);
+
 export function groupBotFamilies(bots: StudioBot[]): BotFamily[] {
   const map = new Map<string, StudioBot[]>();
   for (const bot of bots) {

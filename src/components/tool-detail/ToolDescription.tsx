@@ -16,7 +16,9 @@ const ToolDescription = ({ tool }: ToolDescriptionProps) => {
       
       // Add category-specific benefits
       if (tool.category) {
-        enhancedDescription += ` This cutting-edge ${getDisplayedCategory(tool) === "AI Agents" ? "AI Agents" : tool.category.toLowerCase()} AI tool revolutionizes workflows by automating complex tasks and providing intelligent insights that would typically require hours of manual work.`;
+        enhancedDescription += tool.title === "Muse" && getDisplayedCategory(tool) === "AI Agents"
+          ? " Muse revolutionizes workflows by automating complex tasks and providing intelligent insights that would typically require hours of manual work."
+          : ` This cutting-edge ${tool.category.toLowerCase()} AI tool revolutionizes workflows by automating complex tasks and providing intelligent insights that would typically require hours of manual work.`;
       }
       
       // Add tag-based features

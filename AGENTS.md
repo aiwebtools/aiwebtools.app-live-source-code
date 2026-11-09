@@ -57,6 +57,7 @@
 - Share one lossless MTVAI catalog union across pinned, vertical, book and theater players; counts and first-track identities must not diverge between surfaces.
 - Render the preserved full-book PDF through the existing PDF.js library; third-party document embeds must not be the only readable preview.
 - Use generated directory totals for first-paint counts and actual catalog length for exports; distinct metrics must be explicitly labeled.
+- Count studio category rooms including every family version, matching the shared catalog total; tool-page static and rendered metadata use the shared displayed-category resolver to prevent first-paint drift.
 - Reserve a separate floating lane for Clone while Care Bot is open and contain phone conversation scrolling; controls must not cover one another.
 - Lead every MTVAI music queue with the shared channel upload order rather than randomizing new additions; preserve legacy identities and keep chronological metadata unknown when unverifiable.
 - Render the music-channel signature through MtvaiBrand across header, footer and players; shared attribution prevents branding drift while preserving the main directory identity.

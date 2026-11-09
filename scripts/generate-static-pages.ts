@@ -28,6 +28,7 @@ import { blogPosts } from "../src/data/blogPostContent";
 import { mainCategories } from "../src/utils/mainCategoryMapping";
 import { OP_INSTRUCTION_DOCS } from "../src/data/opInstructionDocs";
 import { TOTAL_TOOLS } from "../src/data/generated/toolCount";
+import { getDisplayedCategory } from "../src/utils/toolCategoryDisplay";
 
 const BASE_URL = "https://aiwebtools.app";
 const DIST = path.resolve(process.cwd(), "dist");
@@ -161,7 +162,7 @@ for (const tool of allTools) {
 
 const byCategory = new Map<string, Array<{ slug: string; title: string }>>();
 for (const { slug, tool } of toolEntries) {
-  const category = clean(tool.category) || "AI Tools";
+  const category = clean(getDisplayedCategory(tool)) || "AI Tools";
   if (!byCategory.has(category)) byCategory.set(category, []);
   byCategory.get(category)!.push({ slug, title: tool.title });
 }
