@@ -159,5 +159,5 @@
 - [ ] 1 seven missing GPTs — blocked: no instructions exist in project, database or uploads; need Master's originals
 - [ ] 2–5, 6 (own row), 7 (taglines stored truncated), 10, 12–15, 17, 20 — open
 
-- Remove personal TikTok @kennethbastian869 from Socials/footer (Master: only AIWebTools and MTVai pages)
+- [x] Removed personal TikTok from Socials/footer; added Facebook AIWebTools News; audiobooks confirmed in collection
 - Add Facebook AIWebTools News link to Socials
