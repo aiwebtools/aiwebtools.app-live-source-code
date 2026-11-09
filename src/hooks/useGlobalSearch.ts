@@ -2623,8 +2623,9 @@ export const useGlobalSearch = () => {
   }, [communityBots, searchTerm]);
 
   const combinedResults = useMemo(() => {
+    const resultTitles = new Set(searchResults.map((result) => result?.title));
     const community = searchResults.length || recommendedTools.length || searchTerm.trim()
-      ? matchCommunityBots(communityBots, searchTerm).filter((b) => !searchResults.some((r) => r?.title === b.title))
+      ? matchCommunityBots(communityBots, searchTerm).filter((b) => !resultTitles.has(b.title))
       : [];
     return [...community, ...searchResults, ...recommendedTools];
   }, [searchResults, recommendedTools, communityBots, searchTerm]);
