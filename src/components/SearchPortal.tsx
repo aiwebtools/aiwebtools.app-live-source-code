@@ -78,7 +78,7 @@ const SearchPortal = () => {
           ) : selectedCategory ? (
             `${totalToolsCount} tools in ${selectedCategory}`
           ) : (
-            `Discover ${totalToolsCount}+ curated AI tools`
+            `Discover ${totalToolsCount.toLocaleString()} curated AI tools`
           )}
         </div>
         {!searchTerm && !selectedCategory && (

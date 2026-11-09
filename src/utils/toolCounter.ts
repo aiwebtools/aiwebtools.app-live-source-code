@@ -1,5 +1,4 @@
-import { mainCategories } from '@/utils/mainCategoryMapping';
-import { TOTAL_TOOLS, MARKETING_TOOL_COUNT } from '@/data/generated/toolCount';
+import { TOTAL_TOOLS, TOTAL_TOOL_CATEGORIES, MARKETING_TOOL_COUNT } from '@/data/generated/toolCount';
 
 // Keep the first paint path tiny. Importing the full tool database and all
 // integrity/category verifiers here was blocking the homepage lazy route for
@@ -14,7 +13,7 @@ const getFastCountResult = () => ({
   totalTools: FAST_TOOL_TOTAL,
   categoryBreakdown: {},
   mainCategoryCounts: { 'ALL AI TOOLS': FAST_TOOL_TOTAL },
-  categoriesCount: mainCategories.length,
+  categoriesCount: TOTAL_TOOL_CATEGORIES,
   rawToolsCount: FAST_TOOL_TOTAL,
   removedByDeduplication: 0,
   preservationScore: 100,
@@ -108,7 +107,7 @@ export const getToolCountAudit = async () => {
   
   return {
     exactTotal: allTools.length, // Use allTools.length as the authoritative count
-    marketingNumber: `${Math.round(allTools.length / 100) * 100}+`,
+    marketingNumber: `${(Math.floor(allTools.length / 100) * 100).toLocaleString('en-US')}+`,
     totalTools: allTools.length,
     categoryBreakdown: preservationReport.categoryDistribution,
     mainCategoryCounts,

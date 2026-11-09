@@ -28,7 +28,7 @@ import { blogPosts } from "../src/data/blogPostContent";
 import { mainCategories } from "../src/utils/mainCategoryMapping";
 import { OP_INSTRUCTION_DOCS } from "../src/data/opInstructionDocs";
 import { TOTAL_TOOLS } from "../src/data/generated/toolCount";
-import { getDisplayedCategory } from "../src/utils/toolCategoryDisplay";
+import { getDisplayedCategory, getStaticToolTitle } from "../src/utils/toolCategoryDisplay";
 
 const BASE_URL = "https://aiwebtools.app";
 const DIST = path.resolve(process.cwd(), "dist");
@@ -191,7 +191,7 @@ for (const { slug, tool } of toolEntries) {
 
   writePage({
     route: `/${slug}`,
-    title: `${tool.title} — ${category} AI Tool | AI Web Tools`,
+    title: getStaticToolTitle(tool),
     description,
     image: tool.imageUrl,
     jsonLd: {

@@ -31,7 +31,7 @@ const MoreToolsSection = ({
           🚀 SEE MORE AI TOOLS
         </Button>
         <div className="mt-4 text-cyan-300 text-sm">
-          Explore our complete collection of {totalTools}+ amazing AI tools
+          Explore our complete collection of {totalTools.toLocaleString()} amazing AI tools
         </div>
       </div>
     );

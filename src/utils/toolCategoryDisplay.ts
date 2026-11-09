@@ -22,3 +22,10 @@ export const getDisplayedCategory = (
   }
   return tool?.category || "";
 };
+
+/** First-paint title uses the same category as the hydrated tool page. */
+export const getStaticToolTitle = (tool: CategoryDisplaySource): string => {
+  const category = getDisplayedCategory(tool) || "AI Tools";
+  const suffix = tool.title === "Muse" && category === "AI Agents" ? "Tool" : "AI Tool";
+  return `${tool.title} — ${category} ${suffix} | AI Web Tools`;
+};

@@ -85,7 +85,13 @@ export const useFeaturedToolsState = () => {
     return tools;
   }, [selectedCategory, searchTerm, showFreeOnly]);
 
-  const totalToolsCount = filteredTools.length;
+  // Category grids append recommendations, which must not inflate their tally.
+  const totalToolsCount = useMemo(() => {
+    if (!selectedCategory) return filteredTools.length;
+    const categoryCount = getSortedStandardizedCategories().find(([name]) => name === selectedCategory)?.[1];
+    if (!showFreeOnly && categoryCount !== undefined) return categoryCount;
+    return allTools.filter(tool => tool.category === selectedCategory && (!showFreeOnly || isFreeTool(tool))).length;
+  }, [filteredTools, selectedCategory, showFreeOnly]);
   
   // Simple categories calculation
   const categoriesWithCounts = useMemo(() => {
