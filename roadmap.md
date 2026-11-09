@@ -13,7 +13,7 @@
 ## November 9 pinpointed counts and Muse metadata — do not publish
 - [x] Current data-driven totals already 5,563 tools, 546 featured cards and 1,542 in-site rooms; browser category sum is 1,542 including versions. Correct exact-total plus signs/stale 1000+ and label filtered assistant counts against their matching categories; preserve rounded 5,500+ and explicitly labeled shown/remaining counts
 - [x] Live first-paint category and requested About sentence already corrected; align Muse first-paint title exactly with rendered AI Agents title and cover shared metadata category/title rule
-- [ ] Run focused regressions and desktop/phone browser checks; preserve all catalogs, Muse offer/media, Socials, bot instructions and URLs
+- [x] Twelve focused regressions pass; live GPT categories 16 / sum 1,542 and filtered sums verified. Repaired stale 336-room offline snapshot with 1,542 verified active public records, no database/instruction writes. Actual static generator Muse title/OG/Twitter/category pass, rendered sentence and PI0DS6 verified, screenshots reviewed at desktop/360px emulation; build OK. No physical phone test or publication; existing offer/media, Socials and URLs untouched
 
 ## November 8 requested music, audiobooks and exact Socials only
 - [x] All four requested music clips and eight audiobook parts already present exactly once; fresh YouTube oEmbed confirms all twelve public titles/AIWEBTOOLS ownership. Preserved 1,070 shared recordings / 29 audiobooks and newest source order, no redundant additions
