@@ -1,5 +1,9 @@
 import { getBotCategory } from "./botSubjects";
-import { botFamilyKey, botVersionNumber, type StudioBot } from "./botCatalog";
+import type { StudioBot } from "./botCatalog";
+
+// Family arithmetic must remain independent of browser-only catalog/media loading.
+const botFamilyKey = (slug: string) => slug.replace(/^community-/, "").replace(/-v\d+$/, "");
+const botVersionNumber = (slug: string) => Number(slug.match(/-v(\d+)$/)?.[1] || 1);
 
 const byName = (a: string, b: string) => a.localeCompare(b, "en", { sensitivity: "base" });
 
