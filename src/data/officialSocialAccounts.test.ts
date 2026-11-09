@@ -12,6 +12,7 @@ test("exactly the nine owner-supplied URLs are retained without other socials or
     "https://bsky.app/profile/mtvailive.bsky.social",
     "https://odysee.com/@MTVai",
     "https://www.facebook.com/TruthIsScary",
+    "https://www.facebook.com/profile.php?id=100092436578624",
   ].sort());
 });
 
