@@ -3,7 +3,7 @@ import { expect, test } from "bun:test";
 import { RECENT_MTVAI_UPLOADS } from "./recentMtvaiUploads";
 
 test("recent MTV AI additions are unique uploads inside the requested two-week window", () => {
-  expect(RECENT_MTVAI_UPLOADS).toHaveLength(783);
+  expect(RECENT_MTVAI_UPLOADS).toHaveLength(787);
   expect(new Set(RECENT_MTVAI_UPLOADS.map(v => v.id)).size).toBe(783);
   for (const video of RECENT_MTVAI_UPLOADS) {
     if (video.publishedAt !== null) {

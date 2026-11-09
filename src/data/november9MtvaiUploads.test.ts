@@ -6,7 +6,7 @@ import { MTVAI_AUDIOBOOKS } from "./mtvaiAudiobooks";
 
 test("all 15 newly verified recordings reach the shared three-player catalog exactly once", () => {
   expect(NOVEMBER_9_MTVAI_UPLOADS).toHaveLength(19);
-  expect(NOVEMBER_9_MTVAI_UPLOADS.filter(v => v.kind === "music")).toHaveLength(9);
+  expect(NOVEMBER_9_MTVAI_UPLOADS.filter(v => v.kind === "music")).toHaveLength(10);
   for (const v of NOVEMBER_9_MTVAI_UPLOADS) {
     expect(MTVAI_CATALOG.filter(item => item.id === v.id)).toHaveLength(1);
     expect(v.url).toBe(`https://www.youtube.com/watch?v=${v.id}`);
