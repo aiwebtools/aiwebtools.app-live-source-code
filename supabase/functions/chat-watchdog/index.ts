@@ -105,7 +105,7 @@ Deno.serve(async (req) => {
     const { error } = await supabase.from("chat_provider_state").update({ status: "ready", http_status: null, retry_at: null }).eq("provider", body.resumeProvider);
     if (error) return new Response(JSON.stringify({ error: "Provider could not resume." }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
   }
-  const { data: providerStates, error: stateError } = await supabase.from("chat_provider_state").select("provider,status,http_status,retry_at");
+  const { data: providerStates, error: stateError } = await supabase.from("chat_provider_state").select("provider,status,http_status,retry_at,updated_at");
   if (stateError) return new Response(JSON.stringify({ error: "Provider safety state is unavailable." }), { status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" } });
   const pausedProviders = (providerStates as ProviderState[] || []).filter((state) => isPaused(state));
 
@@ -165,7 +165,12 @@ Deno.serve(async (req) => {
     pausedProviders: pausedProviders.map((state) => state.provider),
   };
 
-  if (troubled.length === 0 && !pausedProviders.length && !body.force) {
+  // Alert on a provider pause only once, when it begins inside this window; ongoing pauses stay on /admin/chat-quality.
+  const newlyPaused = pausedProviders.filter((state) => {
+    const changed = (state as ProviderState & { updated_at?: string }).updated_at;
+    return !!changed && changed >= since;
+  });
+  if (troubled.length === 0 && !newlyPaused.length && !body.force) {
     return new Response(JSON.stringify({ ...summary, ok: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
