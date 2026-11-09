@@ -158,3 +158,6 @@
 - [x] 6 token total = in+out; 8 Retail header; 9 CCSBA rename+greeting; 11 placeholders; 16 popup once/session; 18 About Muse; 19 pinch zoom
 - [ ] 1 seven missing GPTs — blocked: no instructions exist in project, database or uploads; need Master's originals
 - [ ] 2–5, 6 (own row), 7 (taglines stored truncated), 10, 12–15, 17, 20 — open
+
+- Remove personal TikTok @kennethbastian869 from Socials/footer (Master: only AIWebTools and MTVai pages)
+- Add Facebook AIWebTools News link to Socials
