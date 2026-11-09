@@ -28,12 +28,6 @@ export const useFeaturedToolsLogic = ({ onToolsLoaded }: UseFeaturedToolsLogicPr
     hasMoreTools
   } = useFeaturedToolsState();
 
-  // Find Marriage Mender GPT index with more flexible matching
-  const marriageMenderIndex = filteredTools.findIndex(tool => 
-    tool.title.toLowerCase().includes('marriage mender') ||
-    tool.title.toLowerCase().includes('marriage') && tool.title.toLowerCase().includes('mender')
-  );
-  
   // Set initial display count to minimal for instant loading
   const initialDisplayCount = 8;
 
@@ -81,7 +75,8 @@ export const useFeaturedToolsLogic = ({ onToolsLoaded }: UseFeaturedToolsLogicPr
 
   const handleShowMoreFeaturedTools = useCallback(() => {
     setShowAllFeaturedTools(true);
-    setDisplayedCount(filteredTools.length);
+    // Enable the existing guarded infinite loader, not a full-catalog mount.
+    setDisplayedCount(Math.min(24, filteredTools.length));
   }, [setDisplayedCount, filteredTools.length]);
 
   // Disable infinite scroll for featured tools section - only manual loading
