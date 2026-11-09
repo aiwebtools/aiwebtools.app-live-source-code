@@ -31,6 +31,7 @@
 - Scope commercial events to their own iframe, layer them above studio dialogs, and stop playback before dismissal; unrelated players must never hide a sounding commercial or block chat.
 - Keep studio drawers above embedded dialogs and close their parent dialog before route changes; phone bot switching must never remain hidden behind the previous room.
 - Apply offscreen paint containment only to individual tool cards, never all nested grids; homepage sections and studio controls must stay visible across browsers.
+- Expand homepage tools through the existing guarded incremental loader, never by mounting the entire catalog on one click; bounded batches preserve click and scroll responsiveness.
 - Store device conversations separately by bot and thread, with dedicated `/app/:slug/chat/:threadId` URLs so reloads restore the exact conversation.
 - Carry actual routed model and normalized provider usage in stream metadata and device history; aggregate tool rounds, never infer billable tokens from text or cover chat controls.
 - Keep studio image download/revision actions in `StudioImageActions` and route revisions through the existing conversation so generated visuals retain story context.

@@ -1,9 +1,9 @@
 # Roadmap
 
 ## November 9 speed and smooth interaction check
-- [ ] Measure real visitor speed and inspect current runtime signals; reproduce click/scroll bottlenecks
-- [ ] Apply only confirmed targeted performance fixes, preserving all content and current functionality
-- [ ] Repeat desktop/emulated-phone interaction checks and focused regressions; report measured limitations, do not publish
+- [x] Real homepage p75 FCP 2.486s (82 readings), LCP 2.608s (47), CLS .141 (66); other pages/INP have too few collapsed series for firm rankings. Reproduced Show More mounting 5,563 cards with a 3.344s main-thread task and 27.7s browser-check delay
+- [x] Show More enables existing incremental loader starting at 24 instead of mounting all tools; removed unused per-render scan and replaced nested search deduplication with a title Set, preserving ordering and exact matching
+- [x] Same browser check now mounts bounded cards (48) and completes in 3.71s under startup/third-party load, not certified instantaneous. Desktop/360px menu/search/expand/scroll checks show no overflow or page errors; five focused search/count regressions pass, build OK. Physical phone and improved post-publication field metrics unavailable; not published
 
 ## November 9 latest MTVAI uploads — no unrelated changes
 - [x] Fully expanded 643 Videos and 440 Shorts, exhausted both continuations; oEmbed verified exact public titles and AIWEBTOOLS ownership for all 15 genuinely missing IDs. Excluded existing audiobook-only entries; unknown dates retained as null
