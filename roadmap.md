@@ -1,5 +1,10 @@
 # Roadmap
 
+## November 9 speed and smooth interaction check
+- [ ] Measure real visitor speed and inspect current runtime signals; reproduce click/scroll bottlenecks
+- [ ] Apply only confirmed targeted performance fixes, preserving all content and current functionality
+- [ ] Repeat desktop/emulated-phone interaction checks and focused regressions; report measured limitations, do not publish
+
 ## November 9 latest MTVAI uploads — no unrelated changes
 - [x] Fully expanded 643 Videos and 440 Shorts, exhausted both continuations; oEmbed verified exact public titles and AIWEBTOOLS ownership for all 15 genuinely missing IDs. Excluded existing audiobook-only entries; unknown dates retained as null
 - [x] Added nine music previews, five book recordings and one dated Short to the shared main, pinned and book-promo lineup in newest source order per tab; no duplicates or removals. Shared catalog 1,085 / audiobook collection 34; exact cross-tab chronology unavailable
