@@ -2,6 +2,46 @@
 // Newest source order per tab; cross-tab timestamps are unavailable. Preserve exact titles and IDs.
 export const NOVEMBER_9_MTVAI_UPLOADS = [
   {
+    "id": "1GuIvKW26b4",
+    "title": "The Fire the Darkness Cannot Own — Collective Mind | Official AI Music Video (Preview)",
+    "url": "https://www.youtube.com/watch?v=1GuIvKW26b4",
+    "publishedAt": null,
+    "durationSeconds": null,
+    "format": "shorts",
+    "kind": "music",
+    "thumbnailUrl": "https://i.ytimg.com/vi/1GuIvKW26b4/hqdefault.jpg"
+  },
+  {
+    "id": "1rPWae9L_W8",
+    "title": "Chasing Union: The Lost Diary of George Washington — Audiobook Opening | KG Bastian",
+    "url": "https://www.youtube.com/watch?v=1rPWae9L_W8",
+    "publishedAt": null,
+    "durationSeconds": null,
+    "format": "shorts",
+    "kind": "audiobook",
+    "thumbnailUrl": "https://i.ytimg.com/vi/1rPWae9L_W8/hqdefault.jpg"
+  },
+  {
+    "id": "4Wwhn5YweQ4",
+    "title": "Chasing Union: The Lost Diary of George Washington — Audiobook, Part 2 | KG Bastian",
+    "url": "https://www.youtube.com/watch?v=4Wwhn5YweQ4",
+    "publishedAt": null,
+    "durationSeconds": null,
+    "format": "videos",
+    "kind": "audiobook",
+    "thumbnailUrl": "https://i.ytimg.com/vi/4Wwhn5YweQ4/hqdefault.jpg"
+  },
+  {
+    "id": "1lto24uXMIU",
+    "title": "Chasing Union: The Lost Diary of George Washington — Audiobook, Part 1 | KG Bastian",
+    "url": "https://www.youtube.com/watch?v=1lto24uXMIU",
+    "publishedAt": null,
+    "durationSeconds": null,
+    "format": "videos",
+    "kind": "audiobook",
+    "thumbnailUrl": "https://i.ytimg.com/vi/1lto24uXMIU/hqdefault.jpg"
+  },
+  {
     "id": "L6lbL0HYyms",
     "title": "How Am I the Fire — The Dawn Threshers | Official AI Music Video (Preview)",
     "url": "https://www.youtube.com/watch?v=L6lbL0HYyms",
