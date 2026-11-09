@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Bot, ChevronDown, RotateCw, Search, Wand2 } from "lucide-react";
 import { loadStudioBots, type StudioBot } from "@/components/bot-studio/botCatalog";
 import { Button } from "@/components/ui/button";
-import { groupBotsByCategory } from "@/components/bot-studio/botCategories";
+import { countCategoryAssistants, groupBotsByCategory } from "@/components/bot-studio/botCategories";
 import CommunityAppsMenuSection from "./CommunityAppsMenuSection";
 import { searchStudioBots } from "@/components/bot-studio/botSubjects";
 import { normalizeSearchName } from '@/utils/search/enterTarget';
@@ -100,7 +100,7 @@ export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false, full
                 <div key={category} className="border-b border-primary/10 last:border-0">
                   <Button variant="ghost" type="button" onClick={() => setOpenGroup(expanded && !query ? null : category)} aria-expanded={expanded}
                     className="flex w-full items-center justify-between py-2 text-left text-xs font-semibold uppercase tracking-wide text-primary">
-                    {category}<span className="text-[10px] text-muted-foreground">{families.length}</span>
+                    {category}<span className="text-[10px] text-muted-foreground">{countCategoryAssistants(families)}</span>
                   </Button>
                   {expanded && families.map(({ key, base, versions }) => (
                     <div key={key} className="py-0.5 pl-2">

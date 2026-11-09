@@ -28,6 +28,7 @@ import { blogPosts } from "../src/data/blogPostContent";
 import { mainCategories } from "../src/utils/mainCategoryMapping";
 import { OP_INSTRUCTION_DOCS } from "../src/data/opInstructionDocs";
 import { TOTAL_TOOLS } from "../src/data/generated/toolCount";
+import { getDisplayedCategory } from "../src/utils/toolCategoryDisplay";
 
 const BASE_URL = "https://aiwebtools.app";
 const DIST = path.resolve(process.cwd(), "dist");
@@ -168,7 +169,7 @@ for (const { slug, tool } of toolEntries) {
 
 let count = 0;
 for (const { slug, tool } of toolEntries) {
-  const category = clean(tool.category) || "AI Tools";
+  const category = clean(getDisplayedCategory(tool)) || "AI Tools";
   const description = clean(tool.description) || `${tool.title} on the AI Web Tools directory.`;
   const siblings = (byCategory.get(category) || []).filter((s) => s.slug !== slug).slice(0, 12);
   const tags = (tool.tags || []).slice(0, 12);

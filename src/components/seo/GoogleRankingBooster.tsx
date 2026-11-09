@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { competitiveAdvantage } from '@/utils/googleRankingOptimizer';
 import { generateToolSlug } from '@/utils/urlGenerator';
+import { TOTAL_TOOLS } from '@/data/generated/toolCount';
 
 interface GoogleRankingBoosterProps {
   pageType?: 'homepage' | 'category' | 'tool' | 'search';
@@ -59,7 +60,7 @@ const GoogleRankingBooster = ({ pageType = 'homepage', toolData, category }: Goo
         "@type": "ItemList",
         "name": "AI Web Tools Directory",
         "description": "Comprehensive collection of 5,500+ AI web tools",
-        "numberOfItems": 4000
+        "numberOfItems": TOTAL_TOOLS
       }
     };
 

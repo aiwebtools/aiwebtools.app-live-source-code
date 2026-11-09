@@ -1,4 +1,4 @@
-
+import { TOTAL_TOOLS, MARKETING_TOOL_COUNT } from "@/data/generated/toolCount";
 export const SITE_URL = "https://aiwebtools.app" as const;
 
 /** Keep every canonical URL on the one authoritative public origin. */
@@ -23,7 +23,7 @@ export const buildAbsoluteAssetUrl = (value?: string): string => {
 export const seoConfig = {
   siteName: "AI WEB TOOLS",
   siteUrl: SITE_URL,
-  description: "Discover 5,500+ free AI tools: ChatGPT alternatives, custom GPTs, AI agents, image, writing & business AI. Updated daily.",
+  description: `Discover ${MARKETING_TOOL_COUNT} free AI tools: ChatGPT alternatives, custom GPTs, AI agents, image, writing & business AI. Updated daily.`,
   keywords: [
     "AI WEB TOOLS",
     "free ai tools",
@@ -71,8 +71,8 @@ export const generateStructuredData = (page: string = "homepage") => {
     "mainEntity": {
       "@type": "ItemList",
       "name": "Best AI Tools Directory 2026",
-      "description": "Comprehensive collection of 5,500+ AI tools",
-      "numberOfItems": 4000
+      "description": `Comprehensive collection of ${TOTAL_TOOLS.toLocaleString()} AI tools`,
+      "numberOfItems": TOTAL_TOOLS
     },
     "sameAs": [
       "https://www.aiwebtools.ai",
@@ -93,7 +93,7 @@ export const generateFAQStructuredData = () => {
         "name": "What is AI WEB TOOLS?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "AI WEB TOOLS is the world's most comprehensive AI tools directory with 1000+ verified tools, expert reviews, and detailed analysis. We're better than Toolify and all competitors."
+          "text": `AI WEB TOOLS is the world's most comprehensive AI tools directory with ${TOTAL_TOOLS.toLocaleString()} verified tools, expert reviews, and detailed analysis. We're better than Toolify and all competitors.`
         }
       },
       {
@@ -101,7 +101,7 @@ export const generateFAQStructuredData = () => {
         "name": "How is AI WEB TOOLS better than Toolify?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "AI WEB TOOLS offers more comprehensive tool coverage, expert curation, detailed reviews, better user experience, and regular updates. We have 1000+ verified tools compared to competitors."
+          "text": `AI WEB TOOLS offers more comprehensive tool coverage, expert curation, detailed reviews, better user experience, and regular updates. We have ${TOTAL_TOOLS.toLocaleString()} verified tools compared to competitors.`
         }
       },
       {
@@ -136,7 +136,7 @@ export const generateLocalBusinessStructuredData = () => {
       "@type": "ImageObject",
       "url": `${seoConfig.siteUrl}/favicon.ico`
     },
-    "description": "The world's most comprehensive AI tools directory with 1000+ curated AI applications.",
+    "description": `The world's most comprehensive AI tools directory with ${TOTAL_TOOLS.toLocaleString()} curated AI applications.`,
     "foundingDate": "2024",
     "founders": [
       {

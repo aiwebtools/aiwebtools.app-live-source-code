@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { generateToolSlug } from "@/utils/urlGenerator";
 import { buildCanonicalUrl } from "@/utils/seo";
+import { getDisplayedCategory } from "@/utils/toolCategoryDisplay";
 
 interface ToolReviewsProps {
   tool: Tool;
@@ -154,7 +155,7 @@ const ToolReviews = ({ tool, fallbackRating, fallbackVotes }: ToolReviewsProps) 
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: tool.title,
-    applicationCategory: tool.category || "AI Tool",
+    applicationCategory: getDisplayedCategory(tool) || "AI Tool",
     operatingSystem: "Web Browser",
     url: buildCanonicalUrl(`/${slug}`),
     aggregateRating: {

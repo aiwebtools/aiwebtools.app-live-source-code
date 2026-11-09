@@ -131,7 +131,7 @@ const ImprovedSEOHead: React.FC<ImprovedSEOHeadProps> = ({
     "description": getDescription(),
     "url": getCanonicalUrl(),
     ...(pageType === 'tool' && {
-      "applicationCategory": tool?.category || "Artificial Intelligence",
+      "applicationCategory": getDisplayedCategory(tool) || "Artificial Intelligence",
       "operatingSystem": "Web Browser",
         "offers": {
         "@type": "Offer",

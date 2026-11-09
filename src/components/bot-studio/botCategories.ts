@@ -1,10 +1,18 @@
 import { getBotCategory } from "./botSubjects";
-import { botFamilyKey, botVersionNumber, type StudioBot } from "./botCatalog";
+import type { StudioBot } from "./botCatalog";
+
+// Family arithmetic must remain independent of browser-only catalog/media loading.
+const botFamilyKey = (slug: string) => slug.replace(/^community-/, "").replace(/-v\d+$/, "");
+const botVersionNumber = (slug: string) => Number(slug.match(/-v(\d+)$/)?.[1] || 1);
 
 const byName = (a: string, b: string) => a.localeCompare(b, "en", { sensitivity: "base" });
 
 /** A bot plus every archived version of its operational instructions, V1 first. */
 export type BotFamily = { key: string; base: StudioBot; versions: StudioBot[] };
+
+/** Count rooms, including versions, just like the shared studio catalog total. */
+export const countCategoryAssistants = (families: BotFamily[]): number =>
+  families.reduce((total, family) => total + family.versions.length, 0);
 
 export function groupBotFamilies(bots: StudioBot[]): BotFamily[] {
   const map = new Map<string, StudioBot[]>();
