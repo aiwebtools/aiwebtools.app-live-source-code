@@ -12,7 +12,7 @@ test("all 15 newly verified recordings reach the shared three-player catalog exa
     expect(v.url).toBe(`https://www.youtube.com/watch?v=${v.id}`);
     expect(v.thumbnailUrl).toBe(`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`);
   }
-  expect(MTVAI_CATALOG.slice(0, 15).map(v => v.id)).toEqual(NOVEMBER_9_MTVAI_UPLOADS.map(v => v.id));
+  expect(MTVAI_CATALOG.slice(0, 19).map(v => v.id)).toEqual(NOVEMBER_9_MTVAI_UPLOADS.map(v => v.id));
 });
 
 test("all five new book recordings also reach the audiobook area without duplicate editions", () => {
