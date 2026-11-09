@@ -23,5 +23,5 @@ test("all eight requested audiobook parts reach the book collection", () => {
   for (const id of ["BhzmstJM7Ew", "dqxmFS051-s", "1iwXFUrn1CM", "P0tmDN4AEfU", "clX7Uz_r7J4", "fxS7aplKVsU", "_v4AWpyBqQg", "b1VzjzJJWG8"]) {
     expect(MTVAI_AUDIOBOOKS.filter(v => v.id === id)).toHaveLength(1);
   }
-  expect(MTVAI_AUDIOBOOKS).toHaveLength(29);
+  expect(MTVAI_AUDIOBOOKS).toHaveLength(34);
 });

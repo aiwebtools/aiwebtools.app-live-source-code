@@ -1,7 +1,9 @@
 // Verified public @AIWEBTOOLS-MTVai uploads: the MTVAI digital art portfolio (music videos, Shorts and audiobooks).
 // Preserve exact YouTube titles and IDs; landscape footage stays uncropped inside vertical players.
 import { NOVEMBER_7_MTVAI_UPLOADS, RECOVERED_MTVAI_UPLOADS } from "./november7MtvaiUploads";
+import { NOVEMBER_9_MTVAI_UPLOADS } from "./november9MtvaiUploads";
 export const RECENT_MTVAI_UPLOADS = [
+  ...NOVEMBER_9_MTVAI_UPLOADS,
   ...NOVEMBER_7_MTVAI_UPLOADS,
   // Verified November 5 channel additions; source order within Videos and Shorts, exact dates unavailable.
   {"id": "NG7PbOalxUM", "title": "Every Step a Choice — The Void Choir | Official AI Music Video (Preview)", "url": "https://www.youtube.com/watch?v=NG7PbOalxUM", "publishedAt": null, "durationSeconds": 31, "format": "shorts", "kind": "music"},

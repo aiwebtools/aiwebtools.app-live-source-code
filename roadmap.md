@@ -1,5 +1,10 @@
 # Roadmap
 
+## November 9 latest MTVAI uploads — no unrelated changes
+- [x] Fully expanded 643 Videos and 440 Shorts, exhausted both continuations; oEmbed verified exact public titles and AIWEBTOOLS ownership for all 15 genuinely missing IDs. Excluded existing audiobook-only entries; unknown dates retained as null
+- [x] Added nine music previews, five book recordings and one dated Short to the shared main, pinned and book-promo lineup in newest source order per tab; no duplicates or removals. Shared catalog 1,085 / audiobook collection 34; exact cross-tab chronology unavailable
+- [x] 21 catalog regressions / 2,558 assertions pass, build OK; browser confirms new music in all three placements, main actual playback 2.48s/readyState 4, pinned video frame, book thumbnails/new embed, no runtime page errors or overflow at emulated 360px. Screenshots reviewed; physical phone and exhaustive playback unverified. Nothing published or changed outside music/catalog tests and roadmap
+
 ## November 9 pinpointed counts and Muse metadata — do not publish
 - [ ] Derive collection counters from their actual data; include archived versions in studio category totals and label remaining/featured subsets explicitly
 - [ ] Match Muse first-paint and rendered metadata to AI Agents; replace only the specified About sentence
