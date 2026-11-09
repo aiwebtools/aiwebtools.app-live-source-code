@@ -1,8 +1,14 @@
 // @ts-nocheck
 import { describe, it, expect } from "bun:test";
-import { getDisplayedCategory } from "./toolCategoryDisplay";
+import { getDisplayedCategory, getStaticToolTitle } from "./toolCategoryDisplay";
 
 describe("getDisplayedCategory", () => {
+  it("uses the AI Agents category in Muse's first-paint title", () => {
+    const tool = { title: "Muse", category: "AI Development & Platforms", directUrl: "https://muse.ai/join?via=aiwebtools" };
+    expect(getStaticToolTitle(tool)).toBe("Muse — AI Agents Tool | AI Web Tools");
+    expect(getDisplayedCategory(tool)).toBe("AI Agents");
+    expect(tool.category).toBe("AI Development & Platforms");
+  });
   it("shows Muse under AI Agents on its own page", () => {
     expect(
       getDisplayedCategory({

@@ -2,6 +2,7 @@
 import { CardDescription } from "@/components/ui/card";
 import { Tool } from "@/types/tools";
 import { getDisplayedCategory } from "@/utils/toolCategoryDisplay";
+import { TOTAL_TOOLS } from "@/data/generated/toolCount";
 
 interface ToolDescriptionProps {
   tool: Tool;
@@ -146,7 +147,7 @@ const ToolDescription = ({ tool }: ToolDescriptionProps) => {
       <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-lg p-4">
         <p className="text-sm text-cyan-300 text-center leading-relaxed">
           <span className="font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-            Discover {tool.title} and 1000+ Premium AI Tools
+            Discover {tool.title} in our collection of {TOTAL_TOOLS.toLocaleString()} AI Tools
           </span>
           <br />
           <span className="text-gray-400">
