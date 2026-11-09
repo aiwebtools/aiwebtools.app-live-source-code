@@ -2,7 +2,7 @@
 import { expect, test } from "bun:test";
 import { OFFICIAL_SOCIAL_ACCOUNTS, orderSocialAccounts } from "./officialSocialAccounts";
 
-test("exactly the eight owner-supplied URLs are retained without other socials or tracking", () => {
+test("exactly the nine owner-supplied URLs are retained without other socials or tracking", () => {
   expect(OFFICIAL_SOCIAL_ACCOUNTS.map(a => a.url).sort()).toEqual([
     "https://www.youtube.com/@AIWEBTOOLS-MTVai",
     "https://www.tiktok.com/@kennethbastian869",
