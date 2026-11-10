@@ -13,7 +13,9 @@ export function getBotHeaderDescription(bot: HeaderBot): string {
   const family = bot.slug.replace(/^community-/, "").replace(/-v\d+$/, "");
   const candidates = [publicDescriptions[bot.slug], publicDescriptions[family], publicDescriptions[`community-${family}`], bot.description, bot.tagline];
   const description = candidates.find((value): value is string => typeof value === "string" && isPublicBotDescription(value));
-  if (!description) return `A conversation companion for ${bot.display_name.replace(/\s*\(V\d+\)$/, "").replace(/\s+GPT$/i, "")}.`;
+  const subject = bot.display_name.replace(/\s*\(V\d+\)$/, "").replace(/\s+GPT$/i, "");
+  const fallback = isPublicBotDescription(subject) ? `A conversation companion for ${subject}.` : "An AI companion for questions, ideas, and thoughtful conversation.";
+  if (!description) return fallback.length <= 160 ? fallback : `${fallback.slice(0, 157).replace(/\s+\S*$/, "")}…`;
   const clean = description.replace(/\s+/g, " ").trim();
   if (clean.length <= 160) return clean;
   const sentence = clean.match(/^.{15,159}?[.!?](?:\s|$)/)?.[0]?.trim();
