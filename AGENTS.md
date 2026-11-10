@@ -1,4 +1,5 @@
 # Architecture Rules
+- Resolve studio header subtitles through the display-only public description catalog with instruction-text rejection; keep heading text single-copy without generated name layers so archived prompts never leak into headers or accessible names.
 - Send administrator notifications through the linked Gmail account using one shared recipient list and branded HTML frame; never silently reduce owner recipients or claim unsent mail succeeded.
 - Submit Enter searches only to an exact normalized name; otherwise retain the typed query and its results instead of opening unrelated suggestions.
 - Keep service packages shared between intake and the services page; save requests before Gmail/Calendar delivery and show payment collection as unavailable until a real checkout is configured.

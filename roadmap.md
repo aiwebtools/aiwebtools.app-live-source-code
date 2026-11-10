@@ -1,5 +1,9 @@
 # Roadmap
 
+## November 10 shared studio header only — do not publish
+- [ ] Audit every studio subtitle; use clean public descriptions without displaying operational instructions or changing them
+- [ ] Keep each shared heading name once, including generated/accessibility text; verify Hildegard, Paracelsus and Alan Watts as visitors
+
 ## November 9 speed and smooth interaction check
 - [x] Real homepage p75 FCP 2.486s (82 readings), LCP 2.608s (47), CLS .141 (66); other pages/INP have too few collapsed series for firm rankings. Reproduced Show More mounting 5,563 cards with a 3.344s main-thread task and 27.7s browser-check delay
 - [x] Show More enables existing incremental loader starting at 24 instead of mounting all tools; removed unused per-render scan and replaced nested search deduplication with a title Set, preserving ordering and exact matching
