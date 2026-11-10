@@ -1,8 +1,8 @@
 import { expect, test } from "bun:test";
 import { acceptsAccessCode, ACCESS_GATE_ENABLED } from "./AccessCodeGate";
 
-test("Master's temporary access gate is disabled for now", () => {
-  expect(ACCESS_GATE_ENABLED).toBe(false);
+test("Master's 11:11 Angel access gate is enabled", () => {
+  expect(ACCESS_GATE_ENABLED).toBe(true);
 });
 
 test("temporary access requires Master's exact 1111 code", () => {
