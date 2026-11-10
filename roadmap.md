@@ -1,5 +1,9 @@
 # Roadmap
 
+## November 10 shared studio header only — do not publish
+- [x] Audited all 1,542 studio subtitles into a display-only description catalog; rejected instruction-like/truncated archive text, reused existing public descriptions or name-based companions, and preserved source records/instructions. Three tests / 4,638 assertions pass
+- [x] Reproduced Hildegard setup leak and two CSS-generated duplicate names before editing; verified clean subtitles and single-copy accessible headings afterward on Hildegard, Paracelsus, Alan Watts and two variants. Desktop/header and emulated 360px screenshots reviewed; no phone overflow, build OK. No physical phone test or publication; Muse, Socials, counts and brains untouched
+
 ## November 9 speed and smooth interaction check
 - [x] Real homepage p75 FCP 2.486s (82 readings), LCP 2.608s (47), CLS .141 (66); other pages/INP have too few collapsed series for firm rankings. Reproduced Show More mounting 5,563 cards with a 3.344s main-thread task and 27.7s browser-check delay
 - [x] Show More enables existing incremental loader starting at 24 instead of mounting all tools; removed unused per-render scan and replaced nested search deduplication with a title Set, preserving ordering and exact matching
