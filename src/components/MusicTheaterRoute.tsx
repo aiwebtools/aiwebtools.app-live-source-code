@@ -39,5 +39,11 @@ async function loadTheater() {
       import("@/pages/MusicStream"),
       new Promise<never>((_, reject) => { timer = setTimeout(() => reject(new Error("Music theater load timed out")), 12000); }),
     ]);
+  } catch {
+    // Handle download errors before React emits a global chunk-error event,
+    // which would trigger the site's unrelated automatic reload recovery.
+    // Browsers cache failed module fetches. An explicit same-URL retry starts
+    // a fresh module graph without ever navigating to the directory.
+    return { default: () => <TheaterStatus failed retry={() => window.location.reload()} /> };
   } finally { if (timer) clearTimeout(timer); }
 }

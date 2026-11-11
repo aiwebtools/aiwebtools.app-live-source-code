@@ -2,7 +2,7 @@
 
 ## November 11 music theater only — do not publish
 - [x] Reproduced published direct-link directory shell, null route loading fallback and hidden player controls; preserve all 1,089 existing tracks and other pages.
-- [ ] Verify dedicated loading/retry, complete selectable list, fresh direct visit/reload and actual playback on desktop/phone.
+- [x] Verified delayed-download loading, failed-download retry and same-URL recovery after the preserved Angel gate; fresh visit/reload retain all 1,089 selectable tracks, first video plays (27.85s, readyState 4), second selection works, 360px fit/screenshots reviewed. Ten catalog/playback tests pass; build OK. External YouTube getDuration error surfaced during rapid selection; physical phone and published static theater shell remain unverified. Nothing published.
 
 ## November 10 shared studio header only — do not publish
 - [x] Audited all 1,542 studio subtitles into a display-only description catalog; rejected instruction-like/truncated archive text, reused existing public descriptions or name-based companions, and preserved source records/instructions. Three tests / 4,638 assertions pass
