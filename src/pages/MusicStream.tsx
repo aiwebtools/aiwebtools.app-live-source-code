@@ -8,6 +8,7 @@ import GlobalSearchBar from "@/components/LazyGlobalSearchBar";
 import DownloadLibraryButton from "@/components/DownloadLibraryButton";
 import MtvaiBrand from "@/components/MtvaiBrand";
 import MtvaiAudiobooksButton from "@/components/MtvaiAudiobooksButton";
+import { Button } from "@/components/ui/button";
 
 const shuffle = <T,>(a: T[]): T[] => {
   const s = [...a];
@@ -39,6 +40,10 @@ const MusicStream = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [audiobooksOpen, setAudiobooksOpen] = useState(false);
   const [frameReady, setFrameReady] = useState(false);
+  const [frameFailed, setFrameFailed] = useState(false);
+  const [frameAttempt, setFrameAttempt] = useState(0);
+  const [trackQuery, setTrackQuery] = useState("");
+  const visibleTracks = useMemo(() => MTVAI_CATALOG.map((track, index) => ({ ...track, index })).filter(track => track.title.toLowerCase().includes(trackQuery.toLowerCase())), [trackQuery]);
 
   // Truly random playback order every time the user enters the theater.
   // The session token guarantees a fresh shuffle per visit (not just first mount).
@@ -64,10 +69,13 @@ const MusicStream = () => {
 
   useEffect(() => {
     setFrameReady(false);
+    setFrameFailed(false);
+    const timeout = window.setTimeout(() => setFrameFailed(true), 12000);
     videoStartRef.current = Date.now();
     advancedForRef.current = null;
     detectedDurationRef.current = null;
-  }, [current.id]);
+    return () => window.clearTimeout(timeout);
+  }, [current.id, frameAttempt]);
 
   // Persist a "came from music stream" flag so the global back-to-music
   // pill can render on any tool/category page the user navigates to.
@@ -148,6 +156,10 @@ const MusicStream = () => {
   // Without this `{event:"listening"}` handshake, end-of-video (info === 0)
   // is never received and the theater never advances.
   const handleIframeLoad = useCallback(() => {
+    // A loaded embed must expose its native Play control even if YouTube's
+    // postMessage readiness handshake is delayed or unavailable.
+    setFrameReady(true);
+    setFrameFailed(false);
     try {
       iframeRef.current?.contentWindow?.postMessage(
         JSON.stringify({ event: "listening", id: current.id, channel: "widget" }),
@@ -329,17 +341,21 @@ const MusicStream = () => {
       </div>
 
       {/* Theater player — giant 9:16 center stage */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-x-0 top-12 bottom-[300px] md:inset-0 md:right-80 flex items-center justify-center">
         <div
-          className="relative h-[100dvh] max-w-full aspect-[9/16]"
+          className="relative h-full max-w-full aspect-[9/16]"
         >
           {!frameReady && !audiobooksOpen && <img src={`https://i.ytimg.com/vi/${current.id}/hqdefault.jpg`} alt={current.title} className="absolute inset-0 w-full h-full object-contain pointer-events-none" />}
+          {!frameReady && !audiobooksOpen && <div className="absolute inset-x-0 top-16 z-10 bg-background/90 p-4 text-center">
+            <p role={frameFailed ? "alert" : "status"}>{frameFailed ? "This player could not load. Retry this track or choose another below." : "Loading player…"}</p>
+            {frameFailed && <Button variant="outline" onClick={() => setFrameAttempt(value => value + 1)}>Retry player</Button>}
+          </div>}
           {!audiobooksOpen && <iframe
             ref={iframeRef}
-            key={current.id}
+            key={`${current.id}-${frameAttempt}`}
             src={src}
             title={current.title}
-            className={`relative w-full h-full transition-opacity ${frameReady ? "opacity-100" : "opacity-0"}`}
+            className="relative w-full h-full"
             onLoad={handleIframeLoad}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
             allowFullScreen
@@ -363,6 +379,18 @@ const MusicStream = () => {
           </div>
         </div>
       </div>
+
+      <aside aria-label="Music track list" className="fixed inset-x-3 bottom-32 h-40 md:inset-x-auto md:right-3 md:top-16 md:bottom-32 md:h-auto md:w-72 z-30 flex flex-col border border-border rounded-md bg-background/95 text-foreground overflow-hidden">
+        <div className="p-2 border-b border-border">
+          <h2 className="font-mono text-sm text-primary">{playlist.length.toLocaleString("en-US")} tracks</h2>
+          <input aria-label="Search music tracks" placeholder="Search tracks" value={trackQuery} onChange={event => setTrackQuery(event.target.value)} className="mt-1 w-full rounded border border-border bg-background px-2 py-1 text-sm" />
+        </div>
+        <ol className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-1">
+          {visibleTracks.map(track => <li key={track.id}><Button variant="ghost" aria-current={idx === track.index ? "true" : undefined} onClick={() => setIdx(track.index)} className="h-auto min-h-10 w-full justify-start text-left text-foreground hover:text-primary text-xs">
+            <span className="shrink-0 text-primary">{track.index + 1}.</span><span>{track.title}</span>
+          </Button></li>)}
+        </ol>
+      </aside>
 
       {/* Footer transport */}
       <div className="fixed bottom-0 inset-x-0 z-40 flex items-center justify-center gap-1 sm:gap-2 p-3 pr-16 sm:pr-3 bg-gradient-to-t from-black/90 to-transparent">

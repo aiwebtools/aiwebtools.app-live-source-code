@@ -29,6 +29,7 @@ import { mainCategories } from "../src/utils/mainCategoryMapping";
 import { OP_INSTRUCTION_DOCS } from "../src/data/opInstructionDocs";
 import { TOTAL_TOOLS } from "../src/data/generated/toolCount";
 import { getDisplayedCategory, getStaticToolTitle } from "../src/utils/toolCategoryDisplay";
+import { MTVAI_CATALOG } from "../src/data/mtvaiCatalog";
 
 const BASE_URL = "https://aiwebtools.app";
 const DIST = path.resolve(process.cwd(), "dist");
@@ -796,6 +797,14 @@ hub(
       },
     ],
   },
+);
+
+// Direct theater visits must never inherit the homepage's directory shell.
+hub(
+  "/music-stream",
+  "MTVAI.live — Presented by aiwebtools.app",
+  "Original AIWebTools music videos and Shorts on MTVAI.live.",
+  `<h1>MTVAI.live</h1><p>Presented by aiwebtools.app</p><p role="status">Loading the music theater and track list…</p><h2>${MTVAI_CATALOG.length.toLocaleString("en-US")} tracks</h2><ol>${MTVAI_CATALOG.slice(0, 12).map(track => `<li>${esc(track.title)}</li>`).join("")}</ol>`,
 );
 
 console.log(`✅ prerender: ${count} static HTML pages written into dist/`);

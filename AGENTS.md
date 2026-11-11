@@ -1,4 +1,5 @@
 # Architecture Rules
+- Keep the music theater inside its own eager loading/error boundary with explicit retry and a dedicated static shell; failed route imports must not reload into directory content or hide player controls behind readiness messages.
 - Resolve studio header subtitles through the display-only public description catalog with instruction-text rejection; keep heading text single-copy without generated name layers so archived prompts never leak into headers or accessible names.
 - Send administrator notifications through the linked Gmail account using one shared recipient list and branded HTML frame; never silently reduce owner recipients or claim unsent mail succeeded.
 - Submit Enter searches only to an exact normalized name; otherwise retain the typed query and its results instead of opening unrelated suggestions.

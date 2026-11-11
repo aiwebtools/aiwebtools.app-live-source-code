@@ -1,5 +1,9 @@
 # Roadmap
 
+## November 11 music theater only — do not publish
+- [x] Reproduced published direct-link directory shell, null route loading fallback and hidden player controls; preserve all 1,089 existing tracks and other pages.
+- [ ] Verify dedicated loading/retry, complete selectable list, fresh direct visit/reload and actual playback on desktop/phone.
+
 ## November 10 shared studio header only — do not publish
 - [x] Audited all 1,542 studio subtitles into a display-only description catalog; rejected instruction-like/truncated archive text, reused existing public descriptions or name-based companions, and preserved source records/instructions. Three tests / 4,638 assertions pass
 - [x] Reproduced Hildegard setup leak and two CSS-generated duplicate names before editing; verified clean subtitles and single-copy accessible headings afterward on Hildegard, Paracelsus, Alan Watts and two variants. Desktop/header and emulated 360px screenshots reviewed; no phone overflow, build OK. No physical phone test or publication; Muse, Socials, counts and brains untouched

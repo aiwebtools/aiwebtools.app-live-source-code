@@ -30,6 +30,7 @@ import { GlobalEmailSignupHost } from "@/components/JoinEmailListButton";
 // Eager load only the disclaimer gate; lazy-load heavy app routes to avoid black-screen startup
 import DisclaimerGate from "./pages/DisclaimerGate";
 import AccessCodeGate from "./components/AccessCodeGate";
+import MusicTheaterRoute from "./components/MusicTheaterRoute";
 
 // Generic retry wrapper for non-component dynamic imports (e.g., side-effect modules).
 // Prevents "Failed to fetch dynamically imported module" from breaking the app.
@@ -91,7 +92,6 @@ const AIWebToolsPage = lazyWithRetry(() => import("./pages/AIWebToolsPage"));
 const AdminAnalytics = lazyWithRetry(() => import("./pages/AdminAnalytics"));
 const AdminChatQuality = lazyWithRetry(() => import("./pages/AdminChatQuality"));
 const PrivacyPolicy = lazyWithRetry(() => import("./pages/PrivacyPolicy"));
-const MusicStream = lazyWithRetry(() => import("./pages/MusicStream"));
 const SocialsPage = lazyWithRetry(() => import("./pages/SocialsPage"));
 const ServicesPage = lazyWithRetry(() => import('./pages/ServicesPage'));
 const UserSubmittedToolsPage = lazyWithRetry(() => import("./pages/UserSubmittedToolsPage"));
@@ -381,7 +381,7 @@ const AnimatedRoutes = () => {
         <Route path="/submit-tool" element={<RouteReadySignal><ToolSubmission /></RouteReadySignal>} />
         <Route path="/admin/analytics" element={<RouteReadySignal><AdminAnalytics /></RouteReadySignal>} />
         <Route path="/admin/chat-quality" element={<RouteReadySignal><AdminChatQuality /></RouteReadySignal>} />
-        <Route path="/music-stream" element={<Suspense fallback={null}><RouteReadySignal><MusicStream /></RouteReadySignal></Suspense>} />
+        <Route path="/music-stream" element={<RouteReadySignal><MusicTheaterRoute /></RouteReadySignal>} />
         <Route path="/socials" element={<RouteReadySignal><SocialsPage /></RouteReadySignal>} />
         <Route path="/services" element={<RouteReadySignal><ServicesPage /></RouteReadySignal>} />
         <Route path="/user-submitted" element={<RouteReadySignal><UserSubmittedToolsPage /></RouteReadySignal>} />
