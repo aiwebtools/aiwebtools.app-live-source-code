@@ -11,7 +11,7 @@ import "@/styles/angel-gate.css";
  * Set ACCESS_GATE_ENABLED to false to turn the gate off completely.
  * Search-engine crawlers are let through so SEO is never affected.
  */
-export const ACCESS_GATE_ENABLED = true;
+export const ACCESS_GATE_ENABLED = false;
 const ACCESS_CODE = "1111";
 export const acceptsAccessCode = (code: string) => code.trim() === ACCESS_CODE;
 
