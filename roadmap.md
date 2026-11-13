@@ -1,5 +1,9 @@
 # Roadmap
 
+## November 13 studio subtitle-only repair — do not publish
+- [ ] Audit all 1,542 rooms and replace archive names, greetings and name-repeat subtitles with short purpose descriptions; preserve brains and unrelated surfaces.
+- [ ] Verify the complete catalog boundary and visitor headers on Time Machine, Survivalist, Competitive Price Analysis, AutoBiz and Career Matchmaker; inspect screenshots and build status.
+
 ## November 11 music theater only — do not publish
 - [x] Reproduced published direct-link directory shell, null route loading fallback and hidden player controls; preserve all 1,089 existing tracks and other pages.
 - [x] Verified delayed-download loading, failed-download retry and same-URL recovery after the preserved Angel gate; fresh visit/reload retain all 1,089 selectable tracks, first video plays (27.85s, readyState 4), second selection works, 360px fit/screenshots reviewed. Ten catalog/playback tests pass; build OK. External YouTube getDuration error surfaced during rapid selection; physical phone and published static theater shell remain unverified. Nothing published.
