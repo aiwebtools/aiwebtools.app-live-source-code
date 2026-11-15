@@ -1,5 +1,9 @@
 # Roadmap
 
+## November 15 MTVAI uploads and playback — no unrelated changes
+- [ ] Audit channel Videos and Shorts against the shared catalog; add verified missing uploads to main, pinned and book-promo players without removing recordings.
+- [ ] Reproduce and repair theater playback; verify actual playing, track selection, retry and phone layout, run music regressions. Do not publish.
+
 ## November 13 studio subtitle-only repair — do not publish
 - [ ] Audit all 1,542 rooms and replace archive names, greetings and name-repeat subtitles with short purpose descriptions; preserve brains and unrelated surfaces.
 - [ ] Verify the complete catalog boundary and visitor headers on Time Machine, Survivalist, Competitive Price Analysis, AutoBiz and Career Matchmaker; inspect screenshots and build status.
