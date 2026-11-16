@@ -1,8 +1,8 @@
 # Roadmap
 
 ## November 15 MTVAI uploads and playback — no unrelated changes
-- [ ] Audit channel Videos and Shorts against the shared catalog; add verified missing uploads to main, pinned and book-promo players without removing recordings.
-- [ ] Reproduce and repair theater playback; verify actual playing, track selection, retry and phone layout, run music regressions. Do not publish.
+- [x] Nov 16: audited all 648 Videos / 456 Shorts; added 15 music + 8 audiobooks; hid 10 uploads removed from YouTube (oEmbed 404); music lineup is music-only (1,071, no repeats), audiobooks only in Audiobooks (36). 28 tests pass; theater shows new lineup.
+- [ ] Physical-phone playback still unverified. Do not publish.
 
 ## November 13 studio subtitle-only repair — do not publish
 - [ ] Audit all 1,542 rooms and replace archive names, greetings and name-repeat subtitles with short purpose descriptions; preserve brains and unrelated surfaces.

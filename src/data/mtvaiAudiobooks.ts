@@ -1,4 +1,5 @@
 import { RECENT_MTVAI_UPLOADS } from "./recentMtvaiUploads";
+import { REMOVED_MTVAI_UPLOAD_IDS, isMtvaiAudiobook } from "./mtvaiRemovedUploads";
 
 // Exact public Videos listing order, verified November 5, 2026.
 export const VERIFIED_MTVAI_AUDIOBOOKS = [
@@ -16,9 +17,9 @@ export const VERIFIED_MTVAI_AUDIOBOOKS = [
   { id: "k1aYXaaAkho", title: "Galactic Gambit The Bet Of The Ages. - Free Full Audiobook written by aiwebtools.ai" },
 ];
 
-export const MTVAI_AUDIOBOOKS = [...RECENT_MTVAI_UPLOADS.filter(v => v.kind === "audiobook"),
+export const MTVAI_AUDIOBOOKS = [...RECENT_MTVAI_UPLOADS.filter(isMtvaiAudiobook),
   ...VERIFIED_MTVAI_AUDIOBOOKS
-].filter((v, i, all) => all.findIndex(item => item.id === v.id) === i);
+].filter((v, i, all) => !REMOVED_MTVAI_UPLOAD_IDS.has(v.id) && all.findIndex(item => item.id === v.id) === i);
 
 export function findMtvaiAudiobooks(query: string) {
   const words = query.toLowerCase().normalize("NFKD").replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter(Boolean);

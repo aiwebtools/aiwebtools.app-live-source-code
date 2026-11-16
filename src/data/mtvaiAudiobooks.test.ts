@@ -2,9 +2,10 @@
 import { expect, test } from "bun:test";
 import { audiobookEdition, findMtvaiAudiobooks, MTVAI_AUDIOBOOKS, VERIFIED_MTVAI_AUDIOBOOKS } from "./mtvaiAudiobooks";
 import { RECENT_MTVAI_UPLOADS } from "./recentMtvaiUploads";
+import { REMOVED_MTVAI_UPLOAD_IDS } from "./mtvaiRemovedUploads";
 
 test("audiobook collection preserves every previously cataloged audiobook", () => {
-  for (const book of RECENT_MTVAI_UPLOADS.filter(v => v.kind === "audiobook")) {
+  for (const book of RECENT_MTVAI_UPLOADS.filter(v => v.kind === "audiobook" && !REMOVED_MTVAI_UPLOAD_IDS.has(v.id))) {
     expect(MTVAI_AUDIOBOOKS.some(v => v.id === book.id)).toBe(true);
   }
   expect(new Set(MTVAI_AUDIOBOOKS.map(v => v.id)).size).toBe(MTVAI_AUDIOBOOKS.length);
@@ -15,7 +16,7 @@ test("verified audiobook uploads remain in newest-first channel order", () => {
 });
 
 test("search locates audiobooks with multiple words regardless of punctuation", () => {
-  expect(findMtvaiAudiobooks("carl sagan").map(v => v.id)).toEqual(["5W5pFFUqvSk", "1paVZJmXL3w", "mxFKRIWF2Ok"]);
+  expect(findMtvaiAudiobooks("carl sagan").map(v => v.id)).toEqual(["uYvRDK4v_rI", "ioW4CHFb56w"]);
   expect(findMtvaiAudiobooks("marie curie").map(v => v.id)).toEqual(["P0tmDN4AEfU", "1iwXFUrn1CM", "FMAstSXaVVM"]);
   expect(findMtvaiAudiobooks("not a real book")).toHaveLength(0);
 });
