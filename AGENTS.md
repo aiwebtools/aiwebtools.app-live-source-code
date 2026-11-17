@@ -58,6 +58,7 @@
 - Run background helper text jobs (Care Bot, weekly digest, community-app review) through `_shared/glm-helper.ts` first, keeping their existing Lovable AI call as fallback; search tool matching and ethics review stay on gateway models for speed/strictness.
 - Let YouTube select playback quality automatically in every player; forced HD and background pause/play loops cause buffering and competing-video interruptions.
 - Share one lossless MTVAI catalog union across pinned, vertical, book and theater players; counts and first-track identities must not diverge between surfaces.
+- Add verified channel batches to the shared recent-upload source; music queues exclude audiobook IDs and removed uploads so all player entry points retain the same separation.
 - Render the preserved full-book PDF through the existing PDF.js library; third-party document embeds must not be the only readable preview.
 - Use generated directory totals for first-paint counts and actual catalog length for exports; distinct metrics must be explicitly labeled.
 - Count studio category rooms including every family version, matching the shared catalog total; filtered counts describe matching rooms, tool-category totals exclude appended recommendations, and public fallback snapshots mirror active directory rows. Tool-page static and rendered metadata use the shared displayed-category resolver to prevent first-paint drift.

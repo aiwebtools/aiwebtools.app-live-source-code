@@ -1,5 +1,10 @@
 # Roadmap
 
+## November 17 MTVAI additions and Angel gate
+- [ ] Audit current Videos and Shorts, add missing published uploads to the shared players without repeats; keep audiobooks separate and removed uploads hidden.
+- [ ] Re-enable the preserved 1111 gate and test rejection, unlock and reload.
+- [ ] Verify main, pinned and book players on desktop/phone emulation; run focused regressions. Do not publish.
+
 ## November 15 MTVAI uploads and playback — no unrelated changes
 - [x] Nov 16: audited all 648 Videos / 456 Shorts; added 15 music + 8 audiobooks; hid 10 uploads removed from YouTube (oEmbed 404); music lineup is music-only (1,071, no repeats), audiobooks only in Audiobooks (36). 28 tests pass; theater shows new lineup.
 - [ ] Physical-phone playback still unverified. Do not publish.
