@@ -19,5 +19,5 @@ test("all five new book recordings also reach the audiobook area without duplica
   for (const id of ["140FVwHeSLI", "WSHG6VsBmVg", "ULM2RZLSgVo", "JHwJNDR3G40", "b6qXfy8MPWE"]) {
     expect(MTVAI_AUDIOBOOKS.filter(v => v.id === id)).toHaveLength(1);
   }
-  expect(MTVAI_AUDIOBOOKS).toHaveLength(38);
+  expect(MTVAI_AUDIOBOOKS).toHaveLength(44);
 });
