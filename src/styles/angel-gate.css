@@ -35,3 +35,22 @@
 @keyframes gate-confetti-burst { 0% { opacity: 0; transform: translate(0,0) rotate(0); } 8% { opacity: 1; } 35% { opacity: 1; transform: translate(calc(var(--x) * .65),var(--rise)) rotate(calc(var(--spin) * .4)); } 75% { opacity: .9; } 100% { opacity: 0; transform: translate(var(--x), var(--y)) rotate(var(--spin)); } }
 @media (max-width: 480px) { .pandora-box { margin-top: 52px; width: min(100%, 330px); } .pandora-lid { height: 100px; } .pandora-body { height: 126px; } }
 @media (prefers-reduced-motion: reduce) { .pandora-lid, .pandora-lock, .pandora-glow, .pandora-body { transition: none; } .gate-announcement { animation: none; } .gate-confetti { display: none; } }
+/* MTVAI opening: fly-out logo, staggered entrance, smooth exit */
+@keyframes mtv-fly-out {
+  0% { transform: perspective(700px) translateZ(-600px) rotateX(35deg) scale(.2); opacity: 0; filter: blur(8px); }
+  45% { transform: perspective(700px) translateZ(40px) rotateX(0) scale(1.08); opacity: 1; filter: blur(0); }
+  70% { transform: perspective(700px) translateZ(0) scale(1); opacity: 1; }
+  100% { transform: perspective(700px) translateZ(500px) scale(2.6); opacity: 0; filter: blur(6px); }
+}
+@keyframes mtv-rise { from { opacity: 0; transform: translateY(14px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes mtv-shine { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+.mtv-logo-fly { animation: mtv-fly-out 1.9s cubic-bezier(.22,1,.36,1) forwards; will-change: transform, opacity; }
+.mtv-logo-text { background: linear-gradient(100deg, hsl(var(--primary)) 30%, hsl(var(--foreground)) 50%, hsl(var(--primary)) 70%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: mtv-shine 1.4s linear; text-shadow: 0 0 40px hsl(var(--primary) / .35); }
+.mtv-rise { opacity: 0; animation: mtv-rise .6s cubic-bezier(.22,1,.36,1) forwards; }
+.mtv-opening { transition: opacity .35s ease; }
+.mtv-opening[data-leaving="true"] { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .mtv-logo-fly { animation-duration: .01s; }
+  .mtv-rise { animation: none; opacity: 1; }
+  .mtv-opening { transition: none; }
+}
