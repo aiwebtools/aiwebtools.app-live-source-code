@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { MTV_CHANNEL_PATH, gateOpeningEventAction, selectGateShort, type GateClip } from "@/utils/gateOpening";
 import { navigateInApp } from "@/utils/inAppNavigate";
 import { commercialPlayerEvent } from "@/utils/botCommercials";
+import MtvaiBrand from "@/components/MtvaiBrand";
 import "@/styles/angel-gate.css";
 
 const PLAYER_ORIGIN = "https://www.youtube-nocookie.com";
@@ -12,7 +13,6 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
   const [clip, setClip] = useState<GateClip | null>(null);
   const [needsSound, setNeedsSound] = useState(false);
   const [started, setStarted] = useState(false);
-  const [intro, setIntro] = useState(true);
   const [leaving, setLeaving] = useState(false);
   const frame = useRef<HTMLIFrameElement>(null);
   const close = useRef<HTMLButtonElement>(null);
@@ -45,7 +45,6 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
   useEffect(() => {
     let alive = true;
     close.current?.focus();
-    const introTimer = window.setTimeout(() => setIntro(false), 1900);
     // Neither the catalog download nor the iframe blocks mounting the actual page.
     void import("@/data/mtvaiCatalog").then(({ MTVAI_CATALOG }) => {
       if (!alive) return;
@@ -60,7 +59,6 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
     return () => {
       alive = false;
       clearTimeout(unavailable);
-      clearTimeout(introTimer);
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", escape);
       command("mute"); command("stopVideo");
@@ -92,23 +90,23 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
   }, [clip, command, finish, subscribe]);
 
   return <div role="dialog" aria-modal="true" aria-label="MTVAI opening" data-leaving={leaving} className="mtv-opening fixed inset-0 z-[2147483647] flex flex-col items-center justify-center gap-3 bg-background px-4 py-4 text-foreground">
-    {intro && <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-20 grid place-items-center"><span className="mtv-logo-fly mtv-logo-text font-mono text-6xl font-black tracking-[0.12em] sm:text-7xl">MTVAI</span></div>}
-    <span className="mtv-rise font-mono text-sm tracking-[0.28em] text-primary" style={{ animationDelay: "1.1s" }}>MTVAI.live</span>
-    <p style={{ animationDelay: "1.25s" }} className="mtv-rise w-full max-w-sm text-center text-sm leading-relaxed text-foreground">This music video was made by a rogue AI music video agent all by itself.....sorta.</p>
-    <div style={{ animationDelay: "1.35s" }} className="mtv-rise relative aspect-[9/16] max-h-[calc(100dvh-17rem)] w-full max-w-sm overflow-hidden rounded-xl border border-primary/25 bg-muted shadow-[0_0_45px_hsl(var(--primary)/.18)]">
+    <span className="mtv-rise font-mono text-sm tracking-[0.28em] text-primary" style={{ animationDelay: "0s" }}>MTVAI.live</span>
+    <p style={{ animationDelay: "0s" }} className="mtv-rise w-full max-w-sm text-center text-sm leading-relaxed text-foreground">This music video was made by a rogue AI music video agent all by itself.....sorta.</p>
+    <div style={{ animationDelay: "0s" }} className="mtv-rise relative aspect-[9/16] max-h-[calc(100dvh-17rem)] w-full max-w-sm overflow-hidden rounded-xl border border-primary/25 bg-muted shadow-[0_0_45px_hsl(var(--primary)/.18)]">
       {!started && <div role="status" aria-label="Loading MTVAI opening" className="pointer-events-none absolute inset-0 z-10 grid place-items-center"><Loader2 className="h-7 w-7 animate-spin motion-reduce:animate-none text-primary" /></div>}
       {clip && <iframe
         ref={frame}
         title={clip.title}
-        onLoad={subscribe}
+        onLoad={() => { subscribe(); setStarted(true); }}
         src={`${PLAYER_ORIGIN}/embed/${clip.id}?autoplay=1&mute=0&playsinline=1&controls=1&rel=0&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`}
         allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
         allowFullScreen
         className="absolute inset-0 h-full w-full border-0"
       />}
+      <div aria-hidden="true" className="pointer-events-none absolute bottom-28 right-2 z-10 rounded-md bg-background/75 px-1.5 py-1 backdrop-blur-sm"><MtvaiBrand compact className="w-[92px]" /></div>
     </div>
     {needsSound && <Button variant="outline" onClick={() => { command("unMute"); command("playVideo"); setNeedsSound(false); }}><Volume2 className="h-4 w-4" />Play with sound</Button>}
-    <div style={{ animationDelay: "1.5s" }} className="mtv-rise flex w-full max-w-sm flex-col items-center gap-2">
+    <div style={{ animationDelay: "0s" }} className="mtv-rise flex w-full max-w-sm flex-col items-center gap-2">
       <Button
         ref={close}
         variant="outline"

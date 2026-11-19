@@ -9,7 +9,19 @@ function OpeningUnavailable({ onFinish }: { onFinish: () => void }) {
   useEffect(onFinish, [onFinish]);
   return null;
 }
-const GateOpeningVideo = lazy(() => import("./GateOpeningVideo").catch(() => ({ default: OpeningUnavailable })));
+const loadOpening = () => import("./GateOpeningVideo");
+const GateOpeningVideo = lazy(() => loadOpening().catch(() => ({ default: OpeningUnavailable })));
+/** Warm the opening player and music list while the PIN screen is showing, so it starts instantly. */
+let openingWarmed = false;
+const warmOpening = () => {
+  if (openingWarmed) return;
+  openingWarmed = true;
+  void loadOpening().catch(() => {});
+  void import("@/data/mtvaiCatalog").catch(() => {});
+  for (const href of ["https://www.youtube-nocookie.com", "https://i.ytimg.com", "https://www.google.com"]) {
+    const link = document.createElement("link"); link.rel = "preconnect"; link.href = href; link.crossOrigin = ""; document.head.appendChild(link);
+  }
+};
 
 /**
  * TEMPORARY ACCESS-CODE GATE
@@ -28,6 +40,7 @@ const isCrawler = () =>
 
 const AccessCodeGate = ({ children }: { children: ReactNode }) => {
   const bypass = !ACCESS_GATE_ENABLED || isCrawler();
+  useEffect(() => { if (!bypass) { const t = window.setTimeout(warmOpening, 300); return () => clearTimeout(t); } }, [bypass]);
   const [unlocked, setUnlocked] = useState<boolean>(bypass);
   const [code, setCode] = useState("");
   const [error, setError] = useState(false);
