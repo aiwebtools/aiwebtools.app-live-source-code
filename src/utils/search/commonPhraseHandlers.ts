@@ -2003,9 +2003,9 @@ export const COMMON_PHRASE_HANDLERS: Record<string, PhraseHandler> = {
     relatedCategories: ['Legal & Government']
   },
   resurrectionGpt: {
-    triggers: ['resurrection', 'resurrect', 'talk to deceased', 'talk to dead', 'memorial gpt', 'grief chat'],
-    keywords: ['resurrection', 'memorial', 'grief', 'deceased'],
-    priorityTools: ['Resurrection GPT', 'ImmortalizeME'],
+    triggers: ['resurrection', 'resurrect', 'ressurect', 'resurect', 'reborn', 'digital resurrection', 'talk to deceased', 'talk to dead', 'talk to the dead', 'memorial gpt', 'grief chat', 'historical figure', 'talk to famous', 'dead philosopher', 'past voices'],
+    keywords: ['digital resurrection', 'resurrection', 'memorial', 'grief', 'deceased'],
+    priorityTools: ['Resurrection GPT', 'GPTPastVoices - Resurrection GPT', 'Titanic Resurrections GPT', 'TALK TO HISTORY GPT', 'ImmortalizeME'],
     relatedCategories: ['Health & Wellness']
   },
   perfectPromptEngine: {

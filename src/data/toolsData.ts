@@ -1,3 +1,4 @@
+import { applyResurrectionAndHistoryTags } from "@/utils/digitalResurrectionTagging";
 import { Tool } from "@/types/tools";
 import { getAllToolCategories } from './toolsCollection';
 import { searchTools } from '@/utils/searchUtils';
@@ -742,7 +743,7 @@ const filteredTools = combinedTools.filter(tool => {
 const finalUniqueTools = deduplicateTools(filteredTools);
 
 const toolsWithFreeFlags = markFreeTools(finalUniqueTools);
-const toolsWithSpiritualTags = applySpirtualTags(toolsWithFreeFlags);
+const toolsWithSpiritualTags = applyResurrectionAndHistoryTags(applySpirtualTags(toolsWithFreeFlags));
 // Auto-tag every tool with its full title so exact-name searches always hit
 const toolsWithTags = ensureTitleTags(toolsWithSpiritualTags);
 // Tag every tool with its pricing model (Free / Freemium / Paid) so all
