@@ -1,5 +1,10 @@
 # Roadmap
 
+## November 19 gate opening close button and channel link
+- [x] Replaced the tiny corner X with one large centered premium Skip control (56px pill, 28px X, glowing primary border) below the video; the loading fallback uses the same control.
+- [x] Added a small "View the full MTV AI channel" link that opens the full MTV page (/music-stream) inside the app via a router-scoped listener, so the gate never re-asks for 1111.
+- [x] 8 regressions / 1,109 assertions pass; phone 408×776 and desktop 1280×1800 checks: channel click reaches /music-stream (and lands there after the disclaimer when consent is new), Skip closes the overlay and leaves the page put; screenshots reviewed, build OK. Physical-phone sound and site-wide loading performance not certified; nothing published.
+
 ## November 19 Angel gate MTV opening
 - [x] Preserved code 1111, gate design and saved recordings; opening now randomly selects a verified music Short with autoplay and an immediate X, without old narration/confetti.
 - [x] Mount the site behind the opening without waiting for playback; stop on skip/end/error, fail open after 15 seconds of unavailable playback, and offer sound after muted autoplay fallback.

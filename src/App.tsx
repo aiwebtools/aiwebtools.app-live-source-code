@@ -30,6 +30,7 @@ import { GlobalEmailSignupHost } from "@/components/JoinEmailListButton";
 // Eager load only the disclaimer gate; lazy-load heavy app routes to avoid black-screen startup
 import DisclaimerGate from "./pages/DisclaimerGate";
 import AccessCodeGate from "./components/AccessCodeGate";
+import InAppNavigateListener from "./components/InAppNavigateListener";
 import MusicTheaterRoute from "./components/MusicTheaterRoute";
 
 // Generic retry wrapper for non-component dynamic imports (e.g., side-effect modules).
@@ -670,6 +671,7 @@ function App() {
               <TooltipProvider>
                 <Toaster />
                 <BrowserRouter>
+                  <InAppNavigateListener />
                   <RouteGuard />
                   <PostAcceptBoot />
                   <GlobalOverlays />

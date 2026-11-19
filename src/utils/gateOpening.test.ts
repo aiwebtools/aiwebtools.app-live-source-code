@@ -1,6 +1,7 @@
 // @ts-ignore -- Bun runs project regressions.
 import { expect, test } from "bun:test";
-import { selectGateShort } from "./gateOpening";
+import { readFileSync } from "node:fs";
+import { MTV_CHANNEL_PATH, selectGateShort } from "./gateOpening";
 import { MTVAI_CATALOG } from "@/data/mtvaiCatalog";
 import { MTVAI_AUDIOBOOKS } from "@/data/mtvaiAudiobooks";
 
@@ -19,4 +20,12 @@ test("random selection can choose different Shorts each opening", () => {
   expect(selectGateShort(clips, () => 0)?.id).toBe("one");
   expect(selectGateShort(clips, () => 0.99)?.id).toBe("two");
   expect(selectGateShort([], () => 0)).toBeNull();
+});
+
+test("opening video's channel button leads to the full MTV page", () => {
+  expect(MTV_CHANNEL_PATH).toBe("/music-stream");
+  const app = readFileSync(new URL("../App.tsx", import.meta.url), "utf8");
+  expect(app).toContain(`path="${MTV_CHANNEL_PATH}"`);
+  const opening = readFileSync(new URL("../components/GateOpeningVideo.tsx", import.meta.url), "utf8");
+  expect(opening).toContain("href={MTV_CHANNEL_PATH}");
 });

@@ -19,6 +19,7 @@
 
 - Keep the temporary access gate unlock in React memory only and render its own Matrix backdrop; reloads must ask again and loader cleanup must not remove its background.
 - Lazy-load the random music-only MTVAI gate opening after PIN acceptance while mounting the site behind it; scope completion to its iframe, stop on skip, and fail open on unavailable playback.
+- Surfaces rendered outside the router (the access gate) reach pages through the shared in-app navigate listener; full page loads would make the gate ask for the code again.
 
 - Schedule automatic promotional dialogs through the shared session-wide scheduler so navigation and competing pop-ups cannot bypass the cooldown.
 

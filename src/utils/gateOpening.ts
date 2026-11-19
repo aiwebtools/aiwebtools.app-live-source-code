@@ -1,5 +1,8 @@
 export type GateClip = { id: string; title: string; kind?: string; format?: string; durationSeconds?: number | null };
 
+/** Where the opening video's "view the full channel" button leads. */
+export const MTV_CHANNEL_PATH = "/music-stream";
+
 /** The caller supplies the shared music-only catalog, never the audiobook collection. */
 export function selectGateShort(videos: readonly GateClip[], random = Math.random): GateClip | null {
   const shorts = videos.filter(video => (video.kind === "music" || /\bmusic video\b/i.test(video.title)) && (video.format === "shorts" || (

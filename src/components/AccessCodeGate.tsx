@@ -55,7 +55,7 @@ const AccessCodeGate = ({ children }: { children: ReactNode }) => {
 
   if (unlocked || granted) return <>
     <div {...(unlocked ? {} : { inert: "" })} aria-hidden={unlocked ? undefined : true}>{children}</div>
-    {!unlocked && <Suspense fallback={<div role="dialog" aria-modal="true" aria-label="MTVAI opening" className="fixed inset-0 z-[2147483647] flex items-start justify-end bg-background p-4"><Button variant="outline" size="icon" onClick={finishOpening} aria-label="Skip opening video"><X className="h-5 w-5" /></Button></div>}>
+    {!unlocked && <Suspense fallback={<div role="dialog" aria-modal="true" aria-label="MTVAI opening" className="fixed inset-0 z-[2147483647] flex items-center justify-center bg-background p-4"><Button variant="outline" onClick={finishOpening} aria-label="Skip opening video" className="h-14 w-full max-w-xs gap-2.5 rounded-full border-primary/55 text-base font-semibold"><X className="h-7 w-7" strokeWidth={2.4} />Skip</Button></div>}>
       <GateOpeningVideo onFinish={finishOpening} />
     </Suspense>}
   </>;
