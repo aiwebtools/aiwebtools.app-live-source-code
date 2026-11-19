@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
 import { Loader2, Play, Volume2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { MTV_CHANNEL_PATH, selectGateShort, type GateClip } from "@/utils/gateOpening";
+import { MTV_CHANNEL_PATH, gateOpeningEventAction, selectGateShort, type GateClip } from "@/utils/gateOpening";
 import { navigateInApp } from "@/utils/inAppNavigate";
 import { commercialPlayerEvent } from "@/utils/botCommercials";
 import "@/styles/angel-gate.css";
@@ -21,6 +21,12 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
   const command = useCallback((func: string, args: unknown[] = []) => {
     frame.current?.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args }), PLAYER_ORIGIN);
   }, []);
+  const subscribe = useCallback(() => {
+    frame.current?.contentWindow?.postMessage(JSON.stringify({ event: "listening", id: "angel-opening", channel: "widget" }), PLAYER_ORIGIN);
+    command("addEventListener", ["onStateChange"]);
+    command("addEventListener", ["onError"]);
+    command("addEventListener", ["onAutoplayBlocked"]);
+  }, [command]);
   const finish = useCallback(() => {
     if (finished.current) return;
     finished.current = true;
@@ -63,12 +69,6 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
 
   useEffect(() => {
     if (!clip) return;
-    const listen = () => {
-      frame.current?.contentWindow?.postMessage(JSON.stringify({ event: "listening", id: "angel-opening" }), PLAYER_ORIGIN);
-      command("addEventListener", ["onStateChange"]);
-      command("addEventListener", ["onError"]);
-      command("addEventListener", ["onAutoplayBlocked"]);
-    };
     const onMessage = (event: MessageEvent) => {
       const backgroundFrame = Array.from(document.querySelectorAll<HTMLIFrameElement>('[inert] iframe')).find(item => item.contentWindow === event.source);
       if (backgroundFrame) {
@@ -77,18 +77,19 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
         return;
       }
       const result = commercialPlayerEvent(event, frame.current?.contentWindow ?? null);
-      if (!result) return;
-      if (result.state === 1) { playing.current = true; setStarted(true); }
-      if ((result.state === 0 && playing.current) || result.error) finish();
+      const action = gateOpeningEventAction(result);
+      if (action === "play") { playing.current = true; setStarted(true); }
+      if (action === "finish") finish();
     };
     window.addEventListener("message", onMessage);
-    const interval = window.setInterval(listen, 500);
+    subscribe();
+    const interval = window.setInterval(subscribe, 500);
     // Sound-on autoplay is attempted first. Restricted browsers can still show moving footage.
     const fallback = window.setTimeout(() => {
       if (!playing.current) { command("mute"); command("playVideo"); setNeedsSound(true); }
     }, 3000);
     return () => { clearInterval(interval); clearTimeout(fallback); window.removeEventListener("message", onMessage); };
-  }, [clip, command, finish]);
+  }, [clip, command, finish, subscribe]);
 
   return <div role="dialog" aria-modal="true" aria-label="MTVAI opening" data-leaving={leaving} className="mtv-opening fixed inset-0 z-[2147483647] flex flex-col items-center justify-center gap-3 bg-background px-4 py-4 text-foreground">
     {intro && <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-20 grid place-items-center"><span className="mtv-logo-fly mtv-logo-text font-mono text-6xl font-black tracking-[0.12em] sm:text-7xl">MTVAI</span></div>}
@@ -99,6 +100,7 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
       {clip && <iframe
         ref={frame}
         title={clip.title}
+        onLoad={subscribe}
         src={`${PLAYER_ORIGIN}/embed/${clip.id}?autoplay=1&mute=0&playsinline=1&controls=1&rel=0&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`}
         allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
         allowFullScreen

@@ -1,7 +1,7 @@
 // @ts-ignore -- Bun runs project regressions.
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
-import { MTV_CHANNEL_PATH, selectGateShort } from "./gateOpening";
+import { MTV_CHANNEL_PATH, gateOpeningEventAction, selectGateShort } from "./gateOpening";
 import { MTVAI_CATALOG } from "@/data/mtvaiCatalog";
 import { MTVAI_AUDIOBOOKS } from "@/data/mtvaiAudiobooks";
 
@@ -20,6 +20,14 @@ test("random selection can choose different Shorts each opening", () => {
   expect(selectGateShort(clips, () => 0)?.id).toBe("one");
   expect(selectGateShort(clips, () => 0.99)?.id).toBe("two");
   expect(selectGateShort([], () => 0)).toBeNull();
+});
+
+test("the opening closes on a real ended event even when YouTube's playing notice was missed", () => {
+  expect(gateOpeningEventAction({ state: 0 })).toBe("finish");
+  expect(gateOpeningEventAction({ state: 1 })).toBe("play");
+  expect(gateOpeningEventAction({ state: 2 })).toBeNull();
+  expect(gateOpeningEventAction({ error: 150 })).toBe("finish");
+  expect(gateOpeningEventAction(null)).toBeNull();
 });
 
 test("opening video's channel button leads to the full MTV page", () => {

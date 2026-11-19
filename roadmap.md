@@ -1,5 +1,9 @@
 # Roadmap
 
+## November 19 gate opening automatic close
+- [x] Close on the active YouTube frame's real ended event even if its earlier playing notice was missed; subscribe on frame load and preserve one-shot Skip/end cleanup.
+- [x] Nine focused regressions pass. Three random real Shorts each reported player state 0 and dismissed the opening with no page errors; phone-sized Skip check also passed. Screenshots reviewed, build OK, nothing published.
+
 ## November 19 gate opening close button and channel link
 - [x] Replaced the tiny corner X with one large centered premium Skip control (56px pill, 28px X, glowing primary border) below the video; the loading fallback uses the same control.
 - [x] Added a small "View the full MTV AI channel" link that opens the full MTV page (/music-stream) inside the app via a router-scoped listener, so the gate never re-asks for 1111.
