@@ -1,5 +1,10 @@
 # Roadmap
 
+## November 19 MTVAI update and loading checks
+- [x] Expanded all 656 Videos and 462 Shorts; oEmbed verified one missing music upload, Temple is Within (UlaGqwBGaMc), prepended to the shared three-player source. No removals; 1,077 music tracks and 44 audiobooks.
+- [x] 21 regressions / 2,150 assertions pass: every audiobook excluded from music, original eligible entries preserved. Desktop theater selects new music; opening Audiobooks removes music iframe, Copernicus Part Two selects correct book iframe, closing removes it; screenshots reviewed.
+- [ ] Final pinned/book visual playback and phone checks blocked by intermittent preview loading stalls; fresh homepage eventually rendered through welcome with no page errors, but repeated checks remained on Opening the Matrix. Playback and smooth-loading acceptance are not certified. Build OK; unpublished.
+
 ## November 17 MTVAI additions and Angel gate
 - [ ] Audit current Videos and Shorts, add missing published uploads to the shared players without repeats; keep audiobooks separate and removed uploads hidden.
 - [ ] Re-enable the preserved 1111 gate and test rejection, unlock and reload.

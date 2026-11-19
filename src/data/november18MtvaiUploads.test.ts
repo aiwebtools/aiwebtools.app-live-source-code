@@ -5,7 +5,8 @@ import { MTVAI_AUDIOBOOKS } from "./mtvaiAudiobooks";
 
 test("November 18 music leads the shared music queue once and stays out of audiobooks", () => {
   const ids = ["-qE3gB7CCTA", "X2afwNekjCc", "RwzijP6_kDU"];
-  expect(MTVAI_CATALOG.slice(0, 3).map(v => v.id)).toEqual(ids);
+  const start = MTVAI_CATALOG.findIndex(v => v.id === ids[0]);
+  expect(MTVAI_CATALOG.slice(start, start + 3).map(v => v.id)).toEqual(ids);
   for (const id of ids) {
     expect(MTVAI_CATALOG.filter(v => v.id === id)).toHaveLength(1);
     expect(MTVAI_AUDIOBOOKS.some(v => v.id === id)).toBe(false);

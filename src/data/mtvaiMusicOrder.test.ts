@@ -5,14 +5,14 @@ import { buildMtvaiMusicOrder } from "./mtvaiMusicOrder";
 
 test("all players lead with current channel order even when their source gallery is reversed", () => {
   const gallery = [...RECENT_MTVAI_UPLOADS].reverse();
-  expect(buildMtvaiMusicOrder(gallery).slice(0, 5).map(v => v.id)).toEqual(["-qE3gB7CCTA", "X2afwNekjCc", "RwzijP6_kDU", "nUDuAnNzFbg", "7GarV2FaHlE"]);
+  expect(buildMtvaiMusicOrder(gallery).slice(0, 5).map(v => v.id)).toEqual(["UlaGqwBGaMc", "-qE3gB7CCTA", "X2afwNekjCc", "RwzijP6_kDU", "nUDuAnNzFbg"]);
 });
 
 test("ordering retains every legacy identity and preserves first-occurrence media metadata", () => {
   const first = { id: "legacy-one", title: "Legacy cinematic recording", gradient: "original" };
   const gallery = [first, { id: "legacy-short", title: "Legacy Short", gradient: "second" }, { ...first, gradient: "duplicate" }, ...RECENT_MTVAI_UPLOADS.map(v => ({ ...v, gradient: "channel" }))];
   const ordered = buildMtvaiMusicOrder(gallery);
-  expect(ordered.length).toBe(825);
+  expect(ordered.length).toBe(826);
   expect(ordered.find(v => v.id === first.id)).toBe(first);
   expect(ordered.some(v => v.id === "legacy-short")).toBe(true);
 });
