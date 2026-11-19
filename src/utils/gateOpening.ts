@@ -11,9 +11,17 @@ export function gateOpeningEventAction(event: { state?: number; error?: number }
   return null;
 }
 
+const MUSIC_SIGNAL = /\b(music video|song|choir|anthem|lyric|ballad|hymn|beats?|chant|aimusic|mtv ?ai|mtv)\b|official music|—|–/i;
+const PROMO_SIGNAL = /\bgpts?\b|commerc?ial|free ai tools|web3|blockchain|minted|domain|clone this website|user interface|ai tool|suite|aitools\.studio|\bdecoder\b/i;
+
+/** Opening clips must be real music videos, never tool promos or commercials. */
+export function isGateMusicVideo(title: string): boolean {
+  return MUSIC_SIGNAL.test(title) && !PROMO_SIGNAL.test(title);
+}
+
 /** The caller supplies the shared music-only catalog, never the audiobook collection. */
 export function selectGateShort(videos: readonly GateClip[], random = Math.random): GateClip | null {
-  const shorts = videos.filter(video => (video.kind === "music" || /\bmusic video\b/i.test(video.title)) && (video.format === "shorts" || (
+  const shorts = videos.filter(video => (video.kind === "music" || /\bmusic video\b/i.test(video.title)) && isGateMusicVideo(video.title) && (video.format === "shorts" || (
     typeof video.durationSeconds === "number" && video.durationSeconds > 0 && video.durationSeconds <= 60
   )));
   if (!shorts.length) return null;
