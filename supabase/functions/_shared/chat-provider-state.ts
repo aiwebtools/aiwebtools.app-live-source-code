@@ -12,13 +12,13 @@ export function providerFailure(status: number): ProviderStatus | null {
 
 export function isPaused(state: ProviderState | null, now = Date.now()): boolean {
   if (!state || state.status === "ready") return false;
-  if (state.status === "outage") return !state.retry_at || Date.parse(state.retry_at) > now;
+  if (state.status === "outage" || (state.status === "credits" && state.retry_at)) return !state.retry_at || Date.parse(state.retry_at) > now;
   return true;
 }
 
-// A fresh visitor request may recover an elapsed outage. Credit/denial pauses need owner action.
+// A fresh visitor request may recover an elapsed outage or credit pause (rechecked every 30 min). Denials need owner action.
 export async function recordProviderFailure(store: ProviderStore, provider: string, status: number, now = Date.now()): Promise<void> {
   const failure = providerFailure(status);
   if (!failure) return;
-  await store.set({ provider, status: failure, http_status: status, retry_at: failure === "outage" ? new Date(now + 5 * 60_000).toISOString() : null });
+  await store.set({ provider, status: failure, http_status: status, retry_at: failure === "outage" ? new Date(now + 5 * 60_000).toISOString() : failure === "credits" ? new Date(now + 30 * 60_000).toISOString() : null });
 }

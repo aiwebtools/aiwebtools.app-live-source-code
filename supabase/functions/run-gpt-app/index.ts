@@ -477,7 +477,7 @@ Deno.serve(async (req) => {
       image_succeeded: imageSucceeded,
       latency_ms: Date.now() - requestStartedAt,
       status: finalStatus,
-      error: finalError || (routedChat.getReason() ? `Bionic ${routedChat.getReason()}; authorized Lovable fallback used.` : null),
+      error: finalError || (routedChat.getReason() ? `Lovable chat ${routedChat.getReason()}; Bionic backup used.` : null),
       user_message: lastUser?.content?.slice(0, 8000) ?? null,
       assistant_reply: assistant.slice(0, 40000) || null,
     });

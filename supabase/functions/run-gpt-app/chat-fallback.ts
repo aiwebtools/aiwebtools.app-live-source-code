@@ -37,7 +37,7 @@ export function createLovableFirstChat(store: ProviderStore, bionic: Transport, 
         if (signal.aborted) return response;
         await recordProviderFailure(store, "lovable_chat", response.status);
         if (response.ok) {
-          if (state?.status === "outage") await store.set({ provider: "lovable_chat", status: "ready", http_status: null, retry_at: null });
+          if ((state?.status === "outage" || state?.status === "credits")) await store.set({ provider: "lovable_chat", status: "ready", http_status: null, retry_at: null });
           return response;
         }
         if (response.status !== 402 && !(response.status >= 500 && response.status <= 599)) return response;
@@ -71,7 +71,7 @@ export function createFallbackChat(store: ProviderStore, bionic: Transport, lova
       const message = detail.message || (typeof detail.error === "string" ? detail.error : detail.error?.message);
       return new Response(JSON.stringify({ error: RESTING_MESSAGE + (message ? ` ${message}` : "") }), { status: 402 });
     }
-    if (response.ok && state?.status === "outage") await store.set({ provider: "lovable_chat", status: "ready", http_status: null, retry_at: null });
+    if (response.ok && (state?.status === "outage" || state?.status === "credits")) await store.set({ provider: "lovable_chat", status: "ready", http_status: null, retry_at: null });
     return response;
   };
   const useFallback = (payload: Payload) => {
@@ -105,7 +105,7 @@ export function createFallbackChat(store: ProviderStore, bionic: Transport, lova
       }
       await recordProviderFailure(store, "bionic", response.status);
       if (response.ok) {
-        if (state?.status === "outage") await store.set({ provider: "bionic", status: "ready", http_status: null, retry_at: null });
+        if ((state?.status === "outage" || state?.status === "credits")) await store.set({ provider: "bionic", status: "ready", http_status: null, retry_at: null });
         return response;
       }
       if (response.status !== 402 && !(response.status >= 500 && response.status <= 599)) return response;
