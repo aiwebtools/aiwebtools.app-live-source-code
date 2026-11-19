@@ -1,5 +1,10 @@
 # Roadmap
 
+## November 19 Angel gate MTV opening
+- [x] Preserved code 1111, gate design and saved recordings; opening now randomly selects a verified music Short with autoplay and an immediate X, without old narration/confetti.
+- [x] Mount the site behind the opening without waiting for playback; stop on skip/end/error, fail open after 15 seconds of unavailable playback, and offer sound after muted autoplay fallback.
+- [x] Eleven regressions / 1,152 assertions pass; desktop and 408×776 browser checks verify PIN rejection, different random music, real advancing footage (readyState 4), X and scoped completion-event dismissal, loaded Socials/theater underneath, no overflow/page errors; screenshots reviewed, build OK. Physical-phone sound and site-wide loading performance not certified; nothing published.
+
 ## November 19 MTVAI update and loading checks
 - [x] Expanded all 656 Videos and 462 Shorts; oEmbed verified one missing music upload, Temple is Within (UlaGqwBGaMc), prepended to the shared three-player source. No removals; 1,077 music tracks and 44 audiobooks.
 - [x] 21 regressions / 2,150 assertions pass: every audiobook excluded from music, original eligible entries preserved. Desktop theater selects new music; opening Audiobooks removes music iframe, Copernicus Part Two selects correct book iframe, closing removes it; screenshots reviewed.
