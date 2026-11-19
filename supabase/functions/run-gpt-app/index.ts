@@ -401,13 +401,13 @@ Deno.serve(async (req) => {
       method: "POST",
       headers: { "Content-Type": "application/json", "Lovable-API-Key": LOVABLE_API_KEY || "", "X-Lovable-AIG-SDK": "fetch" },
       signal: req.signal, body: JSON.stringify(payload),
-    }), req.signal, !body.model || body.model === "default");
+    }), req.signal, false); // Master prefers Bionic first; Lovable is only the backup.
   const callGateway = (payload: Record<string, unknown>) => {
     if (personalAi && personalAdapter) return personalAdapter(personalAi, payload, req.signal, personalRun);
     return routedChat.call(payload);
   };
 
-  // Lovable is tried first for site defaults; Bionic selection determines the safe backup.
+  // Bionic answers site defaults first; Lovable is the pre-stream backup when Bionic is out.
   const turnModel = selectTurnModel(app.model || selectedModel, body.model, lastUser?.content?.split("USER DATA ATTACHMENT")[0] || "", basePrompt, personalAi?.model);
   if (!turnModel) return json({ error: "That model is not supported by this assistant." }, 400);
   const usingBionic = !personalAi && isBionicModel(turnModel);
