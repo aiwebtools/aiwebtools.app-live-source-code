@@ -82,7 +82,8 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
       <span className="font-mono text-sm text-primary">MTVAI.live</span>
       <Button ref={close} variant="outline" size="icon" onClick={finish} aria-label="Skip opening video" title="Skip opening video"><X className="h-5 w-5" /></Button>
     </div>
-    <div className="relative aspect-[9/16] max-h-[calc(100dvh-10rem)] w-full max-w-sm overflow-hidden bg-muted">
+    <p className="w-full max-w-sm text-center text-sm leading-relaxed text-foreground">This music video was made by a rogue AI music video agent all by itself.....sorta.</p>
+    <div className="relative aspect-[9/16] max-h-[calc(100dvh-14rem)] w-full max-w-sm overflow-hidden bg-muted">
       {!started && <div role="status" aria-label="Loading MTVAI opening" className="pointer-events-none absolute inset-0 z-10 grid place-items-center"><Loader2 className="h-7 w-7 animate-spin motion-reduce:animate-none text-primary" /></div>}
       {clip && <iframe
         ref={frame}
