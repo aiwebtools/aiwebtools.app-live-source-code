@@ -12,8 +12,14 @@ import { Tool } from "@/types/tools";
  */
 const CANONICAL_LABELS: Record<string, string> = {
   "ai chat & assistants": "AI Chat & Assistants",
+  "ai chat assistants": "AI Chat & Assistants",
   "development & coding": "Development & Coding",
   "video & multimedia": "Video & Multimedia",
+  "video & animation": "Video & Multimedia",
+  "video generation": "Video & Multimedia",
+  "video & multimedia tools": "Video & Multimedia",
+  "audio & music": "Audio & Music",
+  "audio & music tools": "Audio & Music",
   "3d & visualization": "3D & Visualization",
   "marketing & sales solutions": "Marketing & Sales Solutions",
 };

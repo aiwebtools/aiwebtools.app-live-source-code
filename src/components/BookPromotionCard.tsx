@@ -1412,15 +1412,16 @@ const BookPromotionCard = () => {
 
                   {/* Desktop dot indicators */}
                   <div className="flex justify-center gap-2 mt-4">
-                    {Array.from({ length: totalDesktopPages }).map((_, index) => (
+                    {Array.from({ length: Math.min(5, totalDesktopPages) }, (_, offset) => Math.max(0, Math.min(desktopIndex - 2, totalDesktopPages - 5)) + offset).map((index) => (
                       <button
                         key={index}
                         onClick={() => goToVideo((index * videosPerPage) % videos.length)}
-                        className={`w-2 h-2 rounded-full transition-colors ${
+                        title={`Page ${index + 1} of ${totalDesktopPages}`}
+                        className={`min-w-8 h-8 rounded-md text-xs transition-colors ${
                           index === desktopIndex ? 'bg-cyan-400' : 'bg-gray-500'
                         }`}
                         aria-label={`Go to page ${index + 1}`}
-                      />
+                      >{index + 1}</button>
                     ))}
                   </div>
                 </div>

@@ -25,7 +25,7 @@ export default function BlogPostPage() {
     "headline": post.title,
     "description": post.excerpt,
     "datePublished": post.publishDate,
-    "dateModified": post.publishDate,
+    "dateModified": post.updatedDate || post.publishDate,
     "author": {
       "@type": "Organization",
       "name": "AI Web Tools",

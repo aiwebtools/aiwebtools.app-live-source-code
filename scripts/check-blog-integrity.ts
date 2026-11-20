@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import { blogPosts, getRelatedPosts, getBlogPostBySlug } from '../src/data/blogPostContent';
+for (let i = 1; i < blogPosts.length; i++) assert.ok((blogPosts[i - 1].updatedDate || blogPosts[i - 1].publishDate) >= (blogPosts[i].updatedDate || blogPosts[i].publishDate));
+assert.ok(blogPosts.every(post => post.imageUrl));
+assert.equal(getRelatedPosts('gpt-5-release-date-features-guide').length, 3);
+const gpt = getBlogPostBySlug('gpt-5-release-date-features-guide');
+assert.ok(gpt?.content.includes('August 7, 2025'));
+assert.ok(!gpt?.content.includes('expected to launch'));
+assert.equal(gpt?.updatedDate, '2026-11-20');
+console.log(`Verified ${blogPosts.length} date-ordered illustrated posts, corrected GPT-5 article and three related posts.`);

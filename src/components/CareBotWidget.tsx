@@ -148,6 +148,7 @@ const CareBotWidget = () => {
       const toolContext = await selectRelevantTools(trimmed);
       const resp = await fetch(CHAT_URL, {
         method: "POST",
+        signal: AbortSignal.timeout(25000),
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${ANON}`,
@@ -172,8 +173,7 @@ const CareBotWidget = () => {
 
       while (!done) {
         const { value, done: streamDone } = await reader.read();
-        if (streamDone) break;
-        buf += decoder.decode(value, { stream: true });
+        buf += streamDone ? decoder.decode() + "\n" : decoder.decode(value, { stream: true });
 
         let idx: number;
         while ((idx = buf.indexOf("\n")) !== -1) {
@@ -187,15 +187,12 @@ const CareBotWidget = () => {
             const parsed = JSON.parse(json);
             const content = parsed.choices?.[0]?.delta?.content;
             if (content) appendDelta(content);
-          } catch {
-            buf = line + "\n" + buf;
-            break;
-          }
+          } catch { /* Drop malformed records; never requeue a line forever. */ }
         }
+        if (streamDone) break;
       }
     } catch (e) {
-      console.error("[CareBot] error", e);
-      appendDelta("\n\n⚠️ Connection issue. Please try again.");
+      appendDelta("\n\nThe helper could not finish in time. Your question is still here; use the directory search or try again.");
     } finally {
       voice.flush();
       setLoading(false);
@@ -346,11 +343,7 @@ const CareBotWidget = () => {
                                       window.open(sanitizeExternalUrl(url), "_blank", "noopener,noreferrer");
                                     }
                                   }}
-                                  className={
-                                    internalPath
-                                      ? "inline-flex items-center gap-1 mx-0.5 my-0.5 px-2 py-0.5 rounded-md bg-green-500/20 hover:bg-green-500/40 border border-green-400/50 text-green-100 hover:text-white text-xs font-semibold transition-colors no-underline"
-                                      : "inline-flex items-center gap-1 mx-0.5 my-0.5 px-2 py-0.5 rounded-md bg-cyan-500/15 hover:bg-cyan-500/30 border border-cyan-400/40 text-cyan-200 hover:text-white text-xs font-semibold transition-colors no-underline"
-                                  }
+                                  className="inline text-primary underline underline-offset-2 whitespace-normal text-inherit"
                                   title={url}
                                 >
                                   {children}

@@ -9,6 +9,7 @@ import { isFreeTool } from "@/utils/freeToolDetection";
 import { getToolPricing, getPricingLabel } from "@/utils/pricingClassification";
 import { createTimePortalEffect } from "@/utils/timeEffects";
 import { getDisplayedCategory } from "@/utils/toolCategoryDisplay";
+import ToolThumb from "@/components/tools/ToolThumb";
 
 interface ToolHeaderProps {
   tool: Tool;
@@ -58,7 +59,7 @@ const ToolHeader = ({ tool, defaultRating, defaultVotes, toolIndex }: ToolHeader
       </div>
       
       <div className={`w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r ${tool.color} flex items-center justify-center text-white text-4xl shadow-lg shadow-cyan-500/30 glow-effect`}>
-        {tool.emoji}
+        <ToolThumb tool={tool} className="w-full h-full" rounded="rounded-full" />
       </div>
       <div className="space-y-4">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent cyber-glow">

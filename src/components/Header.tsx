@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Github } from "lucide-react";
 import Logo from "./header/Logo";
 import HeaderGptsButton from "./header/HeaderGptsButton";
@@ -19,7 +19,17 @@ const getViewportMenu = () => {
 };
 
 const Header = () => {
+  const headerRef = useRef<HTMLElement>(null);
   const [viewportMenu, setViewportMenu] = useState(getViewportMenu);
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const update = () => document.documentElement.style.setProperty("--site-header-height", `${header.getBoundingClientRect().height}px`);
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     let raf = 0;
@@ -37,7 +47,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="fixed top-0 w-full z-[100] bg-black/95 border-b border-cyan-500/30 shadow-lg">
+    <header ref={headerRef} className="fixed top-0 w-full z-[100] bg-black/95 border-b border-cyan-500/30 shadow-lg">
       {/* Cosmic scrolling marquee - top strip */}
       <div
         aria-label="Cosmic message"

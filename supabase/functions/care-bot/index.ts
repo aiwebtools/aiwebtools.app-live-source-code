@@ -239,7 +239,7 @@ Deno.serve(async (req) => {
     const userQuery = typeof lastUserMsg?.content === 'string' ? lastUserMsg.content : '';
     let csvMatches: CsvTool[] = [];
     try {
-      const rows = await loadCsv();
+      const rows = safeContext.length >= 3 ? [] : await loadCsv();
       const seenUrls = new Set(safeContext.map((t: any) => String(t?.directUrl || '')));
       csvMatches = searchCsv(rows, userQuery, 12)
         .filter((t) => !seenUrls.has(t.url))
@@ -303,7 +303,7 @@ Deno.serve(async (req) => {
       SYSTEM_PROMPT + SPIRIT_PERSONA + contextBlock + csvBlock + (shouldRemind ? LIGHT_REMINDER : '');
 
     const chatMessages = [{ role: 'system', content: systemContent }, ...trimmedMessages];
-    const glm = await callGlmHelper({ messages: chatMessages, stream: true });
+    const glm = await callGlmHelper({ messages: chatMessages, stream: true, max_tokens: 700 });
     const usedModel = glm ? GLM_HELPER_MODEL : 'google/gemini-3-flash-preview';
     const response = glm ?? await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',

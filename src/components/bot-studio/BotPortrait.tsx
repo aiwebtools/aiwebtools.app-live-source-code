@@ -13,13 +13,15 @@ import oracleImage from "@/assets/emerald-thoth-gpt-hero.jpg";
 import sentinelImage from "@/assets/cipher-encrypt-gpt-hero.jpg";
 import soundstageImage from "@/assets/movie-maker-studio-gpt-hero.jpg";
 import studioImage from "@/assets/coloring-book-gpt-hero.jpg";
+import accessible from "@/assets/survival-bots/accessible-evacuation-unique.webp";
+import fairness from "@/assets/survival-bots/community-fairness-unique.webp";
 
 const subjectImages: Record<string, string> = { academy: academyImage, blueprint: blueprintImage, chambers: chambersImage, clinic: clinicImage, field: fieldImage, forge: forgeImage, ledger: ledgerImage, matrix: matrixImage, observatory: observatoryImage, oracle: oracleImage, sentinel: sentinelImage, soundstage: soundstageImage, studio: studioImage, "time-machine": timeMachineImage };
 
 export default function BotPortrait({ src, name, themeKey, emblem, className = "" }: { src: string; name: string; themeKey: string; emblem: string; className?: string }) {
   const [failedSource, setFailedSource] = useState<string | null>(null);
   const [loadedSource, setLoadedSource] = useState<string | null>(null);
-  const image = themeKey === "time-machine" && name.toLowerCase().includes("time machine") ? timeMachineImage : src;
+  const image = /accessible evacuation coordinator/i.test(name) ? accessible : /community resource fairness dispatcher/i.test(name) ? fairness : themeKey === "time-machine" && name.toLowerCase().includes("time machine") ? timeMachineImage : src;
   const fallback = subjectImages[themeKey] || matrixImage;
   const resolved = failedSource === image ? fallback : image;
   return <span className={`relative z-10 inline-block overflow-hidden ${className}`} title={name}>

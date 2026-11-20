@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import AwtSoundEffects from "@/components/AwtSoundEffects";
 import { requestAudio, useGeneratedAudio } from "@/hooks/useGeneratedAudio";
 import { Volume2, Square, Download, Mic2, Loader2, Play, Pause } from "lucide-react";
+import { audioNotice } from "@/utils/audioNotice";
 
 /**
  * AWT Voice Studio — real, distinct studio voices with a true MP3 download.
@@ -120,7 +121,7 @@ const AwtTextToSpeech: React.FC = () => {
   return (
     <>
     <section
-      aria-label="Free AI Web Tools text to speech generator"
+      aria-label="AI Web Tools voice studio"
       className="py-12 md:py-16 relative overflow-hidden"
       
     >
@@ -128,12 +129,12 @@ const AwtTextToSpeech: React.FC = () => {
         <div className="text-center mb-8">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
             <span className="text-primary" >
-              🔊 FREE AWT TEXT-TO-SPEECH GENERATOR
+              🔊 AWT VOICE STUDIO
             </span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Type anything, pick a real studio voice and language, hear it — then download
-            it as an MP3. Free, no account, no limits.
+            it as audio. No account needed; generation depends on available provider credits.
           </p>
         </div>
 
@@ -260,8 +261,8 @@ const AwtTextToSpeech: React.FC = () => {
 
 
           {error && (
-            <p role="alert" className="mt-4 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-xs text-destructive">
-              {error}
+            <p role="alert" className="mt-4 studio-notice text-sm">
+              {audioNotice(error)}
             </p>
           )}
 
@@ -317,7 +318,7 @@ const AwtTextToSpeech: React.FC = () => {
           </div>
 
           <p className="mt-4 text-center text-[10px] uppercase tracking-[0.18em] text-muted-foreground/60">
-            100% free · no sign-up · 11 studio voices · downloadable MP3 · AIWEBTOOLS.APP
+            No sign-up · 11 studio voices · provider availability applies · AIWEBTOOLS.APP
           </p>
         </div>
       </div>

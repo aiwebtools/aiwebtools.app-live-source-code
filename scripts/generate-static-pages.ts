@@ -30,6 +30,11 @@ import { OP_INSTRUCTION_DOCS } from "../src/data/opInstructionDocs";
 import { TOTAL_TOOLS, MARKETING_TOOL_COUNT } from "../src/data/generated/toolCount";
 import { getDisplayedCategory, getStaticToolTitle } from "../src/utils/toolCategoryDisplay";
 import { MTVAI_CATALOG } from "../src/data/mtvaiCatalog";
+import React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { MemoryRouter } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+import PrivacyPolicy from "../src/pages/PrivacyPolicy";
 
 const BASE_URL = "https://aiwebtools.app";
 const DIST = path.resolve(process.cwd(), "dist");
@@ -807,4 +812,6 @@ hub(
   `<h1>MTVAI.live</h1><p>Presented by aiwebtools.app</p><p role="status">Loading the music theater and track list…</p><h2>${MTVAI_CATALOG.length.toLocaleString("en-US")} tracks</h2><ol>${MTVAI_CATALOG.slice(0, 12).map(track => `<li>${esc(track.title)}</li>`).join("")}</ol>`,
 );
 
+hub("/privacy-policy", "Privacy Policy | AIWebTools.app", "How AIWebTools handles browsing, accounts, submitted information and chat data.",
+  renderToStaticMarkup(React.createElement(HelmetProvider, null, React.createElement(MemoryRouter, null, React.createElement(PrivacyPolicy)))));
 console.log(`✅ prerender: ${count} static HTML pages written into dist/`);

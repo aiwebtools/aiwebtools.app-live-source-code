@@ -50,12 +50,12 @@ const ToolCardHeader = ({
   return (
     <CardHeader className="text-center pb-4 flex-shrink-0 relative z-10">
       {/* Favorites Button - top left */}
-      <div className="absolute top-2 left-2 z-30">
+      <div className="absolute top-2 right-2 z-30">
         <FavoritesButton tool={tool} size="sm" />
       </div>
       
       {/* Pricing badge - top right (FREE / FREEMIUM / PAID) */}
-      <div className="absolute top-0 right-0 z-20">
+      <div className="absolute top-0 left-0 z-20">
         <div
           className={`px-2 py-1 rounded-bl-lg rounded-tr-xl text-xs font-bold shadow-lg ${
             pricing === "free"

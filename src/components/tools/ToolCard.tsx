@@ -103,8 +103,7 @@ const ToolCard = memo(({ tool, index = 0 }: ToolCardProps) => {
   
   // Enhanced rating calculation
   const baseRating = tool.rating || 4.2;
-  const boostFactor = isAIWebToolsOriginal ? 0.5 : 0.2;
-  const boostedRating = Math.min(5.0, baseRating + boostFactor);
+  const boostedRating = baseRating;
   const defaultVotes = tool.totalVotes || (isAIWebToolsOriginal ? 847 : 324);
 
   // Description function

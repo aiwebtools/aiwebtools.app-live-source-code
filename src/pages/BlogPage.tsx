@@ -59,7 +59,7 @@ export default function BlogPage() {
 
       <Header />
 
-      <div className="min-h-screen bg-black">
+      <main className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-12">
           {/* Hero Section */}
           <div className="text-center mb-12 pt-8">
@@ -113,7 +113,7 @@ export default function BlogPage() {
           {/* Stats Bar */}
           <div className="mx-auto mb-12 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
             <div className="text-center p-4 bg-slate-900/50 rounded-lg border border-cyan-500/20">
-              <div className="text-2xl font-bold text-cyan-400">{blogPosts.length}+</div>
+              <div className="text-2xl font-bold text-cyan-400">{blogPosts.length}</div>
               <div className="text-xs text-gray-500">Articles</div>
             </div>
             <div className="text-center p-4 bg-slate-900/50 rounded-lg border border-cyan-500/20">
@@ -121,8 +121,8 @@ export default function BlogPage() {
               <div className="text-xs text-gray-500">Tools in Directory</div>
             </div>
             <div className="text-center p-4 bg-slate-900/50 rounded-lg border border-cyan-500/20">
-              <div className="text-2xl font-bold text-cyan-400">Daily</div>
-              <div className="text-xs text-gray-500">Updates</div>
+              <div className="text-2xl font-bold text-cyan-400">Archive</div>
+              <div className="text-xs text-gray-500">Dated guides</div>
             </div>
           </div>
 
@@ -130,6 +130,7 @@ export default function BlogPage() {
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {blogPosts.map((post) => (
               <Card key={post.id} className="bg-slate-900/50 border-slate-800 hover:border-cyan-500/50 transition-all duration-300 hover:scale-[1.02]">
+                <img src={post.imageUrl} alt={`${post.title} editorial illustration`} width={640} height={360} className="aspect-video w-full object-cover" loading="lazy" decoding="async" />
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded">
@@ -140,7 +141,7 @@ export default function BlogPage() {
                       {post.readTime}
                     </div>
                   </div>
-                  <CardTitle className="text-base text-white leading-tight">
+                  <CardTitle className="text-base text-foreground leading-tight line-clamp-2 min-h-10">
                     {post.title}
                   </CardTitle>
                   <div className="flex items-center text-xs text-gray-500">
@@ -186,7 +187,7 @@ export default function BlogPage() {
             </Button>
           </div>
         </div>
-      </div>
+      </main>
 
       <Footer />
     </>

@@ -1,4 +1,5 @@
 import { applyResurrectionAndHistoryTags } from "@/utils/digitalResurrectionTagging";
+import chatgptCleanImage from "@/assets/tools/chatgpt-clean.webp";
 import { Tool } from "@/types/tools";
 import { getAllToolCategories } from './toolsCollection';
 import { searchTools } from '@/utils/searchUtils';
@@ -756,7 +757,7 @@ const toolsWithCanonicalCategories = normalizeToolCategories(toolsWithPricing);
 
 // Preserve every lookup record and original URL; directory displays/counts use
 // one representative per name, enriched with duplicate tags and missing media.
-export const allTools: Tool[] = toolsWithCanonicalCategories;
+export const allTools: Tool[] = toolsWithCanonicalCategories.map(tool => tool.title === "ChatGPT" ? { ...tool, imageUrl: chatgptCleanImage } : tool);
 export const directoryTools: Tool[] = uniqueDirectoryTools(allTools);
 
 

@@ -177,7 +177,7 @@ const GlobalSearchInput = memo(({
           variant="ghost"
           size="sm"
           onClick={handleClear}
-          className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 text-neutral-600 hover:text-black hover:bg-black/10 z-10"
+          className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 text-foreground bg-card z-[10001]"
           aria-label="Clear search"
         >
           <X className="w-3 h-3" />

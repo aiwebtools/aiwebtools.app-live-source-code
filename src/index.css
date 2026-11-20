@@ -17,6 +17,26 @@
 @tailwind components;
 @tailwind utilities;
 
+:root { --site-header-height: 128px; --notice-foreground: 48 100% 85%; }
+html { scroll-padding-top: calc(var(--site-header-height) + 20px); }
+h1, h2, h3, section[id], [id]:target { scroll-margin-top: calc(var(--site-header-height) + 20px); }
+body:has(header.fixed) main:not(.studio-main) { padding-top: calc(var(--site-header-height) + 28px); padding-bottom: 120px; }
+body:has(header.fixed) header.fixed + div > .container { padding-top: calc(var(--site-header-height) + 28px); }
+.studio-settings p, .studio-settings label, .studio-drawer p { white-space: normal; overflow: visible; overflow-wrap: anywhere; }
+.studio-settings [role="combobox"] { height: auto; min-height: 40px; }
+.studio-settings [role="combobox"] > span { white-space: normal !important; overflow: visible !important; }
+.gpt-generated-content, .gpt-generated-content p, .gpt-generated-content li { white-space: pre-wrap; }
+.studio-notice { color: hsl(var(--notice-foreground)); background: hsl(var(--card)); border: 1px solid hsl(var(--border)); padding: 12px; border-radius: 8px; overflow-wrap: anywhere; }
+.hero-clean-title, .hero-clean-title * { letter-spacing: 0 !important; text-shadow: none !important; }
+.hero-clean-title *::before, .hero-clean-title *::after { content: none !important; }
+.hero-clean-title { overflow-wrap: anywhere; }
+.hero-clean-title .transitioning-word { width: auto !important; margin-right: 12px; }
+.hero-clean-title .hero-3d-glow { margin-left: 0; }
+[role="dialog"] [id$="title"] { padding-right: 40px; overflow-wrap: anywhere; line-height: 1.4; }
+html:not([data-care-bot-open]) .awt-clone-control { top: auto !important; bottom: 84px; right: 16px !important; }
+main p, footer p { position: relative; }
+.matrix-rain-column { opacity: 0.15; }
+
 /* Complementary music-channel branding, using the site's semantic theme. */
 .mtvai-brand img { filter: drop-shadow(0 0 5px hsl(var(--primary) / 0.25)); }
 .mtvai-channel-link { color: hsl(var(--foreground)); background: hsl(var(--background) / 0.85); border-color: hsl(var(--primary) / 0.4); }

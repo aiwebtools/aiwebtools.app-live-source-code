@@ -1,4 +1,5 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 const BotSuiteMenuSection = lazy(() => import("./BotSuiteMenuSection"));
@@ -21,6 +22,8 @@ export const WavingRobotIcon = ({ className = "h-4 w-4" }: { className?: string 
 /** Header shortcut: CUSTOM GPT BUILDER + accordion of every in-site bot category. */
 export default function HeaderGptsButton() {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+  useEffect(() => setOpen(false), [location.pathname, location.search]);
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

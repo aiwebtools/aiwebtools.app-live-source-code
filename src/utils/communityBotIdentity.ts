@@ -6,6 +6,9 @@ import land from "@/assets/off-grid-bots/shared-land-due-diligence-gpt.jpg";
 import agreements from "@/assets/off-grid-bots/community-agreements-facilitator-gpt.jpg";
 import build from "@/assets/off-grid-bots/off-grid-build-planner-gpt.jpg";
 import livelihood from "@/assets/off-grid-bots/community-livelihood-planner-gpt.jpg";
+import accessible from "@/assets/survival-bots/accessible-evacuation-unique.webp";
+import fairness from "@/assets/survival-bots/community-fairness-unique.webp";
+export const correctedCommunityImage = (slug: string): string | undefined => slug.includes("accessible-evacuation-coordinator-gpt") ? accessible : slug.includes("community-resource-fairness-dispatcher-gpt") ? fairness : undefined;
 const publicNames: Record<string, string> = names;
 const offGridImages: Record<string, string> = {
   "community-community-compatibility-guide-gpt-47b622": compatibility,
@@ -16,4 +19,4 @@ const offGridImages: Record<string, string> = {
 };
 /** Presentation only; original operational instructions and stable slugs are preserved. */
 export const communityBotName = (slug: string, original: string): string => publicNames[slug] || original;
-export const communityBotImage = (slug: string): string | undefined => offGridExpansionImages[slug] || offGridImages[slug] || (/^community-pikastory-vision-gpt(?:-v\d+)?$/.test(slug) ? storyVision : undefined);
+export const communityBotImage = (slug: string): string | undefined => correctedCommunityImage(slug) || offGridExpansionImages[slug] || offGridImages[slug] || (/^community-pikastory-vision-gpt(?:-v\d+)?$/.test(slug) ? storyVision : undefined);

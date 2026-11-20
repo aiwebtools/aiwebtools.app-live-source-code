@@ -70,7 +70,7 @@ Best regards`);
         imageHeight={imageHeight} 
       />
       
-      <CardDescription className={`${isAIWebToolsOriginal ? 'text-cyan-100' : 'text-gray-300'} mb-4 leading-relaxed text-sm flex-grow`}>
+      <CardDescription className="text-foreground mb-4 leading-relaxed text-sm line-clamp-4 min-h-20">
         {getDescription()}
       </CardDescription>
       

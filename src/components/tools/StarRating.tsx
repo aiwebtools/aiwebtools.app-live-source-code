@@ -90,7 +90,7 @@ const StarRating = ({ rating, totalVotes, onRate, showVoteCount = true, toolId }
           >
             <Star
               className={`w-4 h-4 ${
-                star <= (hoveredRating || displayRating)
+                star <= Math.round(hoveredRating || displayRating)
                   ? "fill-yellow-400 text-yellow-400"
                   : "text-gray-400 hover:text-yellow-300"
               } ${!hasVoted ? 'hover:drop-shadow-lg' : ''}`}

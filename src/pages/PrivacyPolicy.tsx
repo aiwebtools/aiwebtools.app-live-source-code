@@ -1,22 +1,23 @@
-import { MARKETING_TOOL_COUNT as DIRECTORY_MARKETING_COUNT } from "@/data/generated/toolCount";
+import { TOTAL_TOOLS, TOTAL_TOOL_CATEGORIES } from "@/data/generated/toolCount";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Shield } from "lucide-react";
 
 const PrivacyPolicy = () => {
-  const updated = "May 29, 2026";
+  const updated = "November 20, 2026";
+  const DIRECTORY_MARKETING_COUNT = TOTAL_TOOLS.toLocaleString("en-US");
   return (
     <>
       <Helmet>
         <title>Privacy Policy | AIWebTools.ai — {DIRECTORY_MARKETING_COUNT} AI Tools Directory</title>
         <meta
           name="description"
-          content={`AIWebTools.ai Privacy Policy: we do not collect personal information. Learn how we protect your privacy while browsing our directory of ${DIRECTORY_MARKETING_COUNT} AI tools.`}
+          content={`AIWebTools.ai Privacy Policy: browsing, optional accounts, submitted information and chat data. Learn how we protect your privacy while browsing our directory of ${DIRECTORY_MARKETING_COUNT} AI tools.`}
         />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://aiwebtools.app/privacy-policy" />
         <meta property="og:title" content="Privacy Policy | AIWebTools.ai" />
-        <meta property="og:description" content="AIWebTools.ai does not collect personal information — clear, honest, and minimal." />
+        <meta property="og:description" content="How browsing, optional accounts, submitted information and chat data are handled." />
         <meta property="og:url" content="https://aiwebtools.app/privacy-policy" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -24,7 +25,7 @@ const PrivacyPolicy = () => {
           "name": "Privacy Policy",
           "url": "https://aiwebtools.app/privacy-policy",
           "isPartOf": { "@type": "WebSite", "name": "AIWebTools.ai", "url": "https://aiwebtools.app" },
-          "dateModified": "2026-05-29"
+          "dateModified": "2026-11-20"
         })}</script>
       </Helmet>
 
@@ -45,18 +46,17 @@ const PrivacyPolicy = () => {
               <h2 className="text-xl font-bold text-green-300">1. Who we are</h2>
               <p>
                 AIWebTools.ai (also operating as AITools.studio and several mirror domains) is a directory of
-                {DIRECTORY_MARKETING_COUNT} AI tools, custom GPTs, and AI services. This Privacy Policy explains our commitment to
+                {" "}{DIRECTORY_MARKETING_COUNT} distinct listings across {TOTAL_TOOL_CATEGORIES} categories. This Privacy Policy explains our commitment to
                 your privacy when you visit our website.
               </p>
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-green-300">2. We do not collect personal information</h2>
+              <h2 className="text-xl font-bold text-green-300">2. Browsing and information you choose to provide</h2>
               <p>
-                AIWebTools.ai does not collect, store, or process any personally identifiable information
-                from visitors browsing our directory. We do not require accounts, logins, or registrations to
-                browse tools. No names, emails, addresses, phone numbers, or payment information are gathered
-                simply by visiting the site.
+                Browsing the directory does not require an account. If you create an account, join our email list,
+                submit a tool or request a service, we process the information you provide for that purpose.
+                Technical usage events and error reports help us operate and improve the website.
               </p>
             </section>
 
@@ -83,8 +83,8 @@ const PrivacyPolicy = () => {
               <h2 className="text-xl font-bold text-green-300">5. Local storage</h2>
               <p>
                 Your browser may store a few small items locally — such as your disclaimer-consent preference,
-                favorite tools list (saved only on your device), and session IDs. These remain on your device
-                and are never transmitted to our servers.
+                favorite tools list (saved only on your device), and session IDs. Device chat history is stored locally;
+                requests, session identifiers and diagnostic information may also be sent to our services when you use chat.
               </p>
             </section>
 
@@ -102,9 +102,9 @@ const PrivacyPolicy = () => {
             <section>
               <h2 className="text-xl font-bold text-green-300">7. AI Care Bot</h2>
               <p>
-                Our Care Bot uses Lovable AI Gateway (which routes to providers such as Google and OpenAI) to
-                respond to your questions. Messages are sent to those providers solely to generate the response.
-                We do not store or review your Care Bot conversations. Do not share sensitive personal, medical,
+                Our chat services use Bionic and Lovable-connected AI providers to respond to your questions.
+                Messages and relevant attachments are sent to providers to generate responses. Conversation
+                and diagnostic logs may be stored to operate the service and investigate errors. Do not share sensitive personal, medical,
                 legal, or financial information with any AI bot.
               </p>
             </section>

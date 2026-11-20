@@ -64,10 +64,6 @@ const FooterCompanyInfo = () => {
             </button>
           </div>
           <div className="flex items-center space-x-2">
-            <span>🌍</span>
-            <span>One World Drive, EARTH</span>
-          </div>
-          <div className="flex items-center space-x-2">
             <span>🌐</span>
             <button 
               onClick={(e) => handleExternalLink("https://aiwebtools.app/?via=aiwebtools", e)}

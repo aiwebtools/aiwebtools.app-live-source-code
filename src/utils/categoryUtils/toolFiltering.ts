@@ -3,6 +3,7 @@ import { mainCategories } from "@/utils/mainCategoryMapping";
 import { directoryCategoryTools, directoryNameKey, uniqueDirectoryTools } from "@/utils/directoryIntegrity";
 import { orderCategoryTools } from "@/utils/category/categoryOrdering";
 import type { CategoryCounts, MainCategoryCounts } from "./types";
+import { canonicalCategoryLabel } from "@/utils/category/canonicalCategory";
 
 export const getCategoriesWithCounts = (tools: Tool[]): CategoryCounts => {
   const counts: CategoryCounts = {};
@@ -18,7 +19,7 @@ export const getCategoriesWithCounts = (tools: Tool[]): CategoryCounts => {
 };
 
 export const getToolsByCategory = (tools: Tool[], name: string): Tool[] =>
-  orderCategoryTools(uniqueDirectoryTools(tools).filter(tool => directoryNameKey(tool.category || "") === directoryNameKey(name)), name);
+  orderCategoryTools(uniqueDirectoryTools(tools).filter(tool => directoryNameKey(canonicalCategoryLabel(tool.category) || "") === directoryNameKey(canonicalCategoryLabel(name) || name)), name);
 
 // Array identity, not length or persisted indices, prevents stale same-size catalogs.
 const cache = new WeakMap<Tool[], Map<string, Tool[]>>();

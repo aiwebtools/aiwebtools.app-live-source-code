@@ -1,5 +1,14 @@
 # Roadmap
 
+## November 20 complete correction pass — publish once
+- [ ] 1,18: verify direct entry and immediate real privacy policy.
+- [ ] 2,6,10,14: honest working audio/helper/chat, readable streaming and closing GPT menus.
+- [ ] 3,4,11,12,13,20: unify real counts/categories, verify filtering and duplicates; report any owner-number conflict honestly.
+- [ ] 5,16,17: header/anchor clearance, reachable dialog/search controls, clean hero and floating lanes.
+- [ ] 7,8,9,19,21: current blog, consistent ratings/media/cards and real footer contact.
+- [ ] 15,22: bounded video pagination/counts and loading/performance checks.
+- [ ] Run focused tests and desktop/phone flows; check security, save changes, publish once, report all 22 outcomes and external blockers.
+
 ## November 20 directory integrity — preserve source records, do not publish
 - [x] Use one unique directory collection for counts and category membership; exclude unrelated recommendations from category results.
 - [x] Connect Browse All search, free-only filtering and full-result A–Z sorting before pagination; remove the unrelated pinned strip from this grid.

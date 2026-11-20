@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState, useRef } from "react";
 import { Tool } from "@/types/tools";
 import { isExpiredHost, getYouTubeThumbnail, getBrandLogo } from "@/utils/imageUtils";
 
@@ -37,6 +37,7 @@ interface ToolThumbProps {
 const ToolThumb = memo(({ tool, className = "w-11 h-11", emojiClassName = "text-2xl", rounded = "rounded-lg" }: ToolThumbProps) => {
   const [failed, setFailed] = useState(false);
   const [override, setOverride] = useState<string>();
+  const tried = useRef(new Set<string>());
   const raw = typeof tool.imageUrl === "string" ? tool.imageUrl.trim() : "";
   const expired = raw ? isExpiredHost(raw) : false;
   const resolved = useResolvedToolImage(expired ? "" : raw);
@@ -44,6 +45,7 @@ const ToolThumb = memo(({ tool, className = "w-11 h-11", emojiClassName = "text-
   useEffect(() => {
     setFailed(false);
     setOverride(undefined);
+    tried.current.clear();
   }, [tool.imageUrl]);
 
   const brandLogo = getBrandLogo(tool.directUrl, 128);
@@ -54,7 +56,7 @@ const ToolThumb = memo(({ tool, className = "w-11 h-11", emojiClassName = "text-
   if (!src) {
     return (
       <div className={`${className} ${rounded} flex-shrink-0 flex items-center justify-center ${emojiClassName} bg-gray-800 border border-gray-700/60`}>
-        {tool.emoji}
+        <span title={tool.title}>{tool.emoji || tool.title.slice(0, 2).toUpperCase()}</span>
       </div>
     );
   }
@@ -68,12 +70,13 @@ const ToolThumb = memo(({ tool, className = "w-11 h-11", emojiClassName = "text-
       width={64}
       height={64}
       onError={() => {
+        tried.current.add(src);
         const ytFallback = getYouTubeThumbnail(tool.videoUrl);
         // Try the YouTube thumbnail, then the tool's own site logo, and only
         // then fall back to the emoji tile.
-        if (ytFallback && src !== ytFallback) {
+        if (ytFallback && !tried.current.has(ytFallback)) {
           setOverride(ytFallback);
-        } else if (brandLogo && src !== brandLogo) {
+        } else if (brandLogo && !tried.current.has(brandLogo)) {
           setOverride(brandLogo);
         } else {
           setFailed(true);

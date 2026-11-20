@@ -1,6 +1,6 @@
 import { useParams, Navigate } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { allTools } from "@/data/toolsData";
+import { allTools, directoryTools } from "@/data/toolsData";
 import { generateToolSlug } from "@/utils/urlGenerator";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -175,12 +175,12 @@ const ToolDetail = () => {
       <div className="relative z-10 cyber-grid">
         <Header />
         
-        <div className="container mx-auto px-4 py-20">
+        <main className="container mx-auto px-4 py-20">
           <div className="max-w-4xl mx-auto">
             {/* Visual Breadcrumb Trail */}
             <BreadcrumbNav items={visualBreadcrumbItems} className="mb-4" />
             
-            <ToolPageHeader totalTools={allTools.length} />
+            <ToolPageHeader totalTools={directoryTools.length} />
 
             <div className="mb-6">
               <GlobalSearchBar />
@@ -265,7 +265,7 @@ const ToolDetail = () => {
               <ToolSearch 
                 searchTerm={searchTerm}
                 onSearchChange={handleSearchChange}
-                totalTools={allTools.length}
+                totalTools={directoryTools.length}
               />
             </DeferredMount>
 
@@ -282,7 +282,7 @@ const ToolDetail = () => {
               />
             </DeferredMount>
           </div>
-        </div>
+        </main>
 
         <Footer />
       </div>

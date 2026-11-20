@@ -1,3 +1,8 @@
+import { TOTAL_TOOLS as DIRECTORY_TOTAL } from "@/data/generated/toolCount";
+import chatgptImage from "@/assets/tools/chatgpt-clean.webp";
+import imageGuide from "@/assets/coloring-book-gpt-hero.jpg";
+import educationGuide from "@/assets/college-professor-gpt-hero.jpg";
+import agentGuide from "@/assets/architect-matrix-hero.jpg";
 export interface BlogPost {
   id: number;
   slug: string;
@@ -8,93 +13,46 @@ export interface BlogPost {
   readTime: string;
   keywords: string[];
   content: string;
+  updatedDate?: string;
+  imageUrl?: string;
 }
 
-export const blogPosts: BlogPost[] = [
+const archivedPosts: BlogPost[] = [
   {
     id: 1,
     slug: "gpt-5-release-date-features-guide",
-    title: "GPT-5 Release Date, Features & What We Know So Far (2025)",
-    excerpt: "Everything confirmed about OpenAI GPT-5: expected release date, new capabilities, multimodal features, and how it compares to GPT-4. Complete GPT-5 guide.",
+    title: "GPT-5 Has Launched: A Practical Guide to Choosing AI Tools",
+    excerpt: "GPT-5 is no longer a future release. Learn what to check before choosing a model, and why capabilities and access depend on the product and plan.",
     category: "AI News",
     publishDate: "2025-01-28",
-    readTime: "10 min",
-    keywords: ["GPT-5", "GPT-5 release date", "OpenAI GPT-5", "GPT-5 features", "ChatGPT 5"],
+    updatedDate: "2026-11-20",
+    readTime: "4 min",
+    keywords: ["GPT-5", "OpenAI", "ChatGPT", "AI tools", "model comparison"],
     content: `
-## What is GPT-5?
+## From a prediction to a released model
 
-GPT-5 is OpenAI's next-generation large language model, representing the most significant advancement in AI capabilities since GPT-4's release. As the successor to GPT-4, GPT-5 promises revolutionary improvements in reasoning, multimodal understanding, and real-world task completion.
+GPT-5 launched on August 7, 2025. Our original article looked ahead to a future release; that speculation is now out of date. This guide replaces those predictions rather than presenting them as confirmed capabilities.
 
-## GPT-5 Release Date: When Can We Expect It?
+## What matters when you choose an AI tool
 
-Based on OpenAI's development timeline and industry sources, **GPT-5 is expected to launch in mid-to-late 2025**. Sam Altman has confirmed that GPT-5 is in active development, with training likely completed in Q1 2025.
+Start with the work you want to do: writing a chapter, checking code, understanding a document, or researching a question. Compare the result on your own task, not just the model name.
 
-### Key Timeline Predictions:
-- **Q1 2025**: Training completion
-- **Q2 2025**: Internal testing and red-teaming
-- **Q3-Q4 2025**: Phased public release
+Capabilities, context limits, prices and availability differ between ChatGPT, the API, and other products using OpenAI models. Check [OpenAI's GPT-5 announcement](https://openai.com/index/introducing-gpt-5/?via=aiwebtools) and the provider's current documentation. Do not assume a chat model also includes unlimited image, video or voice generation.
 
-## Confirmed GPT-5 Features
+## Try before committing
 
-### 1. Advanced Reasoning Capabilities
-GPT-5 will feature significantly enhanced reasoning abilities, building on the chain-of-thought improvements seen in GPT-4. Early reports suggest GPT-5 can solve complex multi-step problems with near-human accuracy.
+- Use a small, representative task and check factual claims against original sources.
+- Keep sensitive data out of tools whose privacy terms you have not reviewed.
+- Check whether a free tier has message, credit or feature limits.
+- Save work outside the chat so a service interruption cannot erase your progress.
 
-### 2. True Multimodal Understanding
-Unlike GPT-4's image understanding, GPT-5 will offer:
-- Native video comprehension and generation
-- Real-time audio processing
-- Seamless switching between modalities
-- Enhanced image generation capabilities
+## Explore the directory
 
-### 3. Longer Context Windows
-GPT-5 is rumored to support context windows of **1 million+ tokens**, enabling:
-- Analysis of entire codebases
-- Full book comprehension
-- Extended conversation memory
+AI Web Tools lists ${DIRECTORY_TOTAL.toLocaleString("en-US")} distinct tools. [Browse the directory](/main-category/ALL%20AI%20TOOLS) or compare [ChatGPT](/chatgpt), [Claude](/claude), and [Gemini](/gemini).
 
-### 4. Improved Factual Accuracy
-OpenAI has focused heavily on reducing hallucinations in GPT-5, with early tests showing a 90%+ improvement in factual accuracy compared to GPT-4.
+Our custom GPT instructions are published openly so you can learn from them and run them with a model you choose. Hosted chat and audio depend on provider availability.
 
-## GPT-5 vs GPT-4: Key Differences
-
-| Feature | GPT-4 | GPT-5 (Expected) |
-|---------|-------|------------------|
-| Context Window | 128K tokens | 1M+ tokens |
-| Reasoning | Strong | PhD-level |
-| Multimodal | Image input | Full video/audio |
-| Speed | Moderate | 3x faster |
-| Accuracy | Good | Near-perfect |
-
-## How GPT-5 Will Change AI Tools
-
-The release of GPT-5 will transform the AI tools landscape. At **AI Web Tools**, we're tracking 2195+ AI tools, many of which will be upgraded to leverage GPT-5's capabilities:
-
-- **Writing Tools**: More nuanced, creative content generation
-- **Coding Assistants**: Better code understanding and generation
-- **Business Tools**: Enhanced decision-making support
-- **Creative Tools**: Higher quality image and video generation
-
-## Accessing GPT-5: What We Know
-
-GPT-5 access will likely follow OpenAI's traditional rollout:
-1. **ChatGPT Plus subscribers** get early access
-2. **API access** for developers
-3. **Enterprise tier** with advanced features
-4. **Free tier** with limited capabilities
-
-## Preparing for GPT-5
-
-To make the most of GPT-5 when it launches:
-1. Familiarize yourself with current GPT-4 capabilities
-2. Explore our [AI tool directory](/main-category/ALL%20AI%20TOOLS) to find tools that will upgrade
-3. Learn prompt engineering techniques that will transfer to GPT-5
-4. Consider upgrading to ChatGPT Plus for early access
-
-## Conclusion
-
-GPT-5 represents a massive leap forward for artificial intelligence. Whether you're a business owner, developer, or creative professional, GPT-5 will provide tools and capabilities that seemed impossible just years ago. Stay updated with AI Web Tools for the latest GPT-5 news and reviews.
-
-*Last updated: January 28, 2025*
+*Updated November 20, 2026. Original article published January 28, 2025.*
     `
   },
   {
@@ -3394,6 +3352,12 @@ Choose Midjourney for highest artistic quality and unique aesthetic. Choose DALL
   }
 ];
 
+export const blogPosts: BlogPost[] = archivedPosts.map(post => ({
+  ...post,
+  content: post.content.replace(/(?:2,195|2195|3,700|3700|5,500|5500)\+?\s+(?:AI |ai )?tools/gi, `${DIRECTORY_TOTAL.toLocaleString("en-US")} AI tools`),
+  imageUrl: post.slug.includes("gpt") || post.slug.includes("chat") ? chatgptImage : /image|art|design/i.test(post.title) ? imageGuide : /learn|education|course/i.test(post.title) ? educationGuide : agentGuide,
+})).sort((a, b) => (b.updatedDate || b.publishDate).localeCompare(a.updatedDate || a.publishDate));
+
 export const getBlogPostBySlug = (slug: string): BlogPost | undefined => {
   return blogPosts.find(post => post.slug === slug);
 };
@@ -3402,7 +3366,6 @@ export const getRelatedPosts = (currentSlug: string, limit: number = 3): BlogPos
   const currentPost = getBlogPostBySlug(currentSlug);
   if (!currentPost) return blogPosts.slice(0, limit);
   
-  return blogPosts
-    .filter(post => post.slug !== currentSlug && post.category === currentPost.category)
-    .slice(0, limit);
+  const others = blogPosts.filter(post => post.slug !== currentSlug);
+  return [...others.filter(post => post.category === currentPost.category), ...others.filter(post => post.category !== currentPost.category)].slice(0, limit);
 };

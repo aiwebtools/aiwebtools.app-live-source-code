@@ -14,6 +14,7 @@ const ToolCardMedia = ({ tool, isFeatured, imageHeight }: ToolCardMediaProps) =>
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isNearViewport, setIsNearViewport] = useState(false);
   const [imageFailed, setImageFailed] = useState(false);
+  const [thumbnailFailed, setThumbnailFailed] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   
   const videoId = getYouTubeId(tool.videoUrl);
@@ -28,7 +29,7 @@ const ToolCardMedia = ({ tool, isFeatured, imageHeight }: ToolCardMediaProps) =>
   const hasImage = !!resolvedImageUrl && !imageFailed;
   
   // Effective image for display (Image -> YT Thumb -> Fallback)
-  const effectiveImageUrl = hasImage ? resolvedImageUrl : youtubeThumbnail;
+  const effectiveImageUrl = hasImage ? resolvedImageUrl : thumbnailFailed ? undefined : youtubeThumbnail;
   // No hero image and no video: show the tool's OWN site logo on a branded
   // tile so every card still previews the real product.
   const brandLogo = !effectiveImageUrl ? getBrandLogo(tool.directUrl, 256) : undefined;
@@ -86,6 +87,7 @@ const ToolCardMedia = ({ tool, isFeatured, imageHeight }: ToolCardMediaProps) =>
               alt={`${tool.title} video thumbnail`}
               className="absolute inset-0 w-full h-full object-cover"
               loading="eager"
+              onError={() => setThumbnailFailed(true)}
             />
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-900 animate-pulse" />
@@ -101,7 +103,7 @@ const ToolCardMedia = ({ tool, isFeatured, imageHeight }: ToolCardMediaProps) =>
         <iframe
           width="100%"
           height="100%"
-          src={getOptimizedEmbedUrl(tool.videoUrl!)}
+          src={getOptimizedEmbedUrl(tool.videoUrl || "")}
           title={`${tool.title} Demo`}
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
@@ -113,7 +115,7 @@ const ToolCardMedia = ({ tool, isFeatured, imageHeight }: ToolCardMediaProps) =>
         <iframe
           width="100%"
           height="100%"
-          src={getOptimizedEmbedUrl(tool.videoUrl!)}
+          src={getOptimizedEmbedUrl(tool.videoUrl || "")}
           title={`${tool.title} Demo`}
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
@@ -131,7 +133,7 @@ const ToolCardMedia = ({ tool, isFeatured, imageHeight }: ToolCardMediaProps) =>
             loading="eager"
             decoding="async"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            onError={() => setImageFailed(true)}
+            onError={() => { if (hasImage) setImageFailed(true); else setThumbnailFailed(true); }}
           />
           {imageFailed && (
             <div className="absolute inset-0 flex items-center justify-center text-6xl opacity-50">
@@ -141,6 +143,7 @@ const ToolCardMedia = ({ tool, isFeatured, imageHeight }: ToolCardMediaProps) =>
         </>
       ) : brandLogo ? (
         <div className="w-full h-full flex flex-col items-center justify-center gap-2 px-3 text-center">
+          <span aria-hidden="true" className="text-3xl">{tool.emoji || tool.title.slice(0, 2)}</span>
           <img
             src={brandLogo}
             alt={`${tool.title} logo`}

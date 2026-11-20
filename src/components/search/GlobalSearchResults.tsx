@@ -148,6 +148,8 @@ const GlobalSearchResults = ({
                     size="sm"
                     variant="outline"
                     className="border-green-400/50 bg-green-400/10 text-green-300 hover:bg-green-400/20 hover:border-green-400 text-xs px-2 py-1 h-auto flex-shrink-0"
+                    aria-label={`Open ${tool.title} provider website in a new tab`}
+                    title={`Open ${tool.title} provider website`}
                     onClick={(e) => onDirectAccess(tool, e)}
                   >
                     🚀

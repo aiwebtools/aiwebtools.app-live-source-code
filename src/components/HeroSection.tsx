@@ -68,7 +68,7 @@ const HeroSection = () => {
         </h1>
         
         {/* Main heading with stabilized layout */}
-        <div className="mb-6">
+        <div className="mb-6 hero-clean-title">
           <div className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight" role="heading" aria-level={2}>
             {/* First line - Animated between tool count and brand name */}
             <div className="relative h-20 md:h-24 lg:h-28 mb-3 flex items-center justify-center">
@@ -91,7 +91,7 @@ const HeroSection = () => {
             </div>
             
             {/* Second line with animated word - FIXED width container to prevent jumping */}
-            <span className="text-3xl md:text-4xl lg:text-5xl text-white block">
+            <span className="text-3xl md:text-4xl lg:text-5xl text-foreground flex flex-wrap justify-center items-center gap-y-2">
               <span 
                 className="bg-gradient-to-r from-green-400 via-emerald-500 to-green-600 bg-clip-text text-transparent hero-animated-word hero-stroke-text inline-block transitioning-word"
                 style={{ 
@@ -151,8 +151,8 @@ const HeroSection = () => {
             <div className="text-green-200 text-sm">AI WEB TOOLS</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent" style={{ textShadow: '0 0 15px rgba(0, 255, 0, 0.3)' }}>100%</div>
-            <div className="text-green-200 text-sm">Free AI Web Tool Resources</div>
+            <div className="text-2xl md:text-3xl font-bold text-primary">Open access</div>
+            <div className="text-foreground text-sm">Browse free · tool pricing varies</div>
           </div>
           <div className="text-center">
             <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent" style={{ textShadow: '0 0 15px rgba(0, 255, 0, 0.3)' }}>24/7</div>
