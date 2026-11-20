@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
-import { Loader2, Play, X } from "lucide-react";
+import { LayoutGrid, Loader2, Play, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MTV_CHANNEL_PATH, gateOpeningEventAction, selectGateShort, type GateClip } from "@/utils/gateOpening";
 import { navigateInApp } from "@/utils/inAppNavigate";
@@ -97,9 +97,19 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
   }, [clip, command, finish, subscribe, startWithSound]);
 
   return <div role="dialog" aria-modal="true" aria-label="MTVAI opening" data-leaving={leaving} className="mtv-opening fixed inset-0 z-[2147483647] flex flex-col items-center justify-center gap-3 bg-background px-4 py-4 text-foreground">
-    <span className="mtv-rise font-mono text-sm tracking-[0.28em] text-primary" style={{ animationDelay: "0s" }}>MTVAI.live</span>
+    <div aria-hidden="true" className="mtv-burst pointer-events-none absolute inset-0 z-20 overflow-hidden">
+      <span className="mtv-burst-flash" />
+      <span className="mtv-burst-ring" />
+      <span className="mtv-burst-ring mtv-burst-ring-2" />
+      {Array.from({ length: 14 }, (_, i) => <span key={i} className="mtv-burst-ray" style={{ transform: `rotate(${i * (360 / 14)}deg)` }} />)}
+      <span className="mtv-burst-word font-mono">MTVAI</span>
+    </div>
+    <div className="mtv-rise flex flex-col items-center gap-0.5 text-center" style={{ animationDelay: "0s" }}>
+      <span className="font-mono text-sm tracking-[0.28em] text-primary">MTVAI.live</span>
+      <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Presented by aiwebtools.app · 5,500+ AI Tools</span>
+    </div>
     <p style={{ animationDelay: "0s" }} className="mtv-rise w-full max-w-sm text-center text-sm leading-relaxed text-foreground">This music video was made by a rogue AI music video agent all by itself.....sorta.</p>
-    <div style={{ animationDelay: "0s" }} className="mtv-rise relative aspect-[9/16] max-h-[calc(100dvh-17rem)] w-full max-w-sm overflow-hidden rounded-xl border border-primary/25 bg-muted shadow-[0_0_45px_hsl(var(--primary)/.18)]">
+    <div style={{ animationDelay: "0s" }} className="mtv-rise relative aspect-[9/16] max-h-[calc(100dvh-21rem)] w-full max-w-sm overflow-hidden rounded-xl border border-primary/25 bg-muted shadow-[0_0_45px_hsl(var(--primary)/.18)]">
       {!started && <div role="status" aria-label="Loading MTVAI opening" className="pointer-events-none absolute inset-0 z-10 grid place-items-center"><Loader2 className="h-7 w-7 animate-spin motion-reduce:animate-none text-primary" /></div>}
       {clip && <iframe
         ref={frame}
@@ -123,6 +133,14 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
       >
         <X className="h-7 w-7" strokeWidth={2.4} aria-hidden="true" />
         Skip
+      </Button>
+      <Button
+        onClick={finish}
+        aria-label="View all AI tools"
+        className="h-12 w-full max-w-xs gap-2 rounded-full text-base font-bold tracking-wide shadow-[0_0_30px_hsl(var(--primary)/.35)]"
+      >
+        <LayoutGrid className="h-5 w-5" aria-hidden="true" />
+        VIEW ALL AI TOOLS
       </Button>
       <a
         href={MTV_CHANNEL_PATH}
