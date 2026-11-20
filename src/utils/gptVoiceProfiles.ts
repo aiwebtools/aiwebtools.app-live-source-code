@@ -25,6 +25,15 @@ const BLUEPRINTS: Record<string, VoiceBlueprint> = {
   concierge: { voice: "alloy", speed: 1.02, instructions: "Speak like a polished AIWebTools concierge: welcoming, knowledgeable, concise, and upbeat." },
 };
 
+const ALL_VOICES: GptVoiceProfile["voice"][] = ["alloy", "ash", "ballad", "coral", "echo", "fable", "nova", "onyx", "sage", "shimmer", "verse"];
+const ROLE_VOICES: Record<keyof typeof BLUEPRINTS, GptVoiceProfile["voice"][]> = {
+  historian: ["fable", "onyx", "sage", "ballad"], scientist: ["echo", "fable", "ash", "nova"], mystic: ["ballad", "shimmer", "sage", "onyx"],
+  medical: ["sage", "nova", "coral", "echo"], legal: ["onyx", "ash", "echo", "sage"], finance: ["ash", "alloy", "echo", "nova"],
+  engineer: ["echo", "ash", "alloy", "verse"], guardian: ["onyx", "ash", "echo"], cinematic: ["verse", "coral", "fable", "shimmer", "ash"],
+  creative: ["coral", "shimmer", "verse", "nova", "ballad"], teacher: ["nova", "coral", "fable", "sage", "alloy"], nature: ["sage", "ash", "coral", "fable"],
+  builder: ["ash", "onyx", "echo", "alloy"], concierge: ALL_VOICES,
+};
+
 const RULES: Array<[RegExp, keyof typeof BLUEPRINTS]> = [
   [/einstein|tesla|scientist|science|quantum|physic|space|stellar|probabil|genome|research|data|fact.?check/i, "scientist"],
   [/time.?machine|history|historical|titanic|ancient|archaeolog|apothecary|alchemist|native.?american|resurrect/i, "historian"],
@@ -81,12 +90,17 @@ export const getGptVoiceProfile = (slug = "", displayName = "", category = ""): 
   const name = (displayName || slug || "AIWebTools concierge").replace(/\s+/g, " ").trim().slice(0, 80);
   // Stable delivery signatures distinguish bots sharing one of the hosted base voices.
   const signature = [...identity.toLowerCase()].reduce((hash, char) => (hash * 31 + char.charCodeAt(0)) >>> 0, 0);
-  const delivery = ["warmly intimate", "gently animated", "thoughtfully expressive", "quietly magnetic", "brightly curious", "calmly assured"][signature % 6];
+  const delivery = ["warmly intimate", "gently animated", "thoughtfully expressive", "quietly magnetic", "brightly curious", "calmly assured", "playfully witty", "softly confident", "richly resonant", "crisply energetic"][signature % 10];
+  const timbre = ["a slightly lower, mellow tone", "a light, airy tone", "a rich, rounded tone", "a crisp, clear tone", "a smoky, relaxed tone", "a bright, youthful tone", "a mature, seasoned tone"][Math.floor(signature / 10) % 7];
+  // Bots without a hand-cast voice get a stable, role-compatible voice of their own instead of one shared default.
+  const castVoice = special.voice ?? ROLE_VOICES[key][Math.floor(signature / 70) % ROLE_VOICES[key].length];
+  const castSpeed = special.speed ?? cast.speed + ((Math.floor(signature / 7) % 5) - 2) * 0.02;
   return {
     ...base,
     label: `${key.charAt(0).toUpperCase()}${key.slice(1)} voice`,
     ...special,
-    speed: Math.max(0.96, cast.speed),
-    instructions: `Voice role: ${name}. ${cast.instructions} Delivery: ${delivery}. Speak naturally to one person; varied intonation, connected phrases, subtle emotion. No robotic rhythm, caricature or overacting.`.slice(0, 600),
+    voice: castVoice,
+    speed: Math.max(0.96, castSpeed),
+    instructions: `Voice role: ${name}. ${cast.instructions} Delivery: ${delivery}${special.voice ? "" : `, with ${timbre}`}. Speak naturally to one person; varied intonation, connected phrases, subtle emotion. No robotic rhythm, caricature or overacting.`.slice(0, 600),
   };
 };

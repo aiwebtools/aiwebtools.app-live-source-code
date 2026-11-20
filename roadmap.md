@@ -252,6 +252,6 @@
 - [x] 2 Category search uses category AND search; "movie script" shows 1 of 1; empty state
 - [x] 3 PDF/Word buttons unobscured; real PDF/DOCX downloads tested
 - [ ] 4 AI sound effects — blocked: linked ElevenLabs account has 0 credits; honest local WAV fallback works, AI retried every press
-- [x] 5 Bots speak with Voice Studio voices (stream tested); basic voice only on real credit exhaustion
+- [x] 5 Every bot gets its own stable studio voice (all 11 used) + own tone; basic voice only on real credit exhaustion
 - [x] 6 Seven exact links in footer + MTVai YouTube buttons
 - [x] 7 "Opening the Matrix" route text removed; quick-load spinner only after 1.2s

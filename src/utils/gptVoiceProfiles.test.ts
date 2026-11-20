@@ -41,4 +41,11 @@ describe("bot voice casting", () => {
     expect(first.instructions).toContain("Book Writer GPT");
     expect(first.instructions.length).toBeLessThanOrEqual(600);
   });
+  it("bots without a hand-cast voice spread across all eleven studio voices", () => {
+    const voices = new Set(Array.from({ length: 200 }, (_, i) => getGptVoiceProfile(`community-bot-${i}`, `Helper ${i} GPT`).voice));
+    expect(voices.size).toBe(11);
+  });
+  it("each bot keeps the same voice every time", () => {
+    expect(getGptVoiceProfile("trader-gpt", "Trader GPT")).toEqual(getGptVoiceProfile("trader-gpt", "Trader GPT"));
+  });
 });
