@@ -1,5 +1,15 @@
 # Roadmap
 
+## November 20 20:03 combined 12-item repair — plan first, owner publishes
+- [ ] 1: restore once-per-browser 1111 gate, persistent unlock and session backup; no automatic music opener.
+- [ ] 2,6,11: widen embedded desktop studio, readable titles/composer, accessible PDF/DOCX downloads and header-safe scrolling.
+- [ ] 3: free local speech and synthesized sound fallback with real audio downloads; verify provider-failure paths.
+- [ ] 4,5: canonical writing aliases/shared counts and live Browse All filtering; preserve source records.
+- [ ] 7: shared real review averages/counts; no fabricated votes or contradictory empty state.
+- [ ] 8,9: clear featured screenplay/version grouping and scoped literal single-scene execution, preserve original instructions.
+- [ ] 10,12: enforce/disclose 10 daily free runs if no limit exists; accurate provider disclosure and confirmed device-local history clearing.
+- [ ] Verify all 12 at 1919px and mobile, downloads/audio/live replies and focused tests; report limitations; do not publish.
+
 ## November 20 complete correction pass — publish once
 - [x] 1,18: direct desktop/phone entry; real policy overrides static sitemap shell.
 - [x] 2,6,10,14: playable real primary/fallback TTS, honest audio errors, local explanation, bounded Care Bot (3.6–4.4s), live Bionic chat spacing, usable attachments and route-closing GPT menus.
