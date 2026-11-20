@@ -82,6 +82,11 @@ const BootFallback = ({ failed = false }: { failed?: boolean }) => (
 );
 
 const root = createRoot(rootElement);
+// Download the homepage graph alongside App instead of starting only after App
+// and all its providers have loaded. Other deep links keep their own route load.
+if (window.location.pathname === '/') {
+  void import('./pages/Index').catch(() => { /* route retry handles a failed preload */ });
+}
 // NOTE: do NOT render a boot fallback here — index.html already shows the
 // matrix loading spinner inside #root until React mounts. Rendering another
 // fallback would create a second visible loading screen.

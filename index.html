@@ -173,7 +173,7 @@
         font-family: 'Share Tech Mono','Courier New',monospace;
         opacity: 1; visibility: visible;
         pointer-events: none;
-        transition: opacity 0.82s cubic-bezier(.2,.9,.18,1), visibility 0.82s ease, filter 0.82s ease;
+        transition: opacity 0.2s cubic-bezier(.2,.9,.18,1), visibility 0.2s ease, filter 0.82s ease;
         -webkit-transform: translateZ(0); transform: translateZ(0);
       }
       .loading-spinner.portal-opening { filter: brightness(1.22) contrast(1.08); }
@@ -431,7 +431,7 @@
            const IS_TOUCH = ('ontouchstart' in window) || (navigator.maxTouchPoints || 0) > 0;
            // Keep the cinematic entry, but never leave an invisible full-screen
            // hit target over an already-interactive directory.
-           const MIN_BOOT_MS = IS_TOUCH ? 1400 : 1200;
+           const MIN_BOOT_MS = 0;
            const MAX_BOOT_MS = 5000;
            const FINISH_DELAY_MS = 100;
 
@@ -584,7 +584,7 @@
               if (root && root.children.length && (rootText.length > 0 || root.querySelector('header, main, nav, section, article, h1, h2, button, a, input'))) {
                 trace('watchdog-found-content');
                 routeReady = true;
-                requestFinish('watchdog-found-content');
+                hardRemoveSpinner('watchdog-found-content');
                 return;
               }
               trace('watchdog-recovery-panel');
@@ -710,6 +710,257 @@
 </head>
   <body>
     <div id="root"></div>
+    <div class="loading-spinner" id="aiwt-loader-overlay" aria-live="polite" aria-busy="true">
+      <canvas id="aiwt-matrix-canvas"></canvas>
+      <div class="aiwt-grid-glow"></div>
+      <canvas id="aiwt-hypercube-canvas"></canvas>
+      <canvas id="aiwt-burst-canvas"></canvas>
+      <div class="aiwt-scanlines"></div>
+      <div class="aiwt-vignette"></div>
+      <div class="aiwt-welcome" aria-hidden="true">Welcome Neo</div>
+      <span class="aiwt-corner aiwt-corner-tl"></span>
+      <span class="aiwt-corner aiwt-corner-tr"></span>
+      <span class="aiwt-corner aiwt-corner-bl"></span>
+      <span class="aiwt-corner aiwt-corner-br"></span>
+      <div class="aiwt-binary-strip" id="aiwt-binary-strip"></div>
+      <div class="aiwt-ui">
+        <div class="aiwt-logo-wrap">
+          <div class="aiwt-logo" data-text="AIWEBTOOLS.AI">AIWEBTOOLS.AI</div>
+          <div class="aiwt-subtitle">5,437 AI Tools · Entering The Matrix</div>
+        </div>
+        <div class="aiwt-center-stage">
+          <div class="aiwt-hud-card">
+            <div class="aiwt-cube-label">PANDORA · AI VECTOR CORE</div>
+            <img src="/src/assets/pandora-gate-panel.jpg" alt="Pandora box" width="180" height="101" style="position:absolute;top:32px;left:50%;transform:translateX(-50%);width:120px;height:68px;object-fit:cover;opacity:.85">
+            <div class="aiwt-hud-ring"></div>
+            <div class="aiwt-cube-caption">
+              <div class="aiwt-mini-stat">X/Y/Z<strong id="aiwt-coord-a">0.000</strong></div>
+              <div class="aiwt-mini-stat">W/V AXIS<strong id="aiwt-coord-b">0.000</strong></div>
+              <div class="aiwt-mini-stat">FOLD RATE<strong id="aiwt-coord-c">0.000</strong></div>
+            </div>
+          </div>
+          <div class="aiwt-terminal">
+            <div class="aiwt-terminal-header">
+              <span class="aiwt-dot"></span><span class="aiwt-dot"></span><span class="aiwt-dot"></span>
+              <span class="aiwt-terminal-title">SYSTEM BOOT — v2026.1.0</span>
+            </div>
+            <div class="aiwt-terminal-lines" id="aiwt-terminal-lines"><span class="aiwt-cursor" id="aiwt-cursor"></span></div>
+          </div>
+        </div>
+        <div class="aiwt-bottom-panel">
+          <div class="aiwt-progress-wrap progress-wrap">
+            <div class="aiwt-progress-label">
+              <span id="aiwt-progress-label">INITIALIZING NEURAL CORE</span>
+              <span id="progress-pct">0%</span>
+            </div>
+            <div class="aiwt-progress-track">
+              <div class="progress-bar" id="progress-bar"></div>
+              <div class="aiwt-progress-segments" id="aiwt-progress-segments"></div>
+            </div>
+          </div>
+          <div class="aiwt-stats-row">
+            <div class="aiwt-stat-box"><span class="aiwt-stat-label">AI Tools Indexed</span><span class="aiwt-stat-value" id="aiwt-stat-tools">5,437</span></div>
+            <div class="aiwt-stat-box"><span class="aiwt-stat-label">Nodes Active</span><span class="aiwt-stat-value" id="aiwt-stat-nodes">0</span></div>
+            <div class="aiwt-stat-box"><span class="aiwt-stat-label">Latency</span><span class="aiwt-stat-value" id="aiwt-stat-latency">-- ms</span></div>
+            <div class="aiwt-stat-box"><span class="aiwt-stat-label">Entering In</span><span class="aiwt-stat-value" id="progress-sec">3s</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var overlay = document.getElementById('aiwt-loader-overlay');
+        if (!overlay) return;
+        var matrixCanvas = document.getElementById('aiwt-matrix-canvas');
+        var cubeCanvas = document.getElementById('aiwt-hypercube-canvas');
+        var burstCanvas = document.getElementById('aiwt-burst-canvas');
+        var matrixCtx = matrixCanvas.getContext('2d');
+        var cubeCtx = cubeCanvas.getContext('2d');
+        var burstCtx = burstCanvas.getContext('2d');
+        if (!matrixCtx || !cubeCtx || !burstCtx) { overlay.classList.add("aiwt-no-canvas"); return; }
+        var terminalLines = document.getElementById('aiwt-terminal-lines');
+        var cursor = document.getElementById('aiwt-cursor');
+        var progressLabel = document.getElementById('aiwt-progress-label');
+        var statTools = document.getElementById('aiwt-stat-tools');
+        var statNodes = document.getElementById('aiwt-stat-nodes');
+        var statLatency = document.getElementById('aiwt-stat-latency');
+        var coordA = document.getElementById('aiwt-coord-a');
+        var coordB = document.getElementById('aiwt-coord-b');
+        var coordC = document.getElementById('aiwt-coord-c');
+        var progressSegments = document.getElementById('aiwt-progress-segments');
+        for (var i = 0; i < 24; i++) {
+          var seg = document.createElement('div'); seg.className = 'aiwt-seg'; progressSegments.appendChild(seg);
+        }
+        var CHARS = 'AIWEBTOOLSｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄ0123456789@#$%&<>[]{}|∆∞◈⟨⟩≈≡∑∏√∂';
+        var BOOT_LINES = [
+          { pct:5,  label:'INITIALIZING NEURAL CORE',  html:'<span class="aiwt-prompt">▶</span> <span class="aiwt-dim">AIWEBTOOLS.AI NEURAL BOOT v2026.1</span>' },
+          { pct:14, label:'ESTABLISHING CONNECTION',   html:'<span class="aiwt-prompt">▶</span> Establishing encrypted connection...' },
+          { pct:24, label:'LOADING AI INDEX',          html:'<span class="aiwt-prompt">▶</span> Loading AI index manifest... <span class="aiwt-ok">[OK]</span>' },
+          { pct:35, label:'SYNCING TOOL DATABASE',     html:'<span class="aiwt-prompt">▶</span> Syncing <span class="aiwt-data">5,437</span> verified AI tools...' },
+          { pct:46, label:'COUNTING TOOLS',            html:'<span class="aiwt-prompt">▶</span> Counting every tool in the directory...' },
+          { pct:58, label:'INDEXING SEARCH',           html:'<span class="aiwt-prompt">▶</span> Preparing instant search results...' },
+          { pct:70, label:'WARMING PORTAL',            html:'<span class="aiwt-prompt">▶</span> Warming the AIWebTools portal...' },
+          { pct:82, label:'COMPILING SEARCH VECTORS',  html:'<span class="aiwt-prompt">▶</span> Compiling search vectors... <span class="aiwt-ok">[OK]</span>' },
+          { pct:92, label:'AI RECOMMENDATION ENGINE',  html:'<span class="aiwt-prompt">▶</span> AI recommendation engine: <span class="aiwt-ok">READY</span>' },
+          { pct:100,label:'WELCOME NEO',               html:'<span class="aiwt-prompt">▶</span> <span class="aiwt-data">WELCOME NEO</span> — Portal opening now.' }
+        ];
+        var vw=0, vh=0, dpr=1, fontSize=16, cubeScale=.155, fade=.055, columns=0, drops=[], speeds=[], cubeAngle=0, burst=[];
+        function settings(){ var w=window.innerWidth; if(w<=480)return{f:12,c:.118,fd:.075}; if(w<=768)return{f:14,c:.13,fd:.068}; if(w<=1200)return{f:17,c:.155,fd:.056}; return{f:19,c:.168,fd:.048}; }
+        function resize(){
+          var s=settings(); fontSize=s.f; cubeScale=s.c; fade=s.fd;
+          // One device pixel is enough for the transient phone loader and cuts
+          // its three-canvas paint workload by up to 75% during first scroll.
+          dpr=window.innerWidth<=768?1:Math.min(window.devicePixelRatio||1,1.5); vw=window.innerWidth; vh=window.innerHeight;
+          [matrixCanvas,cubeCanvas,burstCanvas].forEach(function(c){
+            c.width=Math.floor(vw*dpr); c.height=Math.floor(vh*dpr);
+            c.style.width=vw+'px'; c.style.height=vh+'px';
+          });
+          matrixCtx.setTransform(dpr,0,0,dpr,0,0); cubeCtx.setTransform(dpr,0,0,dpr,0,0); burstCtx.setTransform(dpr,0,0,dpr,0,0);
+          columns=Math.max(1,Math.floor(vw/fontSize));
+          drops=Array.from({length:columns},function(){return Math.random()*-vh/fontSize;});
+          speeds=Array.from({length:columns},function(){return .76+Math.random()*.82;});
+        }
+        var lastMatrix=0;
+        function drawMatrix(ts){
+          if(!overlay.isConnected || overlay.classList.contains('fade-out')) return;
+           // Keep visible motion without starving React during first interaction.
+           if(ts && ts-lastMatrix < (vw<=768?34:24)){ requestAnimationFrame(drawMatrix); return; }
+          var delta = lastMatrix ? Math.min(2.2, Math.max(.7, ((ts || lastMatrix) - lastMatrix) / 22)) : 1;
+          lastMatrix = ts || 0;
+          matrixCtx.fillStyle='rgba(0,0,0,'+fade+')'; matrixCtx.fillRect(0,0,vw,vh);
+          matrixCtx.textBaseline='top';
+          for(var i=0;i<drops.length;i++){
+            var x=i*fontSize, y=drops[i]*fontSize;
+            matrixCtx.font='bold '+fontSize+'px "Share Tech Mono",monospace';
+            matrixCtx.fillStyle='rgba(210,255,224,'+(Math.random()*.28+.7)+')';
+            matrixCtx.fillText(CHARS[Math.floor(Math.random()*CHARS.length)],x,y);
+            matrixCtx.font=fontSize+'px "Share Tech Mono",monospace';
+            matrixCtx.fillStyle='rgba(0,'+Math.floor(Math.random()*90+160)+','+Math.floor(Math.random()*45+28)+','+(Math.random()*.32+.44)+')';
+            matrixCtx.fillText(CHARS[Math.floor(Math.random()*CHARS.length)],x,y-fontSize);
+            if(Math.random()>.72){
+              matrixCtx.fillStyle='rgba(0,255,65,'+(Math.random()*.22+.16)+')';
+              matrixCtx.fillText(CHARS[Math.floor(Math.random()*CHARS.length)],x,y-fontSize*2);
+            }
+            if(y>vh&&Math.random()>.974) drops[i]=0;
+            drops[i]+=speeds[i]*delta;
+          }
+          requestAnimationFrame(drawMatrix);
+        }
+        // 5D hypercube
+        var points=[]; for(var a=-1;a<=1;a+=2)for(var b=-1;b<=1;b+=2)for(var c=-1;c<=1;c+=2)for(var d=-1;d<=1;d+=2)for(var e=-1;e<=1;e+=2)points.push([a,b,c,d,e]);
+        var edges=[]; for(var i=0;i<points.length;i++)for(var j=i+1;j<points.length;j++){var df=0;for(var k=0;k<5;k++)if(points[i][k]!==points[j][k])df++;if(df===1)edges.push([i,j]);}
+        function rot(p,q,t){var co=Math.cos(t),si=Math.sin(t);return[p*co-q*si,p*si+q*co];}
+        function project(pt){
+          var x=pt[0],y=pt[1],z=pt[2],w=pt[3],v=pt[4],r;
+          r=rot(x,y,cubeAngle*.74); x=r[0]; y=r[1];
+          r=rot(z,w,cubeAngle*.62); z=r[0]; w=r[1];
+          r=rot(x,z,cubeAngle*.48); x=r[0]; z=r[1];
+          r=rot(y,w,cubeAngle*.38); y=r[0]; w=r[1];
+          r=rot(x,v,cubeAngle*.29); x=r[0]; v=r[1];
+          r=rot(w,v,cubeAngle*.21); w=r[0]; v=r[1];
+          var s5=3.2/(3.2-v); x*=s5; y*=s5; z*=s5; w*=s5;
+          var s4=4.15/(4.15-w); x*=s4; y*=s4; z*=s4;
+          var s3=5.1/(5.1-z);
+          var fs=Math.min(vw,vh)*cubeScale*s3;
+          var yo=vw<=900?-vh*.12:-vh*.04;
+          return{x:vw/2+x*fs,y:vh/2+yo+y*fs,depth:s3*s4*s5};
+        }
+        function drawCube(){
+          if(!overlay.isConnected || overlay.classList.contains('fade-out')) return;
+          cubeCtx.clearRect(0,0,vw,vh);
+          var proj=points.map(project);
+          cubeCtx.save(); cubeCtx.globalCompositeOperation='lighter';
+          edges.forEach(function(ed){
+            var p1=proj[ed[0]], p2=proj[ed[1]], gl=Math.min(1,(p1.depth+p2.depth)/3.1);
+            cubeCtx.beginPath(); cubeCtx.moveTo(p1.x,p1.y); cubeCtx.lineTo(p2.x,p2.y);
+            cubeCtx.strokeStyle='rgba(0,255,65,'+(.18+gl*.6)+')'; cubeCtx.lineWidth=.9+gl*2.0;
+            cubeCtx.stroke();
+          });
+          proj.forEach(function(p,idx){
+            var pu=Math.sin(cubeAngle*6+idx)*.5+.5, rad=Math.max(1.4,1.7+p.depth*1.55+pu*1.25);
+            cubeCtx.beginPath(); cubeCtx.arc(p.x,p.y,rad,0,Math.PI*2);
+            cubeCtx.fillStyle='rgba(190,255,210,'+(.48+pu*.5)+')';
+            cubeCtx.fill();
+          });
+          cubeCtx.restore();
+          cubeAngle+=vw<=560?.0085:.0115;
+          requestAnimationFrame(drawCube);
+        }
+        function drawBurst(){
+          if(!overlay.isConnected || overlay.classList.contains('fade-out')) return;
+          // No active particles → skip the rAF entirely. The pointerdown
+          // handler restarts the loop. Saves ~1 rAF/frame of idle main-thread
+          // work before React mounts.
+          if(burst.length===0){ burstRunning=false; return; }
+          burstCtx.clearRect(0,0,vw,vh);
+          for(var i=burst.length-1;i>=0;i--){
+            var p=burst[i]; p.x+=p.vx; p.y+=p.vy; p.life-=1; p.size*=.985;
+            burstCtx.beginPath(); burstCtx.arc(p.x,p.y,p.size,0,Math.PI*2);
+            burstCtx.fillStyle='rgba(0,255,65,'+Math.max(0,p.life/p.maxLife)+')';
+            burstCtx.fill();
+            if(p.life<=0) burst.splice(i,1);
+          }
+          requestAnimationFrame(drawBurst);
+        }
+        var burstRunning=false;
+        function startBurst(){ if(!burstRunning){ burstRunning=true; requestAnimationFrame(drawBurst); } }
+        overlay.addEventListener('pointerdown',function(ev){
+          for(var n=0;n<46;n++){var ang=Math.random()*Math.PI*2,sp=Math.random()*5+1.2;
+            burst.push({x:ev.clientX,y:ev.clientY,vx:Math.cos(ang)*sp,vy:Math.sin(ang)*sp,size:Math.random()*2.8+1.2,life:Math.floor(Math.random()*28+18),maxLife:46});}
+          var col=Math.floor(ev.clientX/fontSize);
+          for(var k=Math.max(0,col-8);k<Math.min(drops.length,col+8);k++) drops[k]=Math.random()*-8;
+          startBurst();
+        });
+        // Binary strip
+        var strip=document.getElementById('aiwt-binary-strip');
+        function bin(){var o='';for(var i=0;i<130;i++)o+=(Math.random()>.5?'1':'0')+' ';return o;}
+        for(var b=0;b<4;b++){var sp=document.createElement('span');sp.textContent=bin();sp.style.animationDelay=(b*1.2)+'s';strip.appendChild(sp);}
+        setInterval(function(){if(!overlay.isConnected || overlay.classList.contains('fade-out'))return;strip.querySelectorAll('span').forEach(function(s){s.textContent=bin();});},1800);
+        // Terminal lines progressive
+        function addLine(html){
+          var ln=document.createElement('span'); ln.className='aiwt-line'; ln.innerHTML=html;
+          terminalLines.insertBefore(ln,cursor);
+          var all=terminalLines.querySelectorAll('.aiwt-line');
+          var maxL=window.innerWidth<=560?6:window.innerWidth<=900?7:8;
+          if(all.length>maxL) all[0].remove();
+        }
+        // Boot sequence — paced over a target while the watchdog drives real progress width.
+        window.__aiwtBootLabel = function(text){ if(progressLabel) progressLabel.textContent = text; };
+        var TARGET_MS = 1200;
+        BOOT_LINES.forEach(function(line,idx){
+          var delay = Math.round(TARGET_MS * (idx / (BOOT_LINES.length-1)));
+          setTimeout(function(){
+            if(!overlay.isConnected || overlay.classList.contains('fade-out')) return;
+            addLine(line.html);
+            if(progressLabel) progressLabel.textContent = line.label;
+          },delay);
+        });
+        // Counter & coords loop
+        var startedAt = performance.now();
+        var statsInt = setInterval(function(){
+          if(!overlay.isConnected || overlay.classList.contains('fade-out')){clearInterval(statsInt);return;}
+          var elapsed=performance.now()-startedAt, ratio=Math.min(1,elapsed/TARGET_MS);
+          statTools.textContent = '5,437';
+          statNodes.textContent = Math.min(180,Math.floor(180*Math.pow(ratio,.86))).toLocaleString();
+          statLatency.textContent = Math.floor(Math.random()*10+3)+' ms';
+          coordA.textContent = (Math.sin(cubeAngle)*.5+.5).toFixed(3);
+          coordB.textContent = (Math.cos(cubeAngle*.74)*.5+.5).toFixed(3);
+          coordC.textContent = (Math.sin(cubeAngle*1.33)*.5+.5).toFixed(3);
+        },140);
+        // Initial paint — defer heavy canvas work one frame so the overlay
+        // (logo, terminal, progress bar) paints instantly. This fixes the
+        // perceived "slow to open" delay where the screen stayed black while
+        // the matrix/cube/burst canvases initialized synchronously.
+        requestAnimationFrame(function(){
+          resize();
+          requestAnimationFrame(drawMatrix);
+          requestAnimationFrame(drawCube);
+        });
+        var rt;
+        window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(resize,120);});
+      })();
+    </script>
+
     <!-- ElevenLabs widget removed (paused subscription) -->
 
     <!-- Scripts -->

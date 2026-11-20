@@ -1,5 +1,11 @@
 # Roadmap
 
+## November 20 22:50 opening restoration — no publication requested
+- [x] Disable PIN requirement without undoing verified directory/chat fixes.
+- [x] Restore original immediate Matrix/Pandora loader; remove artificial minimum hold and stop animations when removed. Preload homepage concurrently with App; visible Pandora fallback replaces the invisible wait after Skip.
+- [x] Restore once-per-session homepage MTVAI music opening with branding, automatic end dismissal, Skip and View All AI Tools.
+- [x] 18 regressions pass; fresh desktop/501px phone show custom loader in 0.29–0.74s and real unmuted video with advancing time/readyState 4. View All, scoped end event, blog/reload/session behavior pass; screenshots reviewed, no page errors, build OK. Cold preview homepage still takes ~21s to finish its dependency graph; no claim that total loading is instant or published speed improved. Browser restrictions can require a Play click; not published.
+
 ## November 20 22:24 three leftovers only — owner publishes
 - [x] Align hero CSV, exports, metadata and total checks with 5,437 distinct listings; preserve source records and category rules.
 - [x] Compact full header branding; in-flow header on embedded studio pages prevents occlusion. Full-page scroll sampling and official/feedback clickability pass at 1919px, 1707px and phone width.

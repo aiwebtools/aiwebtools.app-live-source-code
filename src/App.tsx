@@ -31,6 +31,8 @@ import { GlobalEmailSignupHost } from "@/components/JoinEmailListButton";
 import DisclaimerGate from "./pages/DisclaimerGate";
 import InAppNavigateListener from "./components/InAppNavigateListener";
 import AngelNumberGate from "./components/AngelNumberGate";
+import EntryMusicOpening from "./components/EntryMusicOpening";
+import pandoraPanel from "@/assets/pandora-gate-panel.jpg";
 import MusicTheaterRoute from "./components/MusicTheaterRoute";
 
 // Generic retry wrapper for non-component dynamic imports (e.g., side-effect modules).
@@ -180,8 +182,8 @@ const PageLoader = () => {
       data-aiwt-route-fallback="true"
       role="status"
       aria-live="polite"
-      className="aiwt-delayed-loader min-h-screen bg-background text-foreground flex flex-col items-center justify-center gap-4"
-    ><span className="h-6 w-6 animate-spin rounded-full border-2 border-primary/30 border-t-primary" aria-hidden="true" /><span className="sr-only">Loading page</span></div>
+      className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center gap-4"
+    ><p className="font-mono text-xl font-bold text-primary">AIWEBTOOLS.AI</p><img src={pandoraPanel} alt="Pandora opening box" width={240} height={135} className="w-60 max-w-[75vw] rounded border border-primary/40" /><span className="h-6 w-6 animate-spin rounded-full border-2 border-primary/30 border-t-primary" aria-hidden="true" /><p className="font-mono text-sm text-primary">Connecting to the Matrix…</p></div>
   );
 };
 
@@ -658,6 +660,7 @@ function App() {
                   <AngelNumberGate>
                   <InAppNavigateListener />
                   <AnimatedRoutes />
+                  <EntryMusicOpening />
                   <PostAcceptBoot />
                   <GlobalOverlays />
                   <ConfirmSubscriptionHandler />

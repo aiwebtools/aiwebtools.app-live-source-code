@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { hasAngelUnlock, saveAngelUnlock } from '@/utils/angelUnlock';
+import { ACCESS_GATE_ENABLED } from '@/utils/entryExperience';
 
 const safeStorage = (kind: 'localStorage' | 'sessionStorage') => ({
   getItem: (key: string) => { try { return window[kind].getItem(key); } catch { return null; } },
@@ -11,7 +12,7 @@ export default function AngelNumberGate({ children }: { children: ReactNode }) {
   const [unlocked, setUnlocked] = useState(() => hasAngelUnlock(safeStorage('localStorage'), safeStorage('sessionStorage')));
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
-  if (unlocked) return <>{children}</>;
+  if (!ACCESS_GATE_ENABLED || unlocked) return <>{children}</>;
   return <main className="fixed inset-0 z-[2147483647] flex items-center justify-center overflow-y-auto bg-background px-6 py-10 text-foreground" aria-label="Angel Number Gate">
     <form className="w-full max-w-md space-y-6 text-center" onSubmit={event => {
       event.preventDefault();
