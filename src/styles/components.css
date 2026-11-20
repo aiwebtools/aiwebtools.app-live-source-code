@@ -782,6 +782,8 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
 /* Official AIWEBTOOLS.APP wordmark — matches the chat studio brand */
 /* Embedded rooms must size by their container, not the viewport's sidebar breakpoint. */
 .tool-detail-content:has(.studio-embedded) { max-width: 1600px; }
+main.container:has(.studio-embedded) { max-width: 1700px; }
+.featured-story-content:has(.studio-embedded) { max-width: 1600px; }
 .studio-embedded { scroll-margin-top: calc(var(--site-header-height, 128px) + 24px); height: min(980px, 95dvh); }
 .studio-embedded .studio-bot-header { display: grid; grid-template-columns: 44px minmax(0,1fr) auto; }
 .studio-embedded .studio-bot-identity { grid-column: 2; min-width: 0; }

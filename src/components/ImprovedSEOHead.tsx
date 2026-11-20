@@ -140,19 +140,7 @@ const ImprovedSEOHead: React.FC<ImprovedSEOHeadProps> = ({
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock"
       },
-      // Star ratings in Google results: only emitted from real stored
-      // rating data, never fabricated.
-      ...(tool?.rating && tool?.totalVotes
-        ? {
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": Number(tool.rating).toFixed(1),
-              "ratingCount": tool.totalVotes,
-              "bestRating": "5",
-              "worstRating": "1"
-            }
-          }
-        : {}),
+      // Community review schema is emitted by ToolReviews from the actual summary.
       ...(Array.isArray(tool?.tags) && tool.tags.length
         ? { "keywords": tool.tags.slice(0, 25).join(", ") }
         : {})

@@ -994,6 +994,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      reserve_gpt_free_run: {
+        Args: { p_guest_key: string; p_limit: number; p_user_id: string }
+        Returns: number
+      }
     }
     Enums: {
       app_role: "admin" | "user"

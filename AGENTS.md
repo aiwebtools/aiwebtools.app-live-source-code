@@ -18,7 +18,7 @@
 - Keep official social identities and verified audience snapshots in one catalog; share the Socials destination across device menus and leave unavailable counts unknown.
 - Use subject metadata, not themes; lazy-load unpublished survival brains only in the existing builder.
 
-- Mount public routes directly through AnimatedRoutes without entry guards; page access must not depend on consent storage, while legal consent remains explicit.
+- Wrap routes once with the persistent browser unlock gate; retain deep links and explicit legal consent, without chained welcome or music entry dialogs.
 - Surfaces outside the router use the shared in-app navigate listener to preserve single-page navigation.
 
 - Schedule automatic promotional dialogs through the shared session-wide scheduler so navigation and competing pop-ups cannot bypass the cooldown.

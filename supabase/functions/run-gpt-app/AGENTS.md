@@ -9,3 +9,4 @@
 - Validate personal-key sessions with Supabase getUser for client-version compatibility; personal Bionic reuses the fixed transport with visitor credentials and never enters site circuit/fallback state.
 - Route site-paid chat through Bionic first (owner preference) and the shared tool loop; Lovable backup is allowed only before streams on exhausted credits or genuine outages, preserving personal choices and persistent denial/refusal safeguards.
 - Reserve resting status for two confirmed credit-exhaustion states; classify other failures honestly and emit actual model/provider token metadata separately from speech and authored replies.
+- Reserve site-funded daily runs atomically through the service-only allowance function; shared UI/server limits prevent concurrent bypass and misleading labels.

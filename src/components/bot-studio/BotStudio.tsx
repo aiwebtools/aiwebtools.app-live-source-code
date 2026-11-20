@@ -24,9 +24,9 @@ import { useVoiceInput } from "@/hooks/useVoiceInput";
 import { useAuthSession } from "@/hooks/useAuthSession";
 import { getGuestId } from "@/utils/guestId";
 import { playTimeWarpVoice } from "@/utils/effects/timeWarpVoice";
-import { conversationTitle, displayConversationTitle, conversationPath, openBotConversation, readBotConversations, saveBotConversation, type BotConversation, type BotMessage } from "@/utils/botConversations";
+import { conversationTitle, displayConversationTitle, conversationPath, openBotConversation, readBotConversations, saveBotConversation, clearBotConversations, type BotConversation, type BotMessage } from "@/utils/botConversations";
 import { loadToolImageMap } from "@/utils/search/toolImageMap";
-import { countCategoryAssistants, groupBotsByCategory } from "./botCategories";
+import { countCategoryAssistants, groupBotsByCategory, botEditionLabel } from "./botCategories";
 import { botFamilyKey, loadStudioBots, refreshStudioBots, STUDIO_MODELS, type StudioBot } from "./botCatalog";
 import BotPortrait from "./BotPortrait";
 import BotBuilder from "./BotBuilder";
@@ -50,6 +50,7 @@ import { PERSONAL_PROVIDERS } from "../../../supabase/functions/_shared/personal
 import type { ChatUsage } from "../../../supabase/functions/_shared/chat-usage";
 import { supabase } from '@/integrations/supabase/client';
 import { modelIsAvailable } from '@/utils/studioModelAvailability';
+import { DAILY_FREE_RUNS } from '../../../supabase/functions/_shared/free-chat-allowance';
 
 export default function BotStudio({ app, threadId, embedded = false, onExit }: { app: StudioBot; threadId?: string; embedded?: boolean; onExit?: () => void }) {
   const navigate = useNavigate();
@@ -267,6 +268,13 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
     chooseThread(item);
   };
   const chooseBot = (slug: string) => chooseThread(openBotConversation(slug));
+  const clearDeviceChats = () => {
+    if (!window.confirm('Clear all chats stored on this device? This does not delete cloud chats or your custom bots.')) return;
+    stop();
+    if (!clearBotConversations()) { setNotice('This browser could not clear its saved chats.'); return; }
+    const empty: BotConversation = { id: crypto.randomUUID(), slug: app.slug, title: 'New conversation', updatedAt: Date.now(), messages: [], model: 'default' };
+    setThread(empty); threadRef.current = empty; setThreads([]); setInput(''); setNotice('Device-local chats cleared.');
+  };
   const exportChat = () => {
     setNotice("Preparing your PDF with images…");
     void import("@/utils/chatPdfExport").then(({ exportChatPdf }) => exportChatPdf(app.display_name, app.slug, thread.messages))
@@ -281,12 +289,14 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
     <div className="relative my-3"><Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" /><input aria-label="Search bots" placeholder="Find an assistant…" value={query} onChange={(e) => setQuery(e.target.value)} className="studio-search w-full rounded-md border bg-background pl-9 pr-2 text-sm" /></div>
     <p className="text-[11px] text-muted-foreground">{query.trim() ? `${searchStudioBots(bots, query).length.toLocaleString()} matching assistants out of ${bots.length.toLocaleString()}` : `${bots.length.toLocaleString()} in-site assistants`} · including versions</p>
     <div className="studio-bots">
-      {groupBotsByCategory(searchStudioBots(bots, query)).map(([category, families]) => <details key={category} open={Boolean(query) || families.some((f) => f.versions.some((bot) => bot.slug === app.slug))} className="mt-2"><summary className="studio-label cursor-pointer select-none py-1">{category} <span className="ml-auto text-[10px] text-muted-foreground">{countCategoryAssistants(families)}</span></summary>{families.map(({ key, base, versions }) => versions.length === 1
+      {groupBotsByCategory(searchStudioBots(bots, query)).map(([category, families]) => <details key={category} open={Boolean(query) || families.some((f) => f.versions.some((bot) => bot.slug === app.slug))} className="mt-2"><summary className="studio-label cursor-pointer select-none py-1">{category} <span className="ml-auto text-[10px] text-muted-foreground">{countCategoryAssistants(families)}</span></summary>{families.map(({ key, base, versions, featured }) => versions.length === 1
         ? <Tooltip key={base.slug}><TooltipTrigger asChild><Button variant="ghost" onClick={() => chooseBot(base.slug)} className={`studio-row ${base.slug === app.slug ? "studio-selected" : ""}`}>{sidebarPortrait(base)}<span className="studio-tool-name">{base.display_name}</span>{base.slug.startsWith("community-") && <span title="Community GPT" aria-label="Community GPT" className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />}</Button></TooltipTrigger><TooltipContent side="right" className="max-w-64 break-words">{base.display_name}</TooltipContent></Tooltip>
-        : <details key={key} data-testid="version-accordion" open={versions.some((bot) => bot.slug === app.slug)} className="studio-versions"><summary className={`studio-row flex list-none items-center gap-2 cursor-pointer select-none [&::-webkit-details-marker]:hidden ${versions.some((bot) => bot.slug === app.slug) ? "studio-selected" : ""}`}>{sidebarPortrait(base)}<span className="studio-tool-name">{base.display_name}</span><span className="ml-auto shrink-0 rounded border border-primary/40 px-1 text-[10px] text-primary">{versions.length} versions</span></summary><div className="ml-6 grid grid-cols-4 gap-1 py-1">{versions.map((bot, i) => <Button key={bot.slug} size="sm" variant={bot.slug === app.slug ? "default" : "outline"} onClick={() => chooseBot(bot.slug)} title={bot.display_name} aria-label={`${base.display_name} version ${i + 1}`} className="h-7 px-1 text-xs">V{i + 1}</Button>)}</div></details>)}</details>)}
+        : <details key={key} data-testid="version-accordion" open={versions.some((bot) => bot.slug === app.slug)} className="studio-versions"><summary className={`studio-row flex list-none items-center gap-2 cursor-pointer select-none [&::-webkit-details-marker]:hidden ${versions.some((bot) => bot.slug === app.slug) ? "studio-selected" : ""}`}>{sidebarPortrait(base)}<span className="studio-tool-name">{base.display_name}{featured && <small className="ml-1 text-primary">FEATURED</small>}</span><span className="ml-auto shrink-0 rounded border border-primary/40 px-1 text-[10px] text-primary">{versions.length} editions</span></summary><div className="ml-3 grid grid-cols-2 gap-1 py-1">{versions.map((bot, i) => <Button key={bot.slug} size="sm" variant={bot.slug === app.slug ? "default" : "outline"} onClick={() => chooseBot(bot.slug)} title={bot.display_name} aria-label={`${base.display_name} ${botEditionLabel(bot, i)}`} className="h-auto min-h-8 whitespace-normal px-1 text-xs">{botEditionLabel(bot, i)}</Button>)}</div></details>)}</details>)}
     </div>
-    <h2 className="studio-label mt-5"><History className="h-4 w-4" />Recent chats</h2>
-    <div className="studio-history mt-2">{threads.filter((item) => item.messages.length > 0 || item.id === thread.id).map((item) => <Button key={item.id} variant="ghost" onClick={() => chooseThread(item)} className={`studio-row ${item.id === thread.id ? "studio-selected" : ""}`}><History className="h-3.5 w-3.5 shrink-0" /><span className="truncate" title={displayConversationTitle(item)}>{displayConversationTitle(item)}</span></Button>)}</div>
+    <h2 className="studio-label mt-5"><History className="h-4 w-4" />Device-local chats</h2>
+    <p className="mt-2 text-xs text-muted-foreground">Stored only on this device; separate from account chats.</p>
+    <Button variant="outline" className="my-2 h-auto min-h-9 whitespace-normal text-xs" onClick={clearDeviceChats}><Trash2 className="h-3.5 w-3.5" />Clear device-local chats</Button>
+    <div className="studio-history mt-2">{threads.filter((item) => item.messages.length > 0).map((item) => <Button key={item.id} variant="ghost" onClick={() => chooseThread(item)} className={`studio-row ${item.id === thread.id ? "studio-selected" : ""}`}><History className="h-3.5 w-3.5 shrink-0" /><span className="truncate" title={displayConversationTitle(item)}>{displayConversationTitle(item)}</span></Button>)}</div>
     <p className="mt-4 text-xs text-muted-foreground">Saved on this device · {threads.length} conversations</p>
   </>;
   const settings = <>
@@ -307,6 +317,10 @@ export default function BotStudio({ app, threadId, embedded = false, onExit }: {
       <main className="studio-main">
         <header className="studio-bot-header"><BotPortrait src={avatar} name={app.display_name} themeKey={theme.key} emblem={theme.emblem} className="gpt-room-avatar h-11 w-11 shrink-0 rounded-md" /><div className="studio-bot-identity min-w-0 flex-1"><h1 className="break-words text-base font-bold sm:text-xl gpt-room-accent"><span className="gpt-glitch-title">{app.display_name}</span></h1><p className="studio-bot-description mt-1 text-xs text-muted-foreground">{getBotHeaderDescription(app)}</p></div><div className="studio-header-actions"><Button variant="ghost" className="studio-voice-toggle studio-refresh gap-1.5" onClick={newChat} aria-label="Refresh chat and start a fresh conversation with this bot" title="Refresh chat (start fresh)"><RotateCcw className="h-4 w-4" /><span>Refresh</span></Button><Button variant="ghost" size="icon" className="studio-voice-toggle shrink-0" onClick={speech.toggle} aria-label={speech.enabled ? "Mute the voice" : "Enable the voice"} title={speech.enabled ? "Mute the voice" : "Enable the voice"}>{speech.enabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}</Button></div><div className="studio-header-pdf">{app.custom ? <Button variant="outline" size="sm" className="gap-1.5" onClick={downloadCustomInstructions}><Download className="h-4 w-4" />GPT Instructions</Button> : <OpInstructionsButton slug={app.slug} name={app.display_name} singleOnly compact label="GPT Instructions PDF" />}</div></header>
         <BotQuickSwitch bots={[...customBots, ...bots]} onChoose={chooseBot} portrait={sidebarPortrait} />
+        <div className="shrink-0 border-b border-border px-4 py-2 text-xs leading-5 text-muted-foreground">
+          {personalAi ? 'Personal provider active · your provider limits apply.' : `${DAILY_FREE_RUNS} free runs per day across all bots · resets midnight UTC. Submitted runs count, including provider failures.`}
+          <p>In-site runs use Bionic GLM, not ChatGPT; Lovable is the outage backup. Other models appear only when selected and available. Official ChatGPT versions follow OpenAI’s plan requirements and usage limits, including ChatGPT Plus limits.</p>
+        </div>
         {thread.messages.some((message) => message.usage) && (() => {
           const usage = thread.messages.filter((message) => message.usage).at(-1)?.usage;
           return usage ? <div data-testid="chat-usage" className="w-full min-w-0 shrink-0 border-y border-border px-4 py-2 text-[10px] leading-4 text-muted-foreground" title={usage.complete ? `Latest reply including tool rounds: ${usage.inputTokens} input + ${usage.outputTokens} output tokens` : "Provider token totals are pending or incomplete; no estimated count is shown."}><p className="break-all">{usage.model} · latest reply</p><p className="break-words">{usage.complete ? `${(usage.inputTokens + usage.outputTokens).toLocaleString()} tokens · ${usage.inputTokens.toLocaleString()} in + ${usage.outputTokens.toLocaleString()} out` : "Tokens unavailable / pending"}</p></div> : null;

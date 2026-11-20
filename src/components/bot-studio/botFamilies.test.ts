@@ -5,6 +5,14 @@ import catalog from "@/data/generated/botCatalogFallback.json";
 import type { StudioBot } from "./botCatalog";
 
 const bot = (slug: string, display_name: string) => ({ slug, display_name, tool_title: null, tagline: null, greeting: null, starter_prompts: [], supports_images: true, model: "default" }) as StudioBot;
+test('one featured screenplay family retains every original and related edition', () => {
+  const rooms = (catalog as StudioBot[]).filter(b => /movie.script|movie.writer|screenplay/i.test(b.slug));
+  const families = groupBotFamilies(rooms);
+  expect(families).toHaveLength(1);
+  expect(families[0].base.slug).toBe('movie-script-writer-gpt');
+  expect(families[0].featured).toBe(true);
+  expect(families[0].versions.map(b=>b.slug).sort()).toEqual(rooms.map(b=>b.slug).sort());
+});
 
 test("archived versions open under their base bot as V1, V2, V3 in order", () => {
   const families = groupBotFamilies([

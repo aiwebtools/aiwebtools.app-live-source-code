@@ -29,6 +29,7 @@ import { mainCategories } from "../src/utils/mainCategoryMapping";
 import { OP_INSTRUCTION_DOCS } from "../src/data/opInstructionDocs";
 import { TOTAL_TOOLS, TOTAL_TOOL_CATEGORIES, MARKETING_TOOL_COUNT } from "../src/data/generated/toolCount";
 import { getCategoriesWithCounts, getToolsByCategory } from "../src/utils/categoryUtils/toolFiltering";
+import { DAILY_FREE_RUNS } from '../supabase/functions/_shared/free-chat-allowance';
 import { getDisplayedCategory, getStaticToolTitle } from "../src/utils/toolCategoryDisplay";
 import { MTVAI_CATALOG } from "../src/data/mtvaiCatalog";
 import React from "react";
@@ -352,7 +353,7 @@ for (const feature of features) {
     ${heroImage ? `<p><img src="${esc(heroImage)}" alt="${esc(feature.toolTitle)} — custom AI tool by AIWebTools.ai" loading="lazy" width="1200" height="675" /></p>` : ""}
     <p>${esc(clean(feature.answer))}</p>
     <h2>Try ${esc(feature.toolTitle)} right here</h2>
-    <p>The real, working version of ${esc(feature.toolTitle)} runs inside this article — free in the browser, no install and no account needed for a daily allowance.</p>
+    <p>The in-site version of ${esc(feature.toolTitle)} runs inside this article — ${DAILY_FREE_RUNS} site-funded runs per day across all bots, resets midnight UTC. No install or account needed. In-site models are not ChatGPT.</p>
     <p><a href="/${feature.toolSlug}">Open the ${esc(feature.toolTitle)} tool page →</a></p>
     <h2>${esc(feature.toolTitle)} at a glance</h2>
     <ul>${feature.quickFacts.map((f) => `<li><strong>${esc(f.label)}:</strong> ${esc(f.value)}</li>`).join("")}</ul>

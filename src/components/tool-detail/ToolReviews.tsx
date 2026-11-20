@@ -270,7 +270,7 @@ const ToolReviews = ({ tool, fallbackRating, fallbackVotes }: ToolReviewsProps) 
           <p className="text-sm text-gray-400">Loading reviews…</p>
         )}
 
-        {!loading && reviews.length === 0 && (
+        {!loading && displayCount === 0 && (
           <p className="text-sm text-gray-400">
             No community reviews yet for {tool.title}. Share your experience and help the
             next seeker choose wisely.

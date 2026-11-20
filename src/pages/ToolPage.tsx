@@ -27,11 +27,13 @@ import {
 } from "@/utils/toolDisclaimerDetection";
 import ToolCardMedia from "@/components/tools/ToolCardMedia";
 import { openDestinationUrl } from "@/utils/effects/domEffects";
+import { useCommunityRating } from '@/hooks/useCommunityRating';
 
 const ToolPage = () => {
   const { toolIndex } = useParams<{ toolIndex: string }>();
   const navigate = useNavigate();
   const [tool, setTool] = useState<Tool | null>(null);
+  const community = useCommunityRating(tool ? generateToolSlug(tool.title) : '');
   const [similarTools, setSimilarTools] = useState<Tool[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 25);
@@ -158,9 +160,9 @@ const ToolPage = () => {
               <span className="text-cyan-300 font-semibold">
                 Category: {tool.category}
               </span>
-              {tool.rating && tool.totalVotes && (
+              {community.data && community.data.count > 0 && (
                 <span className="text-green-300">
-                  Rating: {tool.rating} ({tool.totalVotes} votes)
+                  Rating: {community.data.rating.toFixed(1)} ({community.data.count} community reviews)
                 </span>
               )}
             </div>

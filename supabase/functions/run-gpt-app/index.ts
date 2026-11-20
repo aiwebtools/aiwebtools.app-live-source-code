@@ -5,6 +5,7 @@ import { selectBotModel, selectTurnModel } from "./model-selection.ts";
 import { callBionic, isBionicModel } from "./bionic-provider.ts";
 import { createLovableFirstChat } from "./chat-fallback.ts";
 import { readTokenUsage } from "../_shared/chat-usage.ts";
+import { DAILY_FREE_RUNS } from '../_shared/free-chat-allowance.ts';
 import type { ProviderState, ProviderStore } from "../_shared/chat-provider-state.ts";
 import { appendInstructionFidelity, resolveOperationalInstructions } from "./instruction-fidelity.ts";
 import { readChatStreamEvent, ChatStreamFailure } from "./stream-events.ts";
@@ -221,7 +222,7 @@ Deno.serve(async (req) => {
 
   if (!personalAi && !BIONIC_API_KEY && !LOVABLE_API_KEY) return json({ error: "AI is not configured" }, 500);
 
-  // Guests and members can chat without an application-level daily cap.
+  // Site-funded runs are bounded; authenticated personal-provider runs use their own funding.
   const isGuest = !userId;
   let guestKey = "";
   if (isGuest) {
@@ -261,22 +262,6 @@ Deno.serve(async (req) => {
     : recentMessages;
   if (recentMessages.length === 0) return json({ error: "Invalid request" }, 400);
 
-  // Retain usage accounting without imposing a daily message allowance.
-  const today = new Date().toISOString().slice(0, 10);
-  const { data: usage } = isGuest
-    ? await admin
-        .from("gpt_guest_usage")
-        .select("message_count")
-        .eq("guest_key", guestKey)
-        .eq("usage_date", today)
-        .maybeSingle()
-    : await admin
-        .from("gpt_usage")
-        .select("message_count")
-        .eq("user_id", userId)
-        .eq("usage_date", today)
-        .maybeSingle();
-  const used = usage?.message_count ?? 0;
 
   // Device-saved custom bots built in the Matrix studio carry their own instructions.
   // A hosted room that happens to share the custom- prefix (e.g. custom-gpt-maker)
@@ -316,6 +301,11 @@ Deno.serve(async (req) => {
   }
   const selectedModel = personalAi?.model || selectBotModel(app.model || "openai/gpt-6-astra", body.model);
   if (!selectedModel) return json({ error: "That model is not supported by this assistant." }, 400);
+  if (!personalAi) {
+    const { data: reserved, error: allowanceError } = await admin.rpc('reserve_gpt_free_run', { p_user_id: userId || null, p_guest_key: isGuest ? guestKey : null, p_limit: DAILY_FREE_RUNS });
+    if (allowanceError) return json({ error: 'Your daily allowance could not be checked. Please try again.' }, 503);
+    if (!reserved) return json({ error: `You have used your ${DAILY_FREE_RUNS} free runs for today. The allowance resets at midnight UTC. Your chat is saved on this device.` }, 429);
+  }
 
   const { data: profile } = userId
     ? await admin.from("profiles").select("display_name").eq("id", userId).maybeSingle()
@@ -364,22 +354,6 @@ Deno.serve(async (req) => {
     conversationId = null;
   }
 
-  if (isGuest) {
-    await admin.from("gpt_guest_usage").upsert(
-      {
-        guest_key: guestKey,
-        usage_date: today,
-        message_count: used + 1,
-        updated_at: new Date().toISOString(),
-      },
-      { onConflict: "guest_key,usage_date" },
-    );
-  } else {
-    await admin.from("gpt_usage").upsert(
-      { user_id: userId, usage_date: today, message_count: used + 1, updated_at: new Date().toISOString() },
-      { onConflict: "user_id,usage_date" },
-    );
-  }
 
   const gateway = createLovableAiGatewayRunIdFetch();
   const personalAdapter = personalAi ? (await import("./personal-provider.ts")).callPersonalProvider : null;

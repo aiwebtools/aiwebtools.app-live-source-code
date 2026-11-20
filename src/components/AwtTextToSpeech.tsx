@@ -81,7 +81,8 @@ const AwtTextToSpeech: React.FC = () => {
       let blob = previewCache.current.get(id);
       if (!blob) {
         const name = VOICES.find(v => v.id === id)?.label.split("—")[0].trim() || id;
-        blob = await requestAudio("awt-tts", { text: `Hi, I'm ${name}. Let's bring your words to life.`, voice: id, speed: 1, instructions: "Warm, relaxed, expressive human conversation, speaking to a friend." }, controller.signal);
+        try { blob = await requestAudio("awt-tts", { text: `Hi, I'm ${name}. Let's bring your words to life.`, voice: id, speed: 1, instructions: "Warm, relaxed, expressive human conversation, speaking to a friend." }, AbortSignal.any([controller.signal,AbortSignal.timeout(6000)])); }
+        catch(error) { if(controller.signal.aborted) throw error; blob=await localSpeech(`Hello, this is the free local voice preview.`); }
         previewCache.current.set(id, blob);
       }
       if (!controller.signal.aborted) await audio.load(blob);
@@ -139,7 +140,7 @@ const AwtTextToSpeech: React.FC = () => {
           {local && <p role="status" className="text-sm text-foreground">Local synthesized voice · WAV · English, Spanish, French and German supported</p>}
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Type anything, pick a real studio voice and language, hear it — then download
-            it as audio. No account needed; generation depends on available provider credits.
+            it as audio. Free · No sign-up. A local synthesized voice is available if studio voices are unavailable.
           </p>
         </div>
 

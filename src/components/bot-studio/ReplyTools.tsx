@@ -6,15 +6,8 @@ import { deliverFile } from '@/utils/fileDelivery';
 
 const plain = (md: string) => md.replace(/!\[[^\]]*\]\([^)]*\)/g, "").replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1 ($2)").replace(/^#{1,6}\s*/gm, "").replace(/\*\*|__|`/g, "").trim();
 const fileBase = (name: string) => `${name.replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase() || "reply"}-aiwebtools`;
-const escapeHtml = (s: string) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c] || c));
 export const pythonBlocks = (text: string) => [...text.matchAll(/```(?:python|py)\s*\n([\s\S]*?)```/gi)].map((m) => m[1].trim()).filter(Boolean);
 
-function save(blob: Blob, filename: string) {
-  const url = URL.createObjectURL(blob);
-  const a = Object.assign(document.createElement("a"), { href: url, download: filename });
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 2000);
-}
 
 /** One-tap PDF/Word export of a reply plus on-device Python for any code blocks it contains. */
 export default function ReplyTools({ text, name, busy, onError }: { text: string; name: string; busy: boolean; onError: (t: string) => void }) {
@@ -28,45 +21,29 @@ export default function ReplyTools({ text, name, busy, onError }: { text: string
     let active = true;
     setFiles(null); setExportError('');
     void (async () => {
-      const [{ jsPDF }, { Document, Packer, Paragraph, TextRun }] = await Promise.all([import('jspdf'), import('docx')]);
+      const [{ jsPDF }, { Document, Packer, Paragraph, TextRun, ImageRun }] = await Promise.all([import('jspdf'), import('docx')]);
       const body = plain(text) + Object.values(results).map(result => `\n\nPython output:\n${result.output}`).join('');
       const pdf = new jsPDF({ unit: 'pt', format: 'letter' });
       pdf.setFont('courier', 'normal'); pdf.setFontSize(12);
       let y = 54;
       for (const line of pdf.splitTextToSize(body, 504) as string[]) {
         if (y > 738) { pdf.addPage(); y = 54; }
-        pdf.text(line.replace(/[\u2018\u2019]/g,"'").replace(/[\u201c\u201d]/g,'"').replace(/[\u2013\u2014]/g,'-'), 54, y); y += 14;
+        pdf.text(line.replace(/[\u2018\u2019]/g,"'").replace(/[\u201c\u201d]/g,'"').replace(/[\u2013\u2014]/g,'-'), 54, y); y += 12;
       }
-      const doc = new Document({ sections: [{ properties: { page: { size: { width: 12240, height: 15840 }, margin: { top: 1080, bottom: 1080, left: 1080, right: 1080 } } }, children: body.split('\n').map(line => new Paragraph({ children: [new TextRun({ text: line, font: 'Courier New', size: 24 })], spacing: { after: 0, line: 280 } })) }] });
+      const charts = Object.values(results).flatMap(result => result.images);
+      for (const chart of charts) { pdf.addPage(); pdf.addImage(chart,'PNG',54,54,504,332); }
+      const paragraphs = body.split('\n').map(line => new Paragraph({ children: [new TextRun({ text: line, font: 'Courier New', size: 24 })], spacing: { after: 0, line: 240 } }));
+      for (const chart of charts) {
+        const bytes = Uint8Array.from(atob(chart.split(',')[1] || ''), character => character.charCodeAt(0));
+        paragraphs.push(new Paragraph({ children: [new ImageRun({ data: bytes, type: 'png', transformation: { width: 672, height: 443 } })] }));
+      }
+      const doc = new Document({ sections: [{ properties: { page: { size: { width: 12240, height: 15840 }, margin: { top: 1080, bottom: 1080, left: 1080, right: 1080 } } }, children: paragraphs }] });
       const word = await Packer.toBlob(doc);
       if (active) setFiles({ pdf: pdf.output('blob'), word });
     })().catch(() => { if (active) setExportError('Export preparation failed. Try again.'); });
     return () => { active = false; };
   }, [text, busy, results]);
 
-  const exportPdf = async () => {
-    try {
-      const { jsPDF } = await import("jspdf");
-      const doc = new jsPDF({ unit: "pt", format: "letter" });
-      const w = doc.internal.pageSize.getWidth(), h = doc.internal.pageSize.getHeight(), m = 50;
-      const header = () => { doc.setFont("helvetica", "bold"); doc.setFontSize(10); doc.setTextColor(0, 150, 60); doc.text(`AIWEBTOOLS.AI  |  ${name}`, m, 30); doc.setTextColor(20, 20, 20); doc.setFont("helvetica", "normal"); doc.setFontSize(11); };
-      header();
-      let y = 60;
-      const body = plain(text) + Object.values(results).map((r) => `\n\nPython output:\n${r.output}`).join("");
-      for (const line of doc.splitTextToSize(body, w - m * 2) as string[]) {
-        if (y > h - m) { doc.addPage(); header(); y = 60; }
-        doc.text(line, m, y); y += 15;
-      }
-      for (const r of Object.values(results)) for (const img of r.images) {
-        doc.addPage(); header(); doc.addImage(img, "PNG", m, 60, w - m * 2, (w - m * 2) * 0.66);
-      }
-      doc.save(`${fileBase(name)}.pdf`);
-    } catch { onError("The PDF could not be created in this browser."); }
-  };
-  const exportWord = () => {
-    const html = `<html><head><meta charset="utf-8"><title>${escapeHtml(name)}</title></head><body style="font-family:Calibri,Arial;font-size:11pt"><p style="color:#00963c;font-weight:bold">AIWEBTOOLS.AI | ${escapeHtml(name)}</p><pre style="white-space:pre-wrap;font-family:Calibri,Arial">${escapeHtml(plain(text))}</pre>${Object.values(results).map((r) => `<h3>Python output</h3><pre>${escapeHtml(r.output)}</pre>${r.images.map((i) => `<img src="${i}" width="600"/>`).join("")}`).join("")}</body></html>`;
-    save(new Blob(["\ufeff", html], { type: "application/msword" }), `${fileBase(name)}.doc`);
-  };
   const run = async (i: number) => {
     setRunning(i);
     try { const r = await runPythonOnDevice(blocks[i]); setResults((p) => ({ ...p, [i]: r })); }

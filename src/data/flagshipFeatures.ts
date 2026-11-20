@@ -45,7 +45,8 @@ export interface FlagshipFeature {
   readTime: string;
 }
 
-const FREE = "Free to try in the browser — no install, no account needed for a daily allowance";
+import { DAILY_FREE_RUNS } from '../../supabase/functions/_shared/free-chat-allowance';
+const FREE = `${DAILY_FREE_RUNS} site-funded runs per day across all bots, resets midnight UTC — no install or account needed`;
 
 export const flagshipFeatures: FlagshipFeature[] = [
   {
@@ -123,7 +124,7 @@ export const flagshipFeatures: FlagshipFeature[] = [
     faq: [
       {
         q: "Is TIME MACHINE GPT free?",
-        a: "Yes. The live chat on this page is free to use in the browser, with a daily message allowance for visitors who are not signed in. Signing in with a free AIWebTools.ai account raises the allowance and saves your conversations.",
+        a: FREE,
       },
       {
         q: "Is the history accurate?",
@@ -135,7 +136,7 @@ export const flagshipFeatures: FlagshipFeature[] = [
       },
       {
         q: "Do I need an account?",
-        a: "No. Visitors get a free daily allowance without signing in. An account is only needed for a larger allowance and saved conversations.",
+        a: `No account needed. ${FREE}. Chats are stored only on your device.`,
       },
     ],
     publishDate: "2026-09-19",
@@ -210,7 +211,7 @@ export const flagshipFeatures: FlagshipFeature[] = [
       },
       {
         q: "Does it cost anything?",
-        a: "No. The live chat is free with a daily allowance for visitors; a free account raises the allowance and saves conversations.",
+        a: FREE,
       },
     ],
     publishDate: "2026-09-19",
@@ -285,7 +286,7 @@ export const flagshipFeatures: FlagshipFeature[] = [
       },
       {
         q: "Is it free?",
-        a: "Yes, with a daily message allowance for visitors and a larger allowance for free account holders.",
+        a: FREE,
       },
     ],
     publishDate: "2026-09-19",
@@ -360,7 +361,7 @@ export const flagshipFeatures: FlagshipFeature[] = [
       },
       {
         q: "Is it free?",
-        a: "Yes. Free in the browser with a daily allowance, larger with a free account.",
+        a: FREE,
       },
     ],
     publishDate: "2026-09-19",
@@ -437,7 +438,7 @@ export const flagshipFeatures: FlagshipFeature[] = [
       },
       {
         q: "Is it free?",
-        a: "Yes, free in the browser with a daily allowance and a larger allowance for free account holders.",
+        a: FREE,
       },
     ],
     publishDate: "2026-09-19",
@@ -514,7 +515,7 @@ export const flagshipFeatures: FlagshipFeature[] = [
       },
       {
         q: "Is it free?",
-        a: "Yes, with a daily allowance for visitors and more for free account holders.",
+        a: FREE,
       },
     ],
     publishDate: "2026-09-19",
@@ -589,7 +590,7 @@ export const flagshipFeatures: FlagshipFeature[] = [
       },
       {
         q: "Is it free?",
-        a: "Yes, free in the browser with a daily allowance for visitors.",
+        a: FREE,
       },
     ],
     publishDate: "2026-09-19",
@@ -664,7 +665,7 @@ export const flagshipFeatures: FlagshipFeature[] = [
       },
       {
         q: "Is it free?",
-        a: "Yes, free in the browser with a daily allowance for visitors.",
+        a: FREE,
       },
     ],
     publishDate: "2026-09-19",
@@ -739,7 +740,7 @@ export const flagshipFeatures: FlagshipFeature[] = [
       },
       {
         q: "Is it free?",
-        a: "Yes, free in the browser with a daily allowance for visitors.",
+        a: FREE,
       },
     ],
     publishDate: "2026-09-19",
@@ -814,7 +815,7 @@ export const flagshipFeatures: FlagshipFeature[] = [
       },
       {
         q: "Is it free?",
-        a: "Yes, free in the browser with a daily allowance for visitors.",
+        a: FREE,
       },
     ],
     publishDate: "2026-09-19",
@@ -889,7 +890,7 @@ export const flagshipFeatures: FlagshipFeature[] = [
       },
       {
         q: "Is it free?",
-        a: "Yes, free in the browser with a daily allowance for visitors.",
+        a: FREE,
       },
     ],
     publishDate: "2026-09-19",
@@ -964,7 +965,7 @@ export const flagshipFeatures: FlagshipFeature[] = [
       },
       {
         q: "Is it free?",
-        a: "Yes, free in the browser with a daily allowance for visitors.",
+        a: FREE,
       },
     ],
     publishDate: "2026-09-19",
