@@ -1,4 +1,5 @@
 # Architecture Rules
+- Render tool explanations from catalog descriptions; directory comprehension must not require paid AI.
 - Keep the music theater inside its own eager loading/error boundary with explicit retry and a dedicated static shell; failed route imports must not reload into directory content or hide player controls behind readiness messages.
 - Resolve studio header subtitles through the complete display-only purpose-description catalog, never archive taglines or name-repeat templates; reject setup text, greetings and file artifacts, and keep headings single-copy so internal identities and prompts cannot leak.
 - Send administrator notifications through the linked Gmail account using one shared recipient list and branded HTML frame; never silently reduce owner recipients or claim unsent mail succeeded.

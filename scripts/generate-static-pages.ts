@@ -19,7 +19,7 @@
  */
 import fs from "fs";
 import path from "path";
-import { allTools } from "../src/data/toolsData";
+import { allTools, directoryTools } from "../src/data/toolsData";
 import { generateToolSlug } from "../src/utils/urlGenerator";
 import { getSpotlights } from "../src/data/spotlights";
 import { getFlagshipFeatures } from "../src/data/flagshipFeatures";
@@ -27,7 +27,8 @@ import { isExpiredHost, getYouTubeThumbnail } from "../src/utils/imageUtils";
 import { blogPosts } from "../src/data/blogPostContent";
 import { mainCategories } from "../src/utils/mainCategoryMapping";
 import { OP_INSTRUCTION_DOCS } from "../src/data/opInstructionDocs";
-import { TOTAL_TOOLS, MARKETING_TOOL_COUNT } from "../src/data/generated/toolCount";
+import { TOTAL_TOOLS, TOTAL_TOOL_CATEGORIES, MARKETING_TOOL_COUNT } from "../src/data/generated/toolCount";
+import { getCategoriesWithCounts, getToolsByCategory } from "../src/utils/categoryUtils/toolFiltering";
 import { getDisplayedCategory, getStaticToolTitle } from "../src/utils/toolCategoryDisplay";
 import { MTVAI_CATALOG } from "../src/data/mtvaiCatalog";
 import React from "react";
@@ -167,10 +168,8 @@ for (const tool of allTools) {
 }
 
 const byCategory = new Map<string, Array<{ slug: string; title: string }>>();
-for (const { slug, tool } of toolEntries) {
-  const category = clean(tool.category) || "AI Tools";
-  if (!byCategory.has(category)) byCategory.set(category, []);
-  byCategory.get(category)!.push({ slug, title: tool.title });
+for (const category of Object.keys(getCategoriesWithCounts(directoryTools))) {
+  byCategory.set(category, getToolsByCategory(directoryTools, category).map((tool) => ({ slug: generateToolSlug(tool.title), title: tool.title })));
 }
 
 let count = 0;
@@ -752,7 +751,7 @@ hub(
   `
     ${siteNav}
     <h1>AI Web Tools — ${MARKETING_TOOL_COUNT} AI Tools, And You Can Try Them Right Here</h1>
-    <p>AI Web Tools is a directory of real, working AI tools — ${TOTAL_TOOLS.toLocaleString("en-US")} tools across ${byCategory.size} categories — and the custom GPTs AIWebTools.ai builds run free inside this site, no install and no account needed for a daily allowance.</p>
+    <p>AI Web Tools is a directory of real, working AI tools — ${TOTAL_TOOLS.toLocaleString("en-US")} distinct listings across ${TOTAL_TOOL_CATEGORIES} categories — and the custom GPTs AIWebTools.ai builds run inside this site, with provider availability and usage limits applying.</p>
     <h2>Flagship custom GPTs — read the story, then try the tool</h2>
     <ul>${features
       .map(

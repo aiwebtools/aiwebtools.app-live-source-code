@@ -1519,15 +1519,15 @@ const BookPromotionCard = () => {
                   </div>
 
                   <div className="flex justify-center gap-2 mt-4">
-                    {videos.map((_, index) => (
-                      <button
+                    {Array.from({ length: Math.min(5, videos.length) }, (_, offset) => Math.max(0, Math.min(currentVideoIndex - 2, videos.length - 5)) + offset).map((index) => (
+                      <Button
                         key={index}
                         onClick={() => goToVideo(index)}
-                        className={`w-2 h-2 rounded-full transition-colors ${
-                          index === currentVideoIndex ? 'bg-cyan-400' : 'bg-gray-500'
-                        }`}
+                        variant={index === currentVideoIndex ? 'default' : 'outline'}
+                        size="sm"
+                        className="h-8 min-w-8 px-1"
                         aria-label={`Go to video ${index + 1}`}
-                      />
+                      >{index + 1}</Button>
                     ))}
                   </div>
                 </div>

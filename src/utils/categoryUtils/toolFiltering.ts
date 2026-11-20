@@ -10,8 +10,9 @@ export const getCategoriesWithCounts = (tools: Tool[]): CategoryCounts => {
   const labels = new Map<string, string>();
   uniqueDirectoryTools(tools).forEach(tool => {
     if (!tool.category) return;
-    const key = directoryNameKey(tool.category);
-    const label = labels.get(key) || tool.category;
+    const canonical = canonicalCategoryLabel(tool.category) || tool.category;
+    const key = directoryNameKey(canonical);
+    const label = labels.get(key) || canonical;
     labels.set(key, label);
     counts[label] = (counts[label] || 0) + 1;
   });

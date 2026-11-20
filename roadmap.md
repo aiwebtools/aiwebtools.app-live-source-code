@@ -1,13 +1,15 @@
 # Roadmap
 
 ## November 20 complete correction pass — publish once
-- [ ] 1,18: verify direct entry and immediate real privacy policy.
-- [ ] 2,6,10,14: honest working audio/helper/chat, readable streaming and closing GPT menus.
-- [ ] 3,4,11,12,13,20: unify real counts/categories, verify filtering and duplicates; report any owner-number conflict honestly.
-- [ ] 5,16,17: header/anchor clearance, reachable dialog/search controls, clean hero and floating lanes.
-- [ ] 7,8,9,19,21: current blog, consistent ratings/media/cards and real footer contact.
-- [ ] 15,22: bounded video pagination/counts and loading/performance checks.
-- [ ] Run focused tests and desktop/phone flows; check security, save changes, publish once, report all 22 outcomes and external blockers.
+- [x] 1,18: direct desktop/phone entry; real policy overrides static sitemap shell.
+- [x] 2,6,10,14: playable real primary/fallback TTS, honest audio errors, local explanation, bounded Care Bot (3.6–4.4s), live Bionic chat spacing, usable attachments and route-closing GPT menus.
+- [x] 3,4,11,12,13,20: all 5,563 source records preserved; 5,437 unique listings and 329 canonical categories verified, strict filters/search/empty/free/A–Z and both duplicate fixes pass. Owner numbers 5,563/337 cannot truthfully describe distinct listings/categories.
+- [x] 5,16,17: desktop/phone heading clearance, shared dialog/search controls, cleaner hero and floating lanes; no claim every scroll position exhaustively verified.
+- [x] 7,8,9,19,21: 37 illustrated date-ordered posts, corrected GPT-5/related articles, rounded consistent stars, requested media fixes, real footer contact and reserved card imagery.
+- [x] 15,22: desktop/mobile video navigation windowed; preview reads shared active index; card space reserved and bot-directory waits bounded. External download/player latency cannot be guaranteed.
+- [x] 20 tests/86 assertions and real-catalog/blog checks pass; desktop/phone directory controls and public-page headings pass, real TTS and Bionic reply verified, latest preview build OK.
+- [ ] ElevenLabs sound generation — blocked by external account: 0 credits, 10 required.
+- [ ] One publication requested; awaiting publish result.
 
 ## November 20 directory integrity — preserve source records, do not publish
 - [x] Use one unique directory collection for counts and category membership; exclude unrelated recommendations from category results.

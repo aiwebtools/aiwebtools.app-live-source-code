@@ -144,11 +144,17 @@ const CareBotWidget = () => {
       });
     };
 
+    const controller = new AbortController();
+    const deadline = window.setTimeout(() => controller.abort(), 12000);
+    let toolContext: Awaited<ReturnType<typeof selectRelevantTools>> = [];
     try {
-      const toolContext = await selectRelevantTools(trimmed);
+      toolContext = await Promise.race([
+        selectRelevantTools(trimmed),
+        new Promise<Awaited<ReturnType<typeof selectRelevantTools>>>((resolve) => window.setTimeout(() => resolve([]), 3000)),
+      ]);
       const resp = await fetch(CHAT_URL, {
         method: "POST",
-        signal: AbortSignal.timeout(25000),
+        signal: controller.signal,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${ANON}`,
@@ -192,8 +198,14 @@ const CareBotWidget = () => {
         if (streamDone) break;
       }
     } catch (e) {
-      appendDelta("\n\nThe helper could not finish in time. Your question is still here; use the directory search or try again.");
+      const match = toolContext[0];
+      if (!assistantSoFar && match) {
+        appendDelta(`The live helper is taking too long. Here is a catalog match instead:\n\n[${match.title}](${match.pageUrl}) — ${match.description}\n\nTool pricing and account requirements vary.`);
+      } else {
+        appendDelta("\n\nThe helper could not finish in time. Your question is still here; use the directory search or try again.");
+      }
     } finally {
+      window.clearTimeout(deadline);
       voice.flush();
       setLoading(false);
     }

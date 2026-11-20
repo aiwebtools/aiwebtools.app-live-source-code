@@ -34,7 +34,7 @@ const WindowedSection = memo(({ tools, indexOffset = 0, keyPrefix = "tool" }: Wi
           const identity = `${normalizedTitle}__${normalizedUrl}`;
           return (
             <div
-              className="h-[220px] min-w-0"
+              className="h-full min-w-0"
               key={`${keyPrefix}__${identity}`}
             >
               <MinimalToolCard tool={tool} index={absoluteIndex} />

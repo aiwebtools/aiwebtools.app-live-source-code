@@ -61,9 +61,7 @@ const url = (loc: string, changefreq: string, priority: string) =>
 const pageUrls = staticRoutes.map((r) => url(`${BASE_URL}${r.path}`, r.changefreq, r.priority));
 
 // --- section: categories -----------------------------------------------------
-const toolCategories = Array.from(
-  new Set(allTools.map((tool) => tool.category?.trim()).filter((category): category is string => Boolean(category)))
-).sort((a, b) => a.localeCompare(b));
+const toolCategories = Object.keys(getCategoriesWithCounts(directoryTools)).sort((a, b) => a.localeCompare(b));
 const categoryUrls = [
   ...toolCategories.map((c) => url(`${BASE_URL}/category/${encodePathSegment(c)}`, "weekly", "0.7")),
   ...mainCategories.map((c) => url(`${BASE_URL}/main-category/${encodePathSegment(c.name)}`, "weekly", "0.8")),

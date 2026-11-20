@@ -23,6 +23,8 @@ h1, h2, h3, section[id], [id]:target { scroll-margin-top: calc(var(--site-header
 body:has(header.fixed) main:not(.studio-main) { padding-top: calc(var(--site-header-height) + 28px); padding-bottom: 120px; }
 body:has(header.fixed) header.fixed + div > .container { padding-top: calc(var(--site-header-height) + 28px); }
 .studio-settings p, .studio-settings label, .studio-drawer p { white-space: normal; overflow: visible; overflow-wrap: anywhere; }
+.awt-care-panel { background: hsl(var(--background)) !important; }
+.awt-care-panel [role="log"] { background: hsl(var(--background)) !important; }
 .studio-settings [role="combobox"] { height: auto; min-height: 40px; }
 .studio-settings [role="combobox"] > span { white-space: normal !important; overflow: visible !important; }
 .gpt-generated-content, .gpt-generated-content p, .gpt-generated-content li { white-space: pre-wrap; }

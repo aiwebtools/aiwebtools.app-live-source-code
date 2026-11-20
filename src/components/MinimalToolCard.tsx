@@ -105,12 +105,14 @@ const MinimalToolCard = memo(({ tool, index = 0 }: MinimalToolCardProps) => {
         </div>
       </div>
       
-      <CardContent className="p-4 pr-14 sm:pr-10 pt-6">
+      <div className="aspect-video w-full overflow-hidden bg-muted">
+        <ToolThumb tool={tool} className="w-full h-full" rounded="rounded-none" emojiClassName="text-4xl" />
+      </div>
+      <CardContent className="p-4">
         <div className="flex items-start gap-3 sm:gap-4">
-          <ToolThumb tool={tool} className="w-12 h-12" emojiClassName="text-2xl" />
           <div className="flex-1 min-w-0">
             <h3 
-              className="font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-cyan-300 mb-2 uppercase tracking-wide break-words hyphens-auto"
+              className="font-bold text-foreground mb-2 break-words line-clamp-2 min-h-12 text-base leading-6"
               style={{
                 fontFamily: "'Orbitron', sans-serif",
                 textShadow: '0 0 12px rgba(34, 211, 238, 0.4)',

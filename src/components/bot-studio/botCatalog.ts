@@ -22,7 +22,7 @@ const PAGE = 1000;
 async function fetchAllBots(): Promise<StudioBot[]> {
   const rows: StudioBot[] = [];
   for (let from = 0; ; from += PAGE) {
-    const { data, error, status } = await supabase.from("gpt_apps").select("slug, display_name, tool_title, tagline, greeting, starter_prompts, supports_images, model, image_url, voice, subject").eq("is_active", true).order("display_name").order("slug").range(from, from + PAGE - 1);
+    const { data, error, status } = await supabase.from("gpt_apps").select("slug, display_name, tool_title, tagline, greeting, starter_prompts, supports_images, model, image_url, voice, subject").eq("is_active", true).order("display_name").order("slug").range(from, from + PAGE - 1).abortSignal(AbortSignal.timeout(12000));
     if (error) throw new Error(status === 402
       ? "Bot service is temporarily unavailable because its hosting quota has been reached. Your search is not the problem."
       : "The assistant directory could not load. Please try again.");
