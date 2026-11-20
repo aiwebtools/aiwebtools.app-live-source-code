@@ -75,6 +75,8 @@ export const beginSpeechClip = (url: string, init: RequestInit, outer: AbortSign
       let heard = 0;
       const parser = createParser({
         onEvent(event) {
+          // OpenAI-style streams end with a plain [DONE] marker after the final audio event.
+          if (event.data.trim() === "[DONE]") { completed = true; return; }
           const payload = JSON.parse(event.data) as { type?: string; audio?: string; error?: unknown };
           if (payload.error || payload.type === "error") throw new Error(`Speech failed: ${event.data}`);
           if (payload.type === "speech.audio.done") {
@@ -82,7 +84,7 @@ export const beginSpeechClip = (url: string, init: RequestInit, outer: AbortSign
             return;
           }
           if (payload.type !== "speech.audio.delta" || !payload.audio) return;
-          if (completed) throw new Error("Speech audio arrived after the clip finished.");
+          if (completed) return;
           const decoded = decodePCM(pending, Uint8Array.from(atob(payload.audio), (c) => c.charCodeAt(0)));
           pending = new Uint8Array(decoded.pending);
           if (!decoded.samples.length) return;
@@ -169,6 +171,7 @@ export const drainStudioQueue = async (
       await opts.play(next.clip);
     } catch (error) {
       if (opts.isAborted()) return;
+      console.warn("Lifelike voice clip failed:", error instanceof Error ? error.message : error);
       next.clip.abort();
       if (isCreditExhausted(error)) { await creditsOut(next.text); continue; }
       const backup = opts.retry?.(next.text) ?? null;
@@ -176,6 +179,7 @@ export const drainStudioQueue = async (
         try { await opts.play(backup); continue; }
         catch (retryError) {
           if (opts.isAborted()) return;
+          console.warn("Backup lifelike voice clip failed:", retryError instanceof Error ? retryError.message : retryError);
           backup.abort();
           if (isCreditExhausted(retryError)) { await creditsOut(next.text); continue; }
         }

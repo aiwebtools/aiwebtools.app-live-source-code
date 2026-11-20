@@ -24,6 +24,8 @@ const pick = (used: Set<number>) => {
   return STALL_PHRASES[i];
 };
 
+const WAITING_DEVICE_VOICE = false;
+
 export const ThinkingStatus = ({ avatar, name, voice = false }: { avatar: string; name: string; voice?: boolean }) => {
   const [seconds, setSeconds] = useState(0);
 
@@ -32,9 +34,10 @@ export const ThinkingStatus = ({ avatar, name, voice = false }: { avatar: string
     return () => window.clearInterval(timer);
   }, []);
 
-  // Free device voice only; first line after 1.4s, then a fresh one every ~7s.
+  // Waiting lines used the robotic device voice even while lifelike credits were available,
+  // so they stay silent; replies are read by the lifelike studio voices instead.
   useEffect(() => {
-    if (!voice || !deviceSpeechAvailable()) return;
+    if (!voice || !WAITING_DEVICE_VOICE || !deviceSpeechAvailable()) return;
     const used = new Set<number>();
     const controller = new AbortController();
     let active = false;

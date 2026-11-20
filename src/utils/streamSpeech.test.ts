@@ -169,3 +169,17 @@ test("only exhausted AI credits switch the rest of the reply to the device voice
   expect(downCalls).toBe(1);
   expect(fallback).toEqual(["First.", "Second."]);
 });
+
+test("lifelike clips that end with an OpenAI [DONE] marker play instead of falling back", async () => {
+  const { beginSpeechClip } = await import("./streamSpeech");
+  const audio = btoa(String.fromCharCode(0, 1, 0, 2));
+  const body = `data: {"type":"speech.audio.delta","audio":"${audio}"}\n\ndata: {"type":"speech.audio.done"}\n\ndata: [DONE]\n\n`;
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = (async () => new Response(body, { headers: { "Content-Type": "text/event-stream" } })) as typeof fetch;
+  try {
+    const clip = beginSpeechClip("https://x", {}, new AbortController().signal);
+    while (!clip.finished) await clip.wait();
+    expect(clip.error).toBeNull();
+    expect(clip.started).toBe(true);
+  } finally { globalThis.fetch = realFetch; }
+});
