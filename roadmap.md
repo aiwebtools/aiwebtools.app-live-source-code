@@ -1,5 +1,10 @@
 # Roadmap
 
+## November 20 music uploads and opening sound
+- [ ] Audit YouTube Videos and Shorts and prepend verified missing music to the shared main/pinned/book queue without removing recordings.
+- [ ] Remove the opening's muted fallback and extra sound button; request sound-on playback without fighting browser restrictions.
+- [ ] Run catalog/playback tests and desktop/phone opening and player checks; preserve branding, Skip and automatic ending. Do not publish.
+
 ## November 19 gate opening automatic close
 - [x] Close on the active YouTube frame's real ended event even if its earlier playing notice was missed; subscribe on frame load and preserve one-shot Skip/end cleanup.
 - [x] Nine focused regressions pass. Three random real Shorts each reported player state 0 and dismissed the opening with no page errors; phone-sized Skip check also passed. Screenshots reviewed, build OK, nothing published.

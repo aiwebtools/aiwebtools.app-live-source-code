@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
-import { Loader2, Play, Volume2, X } from "lucide-react";
+import { Loader2, Play, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MTV_CHANNEL_PATH, gateOpeningEventAction, selectGateShort, type GateClip } from "@/utils/gateOpening";
 import { navigateInApp } from "@/utils/inAppNavigate";
@@ -11,7 +11,6 @@ const PLAYER_ORIGIN = "https://www.youtube-nocookie.com";
 
 export default function GateOpeningVideo({ onFinish }: { onFinish: () => void }) {
   const [clip, setClip] = useState<GateClip | null>(null);
-  const [needsSound, setNeedsSound] = useState(false);
   const [started, setStarted] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const frame = useRef<HTMLIFrameElement>(null);
@@ -21,6 +20,12 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
   const command = useCallback((func: string, args: unknown[] = []) => {
     frame.current?.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args }), PLAYER_ORIGIN);
   }, []);
+  const startWithSound = useCallback(() => {
+    if (finished.current) return;
+    command("unMute");
+    command("setVolume", [100]);
+    if (!playing.current) command("playVideo");
+  }, [command]);
   const subscribe = useCallback(() => {
     frame.current?.contentWindow?.postMessage(JSON.stringify({ event: "listening", id: "angel-opening", channel: "widget" }), PLAYER_ORIGIN);
     command("addEventListener", ["onStateChange"]);
@@ -76,18 +81,20 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
       }
       const result = commercialPlayerEvent(event, frame.current?.contentWindow ?? null);
       const action = gateOpeningEventAction(result);
-      if (action === "play") { playing.current = true; setStarted(true); }
+      if (action === "play" && !playing.current) { playing.current = true; setStarted(true); startWithSound(); }
       if (action === "finish") finish();
     };
     window.addEventListener("message", onMessage);
     subscribe();
-    const interval = window.setInterval(subscribe, 500);
-    // Sound-on autoplay is attempted first. Restricted browsers can still show moving footage.
-    const fallback = window.setTimeout(() => {
-      if (!playing.current) { command("mute"); command("playVideo"); setNeedsSound(true); }
-    }, 3000);
-    return () => { clearInterval(interval); clearTimeout(fallback); window.removeEventListener("message", onMessage); };
-  }, [clip, command, finish, subscribe]);
+    // Only retry during startup. Never force muted playback or fight user playback controls.
+    let attempts = 0;
+    const interval = window.setInterval(() => {
+      if (playing.current || finished.current || attempts++ >= 20) { clearInterval(interval); return; }
+      subscribe();
+      startWithSound();
+    }, 500);
+    return () => { clearInterval(interval); window.removeEventListener("message", onMessage); };
+  }, [clip, command, finish, subscribe, startWithSound]);
 
   return <div role="dialog" aria-modal="true" aria-label="MTVAI opening" data-leaving={leaving} className="mtv-opening fixed inset-0 z-[2147483647] flex flex-col items-center justify-center gap-3 bg-background px-4 py-4 text-foreground">
     <span className="mtv-rise font-mono text-sm tracking-[0.28em] text-primary" style={{ animationDelay: "0s" }}>MTVAI.live</span>
@@ -97,7 +104,7 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
       {clip && <iframe
         ref={frame}
         title={clip.title}
-        onLoad={() => { subscribe(); setStarted(true); }}
+        onLoad={() => { subscribe(); startWithSound(); setStarted(true); }}
         src={`${PLAYER_ORIGIN}/embed/${clip.id}?autoplay=1&mute=0&playsinline=1&controls=1&rel=0&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`}
         allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
         allowFullScreen
@@ -105,7 +112,6 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
       />}
       <div aria-hidden="true" className="pointer-events-none absolute bottom-28 right-2 z-10 rounded-md bg-background/75 px-1.5 py-1 backdrop-blur-sm"><MtvaiBrand compact className="w-[92px]" /></div>
     </div>
-    {needsSound && <Button variant="outline" onClick={() => { command("unMute"); command("playVideo"); setNeedsSound(false); }}><Volume2 className="h-4 w-4" />Play with sound</Button>}
     <div style={{ animationDelay: "0s" }} className="mtv-rise flex w-full max-w-sm flex-col items-center gap-2">
       <Button
         ref={close}

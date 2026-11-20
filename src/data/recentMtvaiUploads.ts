@@ -6,7 +6,9 @@ import { NOVEMBER_16_MTVAI_UPLOADS } from "./november16MtvaiUploads";
 import { NOVEMBER_18_MTVAI_UPLOADS } from "./november18MtvaiUploads";
 import { NOVEMBER_17_MTVAI_UPLOADS } from "./november17MtvaiUploads";
 import { NOVEMBER_19_MTVAI_UPLOADS } from "./november19MtvaiUploads";
+import { NOVEMBER_20_MTVAI_UPLOADS } from "./november20MtvaiUploads";
 export const RECENT_MTVAI_UPLOADS = [
+  ...NOVEMBER_20_MTVAI_UPLOADS,
   ...NOVEMBER_19_MTVAI_UPLOADS,
   ...NOVEMBER_18_MTVAI_UPLOADS,
   ...NOVEMBER_17_MTVAI_UPLOADS,
