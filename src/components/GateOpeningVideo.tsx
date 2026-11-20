@@ -96,7 +96,7 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
     return () => { clearInterval(interval); window.removeEventListener("message", onMessage); };
   }, [clip, command, finish, subscribe, startWithSound]);
 
-  return <div role="dialog" aria-modal="true" aria-label="MTVAI opening" data-leaving={leaving} className="mtv-opening fixed inset-0 z-[2147483647] flex flex-col items-center justify-center gap-3 bg-background px-4 py-4 text-foreground">
+  return <div role="dialog" aria-modal="true" aria-label="MTVAI opening" data-leaving={leaving} className="mtv-opening fixed inset-0 z-[2147483647] flex flex-col items-center justify-center gap-3 overflow-y-auto bg-background px-4 py-4 text-foreground">
     <div aria-hidden="true" className="mtv-burst pointer-events-none absolute inset-0 z-20 overflow-hidden">
       <span className="mtv-burst-flash" />
       <span className="mtv-burst-ring" />
@@ -109,7 +109,7 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
       <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Presented by aiwebtools.app · 5,500+ AI Tools</span>
     </div>
     <p style={{ animationDelay: "0s" }} className="mtv-rise w-full max-w-sm text-center text-sm leading-relaxed text-foreground">This music video was made by a rogue AI music video agent all by itself.....sorta.</p>
-    <div style={{ animationDelay: "0s" }} className="mtv-rise relative aspect-[9/16] max-h-[calc(100dvh-21rem)] w-full max-w-sm overflow-hidden rounded-xl border border-primary/25 bg-muted shadow-[0_0_45px_hsl(var(--primary)/.18)]">
+    <div style={{ animationDelay: "0s" }} className="mtv-rise mtv-opening-frame relative shrink-0 overflow-hidden rounded-xl border border-primary/25 bg-muted shadow-[0_0_45px_hsl(var(--primary)/.18)]">
       {!started && <div role="status" aria-label="Loading MTVAI opening" className="pointer-events-none absolute inset-0 z-10 grid place-items-center"><Loader2 className="h-7 w-7 animate-spin motion-reduce:animate-none text-primary" /></div>}
       {clip && <iframe
         ref={frame}
@@ -120,7 +120,7 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
         allowFullScreen
         className="absolute inset-0 h-full w-full border-0"
       />}
-      <div aria-hidden="true" className="pointer-events-none absolute bottom-28 right-2 z-10 rounded-md bg-background/75 px-1.5 py-1 backdrop-blur-sm"><MtvaiBrand compact className="w-[92px]" /></div>
+      <div aria-hidden="true" className="pointer-events-none absolute bottom-28 right-2 z-10 rounded-md bg-background/75 px-1.5 py-1 backdrop-blur-sm"><MtvaiBrand compact /></div>
     </div>
     <div style={{ animationDelay: "0s" }} className="mtv-rise flex w-full max-w-sm flex-col items-center gap-2">
       <Button

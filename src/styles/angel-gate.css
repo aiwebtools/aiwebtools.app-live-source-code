@@ -48,6 +48,8 @@
 .mtv-logo-text { background: linear-gradient(100deg, hsl(var(--primary)) 30%, hsl(var(--foreground)) 50%, hsl(var(--primary)) 70%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: mtv-shine 1.4s linear; text-shadow: 0 0 40px hsl(var(--primary) / .35); }
 .mtv-rise { opacity: 0; animation: mtv-rise .6s cubic-bezier(.22,1,.36,1) forwards; }
 .mtv-opening { transition: opacity .35s ease; }
+.mtv-opening-frame { width: min(100%, 24rem, max(120px, calc((100dvh - 21rem) * 9 / 16))); aspect-ratio: 9 / 16; }
+@media (max-height: 600px) { .mtv-opening { justify-content: flex-start; } }
 .mtv-opening[data-leaving="true"] { opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
   .mtv-logo-fly { animation-duration: .01s; }

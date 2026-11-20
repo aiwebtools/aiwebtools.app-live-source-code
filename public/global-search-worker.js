@@ -1,4 +1,4 @@
-/* AIWebTools global search worker — v3 (intelligent matching + diagnostics) */
+/* AIWebTools global search worker — v5 (intelligent matching + diagnostics) */
 const keys = ["title", "category", "tags", "directUrl", "imageUrl", "videoUrl", "emoji", "color", "rating", "totalVotes", "isFree", "description"];
 let indexPromise;
 let indexReady = false;
@@ -13,6 +13,10 @@ const STOP_WORDS = new Set(["a","an","the","i","im","i'm","me","my","we","you","
 // Synonym / intent expansion — keeps the directory "intelligent" for phrases like
 // "i want to write a book today" -> book writer, author, novel, manuscript.
 const SYNONYMS = {
+  resurrection: ["resurrection", "resurrections", "resurrect", "reborn", "historical figure", "past voices", "persona simulation"],
+  spirituality: ["spirituality", "spiritual", "philosophy", "divine", "mythology"],
+  spiritual: ["spiritual", "spirituality", "philosophy", "divine", "mythology"],
+  history: ["history", "historical", "historian", "past", "time travel"],
   book: ["book", "writer", "author", "novel", "manuscript", "ebook", "publishing", "story"],
   write: ["write", "writer", "writing", "author", "copywriting", "content"],
   writing: ["write", "writer", "writing", "author", "copywriting"],
@@ -52,6 +56,12 @@ const SYNONYMS = {
 };
 
 const expandWord = (word) => SYNONYMS[word] || [word];
+
+const QUERY_SPELLINGS = {
+  ressurection: "resurrection", resurection: "resurrection", resurrecton: "resurrection", resurrecion: "resurrection",
+  ressurect: "resurrection", resurect: "resurrection", resurrect: "resurrection",
+  spirtuality: "spirituality", spirtual: "spiritual", hisotery: "history", hisotory: "history", histroy: "history",
+};
 
 const distance = (a, b) => {
   if (a === b) return 0;
@@ -112,6 +122,7 @@ const loadIndex = () => {
 const score = (entry, query, terms) => {
   let value = 0;
   const compact = query.replace(/\s+/g, "");
+  if (entry.title === "resurrection gpt" && query === "resurrection") value += 250000;
   if (entry.title === query) value += 1000000;
   else if (entry.compact === compact) value += 950000;
   else if (entry.title.startsWith(query)) value += 500000 + Math.round(180000 * (query.length / Math.max(query.length, entry.title.length)));
@@ -128,7 +139,7 @@ const score = (entry, query, terms) => {
       const weight = g === 0 ? 1 : 0.45;
       let hit = 0;
       if (entry.words.includes(word)) hit = 45000;
-      else if (entry.words.some((candidate) => candidate.startsWith(word) || word.startsWith(candidate))) hit = 26000;
+      else if (entry.words.some((candidate) => candidate.startsWith(word) || (candidate.length >= 3 && word.startsWith(candidate)))) hit = 26000;
       else if (word.length >= 4 && entry.title.includes(word)) hit = 20000;
       else if (entry.tags.includes(word)) hit = 10000;
       else if (entry.category.includes(word)) hit = 8000;
@@ -160,7 +171,7 @@ self.onmessage = async ({ data }) => {
 
   const startedAt = Date.now();
   try {
-    const query = normalize(rawQuery);
+    const query = normalize(rawQuery).split(" ").map((word) => QUERY_SPELLINGS[word] || word).join(" ");
     const rawWords = query.split(" ").filter(Boolean);
     // Strip filler words for long natural-language queries, keep everything for short ones.
     const meaningful = rawWords.length > 2 ? rawWords.filter((w) => !STOP_WORDS.has(w)) : rawWords;
