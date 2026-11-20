@@ -31,6 +31,9 @@ export function displayConversationTitle(thread: BotConversation): string {
 }
 
 export const BOT_HISTORY_KEY = "awt-bot-conversations-v1";
+export function clearBotConversations(): boolean {
+  try { localStorage.removeItem(BOT_HISTORY_KEY); return true; } catch { return false; }
+}
 
 export function readBotConversations(): BotConversation[] {
   try {

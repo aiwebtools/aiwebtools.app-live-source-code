@@ -14,6 +14,8 @@ const CANONICAL_LABELS: Record<string, string> = {
   "ai chat & assistants": "AI Chat & Assistants",
   "ai chat assistants": "AI Chat & Assistants",
   "development & coding": "Development & Coding",
+  "writing & text generation": "Content Creation & Writing",
+  "content creation & writing": "Content Creation & Writing",
   "video & multimedia": "Video & Multimedia",
   "video & animation": "Video & Multimedia",
   "video generation": "Video & Multimedia",

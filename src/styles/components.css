@@ -780,6 +780,26 @@ body:has([role="dialog"] .studio) .awt-floating-overlay { display: none; }
   .studio .gpt-room-input textarea { min-height: 44px; max-height: 70px; }
 }
 /* Official AIWEBTOOLS.APP wordmark — matches the chat studio brand */
+/* Embedded rooms must size by their container, not the viewport's sidebar breakpoint. */
+.tool-detail-content:has(.studio-embedded) { max-width: 1600px; }
+.studio-embedded { scroll-margin-top: calc(var(--site-header-height, 128px) + 24px); height: min(980px, 95dvh); }
+.studio-embedded .studio-bot-header { display: grid; grid-template-columns: 44px minmax(0,1fr) auto; }
+.studio-embedded .studio-bot-identity { grid-column: 2; min-width: 0; }
+.studio-embedded .studio-header-actions { grid-column: 3; grid-row: 1; }
+.studio-embedded .studio-header-pdf { grid-column: 2 / 4; grid-row: 2; justify-self: start; }
+.studio-bot-identity h1, .studio-bot-description { word-break: normal !important; overflow-wrap: normal !important; }
+.studio-embedded .studio-messages > .group { width: 100%; max-width: 100%; }
+.studio-embedded .studio-grid { grid-template-columns: minmax(0,1fr); }
+.studio-embedded .studio-sidebar, .studio-embedded .studio-settings { display: none; }
+.studio-embedded .studio-bot-menu, .studio-embedded .studio-nav-control.xl\:hidden { display: flex; }
+@media (min-width: 1500px) {
+  .studio-embedded .studio-grid { grid-template-columns: 230px minmax(700px,1fr) 250px; }
+  .studio-embedded .studio-sidebar { display: flex; }
+  .studio-embedded .studio-settings { display: block; }
+  .studio-embedded .studio-bot-menu, .studio-embedded .studio-nav-control.xl\:hidden { display: none; }
+}
+.studio-reply-tools { position: relative; z-index: 3; pointer-events: auto; }
+body:has(.studio-embedded) .awt-floating-overlay { display: none; }
 .awt-brand-mark, .awt-brand-tagline { --brand-green: 146 90% 55%; }
 .awt-brand-mark { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-weight: 900; line-height: 1.05; letter-spacing: .01em; white-space: nowrap; color: hsl(var(--foreground)); text-shadow: 0 0 14px hsl(var(--brand-green) / .35); }
 .awt-brand-mark span { color: hsl(var(--brand-green)); }

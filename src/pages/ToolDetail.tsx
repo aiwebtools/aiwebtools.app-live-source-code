@@ -127,9 +127,8 @@ const ToolDetail = () => {
     return <ToolNotFound requestedSlug={toolSlug || toolId} totalTools={allTools.length} />;
   }
 
-  const defaultRatings = [4.1, 4.2, 4.3, 4.4];
-  const defaultRating = tool.rating || defaultRatings[toolIndex % defaultRatings.length];
-  const defaultVotes = tool.totalVotes || Math.floor(Math.random() * 3000) + 2000;
+  const defaultRating = 0;
+  const defaultVotes = 0;
 
   const toolStructuredData = generateStructuredData('tool');
 
@@ -176,7 +175,7 @@ const ToolDetail = () => {
         <Header />
         
         <main className="container mx-auto px-4 py-20">
-          <div className="max-w-4xl mx-auto">
+          <div className="tool-detail-content max-w-4xl mx-auto">
             {/* Visual Breadcrumb Trail */}
             <BreadcrumbNav items={visualBreadcrumbItems} className="mb-4" />
             

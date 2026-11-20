@@ -10,6 +10,9 @@ import { getToolPricing, getPricingLabel } from "@/utils/pricingClassification";
 import { createTimePortalEffect } from "@/utils/timeEffects";
 import { getDisplayedCategory } from "@/utils/toolCategoryDisplay";
 import ToolThumb from "@/components/tools/ToolThumb";
+import { useCommunityRating } from '@/hooks/useCommunityRating';
+import { generateToolSlug } from '@/utils/urlGenerator';
+import { Star } from 'lucide-react';
 
 interface ToolHeaderProps {
   tool: Tool;
@@ -20,6 +23,7 @@ interface ToolHeaderProps {
 
 const ToolHeader = ({ tool, defaultRating, defaultVotes, toolIndex }: ToolHeaderProps) => {
   const navigate = useNavigate();
+  const { data: community, isLoading } = useCommunityRating(generateToolSlug(tool.title));
 
   const handleCategoryClick = () => {
     if (tool.category) {
@@ -91,11 +95,10 @@ const ToolHeader = ({ tool, defaultRating, defaultVotes, toolIndex }: ToolHeader
         </div>
         
         <div className="flex justify-center">
-          <StarRating 
-            rating={defaultRating} 
-            totalVotes={defaultVotes}
-            toolId={toolIndex !== undefined ? `tool-${toolIndex}` : undefined}
-          />
+          {community?.count ? <div className="flex flex-wrap items-center justify-center gap-2" aria-label={`${community.rating.toFixed(1)} stars from ${community.count} community reviews`}>
+            {[1,2,3,4,5].map(value => <Star key={value} className={`h-4 w-4 ${value <= Math.round(community.rating) ? 'fill-primary text-primary' : 'text-muted-foreground'}`} />)}
+            <span>{community.rating.toFixed(1)} · {community.count} community reviews</span>
+          </div> : <span className="text-sm text-muted-foreground">{isLoading ? 'Loading community ratings…' : 'No community ratings yet'}</span>}
         </div>
       </div>
     </div>

@@ -30,6 +30,7 @@ import { GlobalEmailSignupHost } from "@/components/JoinEmailListButton";
 // Eager load only the disclaimer gate; lazy-load heavy app routes to avoid black-screen startup
 import DisclaimerGate from "./pages/DisclaimerGate";
 import InAppNavigateListener from "./components/InAppNavigateListener";
+import AngelNumberGate from "./components/AngelNumberGate";
 import MusicTheaterRoute from "./components/MusicTheaterRoute";
 
 // Generic retry wrapper for non-component dynamic imports (e.g., side-effect modules).
@@ -654,6 +655,7 @@ function App() {
               <TooltipProvider>
                 <Toaster />
                 <BrowserRouter>
+                  <AngelNumberGate>
                   <InAppNavigateListener />
                   <AnimatedRoutes />
                   <PostAcceptBoot />
@@ -661,6 +663,7 @@ function App() {
                   <ConfirmSubscriptionHandler />
                   <DownloadCenterDialog />
                   <GlobalEmailSignupHost />
+                  </AngelNumberGate>
                 </BrowserRouter>
               </TooltipProvider>
             </VideoManagerProvider>

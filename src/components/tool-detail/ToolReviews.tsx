@@ -10,6 +10,8 @@ import { useToast } from "@/hooks/use-toast";
 import { generateToolSlug } from "@/utils/urlGenerator";
 import { buildCanonicalUrl } from "@/utils/seo";
 import { getDisplayedCategory } from "@/utils/toolCategoryDisplay";
+import { useCommunityRating } from '@/hooks/useCommunityRating';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface ToolReviewsProps {
   tool: Tool;
@@ -80,6 +82,8 @@ const StarRow = ({
 const ToolReviews = ({ tool, fallbackRating, fallbackVotes }: ToolReviewsProps) => {
   const slug = useMemo(() => generateToolSlug(tool.title), [tool.title]);
   const { toast } = useToast();
+  const { data: summary } = useCommunityRating(slug);
+  const queryClient = useQueryClient();
 
   const [reviews, setReviews] = useState<ReviewRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -99,6 +103,7 @@ const ToolReviews = ({ tool, fallbackRating, fallbackVotes }: ToolReviewsProps) 
       .limit(50);
 
     if (!error && data) setReviews(data as ReviewRow[]);
+    void queryClient.invalidateQueries({ queryKey: ['community-rating', slug] });
     setLoading(false);
   }, [slug]);
 
@@ -111,8 +116,8 @@ const ToolReviews = ({ tool, fallbackRating, fallbackVotes }: ToolReviewsProps) 
       ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
       : 0;
 
-  const displayRating = reviews.length > 0 ? communityAverage : fallbackRating;
-  const displayCount = reviews.length > 0 ? reviews.length : fallbackVotes;
+  const displayRating = summary?.rating || 0;
+  const displayCount = summary?.count || 0;
 
   const handleSubmit = async () => {
     if (submitting) return;
@@ -158,13 +163,13 @@ const ToolReviews = ({ tool, fallbackRating, fallbackVotes }: ToolReviewsProps) 
     applicationCategory: getDisplayedCategory(tool) || "AI Tool",
     operatingSystem: "Web Browser",
     url: buildCanonicalUrl(`/${slug}`),
-    aggregateRating: {
+    ...(displayCount > 0 ? { aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: Number(displayRating.toFixed(1)),
-      reviewCount: Math.max(displayCount, 1),
+      reviewCount: displayCount,
       bestRating: 5,
       worstRating: 1,
-    },
+    }} : {}),
     review: reviews.slice(0, 10).map((r) => ({
       "@type": "Review",
       author: { "@type": "Person", name: sanitizeSchemaText(r.author_name) },
@@ -207,13 +212,13 @@ const ToolReviews = ({ tool, fallbackRating, fallbackVotes }: ToolReviewsProps) 
             Reviews &amp; Ratings
           </h2>
           <div className="mt-2 flex items-center gap-3">
-            <StarRow value={displayRating} size={20} />
+            {displayCount > 0 && <StarRow value={displayRating} size={20} />}
             <span className="text-lg font-semibold text-cyan-300">
-              {displayRating.toFixed(1)}
+              {displayCount > 0 ? displayRating.toFixed(1) : 'Unrated'}
             </span>
             <span className="text-sm text-gray-400">
-              {reviews.length > 0
-                ? `${reviews.length} community review${reviews.length === 1 ? "" : "s"}`
+              {displayCount > 0
+                ? `${displayCount} community review${displayCount === 1 ? "" : "s"}`
                 : "Be the first to review this tool"}
             </span>
           </div>

@@ -1,8 +1,15 @@
 import { beforeEach, expect, test } from "bun:test";
-import { openBotConversation, readBotConversations, saveBotConversation, conversationPath } from "./botConversations";
+import { openBotConversation, readBotConversations, saveBotConversation, conversationPath, clearBotConversations } from "./botConversations";
 const storage = new Map();
 globalThis.localStorage = { getItem: (key) => storage.get(key) ?? null, setItem: (key, value) => { storage.set(key, value); }, removeItem: (key) => { storage.delete(key); }, clear: () => storage.clear(), key: () => null, length: 0 };
 beforeEach(() => storage.clear());
+test('clear removes only device chats and leaves other saved site data intact', () => {
+  openBotConversation('book-writer','one');
+  localStorage.setItem('awt-custom-bots','preserved');
+  expect(clearBotConversations()).toBe(true);
+  expect(readBotConversations()).toEqual([]);
+  expect(localStorage.getItem('awt-custom-bots')).toBe('preserved');
+});
 test("device history keeps separate bot conversations without login", () => {
   const first = openBotConversation("time-machine-gpt", "trip-one");
   saveBotConversation({ ...first, messages: [{ role: "user", content: "Mira has my compass" }] });

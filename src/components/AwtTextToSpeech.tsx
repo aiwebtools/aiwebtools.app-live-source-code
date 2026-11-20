@@ -4,6 +4,8 @@ import AwtSoundEffects from "@/components/AwtSoundEffects";
 import { requestAudio, useGeneratedAudio } from "@/hooks/useGeneratedAudio";
 import { Volume2, Square, Download, Mic2, Loader2, Play, Pause } from "lucide-react";
 import { audioNotice } from "@/utils/audioNotice";
+import { localSpeech } from '@/utils/localAudio';
+import { deliverFile } from '@/utils/fileDelivery';
 
 /**
  * AWT Voice Studio — real, distinct studio voices with a true MP3 download.
@@ -62,6 +64,8 @@ const AwtTextToSpeech: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [previewing, setPreviewing] = useState<string | null>(null);
   const [clipType, setClipType] = useState("audio/mpeg");
+  const [clip, setClip] = useState<Blob | null>(null);
+  const [local, setLocal] = useState(false);
   const audio = useGeneratedAudio();
   const { clipUrl, playing } = audio;
   const previewCache = useRef<Map<string, Blob>>(new Map());
@@ -94,26 +98,26 @@ const AwtTextToSpeech: React.FC = () => {
       const instructions = [language ? `Speak entirely in ${language}.` : "", style ? `Delivery: ${style}.` : "Warm, natural conversational delivery."].join(" ");
       let blob: Blob;
       try {
-        blob = await requestAudio("awt-tts", { text: text.trim(), voice, speed, instructions }, controller.signal);
+        blob = await requestAudio("awt-tts", { text: text.trim(), voice, speed, instructions }, AbortSignal.any([controller.signal,AbortSignal.timeout(6000)]));
+        setLocal(false);
       } catch (primaryError) {
         if (controller.signal.aborted) throw primaryError;
         try {
-          blob = await requestAudio("awt-tts", { engine: "gemini", text: text.trim(), voice, speed, instructions }, controller.signal);
+          blob = await requestAudio("awt-tts", { engine: "gemini", text: text.trim(), voice, speed, instructions }, AbortSignal.any([controller.signal,AbortSignal.timeout(6000)]));
+          setLocal(false);
         } catch (backupError) {
-          throw new Error(`Speech is unavailable. ${primaryError instanceof Error ? primaryError.message : "The selected voice failed."} Backup: ${backupError instanceof Error ? backupError.message : "unavailable"}`);
+          if (controller.signal.aborted) throw backupError;
+          blob = await localSpeech(text.trim(),speed,language); setLocal(true);
         }
       }
-      if (!controller.signal.aborted) { setClipType(blob.type); await audio.load(blob); }
+      if (!controller.signal.aborted) { setClip(blob); setClipType(blob.type); await audio.load(blob); }
     } catch (e) { if (!controller.signal.aborted) setError(e instanceof Error ? e.message : "Voice generation failed."); }
     finally { setLoading(false); request.current = null; }
   };
   const togglePlay = () => void audio.toggle().catch(e => setError(e.message));
   const stop = () => { request.current?.abort(); audio.stop(); };
   const download = () => {
-    if (!clipUrl) return;
-    const link = document.createElement("a");
-    link.href = clipUrl; link.download = `aiwebtools-voice-${voice}.${clipType.includes("wav") ? "wav" : "mp3"}`;
-    document.body.appendChild(link); link.click(); link.remove();
+    if (clip) void deliverFile(clip,`aiwebtools-voice-${voice}.${clipType.includes("wav") ? "wav" : "mp3"}`);
   };
 
   const charCount = text.length;
@@ -132,6 +136,7 @@ const AwtTextToSpeech: React.FC = () => {
               🔊 AWT VOICE STUDIO
             </span>
           </h2>
+          {local && <p role="status" className="text-sm text-foreground">Local synthesized voice · WAV · English, Spanish, French and German supported</p>}
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Type anything, pick a real studio voice and language, hear it — then download
             it as audio. No account needed; generation depends on available provider credits.
