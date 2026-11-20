@@ -17,9 +17,8 @@
 - Keep official social identities and verified audience snapshots in one catalog; share the Socials destination across device menus and leave unavailable counts unknown.
 - Use subject metadata, not themes; lazy-load unpublished survival brains only in the existing builder.
 
-- Keep the temporary access gate unlock in React memory only and render its own Matrix backdrop; reloads must ask again and loader cleanup must not remove its background.
-- Lazy-load the random music-only MTVAI gate opening after PIN acceptance while mounting the site behind it; scope completion to its iframe, stop on skip, and fail open on unavailable playback.
-- Surfaces rendered outside the router (the access gate) reach pages through the shared in-app navigate listener; full page loads would make the gate ask for the code again.
+- Mount public routes directly through AnimatedRoutes without entry guards; page access must not depend on consent storage, while legal consent remains explicit.
+- Surfaces outside the router use the shared in-app navigate listener to preserve single-page navigation.
 
 - Schedule automatic promotional dialogs through the shared session-wide scheduler so navigation and competing pop-ups cannot bypass the cooldown.
 

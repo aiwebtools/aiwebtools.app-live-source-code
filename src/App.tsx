@@ -29,7 +29,6 @@ import { GlobalEmailSignupHost } from "@/components/JoinEmailListButton";
 
 // Eager load only the disclaimer gate; lazy-load heavy app routes to avoid black-screen startup
 import DisclaimerGate from "./pages/DisclaimerGate";
-import AccessCodeGate from "./components/AccessCodeGate";
 import InAppNavigateListener from "./components/InAppNavigateListener";
 import MusicTheaterRoute from "./components/MusicTheaterRoute";
 
@@ -394,19 +393,6 @@ const AnimatedRoutes = () => {
   );
 };
 
-// Global route guard: instant redirect new visitors to /welcome disclaimer gate
-const RouteGuard: React.FC = () => {
-  const location = useLocation();
-  const hasAccepted = getConsentAccepted();
-  
-  // Instant redirect using React Router (no page reload)
-  if (!hasAccepted && location.pathname !== '/welcome') {
-    return <Navigate to="/welcome" replace state={{ returnTo: `${location.pathname}${location.search}${location.hash}` }} />;
-  }
-  
-  return <AnimatedRoutes />;
-};
-
 /**
  * Zero prefetching while the Matrix boot overlay is still on screen.
  * Resolves as soon as #aiwt-loader-overlay is gone (or immediately if it
@@ -428,10 +414,9 @@ const afterLoaderGone = (run: () => void): (() => void) => {
 
 const PostAcceptBoot: React.FC = () => {
   const location = useLocation();
-  const hasAccepted = getConsentAccepted();
 
-  // Never run heavy boot work on disclaimer gate
-  const enabled = hasAccepted && location.pathname !== "/welcome";
+  // Direct entry does not imply consent; keep optional welcome separate from boot.
+  const enabled = location.pathname !== "/welcome";
 
   // Keep route prefetching outside the first interaction window. Eight eager
   // document prefetches previously competed with the homepage on first load.
@@ -541,8 +526,7 @@ const PostAcceptBoot: React.FC = () => {
 
 const GlobalOverlays: React.FC = () => {
   const location = useLocation();
-  const hasAccepted = getConsentAccepted();
-  const show = hasAccepted && location.pathname !== "/welcome";
+  const show = location.pathname !== "/welcome";
   const [overlaysReady, setOverlaysReady] = React.useState(false);
   const [heavyOverlaysReady, setHeavyOverlaysReady] = React.useState(false);
   const isTouchPhone =
@@ -663,7 +647,6 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <AccessCodeGate>
       <QueryClientProvider client={queryClient}>
         <HelmetProvider>
           <FavoritesProvider>
@@ -672,7 +655,7 @@ function App() {
                 <Toaster />
                 <BrowserRouter>
                   <InAppNavigateListener />
-                  <RouteGuard />
+                  <AnimatedRoutes />
                   <PostAcceptBoot />
                   <GlobalOverlays />
                   <ConfirmSubscriptionHandler />
@@ -684,7 +667,6 @@ function App() {
           </FavoritesProvider>
         </HelmetProvider>
       </QueryClientProvider>
-      </AccessCodeGate>
     </ErrorBoundary>
   );
 }

@@ -4,7 +4,7 @@ import { IN_APP_NAVIGATE_EVENT } from "@/utils/inAppNavigate";
 
 /**
  * Mounted inside <BrowserRouter> so overlay surfaces that live outside the
- * router (the access gate) can still move the visitor to a real page.
+ * router can still move the visitor to a real page.
  * Only same-origin absolute paths are accepted.
  */
 export default function InAppNavigateListener() {

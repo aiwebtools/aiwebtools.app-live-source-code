@@ -1,5 +1,10 @@
 # Roadmap
 
+## November 20 direct page entry — remove Angel gate and MTVAI opening only
+- [ ] Remove the shared gate wrapper, opening dialog and gate-only code; keep all page content, media and regular music players unchanged.
+- [ ] Remove automatic first-visit welcome diversion so fresh visitors reach the requested URL; retain the existing optional welcome and legal content without recording false consent.
+- [ ] Test fresh desktop/phone entry, reload and navigation across the requested route families; run regressions and check preview errors. Do not publish.
+
 ## November 20 site-wide health sweep — do not publish
 - [x] Reviewed preview diagnostics (build OK), zero pending Project monitoring findings, and November 13–20 analytics: 1,145 visits / 1,969 page views; 43% reported bounce rate. Page/channel breakdowns do not establish visitor journeys or causation.
 - [x] Reproduced live resurrection typo search ranking an unrelated community tool first and Command R matches from its one-letter title. Corrected the shipped worker's spelling/intent matching and post-community exact-name ordering; preserved all directory rows and Enter exact-only behavior.
@@ -34,7 +39,7 @@
 
 ## November 17 MTVAI additions and Angel gate
 - [ ] Audit current Videos and Shorts, add missing published uploads to the shared players without repeats; keep audiobooks separate and removed uploads hidden.
-- [ ] Re-enable the preserved 1111 gate and test rejection, unlock and reload.
+- [x] Superseded by Master's November 20 removal: no access-code gate or automatic opening video on any route.
 - [ ] Verify main, pinned and book players on desktop/phone emulation; run focused regressions. Do not publish.
 
 ## November 15 MTVAI uploads and playback — no unrelated changes
