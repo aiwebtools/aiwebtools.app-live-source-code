@@ -10,6 +10,7 @@ import { markFreeTools, ensureTitleTags } from '@/utils/toolUtils';
 import { ensurePricingTags } from '@/utils/pricingClassification';
 import { applySpirtualTags } from '@/utils/spiritualTagging';
 import { normalizeToolCategories } from '@/utils/category/canonicalCategory';
+import { uniqueDirectoryTools } from '@/utils/directoryIntegrity';
 
 
 // Import AI Web Tools GPTs - PRIORITY FEATURED TOOLS
@@ -753,7 +754,10 @@ const toolsWithPricing = ensurePricingTags(toolsWithTags);
 // up twice with different casing on cards, chips and filters.
 const toolsWithCanonicalCategories = normalizeToolCategories(toolsWithPricing);
 
+// Preserve every lookup record and original URL; directory displays/counts use
+// one representative per name, enriched with duplicate tags and missing media.
 export const allTools: Tool[] = toolsWithCanonicalCategories;
+export const directoryTools: Tool[] = uniqueDirectoryTools(allTools);
 
 
 // Use filtered tools for all exports

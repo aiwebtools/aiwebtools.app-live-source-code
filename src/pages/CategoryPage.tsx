@@ -40,7 +40,7 @@ const CategoryPage = () => {
   // repeat. Pagination now only ever appends new, unique tools.
   const finalFilteredTools = useMemo(() => {
     const source = filterSearchTerm.trim()
-      ? searchTools(allTools, filterSearchTerm)
+      ? searchTools(categoryTools, filterSearchTerm)
       : categoryTools;
 
     const seen = new Set<string>();

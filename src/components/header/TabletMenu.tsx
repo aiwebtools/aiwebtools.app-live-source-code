@@ -1,3 +1,4 @@
+import { MARKETING_TOOL_COUNT as DIRECTORY_MARKETING_COUNT } from "@/data/generated/toolCount";
 import { downloadAllOperationalInstructions } from "@/utils/downloads";
 
 import { Menu, Phone, Globe, ChevronDown, Download, Copy, Gift, Clock } from "lucide-react";
@@ -297,7 +298,7 @@ const TabletMenu = () => {
                 </div>
                 <DropdownMenuItem onClick={handleDownloadAllToolsCSV} className="text-cyan-100 hover:bg-cyan-500/20 rounded">
                   <Download className="w-4 h-4 mr-2" />
-                  📊 Download ALL 5,500+ AI Tools (CSV)
+                  📊 Download ALL {DIRECTORY_MARKETING_COUNT} AI Tools (CSV)
                 </DropdownMenuItem>
 
                 {/* Recently Visited Tools */}

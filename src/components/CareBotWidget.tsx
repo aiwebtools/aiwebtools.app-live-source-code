@@ -1,3 +1,4 @@
+import { MARKETING_TOOL_COUNT as DIRECTORY_MARKETING_COUNT } from "@/data/generated/toolCount";
 import { sanitizeExternalUrl } from "@/utils/links/linkSafety";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { X, Send, Loader2, Sparkles, Bot, Volume2, VolumeX, Play, Square } from "lucide-react";
@@ -248,7 +249,7 @@ const CareBotWidget = () => {
                 <div className="font-bold text-green-300 text-sm leading-tight">
                   <span className="gpt-glitch-title" data-text="AIWebTools Care Bot">AIWebTools Care Bot</span>
                 </div>
-                <div className="text-[10px] text-green-500/70">Powered by AI · 5,500+ tools indexed</div>
+                <div className="text-[10px] text-green-500/70">Powered by AI · {DIRECTORY_MARKETING_COUNT} tools indexed</div>
               </div>
             </div>
             <div className="flex items-center gap-1">
@@ -283,7 +284,7 @@ const CareBotWidget = () => {
             {messages.length === 0 ? (
               <div className="space-y-3">
                 <div className="text-green-200 text-sm leading-relaxed">
-                  👋 Hey! I'm your AIWebTools Care Bot. Ask me anything about our <strong>5,500+ AI tools</strong> — I can recommend tools, explain how they work, and link you straight to them.
+                  👋 Hey! I'm your AIWebTools Care Bot. Ask me anything about our <strong>{DIRECTORY_MARKETING_COUNT} AI tools</strong> — I can recommend tools, explain how they work, and link you straight to them.
                 </div>
                 <div className="space-y-2">
                   {SUGGESTIONS.map((s) => (

@@ -1,3 +1,4 @@
+import { MARKETING_TOOL_COUNT as DIRECTORY_MARKETING_COUNT } from "@/data/generated/toolCount";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Check, Sparkles, Shield } from "lucide-react";
@@ -385,14 +386,14 @@ const DisclaimerGate: React.FC = () => {
     <div className="min-h-[100dvh] bg-background text-foreground flex items-center justify-center px-3 py-4 sm:px-4">
       <ImprovedSEOHead pageType="homepage" />
       <Helmet>
-        <title>AI Web Tools — 5,500+ Best Free AI Tools Directory</title>
-        <meta name="description" content="Explore 5,500+ AI tools: ChatGPT alternatives, custom GPTs, AI agents, image, video, writing and business AI — free and updated daily." />
+        <title>AI Web Tools — {DIRECTORY_MARKETING_COUNT} Best Free AI Tools Directory</title>
+        <meta name="description" content={`Explore ${DIRECTORY_MARKETING_COUNT} AI tools: ChatGPT alternatives, custom GPTs, AI agents, image, video, writing and business AI — free and updated daily.`} />
         <meta name="robots" content="noindex, follow" />
-        <meta property="og:title" content="AI Web Tools — 5,500+ Best Free AI Tools Directory" />
-        <meta property="og:description" content="Explore 5,500+ AI tools: ChatGPT alternatives, custom GPTs, AI agents, image, video, writing and business AI — free and updated daily." />
+        <meta property="og:title" content={`AI Web Tools — ${DIRECTORY_MARKETING_COUNT} Best Free AI Tools Directory`} />
+        <meta property="og:description" content={`Explore ${DIRECTORY_MARKETING_COUNT} AI tools: ChatGPT alternatives, custom GPTs, AI agents, image, video, writing and business AI — free and updated daily.`} />
         <meta property="og:image" content="https://aiwebtools.app/og-default.jpg" />
-        <meta name="twitter:title" content="AI Web Tools — 5,500+ Best Free AI Tools Directory" />
-        <meta name="twitter:description" content="Explore 5,500+ AI tools: ChatGPT alternatives, custom GPTs, AI agents, image, video, writing and business AI — free and updated daily." />
+        <meta name="twitter:title" content={`AI Web Tools — ${DIRECTORY_MARKETING_COUNT} Best Free AI Tools Directory`} />
+        <meta name="twitter:description" content={`Explore ${DIRECTORY_MARKETING_COUNT} AI tools: ChatGPT alternatives, custom GPTs, AI agents, image, video, writing and business AI — free and updated daily.`} />
         <meta name="twitter:image" content="https://aiwebtools.app/og-default.jpg" />
         <link rel="canonical" href="https://aiwebtools.app/" />
       </Helmet>

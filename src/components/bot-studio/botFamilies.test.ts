@@ -41,3 +41,12 @@ test("complete bundled assistant category counts sum to all 1542 rooms", () => {
   expect(catalog.length).toBe(1542);
   expect(groups.reduce((total, [, families]) => total + countCategoryAssistants(families), 0)).toBe(1542);
 });
+
+test("Free College Lessons & Subject Tutor has one panel entry with both preserved archive rooms", () => {
+  const rooms = [bot("community-free-college-lessons-or-any-subject-education-open-source-pr", "Free College Lessons & Subject Tutor"), bot("community-free-college-lessons-or-any-subject-education-open-source-pr-2", "Free College Lessons & Subject Tutor")];
+  const families = groupBotFamilies(rooms);
+  expect(families).toHaveLength(1);
+  expect(families[0].base.display_name).toBe("Free College Lessons & Subject Tutor");
+  expect(families[0].versions.map(room => room.slug)).toEqual(rooms.map(room => room.slug));
+  expect(countCategoryAssistants(families)).toBe(2);
+});

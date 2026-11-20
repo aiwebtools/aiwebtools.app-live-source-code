@@ -1,5 +1,11 @@
 # Roadmap
 
+## November 20 directory integrity — preserve source records, do not publish
+- [x] Use one unique directory collection for counts and category membership; exclude unrelated recommendations from category results.
+- [x] Connect Browse All search, free-only filtering and full-result A–Z sorting before pagination; remove the unrelated pinned strip from this grid.
+- [x] Deduplicate Similar Tools and GPT panel identities without removing distinct rooms or source tools.
+- [x] Verify all 5,563 preserved records / 5,437 unique listings, every category count, 26 regressions, and desktop/phone controls, pagination, empty results, homepage totals and both duplicate fixes; not published.
+
 ## November 20 direct page entry — remove Angel gate and MTVAI opening only
 - [ ] Remove the shared gate wrapper, opening dialog and gate-only code; keep all page content, media and regular music players unchanged.
 - [ ] Remove automatic first-visit welcome diversion so fresh visitors reach the requested URL; retain the existing optional welcome and legal content without recording false consent.

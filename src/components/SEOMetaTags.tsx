@@ -1,3 +1,4 @@
+import { MARKETING_TOOL_COUNT as DIRECTORY_MARKETING_COUNT } from "@/data/generated/toolCount";
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { buildAbsoluteAssetUrl, buildCanonicalUrl } from '@/utils/seo';
@@ -13,7 +14,7 @@ interface SEOMetaTagsProps {
 }
 
 const SEOMetaTags: React.FC<SEOMetaTagsProps> = ({
-  title = "AI Web Tools — 5,500+ AI Tools Directory 2026",
+  title = `AI Web Tools — ${DIRECTORY_MARKETING_COUNT} AI Tools Directory 2026`,
   description = "Discover the world's largest directory of AI tools for productivity, creativity, and business. Find the perfect AI tool for any task with our comprehensive collection of 1300+ AI tools.",
   keywords = ['ai tools', 'artificial intelligence', 'productivity tools', 'ai directory', 'ai web tools'],
   url = '/',

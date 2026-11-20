@@ -10,6 +10,7 @@ import {
   applyAlphabeticalWithDeprioritization,
   SortMode 
 } from "@/utils/toolSorting/smartToolSorting";
+import { sortDirectoryAlphabetically } from "@/utils/directoryIntegrity";
 import { orderCategoryTools, dedupeTools } from "@/utils/category/categoryOrdering";
 
 // Agent sub-type definitions with emoji and keywords for filtering
@@ -158,7 +159,7 @@ const MainCategoryFilter = memo(({ tools, onFilteredToolsChange, currentMainCate
   }, [selectedMainCategories, currentMainCategory, isAgentsPage, selectedAgentTypes, tools]);
 
   // Track sort state for cache
-  const lastSortRef = React.useRef<{ mode: SortMode; key: number; tools: Tool[] }>({ mode: 'smart', key: 0, tools: [] });
+  const lastSortRef = React.useRef<{ mode: SortMode; key: number; tools: Tool[]; source?: Tool[] }>({ mode: 'smart', key: 0, tools: [] });
 
   // Compute final tools with sorting applied
   const filteredTools = useMemo(() => {
@@ -169,16 +170,16 @@ const MainCategoryFilter = memo(({ tools, onFilteredToolsChange, currentMainCate
     
     switch (sortMode) {
       case 'az':
-        sortedTools = applyAlphabeticalWithDeprioritization(dedupeTools(baseFilteredTools), 'asc');
+        sortedTools = sortDirectoryAlphabetically(dedupeTools(baseFilteredTools), 'asc');
         console.log(`🔤 A-Z Sort: ${sortedTools.length} tools`);
         break;
       case 'za':
-        sortedTools = applyAlphabeticalWithDeprioritization(dedupeTools(baseFilteredTools), 'desc');
+        sortedTools = sortDirectoryAlphabetically(dedupeTools(baseFilteredTools), 'desc');
         console.log(`🔤 Z-A Sort: ${sortedTools.length} tools`);
         break;
       case 'shuffle':
         // Use shuffle key for randomization
-        if (lastSortRef.current.mode === 'shuffle' && lastSortRef.current.key === shuffleKey) {
+        if (lastSortRef.current.mode === 'shuffle' && lastSortRef.current.key === shuffleKey && lastSortRef.current.source === baseFilteredTools) {
           return lastSortRef.current.tools;
         }
         const seed = Date.now() + shuffleKey * 12345;
@@ -192,36 +193,13 @@ const MainCategoryFilter = memo(({ tools, onFilteredToolsChange, currentMainCate
         break;
     }
     
-    lastSortRef.current = { mode: sortMode, key: shuffleKey, tools: sortedTools };
+    lastSortRef.current = { mode: sortMode, key: shuffleKey, tools: sortedTools, source: baseFilteredTools };
     return sortedTools;
   }, [sortMode, shuffleKey, baseFilteredTools, shuffleArray, currentMainCategory]);
 
-  // Track last state to detect changes - include agent types for proper filtering
-  const lastPassedRef = React.useRef<{ mode: SortMode; key: number; agentTypes: string[]; categories: string[] }>({ 
-    mode: 'smart', 
-    key: -1, 
-    agentTypes: [],
-    categories: [] 
-  });
-  
-  // CRITICAL: This effect MUST run when ANY filter changes - using startTransition for smooth updates
   useEffect(() => {
-    const stateChanged = 
-      lastPassedRef.current.mode !== sortMode || 
-      lastPassedRef.current.key !== shuffleKey ||
-      JSON.stringify(lastPassedRef.current.agentTypes) !== JSON.stringify(selectedAgentTypes) ||
-      JSON.stringify(lastPassedRef.current.categories) !== JSON.stringify(selectedMainCategories) ||
-      lastPassedRef.current.key === -1;
-    
-    if (stateChanged || filteredTools.length > 0) {
-      console.log(`🎯 MainCategoryFilter: Passing ${filteredTools.length} tools (mode: ${sortMode}, shuffle #${shuffleKey}, agentTypes: ${selectedAgentTypes.length}, categories: ${selectedMainCategories.length})`);
-      lastPassedRef.current = { mode: sortMode, key: shuffleKey, agentTypes: [...selectedAgentTypes], categories: [...selectedMainCategories] };
-      // Use startTransition for non-blocking updates
-      startTransition(() => {
-        onFilteredToolsChange(filteredTools);
-      });
-    }
-  }, [filteredTools, sortMode, shuffleKey, selectedAgentTypes, selectedMainCategories, onFilteredToolsChange]);
+    onFilteredToolsChange(filteredTools);
+  }, [filteredTools, onFilteredToolsChange]);
 
   const handleMainCategoryToggle = useCallback((mainCategoryName: string) => {
     console.log(`🔄 Toggling category: ${mainCategoryName}`);

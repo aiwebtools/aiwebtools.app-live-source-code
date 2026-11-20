@@ -27,7 +27,7 @@ import { isExpiredHost, getYouTubeThumbnail } from "../src/utils/imageUtils";
 import { blogPosts } from "../src/data/blogPostContent";
 import { mainCategories } from "../src/utils/mainCategoryMapping";
 import { OP_INSTRUCTION_DOCS } from "../src/data/opInstructionDocs";
-import { TOTAL_TOOLS } from "../src/data/generated/toolCount";
+import { TOTAL_TOOLS, MARKETING_TOOL_COUNT } from "../src/data/generated/toolCount";
 import { getDisplayedCategory, getStaticToolTitle } from "../src/utils/toolCategoryDisplay";
 import { MTVAI_CATALOG } from "../src/data/mtvaiCatalog";
 
@@ -742,11 +742,11 @@ for (const slug of Object.keys(OP_INSTRUCTION_DOCS)) {
 // ---------------------------------------------------------------------------
 hub(
   "/",
-  "AIWEBTOOLS — 5,500+ Best AI Tools Directory | Try Custom GPTs Free",
-  "The largest directory of real AI tools: 5,500+ listings plus free custom GPTs you can try in the browser, with their full operational instructions to download.",
+  `AIWEBTOOLS — ${MARKETING_TOOL_COUNT} Best AI Tools Directory | Try Custom GPTs Free`,
+  `The largest directory of real AI tools: ${MARKETING_TOOL_COUNT} listings plus free custom GPTs you can try in the browser, with their full operational instructions to download.`,
   `
     ${siteNav}
-    <h1>AI Web Tools — 5,500+ AI Tools, And You Can Try Them Right Here</h1>
+    <h1>AI Web Tools — ${MARKETING_TOOL_COUNT} AI Tools, And You Can Try Them Right Here</h1>
     <p>AI Web Tools is a directory of real, working AI tools — ${TOTAL_TOOLS.toLocaleString("en-US")} tools across ${byCategory.size} categories — and the custom GPTs AIWebTools.ai builds run free inside this site, no install and no account needed for a daily allowance.</p>
     <h2>Flagship custom GPTs — read the story, then try the tool</h2>
     <ul>${features
@@ -777,7 +777,7 @@ hub(
         name: "AI Web Tools",
         url: `${BASE_URL}/`,
         description:
-          "Directory of 5,500+ real AI tools with free in-browser custom GPTs and downloadable operational instructions.",
+          `Directory of ${MARKETING_TOOL_COUNT} real AI tools with free in-browser custom GPTs and downloadable operational instructions.`,
         publisher: { "@type": "Organization", name: "AIWebTools.ai", url: BASE_URL },
         potentialAction: {
           "@type": "SearchAction",

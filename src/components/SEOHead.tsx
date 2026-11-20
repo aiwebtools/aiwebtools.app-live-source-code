@@ -1,3 +1,4 @@
+import { MARKETING_TOOL_COUNT as DIRECTORY_MARKETING_COUNT } from "@/data/generated/toolCount";
 
 import { Helmet } from 'react-helmet-async';
 import { buildAbsoluteAssetUrl, buildCanonicalUrl, seoConfig, generateFAQStructuredData, generateLocalBusinessStructuredData } from '@/utils/seo';
@@ -31,7 +32,7 @@ const SEOHead = ({
   category,
   toolData
 }: SEOHeadProps) => {
-  const fullTitle = title ? `${title} | AI Web Tools` : "AI Web Tools — 5,500+ Best Free AI Tools 2026";
+  const fullTitle = title ? `${title} | AI Web Tools` : `AI Web Tools — ${DIRECTORY_MARKETING_COUNT} Best Free AI Tools 2026`;
   const canonical = buildCanonicalUrl(url);
   const fullImage = buildAbsoluteAssetUrl(image);
 

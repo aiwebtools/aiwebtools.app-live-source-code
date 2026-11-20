@@ -3,6 +3,10 @@ import type { StudioBot } from "./botCatalog";
 
 // Family arithmetic must remain independent of browser-only catalog/media loading.
 const botFamilyKey = (slug: string) => slug.replace(/^community-/, "").replace(/-v\d+$/, "");
+// These two preserved archive rooms are the same named tutor, not two sidebar entries.
+const duplicateFamilies: Record<string, string> = {
+  "community-free-college-lessons-or-any-subject-education-open-source-pr-2": "free-college-lessons-or-any-subject-education-open-source-pr",
+};
 const botVersionNumber = (slug: string) => Number(slug.match(/-v(\d+)$/)?.[1] || 1);
 
 const byName = (a: string, b: string) => a.localeCompare(b, "en", { sensitivity: "base" });
@@ -17,7 +21,7 @@ export const countCategoryAssistants = (families: BotFamily[]): number =>
 export function groupBotFamilies(bots: StudioBot[]): BotFamily[] {
   const map = new Map<string, StudioBot[]>();
   for (const bot of bots) {
-    const key = botFamilyKey(bot.slug);
+    const key = duplicateFamilies[bot.slug] || botFamilyKey(bot.slug);
     map.set(key, [...(map.get(key) || []), bot]);
   }
   return [...map.entries()].map(([key, list]) => {

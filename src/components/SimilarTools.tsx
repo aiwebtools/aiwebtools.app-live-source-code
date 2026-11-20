@@ -2,6 +2,7 @@
 import { useMemo, useRef, useState, useEffect, useCallback } from "react";
 import { Tool } from "@/types/tools";
 import ToolCard from "@/components/tools/ToolCard";
+import { directoryNameKey } from "@/utils/directoryIntegrity";
 import { allTools } from "@/data/toolsData";
 // Removed embla carousel in favor of reliable native scrolling
 import { getContextAwareAdditionalTools, getHighlyRelevantSimilarTools } from "@/utils/contextAwareSimilarTools";
@@ -19,14 +20,13 @@ const SimilarTools = ({ currentTool, currentToolIndex }: SimilarToolsProps) => {
   // 2) Then fill with the rest of the catalog (deduped, excluding current tool)
   const fullList = useMemo(() => {
     const top = getHighlyRelevantSimilarTools(currentTool, 24);
-    const seen = new Set<string>([currentTool.title, ...top.map(t => t.title)]);
-    const remainder: Tool[] = [];
-    for (const t of allTools) {
-      if (!t?.title || seen.has(t.title)) continue;
-      seen.add(t.title);
-      remainder.push(t);
-    }
-    return [...top, ...remainder];
+    const seen = new Set<string>([directoryNameKey(currentTool.title)]);
+    return [...top, ...allTools].filter(tool => {
+      const key = directoryNameKey(tool.title);
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
   }, [currentTool, currentToolIndex]);
 
   const PAGE = 12;

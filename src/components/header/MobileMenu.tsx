@@ -1,3 +1,4 @@
+import { MARKETING_TOOL_COUNT as DIRECTORY_MARKETING_COUNT } from "@/data/generated/toolCount";
 import { downloadAllOperationalInstructions } from "@/utils/downloads";
 import { Menu, Phone, X, Globe, ChevronDown, Download, Trees, Clapperboard, Heart, Copy, Clock, Github } from "lucide-react";
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
@@ -361,7 +362,7 @@ const MobileMenu = () => {
                   className="min-h-11 w-full justify-center gap-2 border-primary/50 bg-background text-xs font-bold text-primary"
                 >
                   <Download className="h-4 w-4" aria-hidden="true" />
-                  Download All 5,500+ AI Tools (CSV)
+                  Download All {DIRECTORY_MARKETING_COUNT} AI Tools (CSV)
                 </Button>
                 <LocalModelsAccordion onNavigate={closeMenu} />
               </div>
@@ -584,7 +585,7 @@ const MobileMenu = () => {
                   </div>
                   <DropdownMenuItem onClick={handleDownloadAllToolsCSV} className="text-cyan-100 hover:bg-cyan-500/20 mb-1 rounded text-sm">
                     <Download className="w-3 h-3 mr-2" />
-                    📊 Download ALL 5,500+ AI Tools (CSV)
+                    📊 Download ALL {DIRECTORY_MARKETING_COUNT} AI Tools (CSV)
                   </DropdownMenuItem>
                   <DropdownMenuItem 
                      onClick={(e) => { 

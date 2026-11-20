@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { mainCategories } from "@/utils/mainCategoryMapping";
 
-import { TOTAL_TOOLS as FAST_TOOL_TOTAL } from "@/data/generated/toolCount";
+import { MAIN_CATEGORY_COUNTS } from "@/data/generated/toolCount";
 
 const CategoryPageSelection = memo(() => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const CategoryPageSelection = memo(() => {
     return Object.fromEntries(
       mainCategories.map((mainCat) => [
         mainCat.name,
-        mainCat.name === "ALL AI TOOLS" ? `${FAST_TOOL_TOTAL.toLocaleString()} tools` : "Explore",
+        `${(MAIN_CATEGORY_COUNTS[mainCat.name] || 0).toLocaleString()} tools`,
       ]),
     );
   }, []);
@@ -74,6 +74,7 @@ const CategoryPageSelection = memo(() => {
             );
           })}
         </div>
+        <p className="mt-4 text-xs text-muted-foreground">Category totals overlap; Browse All counts each tool once.</p>
       </div>
     </section>
   );

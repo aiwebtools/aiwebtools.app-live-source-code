@@ -70,3 +70,4 @@
 - Keep Muse offer code, join link and copy fallback in `components/muse/museOffer.ts`; banner, popup and tool page share it so the code cannot drift, and the offer voice plays from one cached recording.
 - Request microphone permission via getUserMedia before starting speech recognition, keep voice-input callbacks in refs, and allow `microphone=(self)` in Permissions-Policy; blocked policy or unstable callbacks silently kill dictation.
 - Prioritize exact discovery names after merging community suggestions; test the public search worker against its shipped catalog so source-only ranking tests cannot hide live regressions.
+- Derive directory counts, category membership and paginated filters from the same name-unique catalog; use purpose metadata rather than incidental prose, sort alphabetically before pagination, and preserve source records and bot versions when hiding duplicate listings.

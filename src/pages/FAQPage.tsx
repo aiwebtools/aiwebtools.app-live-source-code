@@ -1,3 +1,4 @@
+import { MARKETING_TOOL_COUNT as DIRECTORY_MARKETING_COUNT } from "@/data/generated/toolCount";
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { HelpCircle, Search, Star, Zap, Users, Grid3X3, Copy, BookOpen, Home } from 'lucide-react';
@@ -172,7 +173,7 @@ const FAQPage = () => {
           {/* Quick Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 max-w-4xl mx-auto">
             {[
-              { icon: Search, label: "AI Tools", value: "5,500+" },
+              { icon: Search, label: "AI Tools", value: `${DIRECTORY_MARKETING_COUNT}` },
               { icon: Star, label: "Curated", value: "Daily" },
               { icon: Zap, label: "Categories", value: "15+" },
               { icon: Users, label: "Built For", value: "Everyone" }

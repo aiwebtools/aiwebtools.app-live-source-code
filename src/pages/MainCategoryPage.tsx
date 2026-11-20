@@ -18,6 +18,7 @@ import { mainCategories } from "@/utils/mainCategoryMapping";
 import { Tool } from "@/types/tools";
 import MainCategoryFilter from "@/components/category/MainCategoryFilter";
 import { useScrollMemory } from "@/hooks/useScrollMemory";
+import { uniqueDirectoryTools } from "@/utils/directoryIntegrity";
 
 const MainCategoryPage = () => {
   const { mainCategoryName } = useParams<{ mainCategoryName: string }>();
@@ -54,7 +55,7 @@ const MainCategoryPage = () => {
 
     // Special fast path for "ALL AI TOOLS" - just use allTools directly (no filtering needed)
     if (decodedCategoryName === "ALL AI TOOLS") {
-      import("@/data/toolsData").then(({ allTools }) => {
+      import("@/data/toolsData").then(({ directoryTools: allTools }) => {
         if (cancelled) return;
         setCategoryTools(allTools);
         setFilteredToolsByCategory(allTools);
@@ -71,8 +72,9 @@ const MainCategoryPage = () => {
       import("@/data/tools/perplexityBotsBatch2026")
         .then(({ perplexityBotsBatch2026 }) => {
           if (cancelled) return;
-          setCategoryTools(perplexityBotsBatch2026);
-          setFilteredToolsByCategory(perplexityBotsBatch2026);
+          const tools = uniqueDirectoryTools(perplexityBotsBatch2026);
+          setCategoryTools(tools);
+          setFilteredToolsByCategory(tools);
           setIsToolsReady(true);
         })
         .catch((error) => {
@@ -89,7 +91,7 @@ const MainCategoryPage = () => {
         import("@/data/toolsData"),
         import("@/utils/categoryUtils/toolFiltering"),
       ])
-        .then(([{ allTools }, { getToolsByMainCategory }]) => {
+        .then(([{ directoryTools: allTools }, { getToolsByMainCategory }]) => {
           if (cancelled) return;
           startTransition(() => {
             const tools = getToolsByMainCategory(allTools, decodedCategoryName);
@@ -269,7 +271,7 @@ const MainCategoryPage = () => {
 
               {/* Tools Count Display - Shows actual filtered count */}
               <div className="text-center mb-8">
-                <div className="text-cyan-400 font-semibold">
+                <div role="status" aria-label="Tool results count" className="text-cyan-400 font-semibold">
                   {finalFilteredTools.length > 0 ? (
                     displayedCount >= finalFilteredTools.length 
                       ? `Showing all ${finalFilteredTools.length} tools`

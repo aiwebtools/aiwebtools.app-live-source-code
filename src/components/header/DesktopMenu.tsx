@@ -1,3 +1,4 @@
+import { MARKETING_TOOL_COUNT as DIRECTORY_MARKETING_COUNT } from "@/data/generated/toolCount";
 import { downloadAllOperationalInstructions, SOURCE_CODE_DOWNLOAD } from "@/utils/downloads";
 import { Menu, Phone, Search, X, FileText, Globe, ChevronDown, Download, Trees, Clapperboard, Heart, Copy, Gift, Clock, Github } from "lucide-react";
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
@@ -392,7 +393,7 @@ const DesktopMenu = () => {
                   <div className="bg-gray-900/50 rounded border border-white/5 p-2 space-y-1">
                     <DropdownMenuItem onClick={handleDownloadAllToolsCSV} className="text-cyan-100 hover:bg-cyan-500/20 rounded text-sm px-2 py-1.5">
                       <Download className="w-3 h-3 mr-2" />
-                      📊 Download 5,500+ Tools (CSV)
+                      📊 Download {DIRECTORY_MARKETING_COUNT} Tools (CSV)
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       onClick={(e) => {

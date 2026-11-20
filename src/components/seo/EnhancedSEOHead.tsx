@@ -1,3 +1,4 @@
+import { MARKETING_TOOL_COUNT as DIRECTORY_MARKETING_COUNT } from "@/data/generated/toolCount";
 
 import { Helmet } from 'react-helmet-async';
 import { buildAbsoluteAssetUrl, buildCanonicalUrl, seoConfig, generateStructuredData, generateFAQStructuredData, generateLocalBusinessStructuredData } from '@/utils/seo';
@@ -29,7 +30,7 @@ const EnhancedSEOHead = ({
 }: EnhancedSEOHeadProps) => {
   const fullTitle = title
     ? `${title} | AI Web Tools`
-    : "AI Web Tools — 5,500+ Best AI Tools Directory 2026";
+    : `AI Web Tools — ${DIRECTORY_MARKETING_COUNT} Best AI Tools Directory 2026`;
   const canonical = buildCanonicalUrl(url);
   // Open Graph titles render best ≤60 chars; clamp to avoid social-preview truncation.
   const ogTitle = fullTitle.length > 60 ? `${fullTitle.slice(0, 57).trimEnd()}…` : fullTitle;

@@ -1,3 +1,4 @@
+import { MARKETING_TOOL_COUNT as DIRECTORY_MARKETING_COUNT } from "@/data/generated/toolCount";
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { generateToolSlug } from '@/utils/urlGenerator';
@@ -30,7 +31,7 @@ const ImprovedSEOHead: React.FC<ImprovedSEOHeadProps> = ({
       case 'search':
         return `${searchTerm} AI Tools | AI Web Tools`;
       default:
-        return 'AI Web Tools — 5,500+ Best Free AI Tools 2026';
+        return `AI Web Tools — ${DIRECTORY_MARKETING_COUNT} Best Free AI Tools 2026`;
     }
   };
 
@@ -53,7 +54,7 @@ const ImprovedSEOHead: React.FC<ImprovedSEOHeadProps> = ({
       case 'search':
         return `Find the best AI tools for "${searchTerm}". Browse our comprehensive directory of AI tools with reviews, features, and direct access links.`;
       default:
-        return 'Discover 5,500+ free AI tools: ChatGPT alternatives, custom GPTs, AI agents, image, writing & business AI. Updated daily.';
+        return `Discover ${DIRECTORY_MARKETING_COUNT} free AI tools: ChatGPT alternatives, custom GPTs, AI agents, image, writing & business AI. Updated daily.`;
     }
   };
 
@@ -288,7 +289,7 @@ const ImprovedSEOHead: React.FC<ImprovedSEOHeadProps> = ({
       <meta name="rating" content="general" />
       
       {/* AI Crawler & Assistant Discovery Tags */}
-       <meta name="ai.description" content="AI Web Tools: 5,500+ AI tools directory. Find ChatGPT alternatives, custom GPTs, productivity tools, creative AI, coding assistants, design tools and more." />
+       <meta name="ai.description" content={`AI Web Tools: ${DIRECTORY_MARKETING_COUNT} AI tools directory. Find ChatGPT alternatives, custom GPTs, productivity tools, creative AI, coding assistants, design tools and more.`} />
       <meta name="ai.keywords" content="ai web tools, free ai tools, ai tools directory, best ai tools 2026, chatgpt alternatives, custom gpts, ai productivity, ai creativity, web3 domains" />
       <meta name="ai-resource" content="true" />
       <meta name="llms" content="allowed" />
@@ -345,7 +346,7 @@ const ImprovedSEOHead: React.FC<ImprovedSEOHeadProps> = ({
           "name": "AI Web Tools",
           "url": buildCanonicalUrl('/'),
           "logo": buildAbsoluteAssetUrl('/logo.png'),
-          "description": "A curated directory of 5,500+ AI tools for productivity, creativity, and business.",
+          "description": `A curated directory of ${DIRECTORY_MARKETING_COUNT} AI tools for productivity, creativity, and business.`,
           "foundingDate": "2023",
           "numberOfEmployees": {
             "@type": "QuantitativeValue",

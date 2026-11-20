@@ -1,3 +1,4 @@
+import { MARKETING_TOOL_COUNT as DIRECTORY_MARKETING_COUNT } from "@/data/generated/toolCount";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
@@ -22,7 +23,7 @@ const ToolSubmission = () => {
     <div className="min-h-screen bg-black relative">
       <SEOHead
         title="Submit Your AI Tool · Free Listing — AIWebTools.ai"
-        description="Submit your AI tool to AIWebTools.ai with a name, description, link and custom image. Safe submissions publish instantly to our community directory of 5,500+ AI tools."
+        description={`Submit your AI tool to AIWebTools.ai with a name, description, link and custom image. Safe submissions publish instantly to our community directory of ${DIRECTORY_MARKETING_COUNT} AI tools.`}
       />
       <AnimatedBackground />
       <div className="relative z-10 cyber-grid">

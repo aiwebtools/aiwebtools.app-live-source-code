@@ -1,3 +1,4 @@
+import { MARKETING_TOOL_COUNT as DIRECTORY_MARKETING_COUNT } from "@/data/generated/toolCount";
 
 import { Tool } from "@/types/tools";
 
@@ -86,11 +87,11 @@ export const generateCompetitivePageContent = (tools: Tool[], category?: string)
     heroContent: `
 # AI Web Tools — AI Tools Directory
 
-Discover 5,500+ curated AI tools with reviews, comparisons, and regular updates.
+Discover ${DIRECTORY_MARKETING_COUNT} curated AI tools with reviews, comparisons, and regular updates.
 
 ## Why Choose AI Web Tools
 
-- **Broad Catalog**: 5,500+ AI tools across many categories
+- **Broad Catalog**: ${DIRECTORY_MARKETING_COUNT} AI tools across many categories
 - **Curated**: Tools are reviewed and organized for discovery
 - **Regularly Updated**: New AI tools added as they launch
 - **User-Focused**: Detailed descriptions, comparisons, and guides

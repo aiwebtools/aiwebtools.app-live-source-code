@@ -7,11 +7,14 @@ import SEOHead from "@/components/SEOHead";
 import ToolsGridSkeleton from "@/components/tools/ToolsGridSkeleton";
 import MinimalToolCard from "@/components/MinimalToolCard";
 import ToolsGrid from "@/components/tools/ToolsGrid";
-import GlobalSearchBar from "@/components/LazyGlobalSearchBar";
+import SearchBar from "@/components/tools/SearchBar";
+import MainCategoryFilter from "@/components/category/MainCategoryFilter";
+import { Button } from "@/components/ui/button";
+import { filterDirectoryTools } from "@/utils/directoryIntegrity";
+import { MARKETING_TOOL_COUNT } from "@/data/generated/toolCount";
 import BreadcrumbNav from "@/components/navigation/BreadcrumbNav";
 import ScrollToTop from "@/components/ui/scroll-to-top";
 import { Tool } from "@/types/tools";
-import CommunityGptStrip from "@/components/CommunityGptStrip";
 
 const PAGE_TITLE = "ALL AI TOOLS";
 
@@ -20,6 +23,10 @@ const AllToolsFastPage = () => {
   const [tools, setTools] = useState<Tool[]>([]);
   const [displayedCount, setDisplayedCount] = useState(48);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showFreeOnly, setShowFreeOnly] = useState(false);
+  const [sortedTools, setSortedTools] = useState<Tool[]>([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -30,10 +37,11 @@ const AllToolsFastPage = () => {
         import("@/data/toolsData"),
         import("@/utils/category/categoryOrdering"),
       ])
-        .then(([{ allTools }, { orderCategoryTools }]) => {
+        .then(([{ directoryTools: allTools }, { orderCategoryTools }]) => {
           if (cancelled) return;
           // Dedupe + GPT-first deterministic ordering, same as every other category page.
           setTools(orderCategoryTools(allTools, PAGE_TITLE));
+          setIsReady(true);
           window.dispatchEvent(new Event("aiwt:page-data-ready"));
         })
         .catch((error) => {
@@ -46,23 +54,28 @@ const AllToolsFastPage = () => {
     };
   }, []);
 
-  const displayedTools = useMemo(() => tools.slice(0, displayedCount), [tools, displayedCount]);
+  const matchingTools = useMemo(() => filterDirectoryTools(tools, searchTerm, showFreeOnly), [tools, searchTerm, showFreeOnly]);
+  const displayedTools = useMemo(() => sortedTools.slice(0, displayedCount), [sortedTools, displayedCount]);
+  const handleFilteredToolsChange = useCallback((filtered: Tool[]) => {
+    setSortedTools(filtered);
+    setDisplayedCount(48);
+  }, []);
 
   const handleLoadMore = useCallback(() => {
-    if (isLoadingMore || displayedCount >= tools.length) return;
+    if (isLoadingMore || displayedCount >= sortedTools.length) return;
     setIsLoadingMore(true);
     requestAnimationFrame(() => {
-      setDisplayedCount((count) => Math.min(count + 48, tools.length));
+      setDisplayedCount((count) => Math.min(count + 48, sortedTools.length));
       setIsLoadingMore(false);
     });
-  }, [displayedCount, isLoadingMore, tools.length]);
+  }, [displayedCount, isLoadingMore, sortedTools.length]);
 
   return (
     <div className="min-h-screen bg-black relative overflow-x-hidden">
       <SEOHead
         title="ALL AI TOOLS - Complete AI Tools Directory"
-        description="Browse the complete AIWebTools.ai directory of 5,500+ AI Tools, searchable and categorized for fast discovery."
-        keywords={["all ai tools", "5,500+ AI Tools", "ai tools directory", "AIWebTools.ai"]}
+        description={`Browse the complete AIWebTools.ai directory of ${MARKETING_TOOL_COUNT} AI Tools, searchable and categorized for fast discovery.`}
+        keywords={["all ai tools", `${MARKETING_TOOL_COUNT} AI Tools`, "ai tools directory", "AIWebTools.ai"]}
       />
 
       <div className="relative z-10 cyber-grid">
@@ -91,33 +104,43 @@ const AllToolsFastPage = () => {
           </div>
 
           <div className="max-w-xl mx-auto mb-6">
-            <GlobalSearchBar />
+            <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} preventAutoNavigation />
           </div>
 
-          <CommunityGptStrip />
+          <div className="flex justify-center mb-4">
+            <Button variant={showFreeOnly ? "default" : "outline"} aria-pressed={showFreeOnly}
+              onClick={() => setShowFreeOnly(value => !value)}>
+              🆓 {showFreeOnly ? "Showing FREE Tools Only" : "Show FREE Tools Only"}
+            </Button>
+          </div>
+          {isReady && <MainCategoryFilter tools={matchingTools} currentMainCategory={PAGE_TITLE}
+            onFilteredToolsChange={handleFilteredToolsChange} />}
 
-          {tools.length === 0 ? (
+          {!isReady ? (
             <ToolsGridSkeleton count={12} />
           ) : (
             <>
               <div className="text-center mb-8">
-                <div className="text-cyan-400 font-semibold">
-                  Showing {displayedTools.length} of {tools.length} tools — scroll for more
+                <div role="status" aria-label="Tool results count" className="text-cyan-400 font-semibold">
+                  Showing {displayedTools.length} of {sortedTools.length} tools{displayedTools.length < sortedTools.length ? " — scroll for more" : ""}
                 </div>
               </div>
 
               <div id="tools-section">
-                <ToolsGrid
-                  tools={tools}
+                {sortedTools.length === 0 ? <div role="status" className="py-16 text-center text-muted-foreground">
+                  <h2 className="text-2xl font-bold text-foreground">No AI tools found</h2>
+                  {searchTerm.trim() && <p className="mt-4">No matches for “{searchTerm.trim()}”.</p>}
+                </div> : <ToolsGrid
+                  tools={sortedTools}
                   displayedCount={displayedCount}
                   selectedCategory={null}
-                  searchTerm=""
+                  searchTerm={searchTerm}
                   onLoadMore={handleLoadMore}
                   hasInfiniteScroll
                   isLoading={isLoadingMore}
-                />
+                />}
 
-                {displayedCount < tools.length && (
+                {displayedCount < sortedTools.length && (
                   <div className="mt-8 flex justify-center">
                     <button
                       onClick={handleLoadMore}

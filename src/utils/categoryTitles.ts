@@ -1,6 +1,6 @@
 
 import { getCategoriesWithCounts } from "./categoryUtils";
-import { allTools } from "@/data/toolsData";
+import { directoryTools as allTools } from "@/data/toolsData";
 
 // Consolidated category title configuration matching your new structure
 export const CATEGORY_TITLES = {

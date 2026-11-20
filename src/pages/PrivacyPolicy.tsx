@@ -1,3 +1,4 @@
+import { MARKETING_TOOL_COUNT as DIRECTORY_MARKETING_COUNT } from "@/data/generated/toolCount";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Shield } from "lucide-react";
@@ -7,10 +8,10 @@ const PrivacyPolicy = () => {
   return (
     <>
       <Helmet>
-        <title>Privacy Policy | AIWebTools.ai — 5,500+ AI Tools Directory</title>
+        <title>Privacy Policy | AIWebTools.ai — {DIRECTORY_MARKETING_COUNT} AI Tools Directory</title>
         <meta
           name="description"
-          content="AIWebTools.ai Privacy Policy: we do not collect personal information. Learn how we protect your privacy while browsing our directory of 5,500+ AI tools."
+          content={`AIWebTools.ai Privacy Policy: we do not collect personal information. Learn how we protect your privacy while browsing our directory of ${DIRECTORY_MARKETING_COUNT} AI tools.`}
         />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://aiwebtools.app/privacy-policy" />
@@ -44,7 +45,7 @@ const PrivacyPolicy = () => {
               <h2 className="text-xl font-bold text-green-300">1. Who we are</h2>
               <p>
                 AIWebTools.ai (also operating as AITools.studio and several mirror domains) is a directory of
-                5,500+ AI tools, custom GPTs, and AI services. This Privacy Policy explains our commitment to
+                {DIRECTORY_MARKETING_COUNT} AI tools, custom GPTs, and AI services. This Privacy Policy explains our commitment to
                 your privacy when you visit our website.
               </p>
             </section>

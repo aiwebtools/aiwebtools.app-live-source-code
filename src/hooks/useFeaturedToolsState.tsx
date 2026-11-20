@@ -1,10 +1,10 @@
 
 import { useState, useMemo, useCallback } from "react";
-import { allTools } from "@/data/toolsData";
+import { directoryTools as allTools } from "@/data/toolsData";
 import { searchTools } from "@/utils/search/searchUtils";
 import { getToolsByCategory } from "@/utils/categoryUtils";
 import { getSortedStandardizedCategories } from "@/utils/categoryTitles";
-import { isFreeTool } from "@/utils/freeToolDetection";
+import { filterDirectoryTools } from "@/utils/directoryIntegrity";
 
 export const useFeaturedToolsState = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -34,65 +34,14 @@ export const useFeaturedToolsState = () => {
     setIsLoading(false);
   }, []);
 
-  // FAST filtering logic (must stay instant) + full-database infinite scroll
+  // One scoped result set drives both the cards and their count. Never append
+  // unrelated recommendations or replace an empty search with the full catalog.
   const filteredTools = useMemo(() => {
-    let tools = allTools;
-
-    if (selectedCategory) {
-      console.log("🔍 Filtering by category:", selectedCategory);
-
-      // Category tools first, then the rest of the database as recommendations (no duplicates)
-      const categoryTools = getToolsByCategory(allTools, selectedCategory);
-
-      // Cheap O(n) de-dupe by stable key to avoid repeated tools when we merge lists
-      const seen = new Set<string>();
-      const keyOf = (t: (typeof allTools)[number]) => `${t.title}__${t.directUrl ?? ""}`;
-
-      const uniqueCategoryTools = categoryTools.filter((t) => {
-        const k = keyOf(t);
-        if (seen.has(k)) return false;
-        seen.add(k);
-        return true;
-      });
-
-      const recommendationTools = allTools.filter((t) => {
-        const k = keyOf(t);
-        if (seen.has(k)) return false;
-        seen.add(k);
-        return true;
-      });
-
-      tools = [...uniqueCategoryTools, ...recommendationTools];
-    } else if (searchTerm) {
-      const trimmedTerm = searchTerm.trim();
-      if (trimmedTerm.length >= 1) {
-        // Intelligent ranking + internal dedupe
-        tools = searchTools(allTools, trimmedTerm);
-      }
-    } else {
-      // This hook powers the homepage's full search portal. Dedicated featured
-      // sections already showcase our GPTs, Gems, and Perplexity Bots above it;
-      // the default browse grid must retain the complete directory so infinite
-      // scroll can reach every catalogued tool.
-      tools = allTools;
-    }
-
-    // Apply FREE filter if enabled
-    if (showFreeOnly) {
-      tools = tools.filter(isFreeTool);
-    }
-
-    return tools;
+    const source = selectedCategory ? getToolsByCategory(allTools, selectedCategory) : allTools;
+    return filterDirectoryTools(source, searchTerm, showFreeOnly);
   }, [selectedCategory, searchTerm, showFreeOnly]);
+  const totalToolsCount = filteredTools.length;
 
-  // Category grids append recommendations, which must not inflate their tally.
-  const totalToolsCount = useMemo(() => {
-    if (!selectedCategory) return filteredTools.length;
-    const categoryCount = getSortedStandardizedCategories().find(([name]) => name === selectedCategory)?.[1];
-    if (!showFreeOnly && categoryCount !== undefined) return categoryCount;
-    return allTools.filter(tool => tool.category === selectedCategory && (!showFreeOnly || isFreeTool(tool))).length;
-  }, [filteredTools, selectedCategory, showFreeOnly]);
-  
   // Simple categories calculation
   const categoriesWithCounts = useMemo(() => {
     const categories = getSortedStandardizedCategories();

@@ -11,9 +11,10 @@ import AllToolsButton from "@/components/tools/AllToolsButton";
 import { 
   getCachedCategoryCounts 
 } from "@/utils/categoryUtils/precomputedCache";
-import { allTools } from "@/data/toolsData";
+import { directoryTools as allTools } from "@/data/toolsData";
 import { mainCategories } from "@/utils/mainCategoryMapping";
 import { getMainCategoriesWithCountsAsync, peekMainCategoryCounts } from "@/utils/categoryUtils/toolFiltering";
+import { MAIN_CATEGORY_COUNTS, TOTAL_TOOLS } from "@/data/generated/toolCount";
 
 interface CategoryFiltersProps {
   categoriesWithCounts: Record<string, number>;
@@ -48,7 +49,7 @@ const CategoryFilters = memo(({
 
   // Use pre-computed counts - INSTANT, no heavy computation
   const [staticMainCategoriesWithCounts, setStaticCounts] = useState<Record<string, number>>(
-    () => getInstantMainCategoryCounts() ?? {}
+    () => MAIN_CATEGORY_COUNTS
   );
   useEffect(() => {
     if (Object.keys(staticMainCategoriesWithCounts).length > 0) return;
@@ -57,7 +58,7 @@ const CategoryFilters = memo(({
     return () => { alive = false; };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const totalTools = Object.values(categoriesWithCounts).reduce((sum, count) => sum + count, 0);
+  const totalTools = TOTAL_TOOLS;
 
   const handleCategorySelect = (category: string | null) => {
     onCategoryChange(category);
@@ -94,6 +95,7 @@ const CategoryFilters = memo(({
         <div className="flex justify-center mb-4">
           <Button
             onClick={() => onFreeOnlyChange(!showFreeOnly)}
+            aria-pressed={showFreeOnly}
             variant={showFreeOnly ? "default" : "outline"}
             className={`${
               showFreeOnly 
@@ -151,6 +153,7 @@ const CategoryFilters = memo(({
             )}
           </div>
         )}
+        <p className="mt-3 text-center text-xs text-muted-foreground">Category totals overlap; Browse All counts each tool once.</p>
       </div>
     </div>
   );

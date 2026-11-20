@@ -1,3 +1,4 @@
+import { MARKETING_TOOL_COUNT as DIRECTORY_MARKETING_COUNT } from "@/data/generated/toolCount";
 // Enhanced SEO Utilities for Maximum Search Engine Visibility
 // Optimized for "aiwebtools.ai" and "ai web tools" keywords
 
@@ -17,7 +18,7 @@ export const generateEnhancedStructuredData = () => {
           "width": 512,
           "height": 512
         },
-        "description": "AI Web Tools is a curated directory of 5,500+ AI tools for business, creativity, and productivity.",
+        "description": `AI Web Tools is a curated directory of ${DIRECTORY_MARKETING_COUNT} AI tools for business, creativity, and productivity.`,
         "foundingDate": "2024",
         "numberOfEmployees": "1-10",
         "industry": "Technology",
@@ -61,7 +62,7 @@ export const generateEnhancedStructuredData = () => {
         "url": "https://aiwebtools.app",
         "name": "AI Web Tools Directory",
         "alternateName": "AI WEB TOOLS Directory",
-        "description": "A curated directory of 5,500+ AI tools with reviews, comparisons, and daily updates.",
+        "description": `A curated directory of ${DIRECTORY_MARKETING_COUNT} AI tools with reviews, comparisons, and daily updates.`,
         "publisher": {
           "@id": "https://aiwebtools.app/#organization"
         },
@@ -133,7 +134,7 @@ export const generateEnhancedStructuredData = () => {
             "name": "What is AIWEBTOOLS.AI?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "AI Web Tools is a curated directory of 5,500+ AI tools with reviews, ratings, and direct access links."
+              "text": `AI Web Tools is a curated directory of ${DIRECTORY_MARKETING_COUNT} AI tools with reviews, ratings, and direct access links.`
             }
           },
           {
