@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { createTimePortalEffect } from "@/utils/timeEffects";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { allTools } from "@/data/toolsData";
+import { directoryTools } from "@/data/toolsData";
+import { TOTAL_TOOLS } from "@/data/generated/toolCount";
 import { downloadToolsCSV } from "@/utils/csvExport";
 import { triggerPublicDownload } from "@/utils/downloads";
 import { useNavigate } from "react-router-dom";
@@ -1627,7 +1628,7 @@ const BookPromotionCard = () => {
                         <Button
                           onClick={() => {
                             try {
-                              downloadToolsCSV(allTools, `AIWebTools-Complete-Directory-${allTools.length}-Tools.csv`);
+                              downloadToolsCSV(directoryTools, `AIWebTools-Complete-Directory-${TOTAL_TOOLS}-Tools.csv`);
                             } catch (err) {
                               console.error("CSV download failed:", err);
                             }
@@ -1636,7 +1637,7 @@ const BookPromotionCard = () => {
                           className="bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 text-black font-bold px-4 py-2 rounded-lg text-sm shadow-lg hover:shadow-yellow-500/25 transition-all duration-300 transform hover:scale-105 border border-yellow-400/40"
                         >
                           <Download className="mr-1.5" size={16} />
-                          📊 Download All {allTools.length.toLocaleString()} AI Tools (CSV)
+                          📊 Download All {TOTAL_TOOLS.toLocaleString("en-US")} AI Tools (CSV)
                         </Button>
 
                         <Button

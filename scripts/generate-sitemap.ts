@@ -137,8 +137,8 @@ for (const w of written) console.log(`   • ${w.file}: ${w.count}`);
 // ---------------------------------------------------------------------------
 const countOutPath = path.resolve(process.cwd(), "src/data/generated/toolCount.ts");
 const totalTools = directoryTools.length;
-// Rounded headline is a lower bound, never a separate collection total.
-const marketingTotal = `${(Math.floor(totalTools / 100) * 100).toLocaleString("en-US")}+`;
+// Every directory headline uses the same exact distinct-listing total.
+const marketingTotal = totalTools.toLocaleString("en-US");
 const categorySet = new Set(Object.keys(getCategoriesWithCounts(directoryTools)));
 fs.writeFileSync(
   countOutPath,

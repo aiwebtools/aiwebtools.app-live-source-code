@@ -20,7 +20,13 @@ const botVersionNumber = (slug: string) => Number(slug.match(/-v(\d+)$/)?.[1] ||
 const byName = (a: string, b: string) => a.localeCompare(b, "en", { sensitivity: "base" });
 
 /** A bot plus every archived version of its operational instructions, V1 first. */
-export type BotFamily = { key: string; base: StudioBot; versions: StudioBot[]; featured?: boolean };
+export type BotFamily = { key: string; base: StudioBot; versions: StudioBot[]; editions: StudioBot[]; featured?: boolean };
+const screenplayEditions = new Set(['screenplay-writer', 'screenplay-writer-gpt-page', 'community-screenplay-writer-gpt-page-v2']);
+/** One public screenplay edition; archive rooms remain addressable and counted. */
+export function visibleBotEditions(versions: StudioBot[]): StudioBot[] {
+  const screenplay = versions.find(bot => bot.slug === 'screenplay-writer-gpt-page') || versions.find(bot => screenplayEditions.has(bot.slug));
+  return versions.filter(bot => !screenplayEditions.has(bot.slug) || bot === screenplay);
+}
 export const botEditionLabel = (bot: StudioBot, index: number) => {
   if (bot.slug === 'movie-script-writer-gpt') return 'Featured';
   if (/original-version-1/.test(bot.slug)) return 'Original V1';
@@ -44,7 +50,7 @@ export function groupBotFamilies(bots: StudioBot[]): BotFamily[] {
   }
   return [...map.entries()].map(([key, list]) => {
     const versions = [...list].sort((a, b) => Number(b.slug === key) - Number(a.slug === key) || botVersionNumber(a.slug) - botVersionNumber(b.slug));
-    return { key, base: versions[0], versions, featured: key === 'movie-script-writer-gpt' };
+    return { key, base: versions[0], versions, editions: visibleBotEditions(versions), featured: key === 'movie-script-writer-gpt' };
   });
 }
 

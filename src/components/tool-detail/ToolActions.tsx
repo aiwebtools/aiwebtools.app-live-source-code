@@ -59,7 +59,7 @@ Thank you!`);
   const isCsvDownload = tool.directUrl?.startsWith('csv-download://') || false;
 
   return (
-    <div className="text-center pb-6 mb-6 border-b border-cyan-500/30">
+    <div className="tool-official-actions text-center pb-6 mb-6 border-b border-cyan-500/30">
       <div className="space-y-4 px-4">
         <Button 
           size="lg"

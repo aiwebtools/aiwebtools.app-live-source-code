@@ -1,0 +1,3 @@
+- Use the exact shared generated total for directory labels and CSV exports; preserved lookup records are not displayed totals.
+- Keep the global header in normal document flow on embedded studio pages; compact reserved branding prevents navigation from occluding official actions while scrolling.
+- Present screenplay archive rooms through one canonical visible edition in shared family menus; retain every original room and instruction link in the catalog.

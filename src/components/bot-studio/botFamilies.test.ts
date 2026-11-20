@@ -1,6 +1,6 @@
 // @ts-ignore -- Bun test runtime import
 import { expect, test } from "bun:test";
-import { countCategoryAssistants, groupBotFamilies, groupBotsByCategory } from "./botCategories";
+import { countCategoryAssistants, groupBotFamilies, groupBotsByCategory, visibleBotEditions } from "./botCategories";
 import catalog from "@/data/generated/botCatalogFallback.json";
 import type { StudioBot } from "./botCatalog";
 
@@ -12,6 +12,17 @@ test('one featured screenplay family retains every original and related edition'
   expect(families[0].base.slug).toBe('movie-script-writer-gpt');
   expect(families[0].featured).toBe(true);
   expect(families[0].versions.map(b=>b.slug).sort()).toEqual(rooms.map(b=>b.slug).sort());
+});
+
+test('My GPTs presents one canonical Screenplay Writer GPT edition, preserving all archive links', () => {
+  const rooms = (catalog as StudioBot[]).filter(b => /movie.script|movie.writer|screenplay/i.test(b.slug));
+  const [family] = groupBotFamilies(rooms);
+  const screenplay = family.editions.filter(b => /screenplay/i.test(b.slug));
+  expect(screenplay.map(b => b.slug)).toEqual(['screenplay-writer-gpt-page']);
+  expect(screenplay[0].display_name).toBe('Screenplay Writer GPT');
+  expect(family.featured).toBe(true);
+  expect(family.versions.length).toBe(rooms.length);
+  expect(visibleBotEditions([...rooms].reverse()).filter(b => /screenplay/i.test(b.slug)).map(b => b.slug)).toEqual(['screenplay-writer-gpt-page']);
 });
 
 test("archived versions open under their base bot as V1, V2, V3 in order", () => {

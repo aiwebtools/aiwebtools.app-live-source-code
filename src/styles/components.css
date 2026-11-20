@@ -805,8 +805,29 @@ body:has(.studio-embedded) .awt-floating-overlay { display: none; }
 .awt-brand-mark, .awt-brand-tagline { --brand-green: 146 90% 55%; }
 .awt-brand-mark { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-weight: 900; line-height: 1.05; letter-spacing: .01em; white-space: nowrap; color: hsl(var(--foreground)); text-shadow: 0 0 14px hsl(var(--brand-green) / .35); }
 .awt-brand-mark span { color: hsl(var(--brand-green)); }
-.awt-brand-tagline { font-weight: 700; letter-spacing: .06em; line-height: 1.25; color: hsl(var(--brand-green) / .85); white-space: normal; overflow-wrap: anywhere; margin-top: 2px; }
-@media (max-width: 639px) { header .awt-brand-mark { font-size: clamp(11px, 3.25vw, 16px); letter-spacing: 0; } header .awt-brand-tagline { font-size: 6.5px; letter-spacing: .03em; } }
+.awt-brand-tagline { font-weight: 700; letter-spacing: 0; line-height: 1.25; color: hsl(var(--brand-green) / .85); white-space: normal; overflow-wrap: normal; word-break: normal; margin-top: 2px; }
+.site-header-inner { max-width: 1700px; }
+.site-header-identity { flex: 0 0 340px; }
+.site-header .awt-brand-mark { font-size: 24px; letter-spacing: 0; }
+.site-header .awt-brand-tagline { font-size: 11px; }
+.studio-versions > summary.studio-row { display: grid; grid-template-columns: auto minmax(0, 1fr); }
+.studio-versions > summary .studio-tool-name { overflow-wrap: normal; word-break: normal; }
+.studio-versions > summary .studio-tool-name small { display: block; margin-left: 0; }
+.studio-versions > summary > span:last-child { grid-column: 2; margin-left: 0; justify-self: start; }
+/* In-flow studio-page navigation cannot slide over any studio or official action. */
+body:has(.studio-embedded) .site-header { position: relative; }
+.studio-embedded, .tool-official-actions { scroll-margin-top: calc(var(--site-header-height, 128px) + 24px); }
+@media (max-width: 1279px) {
+  .site-header-row { flex-wrap: wrap; }
+  .site-header-identity { flex: 1 0 100%; }
+  .site-header-controls { margin-left: auto; }
+}
+@media (max-width: 767px) {
+  .site-header-identity { flex: 1 1 240px; }
+  .site-header-controls { margin-left: 0; }
+  .site-header .awt-brand-mark { font-size: 20px; }
+  .site-header .awt-brand-tagline { font-size: 10px; }
+}
 
 /* Route fallback stays invisible for quick loads; a small spinner appears only if a page is slow. */
 .aiwt-delayed-loader { opacity: 0; animation: aiwt-loader-in 0.2s ease-out 1.2s forwards; }

@@ -92,7 +92,7 @@ const Logo = ({ compact = false }: { compact?: boolean }) => {
           <span>AI</span>WEBTOOLS<span>.APP</span>
         </a>
         <p className={`awt-brand-tagline ${compact ? 'text-[7px]' : 'text-[7.5px] sm:text-[9px] md:text-[11px]'}`}>
-          AN AI TOOLS DIRECTORY DRIVEN BY IMAGINATION
+          An AI tools directory driven by imagination
         </p>
         <div className={`${compact ? 'text-[8px]' : 'text-[8px] sm:text-[10px] md:text-xs'} text-muted-foreground mt-0.5 truncate hidden sm:block`}>
           MADE BY AWT-{" "}

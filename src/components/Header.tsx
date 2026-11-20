@@ -47,7 +47,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header ref={headerRef} className="fixed top-0 w-full z-[100] bg-black/95 border-b border-cyan-500/30 shadow-lg">
+    <header ref={headerRef} className="site-header fixed top-0 w-full z-[100] bg-background/95 border-b border-primary/30 shadow-lg">
       {/* Cosmic scrolling marquee - top strip */}
       <div
         aria-label="Cosmic message"
@@ -60,10 +60,10 @@ const Header = () => {
           <Link to="/music-stream" className="mx-8 inline-block font-bold">MTVAI.live · Presented by aiwebtools.app</Link>
         </div>
       </div>
-      <div className="container mx-auto px-3 md:px-4 py-3 md:py-4">
-        <div className="flex items-center justify-between min-h-[50px] md:min-h-[60px] gap-2">
+      <div className="site-header-inner mx-auto px-3 md:px-4 py-2">
+        <div className="site-header-row flex items-center justify-between min-h-[50px] gap-3">
           {/* Logo - smaller on mobile */}
-          <div className="flex-shrink min-w-0 overflow-hidden">
+          <div className="site-header-identity min-w-0">
             <Logo />
             <Link to="/music-stream" aria-label="Watch MTVAI.live, presented by aiwebtools.app" className="block w-fit mt-1">
               <MtvaiBrand compact />
@@ -71,7 +71,7 @@ const Header = () => {
           </div>
           
           {/* Menu buttons - always visible */}
-          <div className="relative z-10 flex items-center gap-2 md:gap-3 flex-shrink-0">
+          <div className="site-header-controls relative z-10 flex items-center gap-2 md:gap-3 flex-shrink-0">
             <HeaderGptsButton />
             <a
               href="https://github.com/aiwebtools/"

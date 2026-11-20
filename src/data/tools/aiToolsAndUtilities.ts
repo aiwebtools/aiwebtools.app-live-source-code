@@ -45,7 +45,7 @@ export const aiToolsAndUtilities: Tool[] = [
   },
   {
     icon: List,
-    title: "5,500+ AI Tools List (FREE CSV Download)",
+    title: "AI Tools List (FREE CSV Download)",
     description: "Instantly download the complete AI Web Tools directory as a CSV file — every tool, category, URL, tag, and rating in our live database. Always up-to-date with every new tool added.",
     emoji: "📚",
     color: "from-green-500 to-blue-600",

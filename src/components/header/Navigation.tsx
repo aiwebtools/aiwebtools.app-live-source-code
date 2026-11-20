@@ -1,4 +1,4 @@
-import { MARKETING_TOOL_COUNT as DIRECTORY_MARKETING_COUNT } from "@/data/generated/toolCount";
+import { TOTAL_TOOLS } from "@/data/generated/toolCount";
 import { downloadAllOperationalInstructions } from "@/utils/downloads";
 
 import { Phone, Trees, Clapperboard, Heart, Download } from "lucide-react";
@@ -30,9 +30,9 @@ const Navigation = () => {
     try {
       // Trigger confetti celebration first
       createConfettiCelebration();
-      const { allTools } = await import("@/data/toolsData");
+      const { directoryTools } = await import("@/data/toolsData");
       
-      console.log(`📊 Generating comprehensive CSV with ${allTools.length} tools...`);
+      console.log(`📊 Generating comprehensive CSV with ${directoryTools.length} tools...`);
       
       // Enhanced headers with all available data fields
       const headers = [
@@ -49,7 +49,7 @@ const Navigation = () => {
       ];
       
       // Enhanced data extraction with all fields
-      const rows = allTools.map((tool, index) => [
+      const rows = directoryTools.map((tool, index) => [
         tool.title || "",
         tool.category || "",
         tool.directUrl || "",
@@ -75,13 +75,13 @@ const Navigation = () => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `ai-tools-complete-${allTools.length}-tools-${new Date().toISOString().split('T')[0]}.csv`;
+      a.download = `ai-tools-complete-${directoryTools.length}-tools-${new Date().toISOString().split('T')[0]}.csv`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
       
-      console.log(`✅ CSV download complete! ${allTools.length} tools exported with enhanced data`);
+      console.log(`✅ CSV download complete! ${directoryTools.length} tools exported with enhanced data`);
       
       // Also download the GPT Instructions ZIP file after a short delay
       setTimeout(() => {
@@ -153,7 +153,7 @@ const Navigation = () => {
       <button 
         onClick={handleDownloadAllToolsCSV}
         className="text-cyan-100 hover:text-cyan-400 transition-colors whitespace-nowrap cursor-pointer flex items-center space-x-1 px-2 py-1 rounded text-xs font-medium"
-        title={`Download all ${DIRECTORY_MARKETING_COUNT} AI tools as CSV`}
+        title={`Download all ${TOTAL_TOOLS.toLocaleString("en-US")} AI tools as CSV`}
       >
         <Download className="w-3 h-3" />
         <span className="hidden xl:inline">CSV</span>

@@ -263,13 +263,13 @@ export const createTimePortalEffect = (
     console.log('📥 CSV download sentinel detected — exporting full directory');
     (async () => {
       try {
-        const [{ allTools }, { downloadToolsCSV }, { createConfettiCelebration }] = await Promise.all([
+        const [{ directoryTools }, { downloadToolsCSV }, { createConfettiCelebration }] = await Promise.all([
           import('@/data/toolsData'),
           import('@/utils/csvExport'),
           import('@/utils/effects/audioEffects'),
         ]);
         createConfettiCelebration();
-        downloadToolsCSV(allTools, `AIWebTools-Complete-Directory-${allTools.length}-Tools.csv`);
+        downloadToolsCSV(directoryTools, `AIWebTools-Complete-Directory-${directoryTools.length}-Tools.csv`);
       } catch (err) {
         console.error('CSV download failed:', err);
       }

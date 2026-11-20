@@ -1,5 +1,11 @@
 # Roadmap
 
+## November 20 22:24 three leftovers only — owner publishes
+- [x] Align hero CSV, exports, metadata and total checks with 5,437 distinct listings; preserve source records and category rules.
+- [x] Compact full header branding; in-flow header on embedded studio pages prevents occlusion. Full-page scroll sampling and official/feedback clickability pass at 1919px, 1707px and phone width.
+- [x] Show one canonical Screenplay Writer GPT edition in My GPTs while preserving archived rooms, instructions and links; embedded selection opens its correct room.
+- [x] Count/family regressions pass; preview screenshots and build health checked. Hero/footer show 5,437 and downloaded CSV has 5,437 indexed rows; no publication.
+
 ## November 20 20:03 combined 12-item repair — plan first, owner publishes
 - [ ] 1: restore once-per-browser 1111 gate, persistent unlock and session backup; no automatic music opener.
 - [ ] 2,6,11: widen embedded desktop studio, readable titles/composer, accessible PDF/DOCX downloads and header-safe scrolling.

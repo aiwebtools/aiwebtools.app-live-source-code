@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Bot, ChevronDown, RotateCw, Search, Wand2 } from "lucide-react";
 import { loadStudioBots, type StudioBot } from "@/components/bot-studio/botCatalog";
 import { Button } from "@/components/ui/button";
-import { countCategoryAssistants, groupBotsByCategory } from "@/components/bot-studio/botCategories";
+import { countCategoryAssistants, groupBotsByCategory, botEditionLabel } from "@/components/bot-studio/botCategories";
 import CommunityAppsMenuSection from "./CommunityAppsMenuSection";
 import { searchStudioBots } from "@/components/bot-studio/botSubjects";
 import { normalizeSearchName } from '@/utils/search/enterTarget';
@@ -32,7 +32,7 @@ export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false, full
 
   const matches = useMemo(() => searchStudioBots(bots || [], query.trim()), [bots, query]);
   const groups = useMemo(() => groupBotsByCategory(matches), [matches]);
-  const best = query.trim() ? matches.slice(0, 3) : [];
+  const best = query.trim() ? groups.flatMap(([, families]) => families.flatMap(family => family.editions)).slice(0, 3) : [];
 
   const go = (path: string) => {
     onNavigate?.();
@@ -102,11 +102,11 @@ export default function BotSuiteMenuSection({ onNavigate, gptsOnly = false, full
                     className="flex w-full items-center justify-between py-2 text-left text-xs font-semibold uppercase tracking-wide text-primary">
                     {category}<span className="text-[10px] text-muted-foreground">{countCategoryAssistants(families)}</span>
                   </Button>
-                  {expanded && families.map(({ key, base, versions }) => (
+                  {expanded && families.map(({ key, base, editions: versions, featured }) => (
                     <div key={key} className="py-0.5 pl-2">
                       {versions.length === 1 ? <Button variant="ghost" type="button" title={base.display_name} onClick={() => go(`/app/${base.slug}`)} className="h-auto min-h-9 w-full justify-start px-1 py-1 text-left text-sm text-foreground">{base.display_name}</Button> :
-                      <details open={Boolean(query)}><summary className="cursor-pointer py-2 text-sm text-foreground">{base.display_name} <span className="text-xs text-muted-foreground">· {versions.length} versions</span></summary>
-                        <div className="grid grid-cols-4 gap-1">{versions.map((v, i) => <Button variant="outline" key={v.slug} type="button" onClick={() => go(`/app/${v.slug}`)} aria-label={`${base.display_name} version ${i + 1}`} title={v.display_name} className="h-9 px-1 text-xs text-primary">V{i + 1}</Button>)}</div>
+                      <details open={Boolean(query)}><summary className="cursor-pointer py-2 text-sm text-foreground">{base.display_name} {featured && <small className="text-primary">FEATURED</small>} <span className="text-xs text-muted-foreground">· {versions.length} editions</span></summary>
+                        <div className="grid grid-cols-2 gap-1">{versions.map((v, i) => <Button variant="outline" key={v.slug} type="button" onClick={() => go(`/app/${v.slug}`)} aria-label={`${base.display_name} ${botEditionLabel(v, i)}`} title={v.display_name} className="h-auto min-h-9 whitespace-normal px-1 text-xs text-primary">{botEditionLabel(v, i)}</Button>)}</div>
                       </details>}
                     </div>
                   ))}

@@ -139,9 +139,9 @@ const MobileMenu = () => {
     try {
       // Trigger confetti celebration first
       createConfettiCelebration();
-      const { allTools } = await import("@/data/toolsData");
+      const { directoryTools } = await import("@/data/toolsData");
       
-      console.log(`📊 Generating comprehensive CSV with ${allTools.length} tools...`);
+      console.log(`📊 Generating comprehensive CSV with ${directoryTools.length} tools...`);
       
       const headers = [
         "Title", 
@@ -156,7 +156,7 @@ const MobileMenu = () => {
         "Pricing"
       ];
       
-      const rows = allTools.map((tool, index) => [
+      const rows = directoryTools.map((tool, index) => [
         tool.title || "",
         tool.category || "",
         tool.directUrl || "",
@@ -179,7 +179,7 @@ const MobileMenu = () => {
         ["# AIWebTools.ai — Complete AI Tools Directory Export"],
         ["# Website", "https://aiwebtools.app"],
         ["# Clone This AI Tool Empire (FREE)", "https://lovable.dev/projects/cf896208-dec6-4299-b946-c3c870c85ab3?utm_source=lovable-badge"],
-        ["# Total Tools", String(allTools.length)],
+        ["# Total Tools", String(directoryTools.length)],
         ["# Exported", new Date().toISOString()],
         [""],
       ];
@@ -191,13 +191,13 @@ const MobileMenu = () => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `ai-tools-complete-${allTools.length}-tools-${new Date().toISOString().split('T')[0]}.csv`;
+      a.download = `ai-tools-complete-${directoryTools.length}-tools-${new Date().toISOString().split('T')[0]}.csv`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
       
-      console.log(`✅ CSV download complete! ${allTools.length} tools exported with enhanced data`);
+      console.log(`✅ CSV download complete! ${directoryTools.length} tools exported with enhanced data`);
       
       // Also download the GPT Instructions ZIP file
       setTimeout(() => {

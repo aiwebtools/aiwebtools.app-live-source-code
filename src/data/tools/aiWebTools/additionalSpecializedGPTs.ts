@@ -7,7 +7,7 @@ export const additionalSpecializedGPTs: Tool[] = [
   {
     icon: Database,
     title: "Downloadable AIWebTools Directory List",
-    description: "The complete downloadable AIWebTools.ai directory in a single CSV file — every AI tool in our database with names, descriptions, categories, direct URLs, video URLs, image URLs, tags, ratings, and metadata. Perfect for researchers, builders, marketers, and AI enthusiasts who want offline access to the full 5,500+ AI Tools catalog. Always synced with the live database. Click 'USE IT NOW' to instantly download the latest CSV export.",
+    description: "The complete downloadable AIWebTools.ai directory in a single CSV file — every AI tool in our database with names, descriptions, categories, direct URLs, video URLs, image URLs, tags, ratings, and metadata. Perfect for researchers, builders, marketers, and AI enthusiasts who want offline access to the full AI Tools catalog. Always synced with the live database. Click 'USE IT NOW' to instantly download the latest CSV export.",
     emoji: "📊",
     color: "from-green-500 to-emerald-600",
     directUrl: "https://aiwebtools.lovable.app/downloads/aiwebtools-directory-list.csv",
