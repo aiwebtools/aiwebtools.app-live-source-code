@@ -109,7 +109,14 @@ const ToolsGrid = memo(({
     }));
   }, [displayTools]);
 
-  if (toolsWithStableKeys.length === 0) return null;
+  if (toolsWithStableKeys.length === 0) {
+    return searchTerm ? (
+      <div role="status" className="mx-auto max-w-xl px-4 py-12 text-center text-cyan-100" data-search-results>
+        <p className="text-lg font-semibold">Showing 0 tools matching "{searchTerm}"</p>
+        <p className="mt-2 text-sm text-gray-300">No tools here match every word of your search. Try fewer or different words.</p>
+      </div>
+    ) : null;
+  }
 
   // Always use virtualized grid for maximum performance - simplified
   const useVirtualization = true;
@@ -124,8 +131,8 @@ const ToolsGrid = memo(({
           </h3>
           {searchTerm && (
             <p className="text-gray-300 text-sm">
-              Found {tools.length} {tools.length === 1 ? 'tool' : 'tools'} matching "{searchTerm}"
-              {tools.length > displayTools.length && " • Scroll down to see more results"}
+              Showing {displayTools.length} of {tools.length} {tools.length === 1 ? 'tool' : 'tools'} matching "{searchTerm}"
+              {tools.length > displayTools.length && " • Scroll down to load the rest"}
             </p>
           )}
           {selectedCategory && !searchTerm && (

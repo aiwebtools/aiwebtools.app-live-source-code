@@ -9,10 +9,10 @@ import ToolsGrid from "@/components/tools/ToolsGrid";
 import ScrollToTopButton from "@/components/category/ScrollToTopButton";
 import SEOHead from "@/components/SEOHead";
 import { allTools } from "@/data/toolsData";
+import { filterDirectoryTools } from "@/utils/directoryIntegrity";
 import { getToolsByCategory } from "@/utils/categoryUtils";
 import { getStandardizedCategoryTitle } from "@/utils/categoryTitles";
 import { generateStructuredData } from "@/utils/seo";
-import { searchTools } from "@/utils/searchUtils";
 import { orderCategoryTools } from "@/utils/category/categoryOrdering";
 import DownloadLibraryButton from "@/components/DownloadLibraryButton";
 
@@ -40,7 +40,8 @@ const CategoryPage = () => {
   // repeat. Pagination now only ever appends new, unique tools.
   const finalFilteredTools = useMemo(() => {
     const source = filterSearchTerm.trim()
-      ? searchTools(categoryTools, filterSearchTerm)
+      // Strict filter: only tools in this category whose text contains every search word.
+      ? filterDirectoryTools(categoryTools, filterSearchTerm)
       : categoryTools;
 
     const seen = new Set<string>();

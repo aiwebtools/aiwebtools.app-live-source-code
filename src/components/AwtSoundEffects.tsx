@@ -13,6 +13,7 @@ export default function AwtSoundEffects() {
   const [error, setError] = useState("");
   const [clip, setClip] = useState<Blob | null>(null);
   const [local, setLocal] = useState(false);
+  const [localReason, setLocalReason] = useState("");
   const request = useRef<AbortController | null>(null);
   useEffect(() => () => request.current?.abort(), []);
   const audio = useGeneratedAudio();
@@ -23,8 +24,16 @@ export default function AwtSoundEffects() {
     try {
       await audio.unlock();
       let blob: Blob;
-      try { blob = await requestAudio("awt-sound-effects", { prompt: prompt.trim(), duration }, AbortSignal.any([controller.signal,AbortSignal.timeout(6000)])); setLocal(false); }
-      catch (error) { if(controller.signal.aborted) throw error; blob=synthesizeSound(prompt,duration);setLocal(true); }
+      // AI sound generation can take up to ~30s; credits are re-checked on every request.
+      try { blob = await requestAudio("awt-sound-effects", { prompt: prompt.trim(), duration }, AbortSignal.any([controller.signal,AbortSignal.timeout(30000)])); setLocal(false); setLocalReason(""); }
+      catch (error) {
+        if(controller.signal.aborted) throw error;
+        const message = error instanceof Error ? error.message : String(error || "");
+        setLocalReason(/credit|quota|balance|402|insufficient|payment/i.test(message)
+          ? "The AI sound provider is out of credits right now, so this is a locally synthesized sound. AI sound effects return automatically as soon as credits are restored."
+          : "The AI sound provider did not respond, so this is a locally synthesized sound. Try again for an AI-generated version.");
+        blob=synthesizeSound(prompt,duration);setLocal(true);
+      }
       if (!controller.signal.aborted) { setClip(blob); await audio.load(blob); }
     } catch (e) { if (!controller.signal.aborted) setError(e instanceof Error ? e.message : "Sound generation failed."); }
     finally { setBusy(false); request.current = null; }
@@ -33,7 +42,7 @@ export default function AwtSoundEffects() {
     <div className="mx-auto max-w-3xl px-4">
       <h2 className="mb-5 flex items-center gap-3 text-2xl font-bold text-primary"><AudioLines />AWT Sound Effects Studio</h2>
       <p className="mb-4 text-sm text-muted-foreground">Free · No sign-up. Local synthesized audio remains available when AI audio is unavailable.</p>
-      {local && <p role="status" className="mb-3 text-sm text-foreground">Locally synthesized sound · WAV</p>}
+      {local && <p role="status" className="mb-3 rounded-md border border-primary/40 bg-card p-3 text-sm text-foreground">{localReason || "Locally synthesized sound"} · WAV</p>}
       <label className="text-sm text-foreground" htmlFor="sound-description">Sound description</label>
       <textarea id="sound-description" value={prompt} onChange={e => setPrompt(e.target.value)} maxLength={1000} rows={3} className="mt-2 w-full rounded-lg border border-primary/30 bg-card p-3 text-base text-foreground" />
       <label className="mt-4 flex items-center gap-4 text-sm text-foreground">Duration · {duration} seconds<input aria-label="Sound duration" className="min-w-0 flex-1 accent-primary" type="range" min="0.5" max="22" step="0.5" value={duration} onChange={e => setDuration(Number(e.target.value))} /></label>

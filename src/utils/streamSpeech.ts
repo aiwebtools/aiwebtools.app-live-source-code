@@ -64,7 +64,9 @@ export const beginSpeechClip = (url: string, init: RequestInit, outer: AbortSign
       const response = await fetch(url, { ...init, signal: controller.signal });
       if (!response.ok || (response.headers.get("Content-Type") || "").includes("application/json")) {
         const detail = await response.json().catch(() => ({}));
-        throw new Error(detail?.error || detail?.message || "Voice playback is unavailable right now.");
+        const failure = new Error(detail?.error || detail?.message || "Voice playback is unavailable right now.");
+        if (response.status === 402 || detail?.status === 402) failure.name = "CreditExhausted";
+        throw failure;
       }
       if (!response.body) throw new Error("The voice engine returned no playable audio.");
 
@@ -126,11 +128,15 @@ export const beginSpeechClip = (url: string, init: RequestInit, outer: AbortSign
   };
 };
 
+/** True only when the lifelike engine is genuinely out of AI credits. */
+export const isCreditExhausted = (error: unknown) =>
+  error instanceof Error && (error.name === "CreditExhausted" || /\b402\b|credit|quota|insufficient|payment required/i.test(error.message));
+
 /**
- * Drain a queue of spoken clips in order. When the lifelike engine fails
- * (commonly AI credits recharging), the failed sentence and everything still
- * queued is handed to the free on-device fallback instead — complete replies
- * are preserved and nothing already heard is re-read.
+ * Drain a queue of spoken clips in order. Lifelike studio voices stay primary:
+ * a transient failure retries the sentence once on the backup lifelike engine
+ * (and only that sentence uses the device voice if both fail). The free device
+ * voice takes over for the rest of the reply only when AI credits are exhausted.
  */
 export const drainStudioQueue = async (
   queue: Array<{ text: string; clip: SpeechClip | null }>,
@@ -139,9 +145,17 @@ export const drainStudioQueue = async (
     isAborted: () => boolean;
     onStudioDown: () => void;
     playFallback: (text: string) => void | Promise<void>;
+    retry?: (text: string) => SpeechClip | null;
   },
 ): Promise<void> => {
   let deviceOnly = false;
+  const creditsOut = async (text: string) => {
+    stopSpeechPlayback();
+    opts.onStudioDown();
+    deviceOnly = true;
+    for (const rest of queue) rest.clip?.abort();
+    await opts.playFallback(text);
+  };
   while (queue.length) {
     const next = queue.shift();
     if (!next) return;
@@ -153,13 +167,20 @@ export const drainStudioQueue = async (
     }
     try {
       await opts.play(next.clip);
-    } catch {
+    } catch (error) {
       if (opts.isAborted()) return;
       next.clip.abort();
+      if (isCreditExhausted(error)) { await creditsOut(next.text); continue; }
+      const backup = opts.retry?.(next.text) ?? null;
+      if (backup) {
+        try { await opts.play(backup); continue; }
+        catch (retryError) {
+          if (opts.isAborted()) return;
+          backup.abort();
+          if (isCreditExhausted(retryError)) { await creditsOut(next.text); continue; }
+        }
+      }
       stopSpeechPlayback();
-      opts.onStudioDown();
-      deviceOnly = true;
-      for (const rest of queue) rest.clip?.abort();
       await opts.playFallback(next.text);
     }
   }

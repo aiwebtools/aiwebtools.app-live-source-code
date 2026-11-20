@@ -70,6 +70,26 @@ Deno.serve(async (req) => {
       return new Response(wav, { headers: { ...corsHeaders, 'Content-Type': 'audio/wav', 'Cache-Control': 'no-store' } });
     }
 
+    // Live bot playback with the same lifelike voices as Voice Studio: 24 kHz PCM over SSE.
+    if (body?.stream === true) {
+      const live = await fetch('https://ai.gateway.lovable.dev/v1/audio/speech', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'openai/gpt-4o-mini-tts', input: text, voice, response_format: 'pcm', stream_format: 'sse',
+          instructions: `Read only the text once. Speak naturally to one person, with warm human expression, connected phrases, varied intonation and subtle emotion. Never robotic, flat, sing-song or announcer-like. ${instructions}`,
+        }),
+        signal: req.signal,
+      });
+      if (!live.ok) {
+        const details = await live.json().catch(() => ({}));
+        if (live.status === 402) return json({ error: 'The voice studio is out of AI credits right now.', status: 402 });
+        return json({ error: details?.error?.message || details?.message || 'The voice could not be generated.', status: live.status }, live.status);
+      }
+      if (!live.body) return json({ error: 'The voice provider returned no audio.' }, 502);
+      return new Response(live.body, { headers: { ...corsHeaders, 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-store' } });
+    }
+
     const upstream = await fetch('https://ai.gateway.lovable.dev/v1/audio/speech', {
       method: 'POST',
       headers: {

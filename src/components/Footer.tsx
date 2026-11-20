@@ -16,6 +16,8 @@ import MtvaiBrand from "./MtvaiBrand";
 import brandVideo from "@/assets/videos/aiwebtools_awakening_brand.mp4.asset.json";
 import { Link } from "react-router-dom";
 import { OFFICIAL_SOCIAL_ACCOUNTS, orderSocialAccounts } from "@/data/officialSocialAccounts";
+import { FEATURED_LINKS } from "@/data/featuredLinks";
+import MtvaiYouTubeLink from "@/components/MtvaiYouTubeLink";
 import { Button } from "@/components/ui/button";
 
 const Footer = () => {
@@ -167,10 +169,11 @@ Best regards,
             className="block aspect-video w-full object-cover"
           />
         </div>
-        <div className="flex justify-center mb-8">
+        <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
           <Link to="/music-stream" aria-label="Watch MTVAI.live, presented by aiwebtools.app" className="mtvai-channel-link inline-flex items-center gap-4 border-y py-4 px-6">
             <MtvaiBrand />
           </Link>
+          <MtvaiYouTubeLink />
         </div>
         
         <section aria-label="Official social channels" className="mb-8 border-y border-border py-6">
@@ -179,6 +182,18 @@ Best regards,
             {orderSocialAccounts(OFFICIAL_SOCIAL_ACCOUNTS).map(account => account.url && (
               <Button asChild key={account.url} variant="outline" className="h-auto max-w-full whitespace-normal text-center">
                 <a href={account.url} target="_blank" rel="noopener noreferrer">{account.platform} · {account.purpose ?? account.handle}</a>
+              </Button>
+            ))}
+          </div>
+        </section>
+        <section aria-label="Featured links" className="mb-8 border-b border-border pb-6">
+          <h3 className="mb-4 text-center text-lg font-semibold text-primary">Featured Links</h3>
+          <div className="flex flex-wrap justify-center gap-3">
+            {FEATURED_LINKS.map(link => (
+              <Button asChild key={link.url} variant="outline" className="h-auto max-w-full whitespace-normal text-center">
+                {link.external
+                  ? <a href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a>
+                  : <Link to={link.url}>{link.label}</Link>}
               </Button>
             ))}
           </div>

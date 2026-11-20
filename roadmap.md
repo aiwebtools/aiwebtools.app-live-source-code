@@ -246,3 +246,12 @@
 
 - [x] Removed personal TikTok from Socials/footer; added Facebook AIWebTools News; audiobooks confirmed in collection
 - Add Facebook AIWebTools News link to Socials
+
+## November 20 seven-item master build — Master publishes
+- [x] 1 Desktop studio wide (1,534px studio, 1,022px chat, one-line title at 1919); phone studio roomier
+- [x] 2 Category search uses category AND search; "movie script" shows 1 of 1; empty state
+- [x] 3 PDF/Word buttons unobscured; real PDF/DOCX downloads tested
+- [ ] 4 AI sound effects — blocked: linked ElevenLabs account has 0 credits; honest local WAV fallback works, AI retried every press
+- [x] 5 Bots speak with Voice Studio voices (stream tested); basic voice only on real credit exhaustion
+- [x] 6 Seven exact links in footer + MTVai YouTube buttons
+- [x] 7 "Opening the Matrix" route text removed; quick-load spinner only after 1.2s

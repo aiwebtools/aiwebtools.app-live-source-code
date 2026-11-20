@@ -180,8 +180,8 @@ const PageLoader = () => {
       data-aiwt-route-fallback="true"
       role="status"
       aria-live="polite"
-      className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center gap-4"
-    ><span className="h-8 w-8 animate-spin rounded-full border-2 border-primary/30 border-t-primary" aria-hidden="true" /><p className="font-mono text-primary">Opening the Matrix…</p></div>
+      className="aiwt-delayed-loader min-h-screen bg-background text-foreground flex flex-col items-center justify-center gap-4"
+    ><span className="h-6 w-6 animate-spin rounded-full border-2 border-primary/30 border-t-primary" aria-hidden="true" /><span className="sr-only">Loading page</span></div>
   );
 };
 
@@ -654,7 +654,7 @@ function App() {
             <VideoManagerProvider>
               <TooltipProvider>
                 <Toaster />
-                <BrowserRouter>
+                <BrowserRouter future={{ v7_startTransition: true }}>
                   <AngelNumberGate>
                   <InAppNavigateListener />
                   <AnimatedRoutes />

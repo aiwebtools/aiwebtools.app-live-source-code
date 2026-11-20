@@ -132,3 +132,40 @@ test("gesture unlock resumes a suspended audio context before playback", async (
     expect(resumes).toBe(1);
   } finally { globalThis.window = original; }
 });
+
+test("a non-credit voice failure retries the lifelike backup and keeps studio voices on", async () => {
+  const mk = (text) => ({ text, clip: { abort() {} } });
+  const queue = [mk("First."), mk("Second.")];
+  const fallback = [];
+  const retried = [];
+  let downCalls = 0;
+  let plays = 0;
+  await drainStudioQueue(queue, {
+    play: async () => { plays++; if (plays === 1) throw new Error("The voice clip ended before it was complete."); },
+    isAborted: () => false,
+    onStudioDown: () => { downCalls++; },
+    playFallback: (text) => fallback.push(text),
+    retry: (text) => { retried.push(text); return { abort() {} }; },
+  });
+  expect(retried).toEqual(["First."]);
+  expect(downCalls).toBe(0);
+  expect(fallback).toEqual([]);
+  expect(plays).toBe(3);
+});
+
+test("only exhausted AI credits switch the rest of the reply to the device voice", async () => {
+  const mk = (text) => ({ text, clip: { abort() {} } });
+  const queue = [mk("First."), mk("Second.")];
+  const fallback = [];
+  let downCalls = 0;
+  const credit = new Error("The voice studio is out of AI credits right now.");
+  await drainStudioQueue(queue, {
+    play: async () => { throw credit; },
+    isAborted: () => false,
+    onStudioDown: () => { downCalls++; },
+    playFallback: (text) => fallback.push(text),
+    retry: () => { throw new Error("must not retry when credits are exhausted"); },
+  });
+  expect(downCalls).toBe(1);
+  expect(fallback).toEqual(["First.", "Second."]);
+});

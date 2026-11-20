@@ -7,6 +7,7 @@ import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import GlobalSearchBar from "@/components/LazyGlobalSearchBar";
 import DownloadLibraryButton from "@/components/DownloadLibraryButton";
 import MtvaiBrand from "@/components/MtvaiBrand";
+import MtvaiYouTubeLink from "@/components/MtvaiYouTubeLink";
 import MtvaiAudiobooksButton from "@/components/MtvaiAudiobooksButton";
 import { Button } from "@/components/ui/button";
 
@@ -281,6 +282,7 @@ const MusicStream = () => {
         </div>
         <div className="flex items-center gap-2 min-w-0">
           <MtvaiBrand compact />
+          <MtvaiYouTubeLink compact />
         </div>
         <button
           onClick={toggleMute}

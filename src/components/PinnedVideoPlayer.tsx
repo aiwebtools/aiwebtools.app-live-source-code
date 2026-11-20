@@ -8,6 +8,7 @@ import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import { RECENT_MTVAI_UPLOADS } from "@/data/recentMtvaiUploads";
 import { buildMtvaiMusicOrder } from "@/data/mtvaiMusicOrder";
 import MtvaiBrand from "@/components/MtvaiBrand";
+import MtvaiYouTubeLink from "@/components/MtvaiYouTubeLink";
 import MtvaiAudiobooksButton from "@/components/MtvaiAudiobooksButton";
 import { MTVAI_CATALOG } from "@/data/mtvaiCatalog";
 
@@ -1308,7 +1309,7 @@ const PinnedVideoPlayer = memo(() => {
         </div>
 
         {/* Video Container - stable iframe that doesn't remount on navigation */}
-        {(isMusicMode || mode === 'idle') && <div className="flex flex-col items-center gap-1 bg-background py-1"><MtvaiBrand compact /><MtvaiAudiobooksButton className="h-7 text-[10px]" onOpenChange={setAudiobooksOpen} /></div>}
+        {(isMusicMode || mode === 'idle') && <div className="flex flex-col items-center gap-1 bg-background py-1"><MtvaiBrand compact /><div className="flex items-center gap-1"><MtvaiAudiobooksButton className="h-7 text-[10px]" onOpenChange={setAudiobooksOpen} /><MtvaiYouTubeLink compact className="h-7" /></div></div>}
         <div
           className="group relative bg-black"
           style={{

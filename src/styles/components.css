@@ -807,3 +807,15 @@ body:has(.studio-embedded) .awt-floating-overlay { display: none; }
 .awt-brand-mark span { color: hsl(var(--brand-green)); }
 .awt-brand-tagline { font-weight: 700; letter-spacing: .06em; line-height: 1.25; color: hsl(var(--brand-green) / .85); white-space: normal; overflow-wrap: anywhere; margin-top: 2px; }
 @media (max-width: 639px) { header .awt-brand-mark { font-size: clamp(11px, 3.25vw, 16px); letter-spacing: 0; } header .awt-brand-tagline { font-size: 6.5px; letter-spacing: .03em; } }
+
+/* Route fallback stays invisible for quick loads; a small spinner appears only if a page is slow. */
+.aiwt-delayed-loader { opacity: 0; animation: aiwt-loader-in 0.2s ease-out 1.2s forwards; }
+@keyframes aiwt-loader-in { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .aiwt-delayed-loader { animation-duration: 0.01s; } }
+
+/* Phone: give the embedded studio the screen width and keep notices compact. */
+@media (max-width: 639px) {
+  .tool-detail-content .p-8:has(.studio-embedded), .featured-story-content .p-8:has(.studio-embedded) { padding: 8px; }
+  .studio-embedded .studio-topbar .studio-brand { display: none; }
+  .studio .studio-allowance { font-size: 10px; line-height: 14px; padding: 4px 10px; }
+}

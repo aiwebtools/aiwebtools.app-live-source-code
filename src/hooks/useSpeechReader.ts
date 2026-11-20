@@ -52,10 +52,12 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const generationRef = useRef(0);
   // Set when the lifelike studio voice fails (e.g. AI credits recharging):
   // replies fall back to the free on-device voice for the rest of the session.
-  const studioDownRef = useRef(false);
+  const studioDownUntilRef = useRef(0);
+  const studioDown = () => Date.now() < studioDownUntilRef.current;
   const studioToastShownRef = useRef(false);
   const noteStudioDown = useCallback(() => {
-    studioDownRef.current = true;
+    // Re-check lifelike voices after five minutes so restored credits take effect.
+    studioDownUntilRef.current = Date.now() + 5 * 60_000;
     if (studioToastShownRef.current) return;
     studioToastShownRef.current = true;
     toast(deviceSpeechAvailable()
@@ -85,13 +87,14 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
 
   /** Start one spoken clip; the voice engine streams its audio as it is produced. */
   const startClip = useCallback(
-    (text: string, signal: AbortSignal): SpeechClip =>
+    (text: string, signal: AbortSignal, engine: "openai" | "gemini" = "openai"): SpeechClip =>
       beginSpeechClip(
         FUNCTION_URL,
         {
           method: "POST",
           headers: { "Content-Type": "application/json", apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` },
-          body: JSON.stringify({ text, voice: profile?.voice, engine: "gemini", style: profile?.label, instructions: profile?.instructions, stream: true }),
+          // Same lifelike voices as Voice Studio first; Gemini studio voices are the backup.
+          body: JSON.stringify({ text, voice: profile?.voice || "alloy", engine, speed: profile?.speed, style: profile?.label, instructions: profile?.instructions, stream: true }),
         },
         signal,
         // ~1.6× a normal reading pace: a full second pass by the voice model gets cut off.
@@ -136,12 +139,13 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       requestRef.current = controller;
       setSpeaking(true);
       try {
-        const clips = splitSpeechText(clean, 600).filter(speakable).map((chunk) => ({ text: chunk, clip: studioDownRef.current || !profile || !ANON_KEY ? null : startClip(chunk, controller.signal) }));
+        const clips = splitSpeechText(clean, 600).filter(speakable).map((chunk) => ({ text: chunk, clip: studioDown() || !profile || !ANON_KEY ? null : startClip(chunk, controller.signal) }));
         await drainStudioQueue(clips, {
           play: (clip) => playSpeechClip(clip, clipSpeed(profile?.speed)),
           isAborted: () => controller.signal.aborted,
           onStudioDown: noteStudioDown,
           playFallback: speakChunk,
+          retry: (chunk) => (profile && ANON_KEY && requestRef.current && !requestRef.current.signal.aborted ? startClip(chunk, requestRef.current.signal, "gemini") : null),
         });
         // The device-voice fallback already read the reply when the studio
         // engine failed, so that case is a success, not a surfaced failure.
@@ -169,7 +173,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       const controller = requestRef.current;
       window.dispatchEvent(new Event("awt-response-voice"));
       stopBotIntro();
-      pendingRef.current.push(...splitSpeechText(stripForSpeech(text), 600).filter(speakable).map((chunk) => ({ text: chunk, clip: profile && ANON_KEY && !studioDownRef.current ? startClip(chunk, controller.signal) : null })));
+      pendingRef.current.push(...splitSpeechText(stripForSpeech(text), 600).filter(speakable).map((chunk) => ({ text: chunk, clip: profile && ANON_KEY && !studioDown() ? startClip(chunk, controller.signal) : null })));
       if (queueBusyRef.current) return;
       queueBusyRef.current = true;
       const generation = generationRef.current;
@@ -181,6 +185,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
             isAborted: () => generation !== generationRef.current || controller.signal.aborted,
             onStudioDown: noteStudioDown,
             playFallback: speakChunk,
+          retry: (chunk) => (profile && ANON_KEY && requestRef.current && !requestRef.current.signal.aborted ? startClip(chunk, requestRef.current.signal, "gemini") : null),
           });
         } catch (error) {
           if (generation === generationRef.current && !controller.signal.aborted) {
