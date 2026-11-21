@@ -112,9 +112,9 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
     </div>
     <div className="mtv-rise flex flex-col items-center gap-0.5 text-center" style={{ animationDelay: "0s" }}>
       <span className="font-mono text-sm tracking-[0.28em] text-primary">MTVAI.live</span>
-      <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Presented by aiwebtools.app · {TOTAL_TOOLS.toLocaleString("en-US")} AI Tools</span>
+      <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">PRESENTED BY AIWEBTOOLS.APP · {TOTAL_TOOLS.toLocaleString("en-US")}+ AI TOOLS</span>
     </div>
-    <p style={{ animationDelay: "0s" }} className="mtv-rise w-full max-w-sm text-center text-sm leading-relaxed text-foreground">This music video was made by a rogue AI music video agent all by itself.....sorta.</p>
+    <p style={{ animationDelay: "0s" }} className="mtv-rise w-full max-w-sm text-center text-sm leading-relaxed text-foreground">This music video was made by a rogue AI music video agent all by itself.....sorta...</p>
     <div style={{ animationDelay: "0s" }} className="mtv-rise mtv-opening-frame relative shrink-0 overflow-hidden rounded-xl border border-primary/25 bg-muted shadow-[0_0_45px_hsl(var(--primary)/.18)]">
       {!started && <div role="status" aria-label="Loading MTVAI opening" className="pointer-events-none absolute inset-0 z-10 grid place-items-center"><div className="flex flex-col items-center gap-4"><img src={pandoraPanel} alt="Pandora opening box" width={200} height={112} className="w-40 rounded border border-primary/40" /><Loader2 className="h-7 w-7 animate-spin motion-reduce:animate-none text-primary" /></div></div>}
       {clip && <iframe
