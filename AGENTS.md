@@ -27,7 +27,7 @@
 - Resolve hosted chatbot speech through `getGptVoiceProfile`; this keeps character-inspired voices consistent without cloning real people.
 - Serialize hosted and device response speech via one completion-aware queue (Voice Studio voices first; device voice only when out of credits); cancel welcome/waiting voices and stale audio before replies so fallback cannot overlap or lose sentences.
 - Keep optional voice playback isolated from text delivery and capability-check both device speech APIs; missing phone voices must never truncate displayed or saved replies.
-- Unlock hosted speech during message submission and explicit voice enabling, before network waits, so gesture-restricted browsers can auto-read replies.
+- Unlock hosted speech on submit and voice enabling, before network waits, so gesture-restricted browsers auto-read replies.
 - Prime device speech separately in submit/play gestures, retain utterances until completion, and select natural language-matched voices; Web Audio failures must not suppress free fallback and device failures must be visible and logged.
 - Use cancellable one-utterance mic sessions; release capture before voice submission and resume hosted speech to prevent feedback and silent replies.
 - Render hosted bot rooms through `BotStudio` in both embedded and full-page placements so voice, streaming, downloads, branding and guest history cannot diverge.
@@ -69,6 +69,6 @@
 - Reuse the lazy MTVAI audiobook collection across theater, pinned and book entry points; verified channel IDs and catalog union preserve recordings, and opening it suspends competing playback.
 - Scope exact intake-paragraph deduplication to screenplay-writer streams, preserving other prose and bot output; repeated model questions must not duplicate displayed or saved intake.
 - Keep Muse offer code, join link and copy fallback in `components/muse/museOffer.ts`; banner, popup and tool page share it so the code cannot drift, and the offer voice plays from one cached recording.
-- Request microphone permission via getUserMedia before starting speech recognition, keep voice-input callbacks in refs, and allow `microphone=(self)` in Permissions-Policy; blocked policy or unstable callbacks silently kill dictation.
+- Use getUserMedia for first mic permission, then start recognition synchronously in the tap once granted (Safari); keep voice-input callbacks in refs, and allow `microphone=(self)` in Permissions-Policy; blocked policy or unstable callbacks silently kill dictation.
 - Prioritize exact discovery names after merging community suggestions; test the public search worker against its shipped catalog so source-only ranking tests cannot hide live regressions.
 - Derive directory counts, category membership and paginated filters from the same name-unique catalog; use purpose metadata rather than incidental prose, sort alphabetically before pagination, and preserve source records and bot versions when hiding duplicate listings.

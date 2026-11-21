@@ -208,8 +208,20 @@ const audioContext = () => {
   return context;
 };
 
+/**
+ * iPhone/iPad silence Web Audio under the ringer switch and route it to the quiet
+ * earpiece after microphone use; the "playback" session plays through the speaker.
+ */
+export const preferSpeakerPlayback = () => {
+  try {
+    const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession;
+    if (session && session.type !== "playback") session.type = "playback";
+  } catch { /* Older browsers keep their default audio routing. */ }
+};
+
 /** Call directly from a click, before a network request, to unlock mobile audio. */
 export const unlockSpeechPlayback = async () => {
+  preferSpeakerPlayback();
   const ctx = audioContext();
   // Safari also interrupts a context when microphone capture or another media player takes focus.
   if (ctx.state !== "running" && ctx.state !== "closed") await ctx.resume();

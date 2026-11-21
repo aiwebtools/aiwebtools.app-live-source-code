@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { splitSpeechText } from "@/utils/speechText";
 import { useToast } from "@/hooks/use-toast";
-import { beginSpeechClip, drainStudioQueue, playSpeechClip, stopSpeechPlayback, unlockSpeechPlayback, type SpeechClip } from "@/utils/streamSpeech";
+import { beginSpeechClip, drainStudioQueue, playSpeechClip, preferSpeakerPlayback, stopSpeechPlayback, unlockSpeechPlayback, type SpeechClip } from "@/utils/streamSpeech";
 import type { GptVoiceProfile } from "@/utils/gptVoiceProfiles";
 import { deviceSpeechAvailable, speakDeviceText, unlockDeviceSpeech } from "@/utils/deviceSpeech";
 import { stopBotIntro } from "@/utils/botIntroVoice";
@@ -331,7 +331,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       setVoiceError(error instanceof Error ? error.message : "Tap Play TTS to enable audio.");
     });
   }, [stop]);
-  const resumeAfterMicrophone = useCallback(() => { listeningRef.current = false; }, []);
+  const resumeAfterMicrophone = useCallback(() => { listeningRef.current = false; preferSpeakerPlayback(); }, []);
   return { supported, enabled, toggle, feed, flush, reset, stop, speakNow, speaking, voiceError, pauseForMicrophone, resumeAfterMicrophone };
 };
 

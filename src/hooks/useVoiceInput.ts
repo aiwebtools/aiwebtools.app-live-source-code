@@ -24,6 +24,16 @@ export function useVoiceInput(onTranscript: (text: string, final: boolean) => vo
   endRef.current = onEnd;
   const sessionRef = useRef<ReturnType<typeof createVoiceRecognitionSession> | null>(null);
   const Constructor = getConstructor();
+  // Cached so a granted microphone starts recognition inside the tap itself.
+  const permissionRef = useRef<PermissionState | "unknown">("unknown");
+  useEffect(() => {
+    let status: PermissionStatus | null = null;
+    const update = () => { if (status) permissionRef.current = status.state; };
+    navigator.permissions?.query({ name: "microphone" as PermissionName })
+      .then((result) => { status = result; update(); result.addEventListener?.("change", update); })
+      .catch(() => { /* Browsers without the query still request access via getUserMedia. */ });
+    return () => status?.removeEventListener?.("change", update);
+  }, []);
 
   const notify = useCallback((title: string, description: string) => { setMessage(description); toast({ title, description }); }, [toast]);
 
@@ -44,14 +54,15 @@ export function useVoiceInput(onTranscript: (text: string, final: boolean) => vo
     setListening(true);
     const session = createVoiceRecognitionSession({
       Constructor: Ctor, language: navigator.language || "en-US",
-      acquireMicrophone: () => navigator.mediaDevices?.getUserMedia
-        ? navigator.mediaDevices.getUserMedia({ audio: true })
+      acquireMicrophone: permissionRef.current === "granted" ? null : () => navigator.mediaDevices?.getUserMedia
+        ? navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => { permissionRef.current = "granted"; return stream; })
         : Promise.reject(Object.assign(new Error("Microphone unavailable"), { name: "NotSupportedError" })),
       onListening: () => setListening(true),
       onTranscript: (text, final) => callbackRef.current(text, final),
       onEnd: () => { sessionRef.current = null; setListening(false); endRef.current(); },
       onError: (error) => {
-        if (["not-allowed", "service-not-allowed", "NotAllowedError", "SecurityError"].includes(error)) notify("Microphone permission needed", DENIED);
+        if (error === "service-not-allowed") notify("Speech typing is turned off", "Your device's speech recognition is off. On iPhone/iPad turn on Siri & Dictation in Settings, then tap Speak again — or type your message.");
+        else if (["not-allowed", "NotAllowedError", "SecurityError"].includes(error)) notify("Microphone permission needed", DENIED);
         else if (error === "NotFoundError") notify("No microphone found", "Connect a microphone, then tap Speak again — or type your message.");
         else if (error === "no-speech") notify("Didn't catch that", "No speech was heard. Tap Speak and talk once “Listening…” appears.");
         else if (error === "network") notify("Speech typing is offline", "Your browser's speech service couldn't be reached. Check your connection and try again, or type your message.");

@@ -45,8 +45,7 @@ export interface FlagshipFeature {
   readTime: string;
 }
 
-import { DAILY_FREE_RUNS } from '../../supabase/functions/_shared/free-chat-allowance';
-const FREE = `${DAILY_FREE_RUNS} site-funded runs per day across all bots, resets midnight UTC — no install or account needed`;
+const FREE = `Free to use — no install or account needed`;
 
 export const flagshipFeatures: FlagshipFeature[] = [
   {

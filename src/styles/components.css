@@ -838,5 +838,4 @@ body:has(.studio-embedded) .site-header { position: relative; }
 @media (max-width: 639px) {
   .tool-detail-content .p-8:has(.studio-embedded), .featured-story-content .p-8:has(.studio-embedded) { padding: 8px; }
   .studio-embedded .studio-topbar .studio-brand { display: none; }
-  .studio .studio-allowance { font-size: 10px; line-height: 14px; padding: 4px 10px; }
 }

@@ -42,4 +42,14 @@ test("speech-service failure releases microphone once and permits a fresh sessio
   s.recognition().onerror({ error: "network" }); s.session.stop();
   expect(s.events).toEqual(["start", "listening", "abort", "release", "end", "network"]);
   const fresh = setup(); await fresh.session.start(); expect(fresh.events).toEqual(["start", "listening"]); fresh.session.stop();
+});test("granted microphone starts recognition synchronously inside the tap", () => {
+  const events: string[] = [];
+  class Recognition { start() { events.push("start"); } abort() {} }
+  const session = createVoiceRecognitionSession({
+    Constructor: Recognition, language: "en-US", acquireMicrophone: null,
+    onListening: () => events.push("listening"), onEnd: () => events.push("end"),
+    onError: (e) => events.push(e), onTranscript: () => undefined,
+  });
+  void session.start();
+  expect(events).toEqual(["start", "listening"]);
 });
