@@ -77,8 +77,14 @@ export const beginSpeechClip = (url: string, init: RequestInit, outer: AbortSign
         onEvent(event) {
           // OpenAI-style streams end with a plain [DONE] marker after the final audio event.
           if (event.data.trim() === "[DONE]") { completed = true; return; }
-          const payload = JSON.parse(event.data) as { type?: string; audio?: string; error?: unknown };
-          if (payload.error || payload.type === "error") throw new Error(`Speech failed: ${event.data}`);
+          const payload = JSON.parse(event.data) as { type?: string; audio?: string; status?: number; error?: { message?: string; status?: number; httpStatus?: number } | string };
+          if (payload.error || payload.type === "error") {
+            const detail = typeof payload.error === "object" ? payload.error : undefined;
+            const failure = new Error(detail?.message || (typeof payload.error === "string" ? payload.error : "The lifelike voice stream failed."));
+            // Credits may exhaust after HTTP 200 headers; only a structured 402 proves exhaustion.
+            if (payload.status === 402 || detail?.status === 402 || detail?.httpStatus === 402) failure.name = "CreditExhausted";
+            throw failure;
+          }
           if (payload.type === "speech.audio.done") {
             completed = true;
             return;

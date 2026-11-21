@@ -227,3 +227,30 @@ test("lifelike clips that end with an OpenAI [DONE] marker play instead of falli
     expect(clip.started).toBe(true);
   } finally { globalThis.fetch = realFetch; }
 });
+
+test("credit exhaustion inside an already-open speech stream enables free fallback", async () => {
+  const original = globalThis.fetch;
+  globalThis.fetch = async () => new Response('data: {"type":"error","error":{"message":"AI credits exhausted","status":402}}\n\n', { headers: { "Content-Type": "text/event-stream" } });
+  try {
+    const clip = beginSpeechClip("/test", {}, new AbortController().signal);
+    while (!clip.finished) await clip.wait();
+    expect(isCreditExhausted(clip.error)).toBe(true);
+    const heard = [];
+    await drainStudioQueue([{ text: "Read this sentence.", clip }], {
+      play: async (item) => { throw item.error; }, isAborted: () => false, onStudioDown() {},
+      playFallback: (text) => heard.push(text),
+    });
+    expect(heard).toEqual(["Read this sentence."]);
+  } finally { globalThis.fetch = original; }
+});
+
+test("streamed rate limits and credit words do not enable the basic voice", async () => {
+  const original = globalThis.fetch;
+  globalThis.fetch = async () => new Response('data: {"type":"error","error":{"message":"Voice credit quota busy","status":429}}\n\n', { headers: { "Content-Type": "text/event-stream" } });
+  try {
+    const clip = beginSpeechClip("/test", {}, new AbortController().signal);
+    while (!clip.finished) await clip.wait();
+    expect(clip.error?.message).toBe("Voice credit quota busy");
+    expect(isCreditExhausted(clip.error)).toBe(false);
+  } finally { globalThis.fetch = original; }
+});

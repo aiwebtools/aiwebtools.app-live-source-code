@@ -1,5 +1,11 @@
 # Roadmap
 
+## November 21 multi-bot verification and missing ElevenLabs recordings — do not publish
+- [x] Audited 1,542 live bots: every bot resolves a supported lifelike cast across 11 base voices; 1467 use automatic character casting, not MIDI. 362 website recordings and 363 stored recordings preserved; 113 website recordings match the currently selected cast. Shared base IDs are not 1,542 unique synthesized voices.
+- [x] Time Machine/Fable desktop, Mary Magdalene/Shimmer phone and Einstein/Echo tablet: real Bionic replies, non-silent Lovable audio, replay, simulated confirmed-credit fallback to the best installed natural voice, and hosted recovery pass. Fixed structured 402 errors arriving inside an already-open voice stream. Firefox checks inconclusive (introduction overlay/no audio during test); WebKit crashed before studio mounted. Physical microphones and all-device listening remain unverified.
+- [ ] Generate missing personalized ElevenLabs recordings only with available account credits. Blocked: 40,000 of 40,000 credits used; next reset November 21 at 16:33:54 UTC.
+- [x] 42 regressions pass, screenshots reviewed, build OK; no publication. Missing recordings cannot be completed before the provider reset; no automatic work runs after this turn.
+
 ## November 21 bot sound, read-aloud and unlimited use — do not publish
 - [x] Remove the artificial daily bot cap and its messages; preserve provider limits and text routing. Chat function deployed, site not published.
 - [x] Restore interrupted audio contexts, avoid stale device-pending state blocking replay, and expose Play TTS on phone and desktop; enabling sound resumes buffered replies.

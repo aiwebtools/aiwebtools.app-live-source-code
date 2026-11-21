@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { describe, expect, it } from "bun:test";
 import { getGptVoiceProfile } from "./gptVoiceProfiles";
+import catalog from "../data/generated/botCatalogFallback.json";
 
 describe("bot voice casting", () => {
   it("new off-grid assistants retain their authored voice personality", () => {
@@ -47,5 +48,14 @@ describe("bot voice casting", () => {
   });
   it("each bot keeps the same voice every time", () => {
     expect(getGptVoiceProfile("trader-gpt", "Trader GPT")).toEqual(getGptVoiceProfile("trader-gpt", "Trader GPT"));
+  });
+  it("every shipped bot resolves a supported lifelike voice with character instructions", () => {
+    const voices = new Set(["alloy", "ash", "ballad", "coral", "echo", "fable", "nova", "onyx", "sage", "shimmer", "verse"]);
+    expect(catalog.length).toBeGreaterThan(1500);
+    const failures = catalog.filter((bot) => {
+      const profile = getGptVoiceProfile(bot.slug, bot.display_name, bot.tagline || "");
+      return !voices.has(bot.voice || profile.voice) || !profile.instructions.trim() || !profile.label.trim();
+    });
+    expect(failures.map((bot) => bot.slug)).toEqual([]);
   });
 });
