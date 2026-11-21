@@ -1,5 +1,11 @@
 # Roadmap
 
+## November 21 bot sound, read-aloud and unlimited use — do not publish
+- [x] Remove the artificial daily bot cap and its messages; preserve provider limits and text routing. Chat function deployed, site not published.
+- [x] Restore interrupted audio contexts, avoid stale device-pending state blocking replay, and expose Play TTS on phone and desktop; enabling sound resumes buffered replies.
+- [x] Cancellable microphone sessions release capture before final voice submission and prime hosted speech from the mic click; preserve permission and error notices.
+- [x] Desktop 1919px and phone 470px: actual Bionic guest replies and non-silent Lovable audio, completed HTTP 200 voice streams, explicit replay and simulated recognized-input-to-real-reply pass; screenshots reviewed, no page errors, build OK. Native headless speech capture failed; physical microphone/service recognition and audibility still need device testing.
+
 ## November 21 video sound and HD defaults — do not publish
 - [x] Sound-on autoplay and 1080p preference on opening/main/pinned/tool/book/community/popup players; preserve click-to-play cards and user controls.
 - [x] Standalone footer film unmuted when visible, homepage/story embeds start when visible, Muse presenter plays audibly after existing recorded offer; decorative card film unchanged.

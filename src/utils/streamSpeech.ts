@@ -205,7 +205,8 @@ const audioContext = () => {
 /** Call directly from a click, before a network request, to unlock mobile audio. */
 export const unlockSpeechPlayback = async () => {
   const ctx = audioContext();
-  if (ctx.state === "suspended") await ctx.resume();
+  // Safari also interrupts a context when microphone capture or another media player takes focus.
+  if (ctx.state !== "running" && ctx.state !== "closed") await ctx.resume();
   if (ctx.state !== "running") throw new Error("Audio is paused by your browser. Tap Play again to enable it.");
 };
 

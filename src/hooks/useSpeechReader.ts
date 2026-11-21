@@ -65,7 +65,8 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
 
   useEffect(() => {
     if (!supported) return;
-    enabledRef.current = localStorage.getItem(STORAGE_KEY) !== "off";
+    try { enabledRef.current = localStorage.getItem(STORAGE_KEY) !== "off"; }
+    catch { enabledRef.current = true; }
     setEnabled(enabledRef.current);
   }, [supported]);
 
@@ -205,8 +206,8 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   /** Feed the growing reply; only newly completed sentences are spoken. */
   const feed = useCallback(
     (fullText: string) => {
-      if (!supported || !enabledRef.current || listeningRef.current) return;
       bufferRef.current = fullText;
+      if (!supported || !enabledRef.current || listeningRef.current) return;
       const pending = fullText.slice(spokenRef.current);
       // Speak as it types: sentence ends, and for the very first words a clause
       // break or a long run, so the voice starts within the first line.
@@ -235,6 +236,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
 
   /** Start a fresh reply. */
   const reset = useCallback(() => {
+    listeningRef.current = false;
     stopBotIntro();
     window.dispatchEvent(new Event("awt-response-voice"));
     generationRef.current += 1;
@@ -254,7 +256,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     if (enabledRef.current) unlockDeviceSpeech();
     if (profile && enabledRef.current) {
       void unlockSpeechPlayback().catch((error) => {
-        if (!deviceSpeechAvailable()) setVoiceError(error instanceof Error ? error.message : "Tap Play to enable audio.");
+        setVoiceError(error instanceof Error ? error.message : "Tap Play TTS to enable audio.");
       });
     }
   }, [profile, supported, toast]);
@@ -263,11 +265,11 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       const next = !enabledRef.current;
       enabledRef.current = next;
       setEnabled(next);
-      localStorage.setItem(STORAGE_KEY, next ? "on" : "off");
+      try { localStorage.setItem(STORAGE_KEY, next ? "on" : "off"); } catch { /* Keep the current room usable when storage is blocked. */ }
       if (next) { studioCreditsOutRef.current = false; studioToastShownRef.current = false; setVoiceError(""); unlockDeviceSpeech(); }
       if (next && profile) {
         void unlockSpeechPlayback().catch((error) => {
-          if (!deviceSpeechAvailable()) setVoiceError(error instanceof Error ? error.message : "Tap Play to enable audio.");
+          setVoiceError(error instanceof Error ? error.message : "Tap Play TTS to enable audio.");
         });
       }
       if (!next) {
@@ -281,7 +283,12 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
         setSpeaking(false);
         if (supported) window.speechSynthesis?.cancel();
       }
-  }, [profile, supported, toast]);
+      if (next && bufferRef.current) {
+        const rest = bufferRef.current.slice(spokenRef.current);
+        spokenRef.current = bufferRef.current.length;
+        enqueue(rest);
+      }
+  }, [profile, supported, toast, enqueue]);
 
   /**
    * Read one specific message out loud on demand (a play button), regardless of
@@ -290,11 +297,12 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const speakNow = useCallback(
     (text: string) => {
       if (!supported) return;
-      if (speaking || window.speechSynthesis?.speaking || window.speechSynthesis?.pending) {
+      if (speaking) {
         stop();
         return;
       }
       stop();
+      listeningRef.current = false;
       setVoiceError("");
       studioCreditsOutRef.current = false;
       studioToastShownRef.current = false;
@@ -315,7 +323,14 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     if (supported) window.speechSynthesis?.cancel();
   }, [supported]);
 
-  const pauseForMicrophone = useCallback(() => { listeningRef.current = true; stop(); }, [stop]);
+  const pauseForMicrophone = useCallback(() => {
+    listeningRef.current = true;
+    stop();
+    // Prime hosted audio in the microphone click, before permission/recognition waits.
+    void unlockSpeechPlayback().catch((error) => {
+      setVoiceError(error instanceof Error ? error.message : "Tap Play TTS to enable audio.");
+    });
+  }, [stop]);
   const resumeAfterMicrophone = useCallback(() => { listeningRef.current = false; }, []);
   return { supported, enabled, toggle, feed, flush, reset, stop, speakNow, speaking, voiceError, pauseForMicrophone, resumeAfterMicrophone };
 };

@@ -122,16 +122,22 @@ test("stopping during fallback never speaks the next queued sentence", async () 
 test("gesture unlock resumes a suspended audio context before playback", async () => {
   const original = globalThis.window;
   let resumes = 0;
+  let current;
   class RestrictedAudioContext {
     state = "suspended";
+    constructor() { current = this; }
     async resume() { resumes++; this.state = "running"; }
   }
   globalThis.window = { AudioContext: RestrictedAudioContext };
   try {
     await unlockSpeechPlayback();
     expect(resumes).toBe(1);
+    current.state = "interrupted";
     await unlockSpeechPlayback();
-    expect(resumes).toBe(1);
+    expect(resumes).toBe(2);
+    expect(current.state).toBe("running");
+    await unlockSpeechPlayback();
+    expect(resumes).toBe(2);
   } finally { globalThis.window = original; }
 });
 

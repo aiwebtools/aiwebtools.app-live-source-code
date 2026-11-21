@@ -33,4 +33,5 @@ test("guest 10-message and member daily caps are removed from the request handle
   expect(source).not.toContain("GUEST_DAILY_LIMIT");
   expect(source).not.toContain("DAILY_LIMIT");
   expect(source).not.toContain("used >= limit");
+  expect(source).not.toContain("reserve_gpt_free_run");
 });

@@ -5,7 +5,6 @@ import { selectBotModel, selectTurnModel } from "./model-selection.ts";
 import { callBionic, isBionicModel } from "./bionic-provider.ts";
 import { createLovableFirstChat } from "./chat-fallback.ts";
 import { readTokenUsage } from "../_shared/chat-usage.ts";
-import { DAILY_FREE_RUNS } from '../_shared/free-chat-allowance.ts';
 import type { ProviderState, ProviderStore } from "../_shared/chat-provider-state.ts";
 import { appendInstructionFidelity, resolveOperationalInstructions } from "./instruction-fidelity.ts";
 import { readChatStreamEvent, ChatStreamFailure } from "./stream-events.ts";
@@ -301,11 +300,6 @@ Deno.serve(async (req) => {
   }
   const selectedModel = personalAi?.model || selectBotModel(app.model || "openai/gpt-6-astra", body.model);
   if (!selectedModel) return json({ error: "That model is not supported by this assistant." }, 400);
-  if (!personalAi) {
-    const { data: reserved, error: allowanceError } = await admin.rpc('reserve_gpt_free_run', { p_user_id: userId || null, p_guest_key: isGuest ? guestKey : null, p_limit: DAILY_FREE_RUNS });
-    if (allowanceError) return json({ error: 'Your daily allowance could not be checked. Please try again.' }, 503);
-    if (!reserved) return json({ error: `You have used your ${DAILY_FREE_RUNS} free runs for today. The allowance resets at midnight UTC. Your chat is saved on this device.` }, 429);
-  }
 
   const { data: profile } = userId
     ? await admin.from("profiles").select("display_name").eq("id", userId).maybeSingle()

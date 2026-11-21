@@ -10,7 +10,6 @@ import { getFlagshipFeatureBySlug, getFlagshipFeatures } from "@/data/flagshipFe
 import { ArrowRight, ExternalLink, Grid3X3 } from "lucide-react";
 import { useResolvedToolImage } from "@/utils/assetResolver";
 import { isExpiredHost, getYouTubeThumbnail } from "@/utils/imageUtils";
-import { DAILY_FREE_RUNS } from '../../supabase/functions/_shared/free-chat-allowance';
 
 const BASE = "https://aiwebtools.app";
 
@@ -176,7 +175,7 @@ export default function FeaturePage() {
               </h2>
               <p className="mb-4 text-sm text-gray-400">
                 This is the real tool, running inside the page. Free to use — no install and no
-                account needed for {DAILY_FREE_RUNS} site-funded runs per day across all bots; resets midnight UTC. In-site models are not ChatGPT.
+                account needed. No daily bot-use cap. In-site models are not ChatGPT; provider availability and limits still apply.
               </p>
               <InSiteGptRunner tool={tool} />
             </section>

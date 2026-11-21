@@ -1,22 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { createVoiceRecognitionSession, type VoiceRecognitionConstructor } from "@/utils/voiceRecognition";
 
-interface RecognitionResult { isFinal: boolean; 0: { transcript: string } }
-interface Recognition {
-  lang: string;
-  continuous: boolean;
-  interimResults: boolean;
-  onresult: ((event: { resultIndex: number; results: ArrayLike<RecognitionResult> }) => void) | null;
-  onerror: ((event: { error: string }) => void) | null;
-  onend: (() => void) | null;
-  start: () => void;
-  abort: () => void;
-}
-type RecognitionConstructor = new () => Recognition;
-
-const getConstructor = (): RecognitionConstructor | undefined => {
+const getConstructor = (): VoiceRecognitionConstructor | undefined => {
   if (typeof window === "undefined") return undefined;
-  const browser = window as unknown as { SpeechRecognition?: RecognitionConstructor; webkitSpeechRecognition?: RecognitionConstructor };
+  const browser = window as unknown as { SpeechRecognition?: VoiceRecognitionConstructor; webkitSpeechRecognition?: VoiceRecognitionConstructor };
   return browser.SpeechRecognition ?? browser.webkitSpeechRecognition;
 };
 
@@ -34,76 +22,46 @@ export function useVoiceInput(onTranscript: (text: string, final: boolean) => vo
   callbackRef.current = onTranscript;
   startRef.current = onStart;
   endRef.current = onEnd;
-  const recognitionRef = useRef<Recognition | null>(null);
-  const startingRef = useRef(false);
+  const sessionRef = useRef<ReturnType<typeof createVoiceRecognitionSession> | null>(null);
   const Constructor = getConstructor();
 
   const notify = useCallback((title: string, description: string) => { setMessage(description); toast({ title, description }); }, [toast]);
 
   const stop = useCallback(() => {
-    const active = recognitionRef.current;
-    recognitionRef.current = null;
-    if (active) { active.onend = null; active.onerror = null; try { active.abort(); } catch { /* already stopped */ } }
-    setListening(false);
-    endRef.current();
+    sessionRef.current?.stop();
   }, []);
 
   const toggle = useCallback(async () => {
-    if (recognitionRef.current) { stop(); return; }
-    if (startingRef.current) return;
+    if (sessionRef.current) { stop(); return; }
     const Ctor = getConstructor();
     if (!Ctor) {
       notify("Voice input unavailable", "This browser doesn't support speech typing. Try Chrome, Edge or Safari, or type your message.");
       return;
     }
     setMessage("");
-    startingRef.current = true;
-    setListening(true);
-    // Trigger the browser's normal microphone permission prompt first.
-    if (navigator.mediaDevices?.getUserMedia) {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        stream.getTracks().forEach((track) => track.stop());
-      } catch (error) {
-        startingRef.current = false;
-        setListening(false);
-        const name = (error as { name?: string })?.name;
-        notify(name === "NotFoundError" ? "No microphone found" : "Microphone permission needed", name === "NotFoundError" ? "Connect a microphone, then tap Speak again — or type your message." : DENIED);
-        return;
-      }
-    }
+    // Pause bot audio while requesting permission, not after the visitor starts speaking.
     startRef.current();
-    const recognition = new Ctor();
-    recognitionRef.current = recognition;
-    recognition.lang = navigator.language || "en-US";
-    recognition.continuous = false;
-    recognition.interimResults = true;
-    recognition.onresult = (event) => {
-      let text = "";
-      let final = true;
-      for (let i = 0; i < event.results.length; i++) {
-        text += event.results[i][0].transcript;
-        if (!event.results[i].isFinal) final = false;
-      }
-      if (text.trim()) callbackRef.current(text.trim(), final);
-    };
-    recognition.onerror = ({ error }) => {
-      if (error !== "aborted") {
-        if (error === "not-allowed" || error === "service-not-allowed") notify("Microphone permission needed", DENIED);
+    setListening(true);
+    const session = createVoiceRecognitionSession({
+      Constructor: Ctor, language: navigator.language || "en-US",
+      acquireMicrophone: () => navigator.mediaDevices?.getUserMedia
+        ? navigator.mediaDevices.getUserMedia({ audio: true })
+        : Promise.reject(Object.assign(new Error("Microphone unavailable"), { name: "NotSupportedError" })),
+      onListening: () => setListening(true),
+      onTranscript: (text, final) => callbackRef.current(text, final),
+      onEnd: () => { sessionRef.current = null; setListening(false); endRef.current(); },
+      onError: (error) => {
+        if (["not-allowed", "service-not-allowed", "NotAllowedError", "SecurityError"].includes(error)) notify("Microphone permission needed", DENIED);
+        else if (error === "NotFoundError") notify("No microphone found", "Connect a microphone, then tap Speak again — or type your message.");
         else if (error === "no-speech") notify("Didn't catch that", "No speech was heard. Tap Speak and talk once “Listening…” appears.");
         else if (error === "network") notify("Speech typing is offline", "Your browser's speech service couldn't be reached. Check your connection and try again, or type your message.");
-        else notify("Let's try that again", "Your voice couldn't be picked up. Tap Speak to try again.");
-      }
-      recognitionRef.current = null;
-      setListening(false);
-      endRef.current();
-    };
-    recognition.onend = () => { recognitionRef.current = null; setListening(false); endRef.current(); };
-    try { recognition.start(); }
-    catch { recognitionRef.current = null; setListening(false); endRef.current(); notify("Let's try that again", "The microphone was busy. Tap Speak again in a moment."); }
-    finally { startingRef.current = false; }
+        else notify("Let's try that again", "Your microphone couldn't start. Check microphone access and tap Speak again, or type your message.");
+      },
+    });
+    sessionRef.current = session;
+    await session.start();
   }, [notify, stop]);
 
-  useEffect(() => () => { const active = recognitionRef.current; recognitionRef.current = null; try { active?.abort(); } catch { /* noop */ } }, []);
+  useEffect(() => () => { sessionRef.current?.stop(); }, []);
   return { listening, message, clearMessage: () => setMessage(""), toggle: () => { void toggle(); }, stop, supported: Boolean(Constructor) };
 }
