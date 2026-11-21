@@ -50,18 +50,16 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
   const pendingRef = useRef<Array<{ text: string; clip: SpeechClip | null }>>([]);
   const queueBusyRef = useRef(false);
   const generationRef = useRef(0);
-  // Set when the lifelike studio voice fails (e.g. AI credits recharging):
-  // replies fall back to the free on-device voice for the rest of the session.
-  const studioDownUntilRef = useRef(0);
-  const studioDown = () => Date.now() < studioDownUntilRef.current;
+  // Only a confirmed credit-exhaustion response enables device speech for this reply.
+  const studioCreditsOutRef = useRef(false);
+  const studioDown = () => studioCreditsOutRef.current;
   const studioToastShownRef = useRef(false);
   const noteStudioDown = useCallback(() => {
-    // Re-check lifelike voices after five minutes so restored credits take effect.
-    studioDownUntilRef.current = Date.now() + 5 * 60_000;
+    studioCreditsOutRef.current = true;
     if (studioToastShownRef.current) return;
     studioToastShownRef.current = true;
     toast(deviceSpeechAvailable()
-      ? { title: "Using your device's free voice", description: "The lifelike studio voice is unavailable right now, so replies are read by your device's built-in voice instead." }
+      ? { title: "Using your device's free voice", description: "Lovable AI voice credits are exhausted. Your device will read this reply; lifelike voices are checked again on your next reply." }
       : { title: "Voice unavailable", description: "This browser has no available device voice. Your complete reply will still appear in the chat." });
   }, [toast]);
 
@@ -139,19 +137,21 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       requestRef.current = controller;
       setSpeaking(true);
       try {
-        const clips = splitSpeechText(clean, 600).filter(speakable).map((chunk) => ({ text: chunk, clip: studioDown() || !profile || !ANON_KEY ? null : startClip(chunk, controller.signal) }));
+        if (!ANON_KEY) throw new Error("Lifelike voice is not configured. Please try again later.");
+        const clips = splitSpeechText(clean, 600).filter(speakable).map((chunk) => ({ text: chunk, clip: studioDown() ? null : startClip(chunk, controller.signal) }));
         await drainStudioQueue(clips, {
           play: (clip) => playSpeechClip(clip, clipSpeed(profile?.speed)),
           isAborted: () => controller.signal.aborted,
           onStudioDown: noteStudioDown,
           playFallback: speakChunk,
-          retry: (chunk) => (profile && ANON_KEY && requestRef.current && !requestRef.current.signal.aborted ? startClip(chunk, requestRef.current.signal, "gemini") : null),
+          retry: (chunk) => (ANON_KEY && !controller.signal.aborted ? startClip(chunk, controller.signal, "gemini") : null),
         });
         // The device-voice fallback already read the reply when the studio
         // engine failed, so that case is a success, not a surfaced failure.
         return !controller.signal.aborted;
       } catch (error) {
         if (!controller.signal.aborted) {
+          setVoiceError(error instanceof Error ? error.message : "Please try voice playback again.");
           toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Please try voice playback again.", variant: "destructive" });
         }
         return false;
@@ -173,7 +173,8 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       const controller = requestRef.current;
       window.dispatchEvent(new Event("awt-response-voice"));
       stopBotIntro();
-      pendingRef.current.push(...splitSpeechText(stripForSpeech(text), 600).filter(speakable).map((chunk) => ({ text: chunk, clip: profile && ANON_KEY && !studioDown() ? startClip(chunk, controller.signal) : null })));
+      if (!ANON_KEY) { setVoiceError("Lifelike voice is not configured. Please try again later."); return; }
+      pendingRef.current.push(...splitSpeechText(stripForSpeech(text), 600).filter(speakable).map((chunk) => ({ text: chunk, clip: !studioDown() ? startClip(chunk, controller.signal) : null })));
       if (queueBusyRef.current) return;
       queueBusyRef.current = true;
       const generation = generationRef.current;
@@ -185,10 +186,11 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
             isAborted: () => generation !== generationRef.current || controller.signal.aborted,
             onStudioDown: noteStudioDown,
             playFallback: speakChunk,
-          retry: (chunk) => (profile && ANON_KEY && requestRef.current && !requestRef.current.signal.aborted ? startClip(chunk, requestRef.current.signal, "gemini") : null),
+            retry: (chunk) => (!controller.signal.aborted ? startClip(chunk, controller.signal, "gemini") : null),
           });
         } catch (error) {
           if (generation === generationRef.current && !controller.signal.aborted) {
+            setVoiceError(error instanceof Error ? error.message : "Please try voice playback again.");
             pendingRef.current = [];
             toast({ title: "Voice unavailable", description: error instanceof Error ? error.message : "Please try voice playback again.", variant: "destructive" });
           }
@@ -245,6 +247,8 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
     if (supported) window.speechSynthesis?.cancel();
     setSpeaking(false);
     setVoiceError("");
+    studioCreditsOutRef.current = false;
+    studioToastShownRef.current = false;
     // Reset is called from submit, before fetching the reply. Unlock while the
     // browser still has the visitor's click/keypress gesture (especially iOS).
     if (enabledRef.current) unlockDeviceSpeech();
@@ -260,7 +264,7 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       enabledRef.current = next;
       setEnabled(next);
       localStorage.setItem(STORAGE_KEY, next ? "on" : "off");
-      if (next) { setVoiceError(""); unlockDeviceSpeech(); }
+      if (next) { studioCreditsOutRef.current = false; studioToastShownRef.current = false; setVoiceError(""); unlockDeviceSpeech(); }
       if (next && profile) {
         void unlockSpeechPlayback().catch((error) => {
           if (!deviceSpeechAvailable()) setVoiceError(error instanceof Error ? error.message : "Tap Play to enable audio.");
@@ -292,6 +296,8 @@ export const useSpeechReader = (profile?: GptVoiceProfile) => {
       }
       stop();
       setVoiceError("");
+      studioCreditsOutRef.current = false;
+      studioToastShownRef.current = false;
       unlockDeviceSpeech();
       // Web Audio failure must not prevent the independent free device fallback.
       void unlockSpeechPlayback().catch(() => undefined);

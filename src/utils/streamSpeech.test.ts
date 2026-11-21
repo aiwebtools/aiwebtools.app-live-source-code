@@ -1,6 +1,8 @@
 // @ts-nocheck
 import { expect, test } from "bun:test";
-import { beginSpeechClip, decodePCM, drainStudioQueue, unlockSpeechPlayback } from "./streamSpeech";
+import { beginSpeechClip, decodePCM, drainStudioQueue, isCreditExhausted, unlockSpeechPlayback } from "./streamSpeech";
+
+const exhausted = () => Object.assign(new Error("Voice credits exhausted"), { name: "CreditExhausted" });
 
 const bytes = (...values: number[]) => Uint8Array.from(values);
 
@@ -59,7 +61,7 @@ test("studio voice failure hands the failed sentence and the rest of the queue t
   await drainStudioQueue(queue, {
     play: async (clip) => {
       played.push(clip);
-      if (played.length === 2) throw new Error("credits recharging");
+      if (played.length === 2) throw exhausted();
     },
     isAborted: () => false,
     onStudioDown: () => { downCalls++; },
@@ -90,7 +92,7 @@ test("fallback waits for each sentence before later streamed text and aborts unu
   let aborted = 0;
   const queue = [{ text: "First.", clip: { abort() { aborted++; } } }, { text: "Second.", clip: { abort() { aborted++; } } }];
   const draining = drainStudioQueue(queue, {
-    play: async () => { throw new Error("quota"); },
+    play: async () => { throw exhausted(); },
     isAborted: () => false,
     onStudioDown() {},
     playFallback: (text) => {
@@ -158,7 +160,7 @@ test("only exhausted AI credits switch the rest of the reply to the device voice
   const queue = [mk("First."), mk("Second.")];
   const fallback = [];
   let downCalls = 0;
-  const credit = new Error("The voice studio is out of AI credits right now.");
+  const credit = exhausted();
   await drainStudioQueue(queue, {
     play: async () => { throw credit; },
     isAborted: () => false,
@@ -168,6 +170,42 @@ test("only exhausted AI credits switch the rest of the reply to the device voice
   });
   expect(downCalls).toBe(1);
   expect(fallback).toEqual(["First.", "Second."]);
+});
+
+test("quota, credit-related messages and rate limits do not prove credit exhaustion", () => {
+  for (const message of ["quota", "credits recharging", "429 rate limit", "insufficient permissions", "payment required", "upstream request 402 failed"]) {
+    expect(isCreditExhausted(new Error(message))).toBe(false);
+  }
+  expect(isCreditExhausted(exhausted())).toBe(true);
+});
+
+test("two temporary lifelike failures never select the basic voice", async () => {
+  const fallback = [];
+  let markedDown = false;
+  let attempts = 0;
+  await expect(drainStudioQueue([{ text: "Hello.", clip: { abort() {} } }], {
+    play: async () => { attempts++; throw new Error("429 voice quota busy"); },
+    isAborted: () => false,
+    onStudioDown: () => { markedDown = true; },
+    playFallback: (text) => fallback.push(text),
+    retry: () => ({ abort() {} }),
+  })).rejects.toThrow("Lifelike voice playback failed");
+  expect(attempts).toBe(2);
+  expect(markedDown).toBe(false);
+  expect(fallback).toEqual([]);
+});
+
+test("a new reply tries lifelike speech after the previous reply exhausted credits", async () => {
+  const heard = [];
+  const opts = {
+    play: async () => { throw exhausted(); }, isAborted: () => false, onStudioDown() {},
+    playFallback: (text) => heard.push(text),
+  };
+  await drainStudioQueue([{ text: "First reply.", clip: { abort() {} } }], opts);
+  let plays = 0;
+  await drainStudioQueue([{ text: "Next reply.", clip: { abort() {} } }], { ...opts, play: async () => { plays++; } });
+  expect(plays).toBe(1);
+  expect(heard).toEqual(["First reply."]);
 });
 
 test("lifelike clips that end with an OpenAI [DONE] marker play instead of falling back", async () => {

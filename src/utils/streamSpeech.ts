@@ -132,12 +132,12 @@ export const beginSpeechClip = (url: string, init: RequestInit, outer: AbortSign
 
 /** True only when the lifelike engine is genuinely out of AI credits. */
 export const isCreditExhausted = (error: unknown) =>
-  error instanceof Error && (error.name === "CreditExhausted" || /\b402\b|credit|quota|insufficient|payment required/i.test(error.message));
+  error instanceof Error && error.name === "CreditExhausted";
 
 /**
  * Drain a queue of spoken clips in order. Lifelike studio voices stay primary:
  * a transient failure retries the sentence once on the backup lifelike engine
- * (and only that sentence uses the device voice if both fail). The free device
+ * (and surfaces a playback error if both fail). The free device
  * voice takes over for the rest of the reply only when AI credits are exhausted.
  */
 export const drainStudioQueue = async (
@@ -185,7 +185,8 @@ export const drainStudioQueue = async (
         }
       }
       stopSpeechPlayback();
-      await opts.playFallback(next.text);
+      for (const rest of queue) rest.clip?.abort();
+      throw new Error("Lifelike voice playback failed. Tap Play reply to retry; the free voice is only used when AI credits are exhausted.");
     }
   }
 };

@@ -1,5 +1,10 @@
 # Roadmap
 
+## November 21 bot voice credit priority — no publication requested
+- [x] Audit shared GPT/Care Bot read-aloud and character assignments; retain Bionic GLM text and Lovable lifelike TTS.
+- [x] Restrict basic voice fallback to confirmed credit exhaustion, not quota words or temporary failures; retry hosted voices on every new reply/play.
+- [x] 32 voice regressions pass; real guest Time Machine reply uses Bionic GLM with completed Lovable OpenAI Fable audio streams (HTTP 200), no basic reply speech or page errors; screenshot reviewed, build OK. Physical-device listening/every bot audition and published-site rollout not verified; not published.
+
 ## November 20 22:50 opening restoration — no publication requested
 - [x] Disable PIN requirement without undoing verified directory/chat fixes.
 - [x] Restore original immediate Matrix/Pandora loader; remove artificial minimum hold and stop animations when removed. Preload homepage concurrently with App; visible Pandora fallback replaces the invisible wait after Skip.
