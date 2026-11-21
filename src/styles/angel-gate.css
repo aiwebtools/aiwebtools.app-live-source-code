@@ -49,6 +49,8 @@
 .mtv-rise { opacity: 0; animation: mtv-rise .6s cubic-bezier(.22,1,.36,1) forwards; }
 .mtv-opening { transition: opacity .35s ease; }
 .mtv-opening-frame { width: min(100%, 24rem, max(120px, calc((100dvh - 21rem) * 9 / 16))); aspect-ratio: 9 / 16; }
+.mtv-opening-brand .mtvai-brand { width: 72px; }
+.mtv-opening-brand .mtvai-brand > span { font-size: 4.5px; }
 @media (max-height: 600px) { .mtv-opening { justify-content: flex-start; } }
 .mtv-opening[data-leaving="true"] { opacity: 0; }
 @media (prefers-reduced-motion: reduce) {

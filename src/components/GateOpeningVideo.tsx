@@ -141,7 +141,7 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
         className="absolute inset-0 h-full w-full border-0"
       />}
       {autoplayBlocked && <Button onClick={() => { setAutoplayBlocked(false); startWithSound(); }} className="absolute inset-x-8 top-1/2 z-20 gap-2"><Play className="h-5 w-5" />Play music video</Button>}
-      <div aria-hidden="true" className="pointer-events-none absolute bottom-28 right-2 z-10 rounded-md bg-background/75 px-1.5 py-1 backdrop-blur-sm"><MtvaiBrand compact /></div>
+      <div aria-hidden="true" className="mtv-opening-brand pointer-events-none absolute bottom-2 right-2 z-10 rounded bg-background/60 px-1 py-0.5"><MtvaiBrand compact /></div>
     </div>
     <div style={{ animationDelay: "0s" }} className="mtv-rise flex w-full max-w-sm flex-col items-center gap-2">
       <Button
