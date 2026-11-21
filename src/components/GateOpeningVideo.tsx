@@ -20,6 +20,7 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
   const close = useRef<HTMLButtonElement>(null);
   const finished = useRef(false);
   const playing = useRef(false);
+  const watchdog = useRef<number | null>(null);
   const command = useCallback((func: string, args: unknown[] = []) => {
     frame.current?.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args }), PLAYER_ORIGIN);
   }, []);
@@ -38,6 +39,7 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
   const finish = useCallback(() => {
     if (finished.current) return;
     finished.current = true;
+    if (watchdog.current !== null) { window.clearTimeout(watchdog.current); watchdog.current = null; }
     command("mute");
     command("stopVideo");
     setLeaving(true);
@@ -67,6 +69,7 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
     return () => {
       alive = false;
       clearTimeout(unavailable);
+      if (watchdog.current !== null) { window.clearTimeout(watchdog.current); watchdog.current = null; }
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", escape);
       command("mute"); command("stopVideo");
@@ -87,7 +90,18 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
         try { const data = typeof event.data === "string" ? JSON.parse(event.data) : event.data; if (data?.event === "onAutoplayBlocked") { setAutoplayBlocked(true); setStarted(true); } } catch { /* ignore unrelated messages */ }
       }
       const action = gateOpeningEventAction(result);
-      if (action === "play" && !playing.current) { setAutoplayBlocked(false); playing.current = true; setStarted(true); startWithSound(); }
+      if (action === "play" && !playing.current) {
+        setAutoplayBlocked(false);
+        playing.current = true;
+        setStarted(true);
+        startWithSound();
+        // Safety net: if YouTube's ended notice is ever missed, close after the clip's
+        // known length (plus buffer) so the opening never replays or lingers.
+        if (watchdog.current === null) {
+          const secs = typeof clip.durationSeconds === "number" && clip.durationSeconds > 0 ? Math.min(clip.durationSeconds, 120) : 75;
+          watchdog.current = window.setTimeout(finish, secs * 1000 + 6000);
+        }
+      }
       if (action === "finish") finish();
     };
     window.addEventListener("message", onMessage);
