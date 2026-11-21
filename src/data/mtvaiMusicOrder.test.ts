@@ -1,7 +1,7 @@
 // @ts-ignore -- Bun executes regression tests.
 import { expect, test } from "bun:test";
 import { RECENT_MTVAI_UPLOADS } from "./recentMtvaiUploads";
-import { buildMtvaiMusicOrder } from "./mtvaiMusicOrder";
+import { buildMtvaiMusicOrder, shuffleMtvaiOrder } from "./mtvaiMusicOrder";
 
 test("all players lead with current channel order even when their source gallery is reversed", () => {
   const gallery = [...RECENT_MTVAI_UPLOADS].reverse();
@@ -15,6 +15,24 @@ test("ordering retains every legacy identity and preserves first-occurrence medi
   expect(ordered.length).toBe(829);
   expect(ordered.find(v => v.id === first.id)).toBe(first);
   expect(ordered.some(v => v.id === "legacy-short")).toBe(true);
+});
+
+test("shuffle keeps every track exactly once and varies the order between rounds", () => {
+  const gallery = buildMtvaiMusicOrder([...RECENT_MTVAI_UPLOADS]);
+  const shuffled = shuffleMtvaiOrder(gallery);
+  expect(shuffled.length).toBe(gallery.length);
+  expect(new Set(shuffled.map(v => v.id)).size).toBe(gallery.length);
+  expect([...shuffled].map(v => v.id).sort()).toEqual([...gallery].map(v => v.id).sort());
+  const orders = new Set(Array.from({ length: 8 }, () => shuffleMtvaiOrder(gallery).map(v => v.id).join(",")));
+  expect(orders.size).toBeGreaterThan(1);
+});
+
+test("shuffle never opens a new round with the track that just finished", () => {
+  const gallery = buildMtvaiMusicOrder([...RECENT_MTVAI_UPLOADS]);
+  const lastId = gallery[gallery.length - 1].id;
+  for (let n = 0; n < 20; n++) {
+    expect(shuffleMtvaiOrder(gallery, lastId)[0].id).not.toBe(lastId);
+  }
 });
 
 test("thirty verified missing recordings exist exactly once including older omitted music", () => {

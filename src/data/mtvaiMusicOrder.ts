@@ -22,3 +22,20 @@ export function buildMtvaiMusicOrder<T extends { id: string; title: string }>(ga
   }
   return [...lead, ...legacy];
 }
+
+// Fisher-Yates shuffle so every MTVAI queue plays in a fresh random order
+// each visit/round — never the same sequence twice in a row. When
+// `avoidFirstId` is given (the track that just finished), the shuffled queue
+// never opens with it, so back-to-back rounds cannot repeat the same video.
+export function shuffleMtvaiOrder<T extends { id: string }>(items: T[], avoidFirstId?: string): T[] {
+  const shuffled = [...items];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  if (avoidFirstId && shuffled.length > 1 && shuffled[0].id === avoidFirstId) {
+    const swap = 1 + Math.floor(Math.random() * (shuffled.length - 1));
+    [shuffled[0], shuffled[swap]] = [shuffled[swap], shuffled[0]];
+  }
+  return shuffled;
+}

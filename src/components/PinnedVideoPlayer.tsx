@@ -6,7 +6,7 @@ import type { Tool } from "@/types/tools";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import { RECENT_MTVAI_UPLOADS } from "@/data/recentMtvaiUploads";
-import { buildMtvaiMusicOrder } from "@/data/mtvaiMusicOrder";
+import { buildMtvaiMusicOrder, shuffleMtvaiOrder } from "@/data/mtvaiMusicOrder";
 import MtvaiBrand from "@/components/MtvaiBrand";
 import MtvaiYouTubeLink from "@/components/MtvaiYouTubeLink";
 import MtvaiAudiobooksButton from "@/components/MtvaiAudiobooksButton";
@@ -353,7 +353,9 @@ const shuffleArray = <T,>(array: T[]): T[] => {
 
 export const buildMusicVideoOrder = buildMtvaiMusicOrder;
 
-const buildMusicOrder = (): typeof MUSIC_VIDEO_GALLERY => MTVAI_CATALOG;
+// Every music round is a fresh random shuffle of the shared catalog — never
+// the same order twice; the round-end reshuffle avoids repeating the last track.
+const buildMusicOrder = (): typeof MUSIC_VIDEO_GALLERY => shuffleMtvaiOrder(MTVAI_CATALOG);
 
 // Priority "wow factor" tools that blow minds - these play FIRST
 const WOW_FACTOR_TOOLS = new Set([

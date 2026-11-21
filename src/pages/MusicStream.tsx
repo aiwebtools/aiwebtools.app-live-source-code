@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowLeft, SkipForward, SkipBack, Volume2, VolumeX, Home, Search, X } from "lucide-react";
 import { MTVAI_CATALOG } from "@/data/mtvaiCatalog";
+import { shuffleMtvaiOrder } from "@/data/mtvaiMusicOrder";
 import mtvAiWebToolsLogo from "@/assets/mtv-aiwebtools-logo.png";
 import GlobalSearchBar from "@/components/LazyGlobalSearchBar";
 import DownloadLibraryButton from "@/components/DownloadLibraryButton";
@@ -10,15 +11,6 @@ import MtvaiBrand from "@/components/MtvaiBrand";
 import MtvaiYouTubeLink from "@/components/MtvaiYouTubeLink";
 import MtvaiAudiobooksButton from "@/components/MtvaiAudiobooksButton";
 import { Button } from "@/components/ui/button";
-
-const shuffle = <T,>(a: T[]): T[] => {
-  const s = [...a];
-  for (let i = s.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [s[i], s[j]] = [s[j], s[i]];
-  }
-  return s;
-};
 
 // Persist a per-visit shuffle seed token so the queue genuinely changes order
 // every time the user enters the MTVai theater (not just first mount).
@@ -44,17 +36,15 @@ const MusicStream = () => {
   const [frameFailed, setFrameFailed] = useState(false);
   const [frameAttempt, setFrameAttempt] = useState(0);
   const [trackQuery, setTrackQuery] = useState("");
-  const visibleTracks = useMemo(() => MTVAI_CATALOG.map((track, index) => ({ ...track, index })).filter(track => track.title.toLowerCase().includes(trackQuery.toLowerCase())), [trackQuery]);
 
   // Truly random playback order every time the user enters the theater.
-  // The session token guarantees a fresh shuffle per visit (not just first mount).
-  // We also randomize the STARTING INDEX so every video has an equal shot at
-  // being the first one played — previously idx always started at 0, which
-  // meant the same shuffled-position-0 video felt biased toward "first".
+  // The session token guarantees a fresh shuffle per visit (not just first mount),
+  // and the shuffled queue starts at position 0 so any video can open the session.
   const playlist = useMemo(() => {
     void newSessionShuffleToken();
-    return MTVAI_CATALOG;
+    return shuffleMtvaiOrder(MTVAI_CATALOG);
   }, []);
+  const visibleTracks = useMemo(() => playlist.map((track, index) => ({ ...track, index })).filter(track => track.title.toLowerCase().includes(trackQuery.toLowerCase())), [playlist, trackQuery]);
 
   // The queue itself is freshly randomized; begin at its first item so the
   // two-long / one-short cadence is preserved from the moment the theater opens.
