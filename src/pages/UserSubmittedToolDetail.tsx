@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ExternalLink, ShieldCheck, ArrowLeft, User } from "lucide-react";
 import { fetchUserSubmittedToolBySlug, type UserSubmittedTool } from "@/hooks/useUserSubmittedTools";
 import SEOHead from "@/components/SEOHead";
+import { youtubePlaybackUrl, startYouTubeWithSound } from "@/utils/videoPlayback";
 
 const UserSubmittedToolDetail = () => {
   const { slug } = useParams();
@@ -28,7 +29,7 @@ const UserSubmittedToolDetail = () => {
   const youtubeEmbed = (url: string | null) => {
     if (!url) return null;
     const m = url.match(/(?:youtu\.be\/|watch\?v=|embed\/)([\w-]{11})/);
-    return m ? `https://www.youtube.com/embed/${m[1]}` : null;
+    return m ? youtubePlaybackUrl(`https://www.youtube.com/embed/${m[1]}?controls=1&rel=0`) : null;
   };
 
   return (
@@ -82,6 +83,7 @@ const UserSubmittedToolDetail = () => {
                 {youtubeEmbed(tool.video_url) && (
                   <div className="mt-6 aspect-video rounded-lg overflow-hidden border border-green-500/30">
                     <iframe
+                      onLoad={event => startYouTubeWithSound(event.currentTarget)}
                       src={youtubeEmbed(tool.video_url) as string}
                       title={tool.name}
                       className="w-full h-full"

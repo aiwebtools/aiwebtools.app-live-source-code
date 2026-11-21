@@ -1,5 +1,10 @@
 # Roadmap
 
+## November 21 video sound and HD defaults — do not publish
+- [x] Sound-on autoplay and 1080p preference on opening/main/pinned/tool/book/community/popup players; preserve click-to-play cards and user controls.
+- [x] Standalone footer film unmuted when visible, homepage/story embeds start when visible, Muse presenter plays audibly after existing recorded offer; decorative card film unchanged.
+- [x] 12 regressions pass; opening and homepage play unmuted with advancing time on 470px phone and desktop, simulated opening block recovers via Play with sound, no page errors. Theater/tool request audible HD but fresh browser blocks playback until native Play; YouTube delivered 240p/640p despite HD request, so 1080p and physical-device audibility are not guaranteed. Screenshots reviewed, build OK; not published.
+
 ## November 21 bot voice credit priority — no publication requested
 - [x] Audit shared GPT/Care Bot read-aloud and character assignments; retain Bionic GLM text and Lovable lifelike TTS.
 - [x] Restrict basic voice fallback to confirmed credit exhaustion, not quota words or temporary failures; retry hosted voices on every new reply/play.

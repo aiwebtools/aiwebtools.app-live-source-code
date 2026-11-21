@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Play } from "lucide-react";
+import { startYouTubeWithSound, youtubePlaybackUrl } from "@/utils/videoPlayback";
+import { Button } from "@/components/ui/button";
 
 interface LazyYouTubeEmbedProps {
   videoId: string;
@@ -42,7 +44,9 @@ const LazyYouTubeEmbed = ({
 }: LazyYouTubeEmbedProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isNearViewport, setIsNearViewport] = useState(false);
+  const [soundBlocked, setSoundBlocked] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   
   // Extract ID if full URL was passed
   const actualVideoId = extractYouTubeId(videoId) || videoId;
@@ -52,19 +56,31 @@ const LazyYouTubeEmbed = ({
   const maxResThumbnail = `https://i.ytimg.com/vi/${actualVideoId}/maxresdefault.jpg`;
 
   useEffect(() => {
+    if (!isLoaded) return;
+    const receive = (event: MessageEvent) => {
+      if (event.source !== iframeRef.current?.contentWindow || event.origin !== "https://www.youtube.com") return;
+      try {
+        const data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+        if (data?.event === "onAutoplayBlocked") setSoundBlocked(true);
+      } catch { /* Ignore unrelated player messages. */ }
+    };
+    window.addEventListener("message", receive);
+    return () => window.removeEventListener("message", receive);
+  }, [isLoaded]);
+
+  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsNearViewport(true);
-            if (autoplayOnVisible) {
+            if (autoplayOnVisible && !document.querySelector('[aria-label="MTVAI opening"]')) {
               setIsLoaded(true);
             }
-            observer.disconnect();
           }
         });
       },
-      { rootMargin: "200px" } // Start loading when 200px from viewport
+      { rootMargin: "0px", threshold: 0.2 }
     );
 
     if (containerRef.current) {
@@ -78,8 +94,7 @@ const LazyYouTubeEmbed = ({
     setIsLoaded(true);
   };
 
-  // Adaptive quality — forcing HD on small embeds causes buffering & glitchy playback.
-  const embedUrl = `https://www.youtube.com/embed/${actualVideoId}?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`;
+  const embedUrl = youtubePlaybackUrl(`https://www.youtube.com/embed/${actualVideoId}?controls=1&rel=0&modestbranding=1`);
 
   return (
     <div
@@ -124,7 +139,14 @@ const LazyYouTubeEmbed = ({
         </>
       ) : (
         <iframe
+          ref={iframeRef}
           src={embedUrl}
+          onLoad={() => {
+            const player = iframeRef.current?.contentWindow;
+            player?.postMessage(JSON.stringify({ event: "listening", id: actualVideoId, channel: "widget" }), "https://www.youtube.com");
+            player?.postMessage(JSON.stringify({ event: "command", func: "addEventListener", args: ["onAutoplayBlocked"] }), "https://www.youtube.com");
+            startYouTubeWithSound(iframeRef.current);
+          }}
           className="absolute inset-0 w-full h-full"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
@@ -132,6 +154,7 @@ const LazyYouTubeEmbed = ({
           loading="lazy"
         />
       )}
+      {isLoaded && soundBlocked && <Button className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 gap-2" onClick={() => { setSoundBlocked(false); startYouTubeWithSound(iframeRef.current); }}><Play className="h-4 w-4" />Play with sound</Button>}
     </div>
   );
 };

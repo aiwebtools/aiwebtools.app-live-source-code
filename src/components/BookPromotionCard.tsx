@@ -18,6 +18,7 @@ import MtvaiAudiobooksButton from "@/components/MtvaiAudiobooksButton";
 import BookPreview, { BOOK_TITLE } from "@/components/BookPreview";
 import { MTVAI_CATALOG } from "@/data/mtvaiCatalog";
 import { createVideoCompletionGate } from "@/utils/mtvaiPlayback";
+import { youtubePlaybackUrl, VIDEO_QUALITY } from "@/utils/videoPlayback";
 
 // Utility function to shuffle array
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -172,6 +173,8 @@ const LazyBookVideo = ({
           events: {
             onReady: (e: any) => {
               try {
+                e.target.setPlaybackQuality?.(VIDEO_QUALITY);
+                e.target.setVolume?.(100);
                 e.target.unMute?.();
                 e.target.playVideo?.();
               } catch {}
@@ -201,7 +204,7 @@ const LazyBookVideo = ({
     return (
       <iframe
         ref={iframeRef}
-        src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1&fs=1&enablejsapi=1&origin=${encodeURIComponent(typeof window !== 'undefined' ? window.location.origin : '')}`}
+        src={youtubePlaybackUrl(`https://www.youtube.com/embed/${videoId}?controls=1&rel=0&modestbranding=1&fs=1&origin=${encodeURIComponent(typeof window !== 'undefined' ? window.location.origin : '')}`)}
         className="absolute inset-0 w-full h-full"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen

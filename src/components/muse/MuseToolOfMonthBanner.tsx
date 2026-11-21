@@ -89,7 +89,12 @@ const MuseToolOfMonthBanner = () => {
             ref={videoRef}
             src={presenterVideo.url}
             poster={presenterPoster}
-            autoPlay muted playsInline controls
+            playsInline controls
+            onLoadedData={() => {
+              if (voiceRef.current && !voiceRef.current.paused) return;
+              const video = videoRef.current;
+              if (video) { video.muted = false; video.volume = 1; void video.play().catch(() => {}); }
+            }}
             className="mx-auto block max-h-[55dvh] w-full bg-background object-contain"
             aria-label={`AIWebTools representative presenting Muse code ${MUSE_CODE}`}
           />

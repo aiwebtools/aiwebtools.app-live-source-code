@@ -3,6 +3,7 @@ import { Image as ImageIcon } from "lucide-react";
 import { Tool } from "@/types/tools";
 import { getToolTagline } from "@/data/toolTaglines";
 import { isExpiredHost, getYouTubeId, getResolvedAssetUrl, getYouTubeThumbnail } from "@/utils/imageUtils";
+import { startYouTubeWithSound, youtubePlaybackUrl } from "@/utils/videoPlayback";
 
 interface ToolMediaProps {
   tool: Tool;
@@ -93,7 +94,7 @@ const ToolMedia = ({ tool, toolIndex }: ToolMediaProps) => {
 
   const getOptimizedEmbedUrl = (url: string) => {
     if (videoId) {
-      return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&rel=0&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}&playsinline=1&modestbranding=1&fs=1&iv_load_policy=3&cc_load_policy=0&start=0`;
+      return youtubePlaybackUrl(`https://www.youtube.com/embed/${videoId}?controls=1&rel=0&origin=${encodeURIComponent(window.location.origin)}&modestbranding=1&fs=1&iv_load_policy=3&cc_load_policy=0&start=0`);
     }
     
     if (url.includes('vimeo.com/')) {
@@ -133,6 +134,7 @@ const ToolMedia = ({ tool, toolIndex }: ToolMediaProps) => {
                 backfaceVisibility: 'hidden'
               }}
               onError={handleVideoError}
+              onLoad={() => { if (videoId) startYouTubeWithSound(iframeRef.current); }}
             />
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900" />

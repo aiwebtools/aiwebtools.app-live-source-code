@@ -11,6 +11,7 @@ import MtvaiBrand from "@/components/MtvaiBrand";
 import MtvaiYouTubeLink from "@/components/MtvaiYouTubeLink";
 import MtvaiAudiobooksButton from "@/components/MtvaiAudiobooksButton";
 import { MTVAI_CATALOG } from "@/data/mtvaiCatalog";
+import { youtubePlaybackUrl, VIDEO_QUALITY } from "@/utils/videoPlayback";
 
 const YT_EMBED_ORIGIN = "https://www.youtube-nocookie.com";
 const YT_API_ORIGIN_FALLBACK = "https://www.youtube.com";
@@ -782,9 +783,9 @@ const PinnedVideoPlayer = memo(() => {
 
   // Handle mute/unmute via postMessage instead of iframe reload.
   // Send to ALL possible YouTube origins + wildcard for maximum mobile compatibility.
-  const sendYTCommand = useCallback((command: string) => {
+  const sendYTCommand = useCallback((command: string, args: unknown[] = []) => {
     if (!iframeRef.current?.contentWindow) return;
-    const msg = JSON.stringify({ event: 'command', func: command });
+    const msg = JSON.stringify({ event: 'command', func: command, args });
     try {
       iframeRef.current.contentWindow.postMessage(msg, YT_EMBED_ORIGIN);
       iframeRef.current.contentWindow.postMessage(msg, YT_API_ORIGIN_FALLBACK);
@@ -802,9 +803,7 @@ const PinnedVideoPlayer = memo(() => {
   const videoSrc = useMemo(() => {
     if (!currentVideoId) return "";
     const origin = typeof window !== 'undefined' ? window.location.origin : '';
-    // No forced quality (vq/hd params): forcing 1080p makes phones buffer
-    // constantly, which sounds like static/stutter. YouTube auto-selects.
-    return `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&mute=0&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&enablejsapi=1&playsinline=1&loop=0&origin=${encodeURIComponent(origin)}&widget_referrer=${encodeURIComponent(origin)}`;
+    return youtubePlaybackUrl(`https://www.youtube.com/embed/${currentVideoId}?controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&loop=0&origin=${encodeURIComponent(origin)}&widget_referrer=${encodeURIComponent(origin)}`);
   }, [currentVideoId]);
   const lastVideoIdRef = useRef<string>(currentVideoId || "");
   
@@ -1207,6 +1206,8 @@ const PinnedVideoPlayer = memo(() => {
 
   const handleIframeLoad = useCallback(() => {
     playerMountedRef.current = true;
+    sendYTCommand('setPlaybackQuality', [VIDEO_QUALITY]);
+    if (!isMuted) sendYTCommand('setVolume', [100]);
     if (!isMuted) {
       // Only command our own iframe on load; pausing other players here was
       // blocking the main page video from starting.

@@ -57,7 +57,7 @@
 - Keep personal keys in owner-bound page memory and authenticated chat requests, never storage/tracking/logs; explicit activation cannot silently fall back to paid default AI.
 - Select builder-paid chat transport server-side behind the existing tool loop with Lovable first and pre-stream Bionic backup, retaining personal-provider precedence and separate image/search/speech services; persistent circuit states prevent denial/refusal bypass.
 - Run background helper text jobs (Care Bot, weekly digest, community-app review) through `_shared/glm-helper.ts` first, keeping their existing Lovable AI call as fallback; search tool matching and ethics review stay on gateway models for speed/strictness.
-- Let YouTube select playback quality automatically in every player; forced HD and background pause/play loops cause buffering and competing-video interruptions.
+- Request 1080p once on video startup, with sound-on autoplay outside cards; honor provider availability and user controls without background quality/pause/play loops.
 - Share one lossless MTVAI catalog union across pinned, vertical, book and theater players; counts and first-track identities must not diverge between surfaces.
 - Add verified channel batches to the shared recent-upload source; music queues exclude audiobook IDs and removed uploads so all player entry points retain the same separation.
 - Render the preserved full-book PDF through the existing PDF.js library; third-party document embeds must not be the only readable preview.

@@ -2,7 +2,11 @@
 import { expect, test } from "bun:test";
 import { commercialEmbed, commercialPlayerEvent, commercialKey, hasSeenCommercial, markCommercialSeen } from "./botCommercials";
 test("existing YouTube commercials autoplay with sound and report when they end", () => {
-  expect(commercialEmbed("https://youtu.be/J31nNY5_PB4")).toBe("https://www.youtube-nocookie.com/embed/J31nNY5_PB4?autoplay=1&mute=0&playsinline=1&rel=0&enablejsapi=1");
+  const embed = new URL(commercialEmbed("https://youtu.be/J31nNY5_PB4") ?? "");
+  expect(embed.pathname).toBe("/embed/J31nNY5_PB4");
+  expect(embed.searchParams.get("autoplay")).toBe("1");
+  expect(embed.searchParams.get("mute")).toBe("0");
+  expect(embed.searchParams.get("vq")).toBe("hd1080");
   expect(commercialEmbed("https://example.com/fake")).toBeNull();
 });
 test("another site's video cannot close or control a bot commercial", () => {

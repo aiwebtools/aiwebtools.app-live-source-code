@@ -1,4 +1,4 @@
-
+import LazyYouTubeEmbed from "@/components/ui/LazyYouTubeEmbed";
 const InspirationMessage = () => {
   return (
     <div className="text-center mt-20 p-8 bg-black/80 border border-cyan-500/30 rounded-2xl shadow-lg neon-border">
@@ -21,14 +21,7 @@ const InspirationMessage = () => {
       {/* YouTube Video Section */}
       <div className="mt-8 max-w-4xl mx-auto">
         <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-          <iframe
-            className="absolute top-0 left-0 w-full h-full rounded-xl border border-cyan-500/30"
-            src="https://www.youtube.com/embed/drUyFiVayaw?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&enablejsapi=1"
-            title="Inspirational Video"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          ></iframe>
+          <LazyYouTubeEmbed videoId="drUyFiVayaw" title="Inspirational Video" autoplayOnVisible className="absolute top-0 left-0 w-full h-full rounded-xl border border-primary/30" />
         </div>
       </div>
     </div>

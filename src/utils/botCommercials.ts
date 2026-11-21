@@ -1,3 +1,4 @@
+import { youtubePlaybackUrl } from "./videoPlayback";
 const shown = new Set<string>();
 export const commercialKey = (slug: string, userId?: string) => `awt-bot-commercial:${userId || "device"}:${slug}`;
 export function hasSeenCommercial(slug: string, userId?: string): boolean {
@@ -13,7 +14,7 @@ export function commercialEmbed(url: string): string | null {
   try {
     const parsed = new URL(url);
     const id = parsed.hostname === "youtu.be" ? parsed.pathname.slice(1) : /^(www\.)?youtube\.com$/.test(parsed.hostname) ? parsed.searchParams.get("v") || parsed.pathname.match(/\/(?:embed|shorts)\/([^/]+)/)?.[1] : null;
-    return id && /^[\w-]{11}$/.test(id) ? `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=0&playsinline=1&rel=0&enablejsapi=1` : null;
+    return id && /^[\w-]{11}$/.test(id) ? youtubePlaybackUrl(`https://www.youtube-nocookie.com/embed/${id}?rel=0`) : null;
   } catch { return null; }
 }
 /** Ignore other site players: only this commercial can end or unblock itself. */

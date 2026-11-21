@@ -28,6 +28,7 @@ const AnimatedBackground = lazy(() => import("@/components/AnimatedBackground"))
 const CloneOfferPopup = lazy(() => import("@/components/CloneOfferPopup"));
 const LovableInvitePopup = lazy(() => import("@/components/LovableInvitePopup"));
 import MuseToolOfMonthBanner from "@/components/muse/MuseToolOfMonthBanner";
+import LazyYouTubeEmbed from "@/components/ui/LazyYouTubeEmbed";
 const MuseTokensPopup = lazy(() => import("@/components/MuseTokensPopup"));
 
 
@@ -45,7 +46,6 @@ const Index = () => {
   const matrixBgDelay = isMobile ? 15000 : 12000;
   const firstScrollSafeDelay = 12000;
 
-  const [mainVideoActive, setMainVideoActive] = useState(false);
 
   // Force scroll to top on mount - fixes "start at bottom" glitch after disclaimer
   useEffect(() => {
@@ -99,37 +99,7 @@ const Index = () => {
             
             <div className="max-w-6xl mx-auto">
               <div className="relative w-full aspect-video rounded-xl border border-green-500/30 bg-slate-950 overflow-hidden shadow-2xl shadow-green-500/10">
-                {mainVideoActive ? (
-                  <iframe
-                    className="absolute inset-0 w-full h-full bg-slate-950"
-                    src="https://www.youtube.com/embed/4zflGSSuBcA?autoplay=1&controls=1&rel=0&modestbranding=1&enablejsapi=1&playsinline=1&iv_load_policy=3&cc_load_policy=0&fs=1&color=red&theme=dark"
-                    title="AI Web Tools Featured Video - 1080p HD"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-                    allowFullScreen
-                    loading="lazy"
-                  />
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => setMainVideoActive(true)}
-                    className="absolute inset-0 w-full h-full group touch-manipulation"
-                    aria-label="Play AI Web Tools featured video"
-                  >
-                    <img
-                      src="https://i.ytimg.com/vi/4zflGSSuBcA/hqdefault.jpg"
-                      alt="AI Web Tools featured video preview"
-                      className="h-full w-full object-cover opacity-80 transition-opacity duration-200 group-hover:opacity-95"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <span className="absolute inset-0 bg-gradient-to-br from-black/30 via-emerald-950/20 to-black/60" />
-                    <span className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-white">
-                      <span className="grid h-20 w-20 place-items-center rounded-full bg-green-500/90 text-4xl shadow-2xl shadow-green-400/40 transition-transform duration-200 group-hover:scale-105">▶</span>
-                      <span className="rounded-full border border-green-400/40 bg-black/70 px-5 py-2 text-sm font-bold text-green-100 backdrop-blur-sm">Tap to load HD video</span>
-                    </span>
-                  </button>
-                )}
+                <LazyYouTubeEmbed videoId="4zflGSSuBcA" title="AI Web Tools Featured Video - 1080p HD" autoplayOnVisible className="h-full w-full" />
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">

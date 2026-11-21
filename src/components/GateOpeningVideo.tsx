@@ -7,6 +7,7 @@ import { commercialPlayerEvent } from "@/utils/botCommercials";
 import { TOTAL_TOOLS } from "@/data/generated/toolCount";
 import pandoraPanel from "@/assets/pandora-gate-panel.jpg";
 import MtvaiBrand from "@/components/MtvaiBrand";
+import { startYouTubeWithSound, youtubePlaybackUrl, VIDEO_QUALITY } from "@/utils/videoPlayback";
 import "@/styles/angel-gate.css";
 
 const PLAYER_ORIGIN = "https://www.youtube-nocookie.com";
@@ -20,6 +21,7 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
   const close = useRef<HTMLButtonElement>(null);
   const finished = useRef(false);
   const playing = useRef(false);
+  const qualityRequested = useRef(false);
   const watchdog = useRef<number | null>(null);
   const command = useCallback((func: string, args: unknown[] = []) => {
     frame.current?.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args }), PLAYER_ORIGIN);
@@ -35,6 +37,7 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
     command("addEventListener", ["onStateChange"]);
     command("addEventListener", ["onError"]);
     command("addEventListener", ["onAutoplayBlocked"]);
+    command("addEventListener", ["onReady"]);
   }, [command]);
   const finish = useCallback(() => {
     if (finished.current) return;
@@ -87,13 +90,19 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
       }
       const result = commercialPlayerEvent(event, frame.current?.contentWindow ?? null);
       if (event.source === frame.current?.contentWindow && event.origin === PLAYER_ORIGIN) {
-        try { const data = typeof event.data === "string" ? JSON.parse(event.data) : event.data; if (data?.event === "onAutoplayBlocked") { setAutoplayBlocked(true); setStarted(true); } } catch { /* ignore unrelated messages */ }
+        try {
+          const data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+          if (data?.event === "onAutoplayBlocked") { setAutoplayBlocked(true); setStarted(true); }
+          if (data?.event === "onReady") startWithSound();
+          if (data?.info?.playerState === 1 && (data.info.muted === true || data.info.volume === 0)) setAutoplayBlocked(true);
+        } catch { /* ignore unrelated messages */ }
       }
       const action = gateOpeningEventAction(result);
       if (action === "play" && !playing.current) {
         setAutoplayBlocked(false);
         playing.current = true;
         setStarted(true);
+        if (!qualityRequested.current) { command("setPlaybackQuality", [VIDEO_QUALITY]); qualityRequested.current = true; }
         startWithSound();
         // Safety net: if YouTube's ended notice is ever missed, close after the clip's
         // known length (plus buffer) so the opening never replays or lingers.
@@ -135,12 +144,12 @@ export default function GateOpeningVideo({ onFinish }: { onFinish: () => void })
         ref={frame}
         title={clip.title}
         onLoad={() => { subscribe(); startWithSound(); setStarted(true); }}
-        src={`${PLAYER_ORIGIN}/embed/${clip.id}?autoplay=1&mute=0&playsinline=1&controls=1&rel=0&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`}
+        src={youtubePlaybackUrl(`${PLAYER_ORIGIN}/embed/${clip.id}?controls=1&rel=0&origin=${encodeURIComponent(window.location.origin)}`)}
         allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
         allowFullScreen
         className="absolute inset-0 h-full w-full border-0"
       />}
-      {autoplayBlocked && <Button onClick={() => { setAutoplayBlocked(false); startWithSound(); }} className="absolute inset-x-8 top-1/2 z-20 gap-2"><Play className="h-5 w-5" />Play music video</Button>}
+      {autoplayBlocked && <Button onClick={() => { setAutoplayBlocked(false); startYouTubeWithSound(frame.current); }} className="absolute inset-x-2 top-1/2 z-20 h-auto min-h-10 gap-2 whitespace-normal px-2 text-xs"><Play className="h-4 w-4 shrink-0" />Play with sound</Button>}
       <div aria-hidden="true" className="mtv-opening-brand pointer-events-none absolute bottom-2 right-2 z-10 rounded bg-background/60 px-1 py-0.5"><MtvaiBrand compact /></div>
     </div>
     <div style={{ animationDelay: "0s" }} className="mtv-rise flex w-full max-w-sm flex-col items-center gap-2">

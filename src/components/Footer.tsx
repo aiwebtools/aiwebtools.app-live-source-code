@@ -1,5 +1,5 @@
 import { downloadAllOperationalInstructions } from "@/utils/downloads";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Separator } from "@/components/ui/separator";
 import { createTimePortalEffect } from "@/utils/timeEffects";
 import { createConfettiCelebration } from "@/utils/effects/audioEffects";
@@ -22,6 +22,22 @@ import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   const [submitOpen, setSubmitOpen] = useState(false);
+  const filmRef = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const video = filmRef.current;
+    if (!video) return;
+    let started = false;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry?.isIntersecting || started || document.querySelector('[aria-label="MTVAI opening"]')) return;
+      started = true;
+      video.muted = false;
+      video.volume = 1;
+      void video.play().catch(() => { /* Native Play controls remain available. */ });
+      observer.disconnect();
+    }, { threshold: 0.2 });
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
 
   const handleRequestTool = () => {
     const subject = encodeURIComponent('AI Tool Request - New Tool Build');
@@ -163,8 +179,9 @@ Best regards,
         <Separator className="bg-green-500/30 mb-8" />
         <div className="mx-auto mb-8 max-w-3xl overflow-hidden rounded-2xl border border-primary/40">
           <video
+            ref={filmRef}
             src={brandVideo.url}
-            autoPlay muted loop playsInline preload="none"
+            loop playsInline controls preload="none"
             aria-label="AIWebTools awakening — angels of light and flame with galaxies within"
             className="block aspect-video w-full object-cover"
           />

@@ -12,6 +12,7 @@ import dualityLight from "@/assets/balance-of-duality-light.png";
 import dualityDark from "@/assets/balance-of-duality-dark.png";
 import dualityMatrix from "@/assets/balance-of-duality-matrix.png";
 import dualityPath from "@/assets/balance-of-duality-path.png";
+import LazyYouTubeEmbed from "@/components/ui/LazyYouTubeEmbed";
 
 const OurStoryPage = () => {
   const handleContactEmail = () => {
@@ -151,17 +152,7 @@ Best regards,
               
               {/* Video Container */}
               <div className="relative w-full overflow-hidden rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 border border-blue-500/30" style={{ aspectRatio: '16/9' }}>
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src="https://www.youtube.com/embed/poOGR-6bb2g?autoplay=0&mute=0&controls=1&rel=0&enablejsapi=1&playsinline=1&modestbranding=1&autohide=1&showinfo=0&fs=1&iv_load_policy=3&cc_load_policy=0&hl=en&color=red&theme=dark"
-                  title="Legislation Writer GPT - WE THE PEOPLE AI"
-                  frameBorder="0"
-                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  className="w-full h-full rounded-xl"
-                  loading="lazy"
-                />
+                <LazyYouTubeEmbed videoId="poOGR-6bb2g" title="Legislation Writer GPT - WE THE PEOPLE AI" autoplayOnVisible className="w-full h-full rounded-xl" />
               </div>
               
               {/* Legislation Writer GPT Description */}
@@ -209,17 +200,7 @@ Best regards,
               
               {/* Video Container */}
               <div className="relative w-full overflow-hidden rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 border border-indigo-500/30" style={{ aspectRatio: '16/9' }}>
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src="https://www.youtube.com/embed/d3uaQz7oRAs?autoplay=0&mute=0&controls=1&rel=0&loop=0&enablejsapi=1&playsinline=1&modestbranding=1&autohide=1&showinfo=0&fs=1&iv_load_policy=3&cc_load_policy=0&hl=en&color=red&theme=dark"
-                  title="Soul Map GPT - My Story"
-                  frameBorder="0"
-                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  className="w-full h-full rounded-xl"
-                  loading="lazy"
-                />
+                <LazyYouTubeEmbed videoId="d3uaQz7oRAs" title="Soul Map GPT - My Story" autoplayOnVisible className="w-full h-full rounded-xl" />
               </div>
               
               {/* Soul Map GPT Description */}
@@ -354,7 +335,7 @@ Best regards,
               {/* KB's Video */}
               <div className="mt-6 max-w-2xl mx-auto">
                 <div className="relative rounded-lg overflow-hidden border border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.3)]">
-                  <iframe width="100%" height="360" src="https://www.youtube.com/embed/puFBsEwdOGk?autoplay=0&mute=0&controls=1&rel=0&playsinline=1&modestbranding=1&fs=1" title="KB's Message" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" allowFullScreen className="w-full aspect-video" loading="lazy" />
+                  <LazyYouTubeEmbed videoId="puFBsEwdOGk" title="KB's Message" autoplayOnVisible className="w-full aspect-video" />
                 </div>
               </div>
 

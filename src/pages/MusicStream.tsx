@@ -11,6 +11,7 @@ import MtvaiBrand from "@/components/MtvaiBrand";
 import MtvaiYouTubeLink from "@/components/MtvaiYouTubeLink";
 import MtvaiAudiobooksButton from "@/components/MtvaiAudiobooksButton";
 import { Button } from "@/components/ui/button";
+import { youtubePlaybackUrl, VIDEO_QUALITY } from "@/utils/videoPlayback";
 
 // Persist a per-visit shuffle seed token so the queue genuinely changes order
 // every time the user enters the MTVai theater (not just first mount).
@@ -35,6 +36,20 @@ const MusicStream = () => {
   const [frameReady, setFrameReady] = useState(false);
   const [frameFailed, setFrameFailed] = useState(false);
   const [frameAttempt, setFrameAttempt] = useState(0);
+  const [soundBlocked, setSoundBlocked] = useState(false);
+  useEffect(() => {
+    setSoundBlocked(false);
+    const receive = (event: MessageEvent) => {
+      if (event.source !== iframeRef.current?.contentWindow || event.origin !== "https://www.youtube.com") return;
+      try {
+        const data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+        if (data?.event === "onAutoplayBlocked") setSoundBlocked(true);
+        if (data?.event === "onStateChange" && data.info === 1) setSoundBlocked(false);
+      } catch { /* Ignore other player messages. */ }
+    };
+    window.addEventListener("message", receive);
+    return () => window.removeEventListener("message", receive);
+  }, [frameAttempt]);
   const [trackQuery, setTrackQuery] = useState("");
 
   // Truly random playback order every time the user enters the theater.
@@ -160,7 +175,14 @@ const MusicStream = () => {
         JSON.stringify({ event: "command", func: "addEventListener", args: ["onStateChange"] }),
         "*"
       );
-      // Let YouTube adapt quality to the connection and device.
+      iframeRef.current?.contentWindow?.postMessage(
+        JSON.stringify({ event: "command", func: "addEventListener", args: ["onAutoplayBlocked"] }),
+        "https://www.youtube.com"
+      );
+      iframeRef.current?.contentWindow?.postMessage(
+        JSON.stringify({ event: "command", func: "setPlaybackQuality", args: [VIDEO_QUALITY] }),
+        "https://www.youtube.com"
+      );
       // Theater-loud: crank to 100 and unmute on every load
       iframeRef.current?.contentWindow?.postMessage(
         JSON.stringify({ event: "command", func: "unMute", args: [] }),
@@ -180,7 +202,7 @@ const MusicStream = () => {
   // IMPORTANT: keep mute OUT of the iframe src so toggling mute does NOT
   // reload the iframe (which previously felt like the track was being skipped).
   // We start muted=0 always at load and control mute purely via postMessage.
-  const src = `https://www.youtube.com/embed/${current.id}?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`;
+  const src = youtubePlaybackUrl(`https://www.youtube.com/embed/${current.id}?controls=1&rel=0&modestbranding=1`);
 
   const toggleMute = useCallback(() => {
     setMuted(prev => {
@@ -352,6 +374,7 @@ const MusicStream = () => {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
             allowFullScreen
           />}
+          {soundBlocked && !audiobooksOpen && <Button className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 gap-2" onClick={() => { setSoundBlocked(false); setMuted(false); setVolume(100); send("unMute"); send("setVolume", [100]); send("playVideo"); }}><Volume2 className="h-4 w-4" />Play with sound</Button>}
           {/* MTV bug overlay (bottom-left) */}
           <img
             src={mtvAiWebToolsLogo}

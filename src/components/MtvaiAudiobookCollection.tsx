@@ -3,6 +3,7 @@ import { Headphones, Play, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { audiobookEdition, findMtvaiAudiobooks, MTVAI_AUDIOBOOKS } from "@/data/mtvaiAudiobooks";
+import { startYouTubeWithSound, youtubePlaybackUrl } from "@/utils/videoPlayback";
 
 export default function MtvaiAudiobookCollection() {
   const [query, setQuery] = useState("");
@@ -11,7 +12,7 @@ export default function MtvaiAudiobookCollection() {
   return <div className="flex min-h-0 flex-1 flex-col gap-3">
     {selected && <div className="shrink-0 border-b border-border pb-3">
       <div className="aspect-video w-full overflow-hidden rounded-md bg-muted">
-        <iframe key={selected.id} src={`https://www.youtube.com/embed/${selected.id}?autoplay=1&playsinline=1&controls=1&rel=0`} title={selected.title} className="h-full w-full" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen />
+        <iframe key={selected.id} src={youtubePlaybackUrl(`https://www.youtube.com/embed/${selected.id}?controls=1&rel=0`)} onLoad={event => startYouTubeWithSound(event.currentTarget)} title={selected.title} className="h-full w-full" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen />
       </div>
       <p className="mt-2 break-words text-sm font-semibold text-foreground">{selected.title}</p>
     </div>}
