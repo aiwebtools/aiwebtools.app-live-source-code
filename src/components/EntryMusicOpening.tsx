@@ -5,11 +5,8 @@ import { OPENING_SESSION_KEY, shouldShowOpening } from '@/utils/entryExperience'
 
 export default function EntryMusicOpening() {
   const { pathname } = useLocation();
-  const [pending] = useState(() => {
-    let seen: string | null = null;
-    try { seen = sessionStorage.getItem(OPENING_SESSION_KEY); } catch { /* optional storage */ }
-    return shouldShowOpening(pathname, seen);
-  });
+  // Every fresh homepage load plays the opener; in-app navigation never replays it.
+  const [pending] = useState(() => shouldShowOpening(pathname, null));
   const [ready, setReady] = useState(false);
   const [finished, setFinished] = useState(false);
   const finish = useCallback(() => {
