@@ -37,7 +37,6 @@ export const generateEnhancedSitemap = () => {
   // Homepage with enhanced competitive positioning
   sitemap += `  <url>
     <loc>${baseUrl}</loc>
-    <lastmod>${currentDate}</lastmod>
     <changefreq>${changeFreqs.homepage}</changefreq>
     <priority>${priorities.homepage}</priority>
     <xhtml:link rel="alternate" hrefLang="en" href="${baseUrl}"/>
@@ -50,7 +49,6 @@ export const generateEnhancedSitemap = () => {
     const categoryUrl = `${baseUrl}/category/${encodeURIComponent(category)}`;
     sitemap += `  <url>
     <loc>${categoryUrl}</loc>
-    <lastmod>${currentDate}</lastmod>
     <changefreq>${changeFreqs.category}</changefreq>
     <priority>${priorities.category}</priority>
     <xhtml:link rel="alternate" hrefLang="en" href="${categoryUrl}"/>
@@ -66,7 +64,6 @@ export const generateEnhancedSitemap = () => {
     
     sitemap += `  <url>
     <loc>${toolUrl}</loc>
-    <lastmod>${currentDate}</lastmod>
     <changefreq>${changeFreqs.tool}</changefreq>
     <priority>${priority}</priority>
     <xhtml:link rel="alternate" hrefLang="en" href="${toolUrl}"/>
@@ -137,7 +134,6 @@ export const generateEnhancedSitemap = () => {
     
     sitemap += `  <url>
     <loc>${searchUrl}</loc>
-    <lastmod>${currentDate}</lastmod>
     <changefreq>${changeFreqs.search}</changefreq>
     <priority>${priority}</priority>
   </url>
@@ -157,7 +153,6 @@ export const generateEnhancedSitemap = () => {
     const categoryUrl = `${baseUrl}/main-category/${encodeURIComponent(category)}`;
     sitemap += `  <url>
     <loc>${categoryUrl}</loc>
-    <lastmod>${currentDate}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hrefLang="en" href="${categoryUrl}"/>
@@ -175,7 +170,6 @@ export const generateEnhancedSitemap = () => {
     const comparisonUrl = `${baseUrl}/compare/${comparison}`;
     sitemap += `  <url>
     <loc>${comparisonUrl}</loc>
-    <lastmod>${currentDate}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>

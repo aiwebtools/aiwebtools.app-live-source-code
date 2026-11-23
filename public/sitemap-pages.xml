@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://aiwebtools.app/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
-  <url><loc>https://aiwebtools.app/mtvai</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://aiwebtools.app/socials</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://aiwebtools.app/services</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/ai-tools</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
   <url><loc>https://aiwebtools.app/ai-tools-hub</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://aiwebtools.app/gpts</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://aiwebtools.app/ai-agents-directory</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://aiwebtools.app/chatgpt-alternatives</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/best-ai-tools</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
@@ -17,6 +17,7 @@
   <url><loc>https://aiwebtools.app/rankings</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
   <url><loc>https://aiwebtools.app/digest</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://aiwebtools.app/gaming-entertainment</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aiwebtools.app/music-stream</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://aiwebtools.app/faq</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://aiwebtools.app/our-story</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://aiwebtools.app/privacy-policy</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>

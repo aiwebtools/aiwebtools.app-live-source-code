@@ -24,8 +24,7 @@ export const generateSitemap = () => {
     return {
       loc: `${seoConfig.siteUrl}/${slug}`,
       changefreq: 'weekly',
-      priority: '0.8',
-      lastmod: new Date().toISOString()
+      priority: '0.8'
     };
   });
 

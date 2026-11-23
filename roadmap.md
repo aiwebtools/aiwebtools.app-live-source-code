@@ -1,5 +1,10 @@
 # Roadmap
 
+## November 23 SEO and sitemap update — Master publishes
+- [ ] Audit public route coverage and regenerate the existing sitemap without changing directory records or layout.
+- [ ] Correct unsupported sitemap freshness dates; use authoritative page-specific blog updates only.
+- [ ] Validate XML, unique links, public route coverage and served sitemap files; run focused regressions. Do not publish.
+
 ## November 21 multi-bot verification and missing ElevenLabs recordings — do not publish
 - [x] Audited 1,542 live bots: every bot resolves a supported lifelike cast across 11 base voices; 1467 use automatic character casting, not MIDI. 362 website recordings and 363 stored recordings preserved; 113 website recordings match the currently selected cast. Shared base IDs are not 1,542 unique synthesized voices.
 - [x] Time Machine/Fable desktop, Mary Magdalene/Shimmer phone and Einstein/Echo tablet: real Bionic replies, non-silent Lovable audio, replay, simulated confirmed-credit fallback to the best installed natural voice, and hosted recovery pass. Fixed structured 402 errors arriving inside an already-open voice stream. Firefox checks inconclusive (introduction overlay/no audio during test); WebKit crashed before studio mounted. Physical microphones and all-device listening remain unverified.

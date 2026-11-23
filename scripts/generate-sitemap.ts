@@ -18,11 +18,11 @@ const BASE_URL = "https://aiwebtools.app";
 
 const staticRoutes: Array<{ path: string; priority: string; changefreq: string }> = [
   { path: "/", priority: "1.0", changefreq: "daily" },
-  { path: "/mtvai", priority: "0.9", changefreq: "weekly" },
   { path: "/socials", priority: "0.7", changefreq: "weekly" },
   { path: "/services", priority: "0.8", changefreq: "weekly" },
   { path: "/ai-tools", priority: "0.9", changefreq: "daily" },
   { path: "/ai-tools-hub", priority: "0.9", changefreq: "weekly" },
+  { path: "/gpts", priority: "0.9", changefreq: "weekly" },
   { path: "/ai-agents-directory", priority: "0.9", changefreq: "weekly" },
   { path: "/chatgpt-alternatives", priority: "0.8", changefreq: "weekly" },
   { path: "/best-ai-tools", priority: "0.9", changefreq: "weekly" },
@@ -34,6 +34,7 @@ const staticRoutes: Array<{ path: string; priority: string; changefreq: string }
   { path: "/rankings", priority: "0.9", changefreq: "daily" },
   { path: "/digest", priority: "0.8", changefreq: "weekly" },
   { path: "/gaming-entertainment", priority: "0.8", changefreq: "weekly" },
+  { path: "/music-stream", priority: "0.9", changefreq: "weekly" },
   { path: "/faq", priority: "0.7", changefreq: "monthly" },
   { path: "/our-story", priority: "0.6", changefreq: "monthly" },
   { path: "/privacy-policy", priority: "0.4", changefreq: "yearly" },
@@ -54,8 +55,11 @@ for (const tool of allTools) {
   slugs.push(slug);
 }
 
-const url = (loc: string, changefreq: string, priority: string) =>
-  `  <url><loc>${loc}</loc><changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>`;
+const escapeXml = (value: string) => value.replace(/[<>&"']/g, character => ({
+  "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;", "'": "&apos;",
+}[character] ?? character));
+const url = (loc: string, changefreq: string, priority: string, lastmod?: string) =>
+  `  <url><loc>${escapeXml(loc)}</loc>${lastmod ? `<lastmod>${escapeXml(lastmod)}</lastmod>` : ""}<changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>`;
 
 // --- section: core pages -----------------------------------------------------
 const pageUrls = staticRoutes.map((r) => url(`${BASE_URL}${r.path}`, r.changefreq, r.priority));
@@ -76,7 +80,10 @@ const blogUrls: string[] = [];
 for (const post of blogPosts) {
   if (!post.slug || blogSlugs.has(post.slug)) continue;
   blogSlugs.add(post.slug);
-  blogUrls.push(url(`${BASE_URL}/blog/${encodePathSegment(post.slug)}`, "monthly", "0.7"));
+  // Only explicit editorial updates describe a significant page change.
+  const lastmod = post.updatedDate && /^\d{4}-\d{2}-\d{2}$/.test(post.updatedDate)
+    ? post.updatedDate : undefined;
+  blogUrls.push(url(`${BASE_URL}/blog/${encodePathSegment(post.slug)}`, "monthly", "0.7", lastmod));
 }
 
 // --- section: spotlights (long-form "back pages") ----------------------------
@@ -95,17 +102,24 @@ const featureUrls = [
 // /sitemap.xml, so search engines can fetch and report on each group.
 // ---------------------------------------------------------------------------
 const publicDir = path.resolve(process.cwd(), "public");
-const today = new Date().toISOString().slice(0, 10);
 const written: Array<{ file: string; count: number }> = [];
+const writtenLocations = new Set<string>();
 
 const writeSitemap = (file: string, entries: string[]) => {
+  // A public URL belongs in the index once, even if a tool shares a route name.
+  const uniqueEntries = entries.filter(entry => {
+    const loc = entry.match(/<loc>(.*?)<\/loc>/)?.[1];
+    if (!loc || writtenLocations.has(loc)) return false;
+    writtenLocations.add(loc);
+    return true;
+  });
   const body =
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-    entries.join("\n") +
+    uniqueEntries.join("\n") +
     `\n</urlset>\n`;
   fs.writeFileSync(path.join(publicDir, file), body, "utf-8");
-  written.push({ file, count: entries.length });
+  written.push({ file, count: uniqueEntries.length });
 };
 
 writeSitemap("sitemap-pages.xml", pageUrls);
@@ -123,7 +137,7 @@ const indexXml =
   `<?xml version="1.0" encoding="UTF-8"?>\n` +
   `<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   written
-    .map((w) => `  <sitemap><loc>${BASE_URL}/${w.file}</loc><lastmod>${today}</lastmod></sitemap>`)
+    .map((w) => `  <sitemap><loc>${BASE_URL}/${w.file}</loc></sitemap>`)
     .join("\n") +
   `\n</sitemapindex>\n`;
 fs.writeFileSync(path.join(publicDir, "sitemap.xml"), indexXml, "utf-8");
