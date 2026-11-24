@@ -13,6 +13,25 @@ export const REMOVED_MTVAI_UPLOAD_IDS = new Set([
   "n9IEIcv2gEk",
 ]);
 
-const AUDIOBOOK_TITLE = /audio\s?book|read-aloud|read aloud|lost diary|picture book|storybook/i;
-export const isMtvaiAudiobook = (video: { title: string; kind?: string }) =>
-  video.kind === "audiobook" || AUDIOBOOK_TITLE.test(video.title);
+type Upload = { id?: string; title: string; kind?: string };
+
+// These promotional uploads have brand-only titles, rather than explicit tool/ad labels.
+// Keep their original records/media intact; exclude them only from listening queues.
+const PROMOTIONAL_UPLOAD_IDS = new Set([
+  "k_tp3d_jq9E", "7U_QmnDQIyE", "FZr-zifwMw4", "HNEnKpYnFFw",
+  "vJz1HOGtV0I", "NWhi0O8OrNA", "TRGOvFg87f8", "KBjodVWvUdU",
+  "tyZxna_K6fQ", "aKJR_7bRrQk", "zyjmLIzP0vQ", "Coi0C7MBzP4",
+  "Zwsf8g4ilM0", "z9p9saWxthM", "_1qcKvXwPbE", "4ysPr5IUhoQ",
+  "lPZVKMfUcrs", "CNDGOkEIx3k", "6JAGh_ItU7w", "qJf3gsrZy08",
+]);
+const MUSIC_TITLE = /music|lyric|\bsong\b|\banthem\b|\bmv\b|#aimusic|#artmusic/i;
+const PROMOTION_TITLE = /\bgpts?\b|\bgemini\b|\bgenerator\b|\bfree ai tools?\b|\bai tools? (?:demo|drop|university)\b|\bcommercial\b|commericial|\badvertisement\b|\bpodcast\b|\btutorial\b|\bcomprehensive.*(?:class|course)\b|\bhow to\b.*(?:\bai\b|generat)|\bcalculator\b|\bai assistant\b|clone.*(?:website|database)|(?:website|database).*clon|\bweb\s?3\b.*domain|domain.*\bweb\s?3\b|\bai tools university\b|\bai tool company\b|revolutionize your workflow/i;
+export const isMtvaiPromotion = (video: Upload) =>
+  video.kind === "promotion" || video.kind === "advertisement" ||
+  (video.id !== undefined && PROMOTIONAL_UPLOAD_IDS.has(video.id)) ||
+  /\bcommercial\b|commericial|\badvertisement\b|\bai tool demo\b/.test(video.title.toLowerCase()) ||
+  (!MUSIC_TITLE.test(video.title) && PROMOTION_TITLE.test(video.title));
+
+const AUDIOBOOK_TITLE = /audio\s?book|read[\s-]aloud|lost diary|resurrection diary|picture book|storybook|time machine: the first thousand doors/i;
+export const isMtvaiAudiobook = (video: Upload) =>
+  !isMtvaiPromotion(video) && (video.kind === "audiobook" || AUDIOBOOK_TITLE.test(video.title));

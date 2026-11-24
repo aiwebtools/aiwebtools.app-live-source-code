@@ -1,0 +1,2 @@
+- Classify MTVAI uploads through shared audiobook/promotion predicates before any music queue; preserve source records so tool ads never become shuffled music.
+- Group multipart audiobooks by normalized work title and numeric part; continue only to the same work's immediate next part on an active-frame completion event, never on a duration timer or into an unrelated book.

@@ -1,5 +1,11 @@
 # Roadmap
 
+## November 24 music and audiobook separation — do not publish
+- [ ] Audit the complete public YouTube Videos and Shorts listings; add verified missing music and audiobook recordings.
+- [ ] Exclude audiobook and tool-advertisement uploads from all shared music queues without deleting source records.
+- [ ] Group audiobook parts in numeric order and automatically play the next part only after completion.
+- [ ] Run catalog/playback regressions and verify desktop/phone collection playback and music separation.
+
 ## November 23 SEO and sitemap update — Master publishes
 - [ ] Audit public route coverage and regenerate the existing sitemap without changing directory records or layout.
 - [ ] Correct unsupported sitemap freshness dates; use authoritative page-specific blog updates only.
