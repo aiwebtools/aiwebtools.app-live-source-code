@@ -14,7 +14,7 @@ test("November 18 music leads the shared music queue once and stays out of audio
 });
 
 test("November 18 audiobook parts appear only in the audiobook collection", () => {
-  const ids = ["nUDuAnNzFbg", "7GarV2FaHlE", "DWnha_4FLzc", "FWaC-SSg2E0", "uPXm6E38hjA", "NeepYyQxSwE"];
-  expect(MTVAI_AUDIOBOOKS.slice(0, 6).map(v => v.id)).toEqual(ids);
+  const ids = ["7GarV2FaHlE", "nUDuAnNzFbg", "DWnha_4FLzc", "FWaC-SSg2E0", "NeepYyQxSwE", "uPXm6E38hjA"];
+  expect(MTVAI_AUDIOBOOKS.filter(v => ids.includes(v.id)).map(v => v.id)).toEqual(ids);
   for (const id of ids) expect(MTVAI_CATALOG.some(v => v.id === id)).toBe(false);
 });

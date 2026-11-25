@@ -3,13 +3,13 @@ import { expect, test } from "bun:test";
 import { NOVEMBER_7_MTVAI_UPLOADS, RECOVERED_MTVAI_UPLOADS } from "./november7MtvaiUploads";
 import { MTVAI_CATALOG } from "./mtvaiCatalog";
 import { MTVAI_AUDIOBOOKS } from "./mtvaiAudiobooks";
-import { REMOVED_MTVAI_UPLOAD_IDS, isMtvaiAudiobook } from "./mtvaiRemovedUploads";
+import { REMOVED_MTVAI_UPLOAD_IDS, isMtvaiAudiobook, isMtvaiPromotion } from "./mtvaiRemovedUploads";
 
 test("all 204 live-verified missing uploads reach the shared players once", () => {
   const additions = [...NOVEMBER_7_MTVAI_UPLOADS, ...RECOVERED_MTVAI_UPLOADS];
   expect(additions.length).toBe(204);
   for (const upload of additions) {
-    if (!REMOVED_MTVAI_UPLOAD_IDS.has(upload.id)) expect((isMtvaiAudiobook(upload) ? MTVAI_AUDIOBOOKS : MTVAI_CATALOG).filter(v => v.id === upload.id)).toHaveLength(1);
+    if (!REMOVED_MTVAI_UPLOAD_IDS.has(upload.id) && !isMtvaiPromotion(upload)) expect((isMtvaiAudiobook(upload) ? MTVAI_AUDIOBOOKS : MTVAI_CATALOG).filter(v => v.id === upload.id)).toHaveLength(1);
     expect(upload.thumbnailUrl).toBe(`https://i.ytimg.com/vi/${upload.id}/hqdefault.jpg`);
   }
 });

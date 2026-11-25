@@ -23,13 +23,15 @@ const PROMOTIONAL_UPLOAD_IDS = new Set([
   "tyZxna_K6fQ", "aKJR_7bRrQk", "zyjmLIzP0vQ", "Coi0C7MBzP4",
   "Zwsf8g4ilM0", "z9p9saWxthM", "_1qcKvXwPbE", "4ysPr5IUhoQ",
   "lPZVKMfUcrs", "CNDGOkEIx3k", "6JAGh_ItU7w", "qJf3gsrZy08",
+  "8aPpUPiDBJ4", "Zdthelofv_E", "9fpWIE20z7s", "JXLqPMfw49Y",
+  "jwjNOKP5mf4", "hB_fKF_5GOI", "LHaPL2oBUmY", "9DR-wgghKAE",
 ]);
 const MUSIC_TITLE = /music|lyric|\bsong\b|\banthem\b|\bmv\b|#aimusic|#artmusic/i;
-const PROMOTION_TITLE = /\bgpts?\b|\bgemini\b|\bgenerator\b|\bfree ai tools?\b|\bai tools? (?:demo|drop|university)\b|\bcommercial\b|commericial|\badvertisement\b|\bpodcast\b|\btutorial\b|\bcomprehensive.*(?:class|course)\b|\bhow to\b.*(?:\bai\b|generat)|\bcalculator\b|\bai assistant\b|clone.*(?:website|database)|(?:website|database).*clon|\bweb\s?3\b.*domain|domain.*\bweb\s?3\b|\bai tools university\b|\bai tool company\b|revolutionize your workflow/i;
+const PROMOTION_TITLE = /\bgpts?\b|\bgemini\b|\bgenerator\b|\bai tools?\b|\bcommercial\b|commericial|commerical|\badvertisement\b|\bpodcast\b|\btutorial\b|\bcomprehensive.*(?:class|course)\b|\bhow to\b.*(?:\bai\b|generat)|\bcalculator\b|\bai assistant\b|clone.*(?:website|database)|(?:website|database).*clon|\bweb\s?3\b.*domain|domain.*\bweb\s?3\b|\bai tools university\b|\bai tool company\b|revolutionize your workflow/i;
 export const isMtvaiPromotion = (video: Upload) =>
   video.kind === "promotion" || video.kind === "advertisement" ||
   (video.id !== undefined && PROMOTIONAL_UPLOAD_IDS.has(video.id)) ||
-  /\bcommercial\b|commericial|\badvertisement\b|\bai tool demo\b/.test(video.title.toLowerCase()) ||
+  /\bcommercial\b|commericial|commerical|\badvertisement\b|\bai tool demo\b/.test(video.title.toLowerCase()) ||
   (!MUSIC_TITLE.test(video.title) && PROMOTION_TITLE.test(video.title));
 
 const AUDIOBOOK_TITLE = /audio\s?book|read[\s-]aloud|lost diary|resurrection diary|picture book|storybook|time machine: the first thousand doors/i;

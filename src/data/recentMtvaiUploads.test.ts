@@ -3,8 +3,8 @@ import { expect, test } from "bun:test";
 import { RECENT_MTVAI_UPLOADS } from "./recentMtvaiUploads";
 
 test("recent MTV AI additions are unique uploads inside the requested two-week window", () => {
-  expect(RECENT_MTVAI_UPLOADS).toHaveLength(827);
-  expect(new Set(RECENT_MTVAI_UPLOADS.map(v => v.id)).size).toBe(827);
+  expect(RECENT_MTVAI_UPLOADS).toHaveLength(831);
+  expect(new Set(RECENT_MTVAI_UPLOADS.map(v => v.id)).size).toBe(831);
   for (const video of RECENT_MTVAI_UPLOADS) {
     if (video.publishedAt !== null) {
       expect(Date.parse(video.publishedAt)).toBeGreaterThanOrEqual(Date.parse("2026-10-18T00:00:00Z"));

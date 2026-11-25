@@ -1,6 +1,7 @@
 # Roadmap
 
 ## November 24 music and audiobook separation — do not publish
+- [ ] November 25 follow-up: re-audit both channel tabs for new uploads and finish outstanding classification, tests and desktop/phone verification in this same task.
 - [ ] Audit the complete public YouTube Videos and Shorts listings; add verified missing music and audiobook recordings.
 - [ ] Exclude audiobook and tool-advertisement uploads from all shared music queues without deleting source records.
 - [ ] Group audiobook parts in numeric order and automatically play the next part only after completion.
