@@ -1,11 +1,11 @@
 # Roadmap
 
 ## November 24 music and audiobook separation — do not publish
-- [ ] November 25 follow-up: re-audit both channel tabs for new uploads and finish outstanding classification, tests and desktop/phone verification in this same task.
-- [ ] Audit the complete public YouTube Videos and Shorts listings; add verified missing music and audiobook recordings.
-- [ ] Exclude audiobook and tool-advertisement uploads from all shared music queues without deleting source records.
-- [ ] Group audiobook parts in numeric order and automatically play the next part only after completion.
-- [ ] Run catalog/playback regressions and verify desktop/phone collection playback and music separation.
+- [x] November 26 follow-up: fully expanded both channel tabs (657 Videos / 467 Shorts) and checked the official latest-upload feed; all 1,124 public uploads already have source records, with no newer upload after November 23 and no missing music or audiobook IDs to add.
+- [x] Audit the complete public YouTube Videos and Shorts listings; preserve four existing music records not currently public rather than deleting them.
+- [x] Exclude audiobook and tool-advertisement uploads from all shared music queues without deleting source records; all 247 public uploads outside the players are explicit promotions, with 833 public music tracks and 44 public audiobooks in their correct collections.
+- [x] Group audiobook parts in numeric order and automatically play the next part only after completion.
+- [x] Run 28 catalog/playback regressions (1,412 assertions); desktop/phone checks select and play Beyond The Stars and Orin Asks, keep Orin out of music, show settled players and report zero page errors. No catalog edits were needed; not published.
 
 ## November 23 SEO and sitemap update — Master publishes
 - [ ] Audit public route coverage and regenerate the existing sitemap without changing directory records or layout.
